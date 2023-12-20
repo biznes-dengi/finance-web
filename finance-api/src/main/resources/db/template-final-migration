@@ -42,9 +42,9 @@ CREATE TABLE goal (
 );
 
 CREATE TABLE role (
-                      id SERIAL PRIMARY KEY,
-                      naming VARCHAR(15)
-);
+   id SERIAL PRIMARY KEY,
+   naming VARCHAR(15)
+);ą
 
 CREATE TABLE role_account (
     role_id INT,
