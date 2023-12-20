@@ -1,4 +1,4 @@
-package com.maksyank.finance.api.model.base;
+package com.maksyank.finance.api.entity.base;
 
 public class BaseBill {
     int id;
