@@ -1,4 +1,4 @@
-package com.maksyank.finance.boundary;
+package com.maksyank.finance.financegoal.boundary;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

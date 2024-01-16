@@ -1,6 +1,6 @@
-package com.maksyank.finance.model;
+package com.maksyank.finance.financegoal.domain.common;
 
-import com.maksyank.finance.model.base.BaseUser;
+import com.maksyank.finance.financegoal.domain.base.BaseUser;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

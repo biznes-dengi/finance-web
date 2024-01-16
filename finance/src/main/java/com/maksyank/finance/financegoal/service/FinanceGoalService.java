@@ -1,6 +1,6 @@
-package com.maksyank.finance.service;
+package com.maksyank.finance.financegoal.service;
 
-import com.maksyank.finance.boundary.financegoal.request.PreparedFinanceGoal;
+import com.maksyank.finance.financegoal.domain.request.PreparedFinanceGoal;
 import org.springframework.stereotype.Service;
 
 // TO DO add validation to all methods

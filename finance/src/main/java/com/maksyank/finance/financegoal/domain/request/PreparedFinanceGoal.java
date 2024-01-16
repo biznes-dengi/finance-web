@@ -1,4 +1,4 @@
-package com.maksyank.finance.boundary.financegoal.request;
+package com.maksyank.finance.financegoal.domain.request;
 
 import lombok.Data;
 

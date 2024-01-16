@@ -1,4 +1,4 @@
-package com.maksyank.finance.boundary.financegoal;
+package com.maksyank.finance.financegoal.boundary;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

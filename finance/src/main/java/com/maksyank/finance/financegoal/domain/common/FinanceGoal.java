@@ -1,4 +1,4 @@
-package com.maksyank.finance.model;
+package com.maksyank.finance.financegoal.domain.common;
 
 import jakarta.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.maksyank.finance.service;
+package com.maksyank.finance.financegoal.service;
 
 import org.springframework.stereotype.Service;
 

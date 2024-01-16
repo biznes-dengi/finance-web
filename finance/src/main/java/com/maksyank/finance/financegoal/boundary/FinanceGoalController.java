@@ -1,8 +1,7 @@
-package com.maksyank.finance.boundary.financegoal;
+package com.maksyank.finance.financegoal.boundary;
 
-import com.maksyank.finance.boundary.BaseController;
-import com.maksyank.finance.boundary.financegoal.request.PreparedFinanceGoal;
-import com.maksyank.finance.service.FinanceGoalService;
+import com.maksyank.finance.financegoal.domain.request.PreparedFinanceGoal;
+import com.maksyank.finance.financegoal.service.FinanceGoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
