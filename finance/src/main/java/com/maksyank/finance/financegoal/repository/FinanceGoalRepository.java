@@ -8,9 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Repository
-interface FinanceGoalRepository extends JpaRepository<FinanceGoal, Integer> {
+public interface FinanceGoalRepository extends JpaRepository<FinanceGoal, Integer> {
 
     Optional<Collection<FinanceGoal>> findByState(String status);
-
-    Optional<FinanceGoal> findById(int id);
 }
