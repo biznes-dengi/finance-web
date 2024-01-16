@@ -2,10 +2,12 @@ package com.maksyank.finance.financegoal.domain.common;
 
 import com.maksyank.finance.financegoal.domain.base.BaseUser;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+@Data
 @Entity
 @Table(name = "user_account")
 public class UserAccount extends BaseUser {

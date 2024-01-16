@@ -1,11 +1,13 @@
 package com.maksyank.finance.financegoal.domain.common;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+@Data
 @Entity
 @Table(name = "finance_goal")
 public class FinanceGoal {
@@ -17,17 +19,25 @@ public class FinanceGoal {
     @Column(name = "title")
     private String title;
 
+    // must be enum
     @Column(name = "state")
     private String state;
 
     @Column(name = "description")
     private String description;
 
+    @Column(name = "amount")
+    private BigDecimal amount;
+
     @Column(name = "target_amount")
     private BigDecimal targetAmount;
 
     @Column(name = "deadline")
     private LocalDateTime deadline;
+
+    // must be enum
+    @Column(name = "risk_profile")
+    private String riskProfile;
 
     @Column(name = "created_on")
     private LocalDateTime createdOn;
