@@ -1,6 +1,7 @@
-package com.maksyank.finance.financegoal.domain.common;
+package com.maksyank.finance.user.domain;
 
 import com.maksyank.finance.financegoal.domain.base.BaseUser;
+import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
 import jakarta.persistence.*;
 import lombok.Data;
 

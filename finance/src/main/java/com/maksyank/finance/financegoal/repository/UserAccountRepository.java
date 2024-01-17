@@ -1,6 +1,6 @@
 package com.maksyank.finance.financegoal.repository;
 
-import com.maksyank.finance.financegoal.domain.common.UserAccount;
+import com.maksyank.finance.user.domain.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
