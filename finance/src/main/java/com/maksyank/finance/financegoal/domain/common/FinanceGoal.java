@@ -1,5 +1,6 @@
 package com.maksyank.finance.financegoal.domain.common;
 
+import com.maksyank.finance.user.domain.UserAccount;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,6 +23,10 @@ public class FinanceGoal {
     // must be enum
     @Column(name = "state")
     private String state;
+
+    // must be enum
+    @Column(name = "currency")
+    private String currency;
 
     @Column(name = "description")
     private String description;
