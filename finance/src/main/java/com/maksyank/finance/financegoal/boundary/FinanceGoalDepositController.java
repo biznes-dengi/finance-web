@@ -15,7 +15,7 @@ public class FinanceGoalDepositController {
     }
 
     @PostMapping
-    public void create() {
+    public void save() {
 
     }
 }

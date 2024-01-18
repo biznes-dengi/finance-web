@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FinanceGoalFundHistoryController {
 
     @GetMapping
-    public void getByFilter() {
+    public void getByPage() {
 
     }
 
