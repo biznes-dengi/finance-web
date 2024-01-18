@@ -2,8 +2,8 @@ package com.maksyank.finance.financegoal.mapper;
 
 import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.dto.FinanceGoalDTO;
-import com.maksyank.finance.financegoal.domain.response.FinanceGoalResponse;
-import com.maksyank.finance.financegoal.domain.response.FinanceGoalViewResponse;
+import com.maksyank.finance.financegoal.domain.response.FinGoalResponse;
+import com.maksyank.finance.financegoal.domain.response.FinGoalViewResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -21,13 +21,13 @@ public interface FinanceGoalMapperToDoLater {
     @Mapping(target = "riskProfile", ignore = true)
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "lastChange", ignore = true)
-    FinanceGoalViewResponse sourceToViewResponse(FinanceGoal source);
+    FinGoalViewResponse sourceToViewResponse(FinanceGoal source);
 
     FinanceGoal dtoToSource(FinanceGoalDTO dto);
 
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "lastChange", ignore = true)
-    FinanceGoalResponse dtoToResponse(FinanceGoalDTO dto);
+    FinGoalResponse dtoToResponse(FinanceGoalDTO dto);
 
     @Mapping(target = "state", ignore = true)
     @Mapping(target = "description", ignore = true)
@@ -35,5 +35,5 @@ public interface FinanceGoalMapperToDoLater {
     @Mapping(target = "riskProfile", ignore = true)
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "lastChange", ignore = true)
-    FinanceGoalViewResponse dtoToViewResponse(FinanceGoalDTO dto);
+    FinGoalViewResponse dtoToViewResponse(FinanceGoalDTO dto);
 }
