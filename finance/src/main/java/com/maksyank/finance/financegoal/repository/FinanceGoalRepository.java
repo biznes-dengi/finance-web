@@ -10,5 +10,7 @@ import java.util.Optional;
 @Repository
 public interface FinanceGoalRepository extends JpaRepository<FinanceGoal, Integer> {
 
-    Optional<Collection<FinanceGoal>> findByState(String status);
+    Optional<FinanceGoal> findByIdAndUserAccount_Id(int id, int userId);
+
+    Optional<Collection<FinanceGoal>> findByStateAndUserAccount_Id(String status, int id);
 }
