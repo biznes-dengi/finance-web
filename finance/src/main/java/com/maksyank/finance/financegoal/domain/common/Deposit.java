@@ -2,11 +2,13 @@ package com.maksyank.finance.financegoal.domain.common;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "deposit")
 public class Deposit {

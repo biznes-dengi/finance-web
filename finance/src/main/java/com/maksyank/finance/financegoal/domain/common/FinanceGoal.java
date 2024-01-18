@@ -3,12 +3,14 @@ package com.maksyank.finance.financegoal.domain.common;
 import com.maksyank.finance.user.domain.UserAccount;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "finance_goal")
 public class FinanceGoal {
@@ -56,4 +58,19 @@ public class FinanceGoal {
 
     @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
+
+    public FinanceGoal(int id, String title, String state, String currency, String description, BigDecimal amount, BigDecimal targetAmount, LocalDateTime deadline, String riskProfile, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
+        this.id = id;
+        this.title = title;
+        this.state = state;
+        this.currency = currency;
+        this.description = description;
+        this.amount = amount;
+        this.targetAmount = targetAmount;
+        this.deadline = deadline;
+        this.riskProfile = riskProfile;
+        this.createdOn = createdOn;
+        this.lastChange = lastChange;
+        this.userAccount = userAccount;
+    }
 }
