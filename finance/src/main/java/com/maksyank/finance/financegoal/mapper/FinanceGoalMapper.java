@@ -4,7 +4,9 @@ import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.request.PreparedFinanceGoal;
 import com.maksyank.finance.financegoal.domain.response.FinanceGoalResponse;
 import com.maksyank.finance.financegoal.domain.response.FinanceGoalViewResponse;
+import com.maksyank.finance.user.domain.UserAccount;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,14 +36,15 @@ public class FinanceGoalMapper {
 
     // TO DO impl state enum, now it's just mocked
     // TO DO amount from start mocked (from start 0)
+    // TO DO separate bussines logic and mapping
     // riskProfile mocked
     // no impl currency
     // lastChange mocked by null
-    public static FinanceGoal preparedToSource(PreparedFinanceGoal preparedFinGoal) {
-        return new FinanceGoal(preparedFinGoal.getUserId(), preparedFinGoal.getTitle(), "new",
+    public static FinanceGoal preparedToSource(int id, PreparedFinanceGoal preparedFinGoal, UserAccount userAccount) {
+        return new FinanceGoal(id, preparedFinGoal.getTitle(), "new",
                 preparedFinGoal.getCurrency(), preparedFinGoal.getDescription(),
-                0, preparedFinGoal.getTargetAmount(), preparedFinGoal.getDeadline(),
-                "riskProfile", preparedFinGoal.getCreatedOn(), null, 0)
+                new BigDecimal(0), preparedFinGoal.getTargetAmount(), preparedFinGoal.getDeadline(),
+                "riskProfile", preparedFinGoal.getCreatedOn(), null, userAccount);
     }
 
 
