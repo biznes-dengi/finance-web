@@ -9,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface FinanceGoalRepository extends JpaRepository<FinanceGoal, Integer> {
-
-    Optional<FinanceGoal> findByIdAndUserAccount_Id(int id, int userId);
-
-    Optional<Collection<FinanceGoal>> findByStateAndUserAccount_Id(String status, int id);
+    Optional<FinanceGoal> findByIdAndUserAccount_Id(int financeId, int userId);
+    Optional<Collection<FinanceGoal>> findByStateAndUserAccount_Id(String status, int userId);
+    boolean existsByIdAndUserAccount_Id(int financeId, int userId);
 }

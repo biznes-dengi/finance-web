@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 
 public class FinanceGoalMapper {
 
-    public static List<FinGoalResponse> sourceToResponse(Collection<FinanceGoal> finGoals) {
-        return finGoals.stream().map(FinanceGoalMapper::sourceToResponse).collect(Collectors.toList());
+    public static List<FinGoalResponse> entityToResponse(Collection<FinanceGoal> finGoals) {
+        return finGoals.stream().map(FinanceGoalMapper::entityToResponse).collect(Collectors.toList());
     }
 
-    public static FinGoalResponse sourceToResponse(FinanceGoal finGoal) {
-        return new FinGoalResponse(finGoal.getId(), finGoal.getTitle(), finGoal.getState(),
-                finGoal.getDescription(), finGoal.getAmount(), finGoal.getTargetAmount(),
-                finGoal.getDeadline(), finGoal.getRiskProfile()
+    public static FinGoalResponse entityToResponse(FinanceGoal source) {
+        return new FinGoalResponse(source.getId(), source.getTitle(), source.getState(),
+                source.getDescription(), source.getAmount(), source.getTargetAmount(),
+                source.getDeadline(), source.getRiskProfile()
         );
     }
 
@@ -44,10 +44,18 @@ public class FinanceGoalMapper {
                 request.createdOn(), userAccount);
     }
 
-    public static FinanceGoal requestToSourceUpdate(int id, FinGoalUpdateRequest request, UserAccount userAccount) {
-        return new FinanceGoal(id, request.title(), request.state(), request.currency(), request.description(),
-                request.amount(), request.targetAmount(), request.deadline(), request.riskProfile(),
-                request.createdOn(), request.lastChange(), userAccount);
+    public static FinanceGoal map(FinGoalUpdateRequest source, FinanceGoal destination) {
+        destination.setTitle(source.title());
+        destination.setState(source.state());
+        destination.setCurrency(source.currency());
+        destination.setDescription(source.description());
+        destination.setAmount(source.amount());
+        destination.setTargetAmount(source.targetAmount());
+        destination.setDeadline(source.deadline());
+        destination.setRiskProfile(source.riskProfile());
+        destination.setCreatedOn(source.createdOn());
+        destination.setLastChange(source.lastChange());
+        return destination;
     }
 
 }

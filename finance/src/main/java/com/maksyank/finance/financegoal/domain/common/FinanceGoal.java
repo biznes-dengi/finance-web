@@ -59,7 +59,24 @@ public class FinanceGoal {
     @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
 
-    public FinanceGoal(int id, String title, String state, String currency, String description, BigDecimal amount, BigDecimal targetAmount, LocalDateTime deadline, String riskProfile, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
+    public FinanceGoal(String title, String state, String currency, String description, BigDecimal amount,
+                       BigDecimal targetAmount, LocalDateTime deadline, String riskProfile,
+                       LocalDateTime createdOn, UserAccount userAccount) {
+        this.title = title;
+        this.state = state;
+        this.currency = currency;
+        this.description = description;
+        this.amount = amount;
+        this.targetAmount = targetAmount;
+        this.deadline = deadline;
+        this.riskProfile = riskProfile;
+        this.createdOn = createdOn;
+        this.userAccount = userAccount;
+    }
+
+    public FinanceGoal(int id, String title, String state, String currency, String description, BigDecimal amount,
+                       BigDecimal targetAmount, LocalDateTime deadline, String riskProfile,
+                       LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
         this.id = id;
         this.title = title;
         this.state = state;
