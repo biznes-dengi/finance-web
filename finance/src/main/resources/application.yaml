@@ -6,3 +6,6 @@ spring:
       hibernate:
         generate_statistics: true
 
+server:
+  error:
+    include-message: always
