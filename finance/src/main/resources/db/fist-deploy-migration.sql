@@ -18,7 +18,7 @@ CREATE TABLE finance_goal (
     id_goal SERIAL PRIMARY KEY,
     title VARCHAR(25) NOT NULL,
     state VARCHAR(15) NOT NULL,
-    currency VARCHAR(3) NOT NULL,
+    currencyCode VARCHAR(3) NOT NULL,
     description VARCHAR(100),
     amount NUMERIC(38,2) NOT NULL,
     target_amount NUMERIC(38,2) NOT NULL,
