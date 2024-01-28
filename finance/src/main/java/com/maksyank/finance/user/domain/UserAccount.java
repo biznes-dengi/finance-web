@@ -17,6 +17,7 @@ public class UserAccount extends BaseUser {
     @Column(name = "id_user_account")
     private int id;
 
+    // must be enum
     @Column(name = "role")
     private String role;
 
@@ -26,14 +27,21 @@ public class UserAccount extends BaseUser {
     @Column(name = "pass")
     private String password;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
+
+    // must be enum
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "date_of_birth")
+    private LocalDateTime dateOfBirth;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "created_on")
     private LocalDateTime createdOn;
