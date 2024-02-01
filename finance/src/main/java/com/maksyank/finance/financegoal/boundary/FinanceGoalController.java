@@ -1,6 +1,5 @@
 package com.maksyank.finance.financegoal.boundary;
 
-import com.maksyank.finance.financegoal.boundary.base.BaseController;
 import com.maksyank.finance.financegoal.domain.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.domain.request.FinGoalUpdateRequest;
 import com.maksyank.finance.financegoal.domain.response.FinGoalResponse;
@@ -25,8 +24,8 @@ import java.util.List;
 // TO DO refactor user error handling
 // TO DO check user isn't necessary because you can just get that user and will see if it exists
 @RestController
-@RequestMapping("financeGoal")
-public class FinanceGoalController extends BaseController {
+@RequestMapping("/financeGoal")
+public class FinanceGoalController {
     private FinanceGoalProcess financeGoalProcess;
     private UserAccountService userAccountService;
 
