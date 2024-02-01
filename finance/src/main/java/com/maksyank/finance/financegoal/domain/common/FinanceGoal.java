@@ -27,8 +27,8 @@ public class FinanceGoal {
     private String state;
 
     // must be enum
-    @Column(name = "currency")
-    private String currency;
+    @Column(name = "currency_code")
+    private String currencyCode;
 
     @Column(name = "description")
     private String description;
@@ -59,12 +59,12 @@ public class FinanceGoal {
     @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
 
-    public FinanceGoal(String title, String state, String currency, String description, BigDecimal amount,
+    public FinanceGoal(String title, String state, String currencyCode, String description, BigDecimal amount,
                        BigDecimal targetAmount, LocalDateTime deadline, String riskProfile,
                        LocalDateTime createdOn, UserAccount userAccount) {
         this.title = title;
         this.state = state;
-        this.currency = currency;
+        this.currencyCode = currencyCode;
         this.description = description;
         this.amount = amount;
         this.targetAmount = targetAmount;
@@ -74,13 +74,13 @@ public class FinanceGoal {
         this.userAccount = userAccount;
     }
 
-    public FinanceGoal(int id, String title, String state, String currency, String description, BigDecimal amount,
+    public FinanceGoal(int id, String title, String state, String currencyCode, String description, BigDecimal amount,
                        BigDecimal targetAmount, LocalDateTime deadline, String riskProfile,
                        LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
         this.id = id;
         this.title = title;
         this.state = state;
-        this.currency = currency;
+        this.currencyCode = currencyCode;
         this.description = description;
         this.amount = amount;
         this.targetAmount = targetAmount;
