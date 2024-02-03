@@ -18,6 +18,7 @@ import java.util.List;
 
 // TODO maybe refactor checkIfExists finGoal, probably move to service, think about it
 // TODO A check user isn't necessary because you can just get that user and will see if it exists
+// TODO validation if need
 @RestController
 @RequestMapping("/financeGoal/{finGoalId}/deposit")
 public class DepositController {
@@ -50,7 +51,8 @@ public class DepositController {
     public ResponseEntity save(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestBody DepositSaveRequest depositToSave,
-            @RequestParam("userId") int userId) {
+            @RequestParam("userId") int userId
+    ) {
         this.checkIfUserExists(userId);
         try {
             this.depositProcess.processSave(depositToSave, financeGoalId, userId);
@@ -60,6 +62,31 @@ public class DepositController {
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }
+    }
+
+    @GetMapping("/{depositId}")
+    public ResponseEntity<DepositResponse> getById(
+            @PathVariable("finGoalId") int financeGoalId,
+            @PathVariable("depositId") int depositId,
+            @RequestParam("userId") int userId
+    ) {
+        this.checkIfUserExists(userId);
+        try {
+            final var response = this.depositProcess.processGetById(depositId, financeGoalId, userId);
+            return ResponseEntity.ok(response);
+        } catch (NotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
+        }
+    }
+
+    @PatchMapping("/{depositId}")
+    public void updateDescription(
+            @PathVariable("finGoalId") int financeGoalId,
+            @PathVariable("depositId") int depositId,
+            @RequestParam("userId") int userId,
+            @RequestParam("description") String description
+    ) {
+        this.checkIfUserExists(userId);
     }
 
     // TODO move the check of fin goal to service
@@ -74,38 +101,6 @@ public class DepositController {
 
         // final var response = this.depositService.calculateAmountByThisMonth(financeGoalId, userId);
         return null;
-    }
-
-    @GetMapping("/{depositId}")
-    public ResponseEntity<DepositResponse> getById(
-            @PathVariable("finGoalId") int financeGoalId,
-            @PathVariable("depositId") int depositId,
-            @RequestParam("userId") int userId
-    ) {
-        if (!this.userAccountService.checkIfExists(userId)) {
-            // not found user
-        }
-
-        // final var response = depositService.findById(depositId, financeGoalId, userId);
-        return null;
-    }
-
-    @PatchMapping("/{depositId}")
-    public void updateDescription(
-            @PathVariable("finGoalId") int financeGoalId,
-            @PathVariable("depositId") int depositId,
-            @RequestParam("userId") int userId,
-            @RequestParam("description") String description
-    ) {
-        if (!this.userAccountService.checkIfExists(userId)) {
-            // not found user
-        }
-
-//        if (!this.financeGoalService.checkIfExists(financeGoalId, userId)) {
-//            // not found financeGoal
-//        }
-
-
     }
 
     private void checkIfUserExists(int userId) {

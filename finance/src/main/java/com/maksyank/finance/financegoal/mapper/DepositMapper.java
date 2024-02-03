@@ -12,8 +12,7 @@ import java.util.List;
 public class DepositMapper {
 
     public static DepositResponse entityToResponse(Deposit source) {
-        return new DepositResponse(source.getId(), source.getType(), source.getDescription(),
-                source.getFundingDate(), source.getAmount());
+        return new DepositResponse(source.getId(), source.getType(), source.getDescription(), source.getFundingDate(), source.getAmount());
     }
 
     public static DepositViewResponse entityToViewResponse(Deposit source) {
