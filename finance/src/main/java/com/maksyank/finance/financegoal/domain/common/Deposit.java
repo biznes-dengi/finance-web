@@ -32,4 +32,12 @@ public class Deposit {
     @ManyToOne
     @JoinColumn(name = "id_goal")
     private FinanceGoal financeGoal;
+
+    public Deposit(String type, String description, LocalDateTime fundingDate, BigDecimal amount, FinanceGoal financeGoal) {
+        this.type = type;
+        this.description = description;
+        this.fundingDate = fundingDate;
+        this.amount = amount;
+        this.financeGoal = financeGoal;
+    }
 }

@@ -1,6 +1,7 @@
 package com.maksyank.finance.financegoal.service.repoimpl;
 
 import com.maksyank.finance.financegoal.domain.common.Deposit;
+import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.repository.DepositRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,15 @@ public class DepositRepoImpl {
                     "'financeGoalId' = " + financeGoalId + ", and by 'pageNumber' = " + pageNumber);
         }
         return response.getContent();
+    }
+
+    // TODO refactor handling type
+    public boolean save(Deposit preparedDeposit) throws DbOperationException {
+        try {
+            this.depositRepository.save(preparedDeposit);
+            return true;
+        } catch (Exception ex) {
+            throw new DbOperationException(ex.getMessage(), ex);
+        }
     }
 }

@@ -1,9 +1,10 @@
 package com.maksyank.finance.financegoal.boundary;
 
+import com.maksyank.finance.financegoal.domain.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.domain.response.DepositResponse;
 import com.maksyank.finance.financegoal.domain.response.DepositViewResponse;
+import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.service.DepositService;
 import com.maksyank.finance.financegoal.service.process.DepositProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.util.List;
 
-// TO DO maybe refactor checkIfExists finGoal, probably move to service, think about it
+// TODO maybe refactor checkIfExists finGoal, probably move to service, think about it
+// TODO A check user isn't necessary because you can just get that user and will see if it exists
 @RestController
 @RequestMapping("/financeGoal/{finGoalId}/deposit")
 public class DepositController {
@@ -35,7 +37,6 @@ public class DepositController {
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
-
         try {
             final var response = this.depositProcess.processGetByPage(financeGoalId, pageNumber, userId);
             return ResponseEntity.ok(response);
@@ -44,7 +45,24 @@ public class DepositController {
         }
     }
 
-    // TO DO move the check of fin goal to service
+    // TODO A realization of amount field. When a deposit comes then calculate amount of finance goal
+    @PostMapping
+    public ResponseEntity save(
+            @PathVariable("finGoalId") int financeGoalId,
+            @RequestBody DepositSaveRequest depositToSave,
+            @RequestParam("userId") int userId) {
+        this.checkIfUserExists(userId);
+        try {
+            this.depositProcess.processSave(depositToSave, financeGoalId, userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
+        } catch (DbOperationException ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        }
+    }
+
+    // TODO move the check of fin goal to service
     @GetMapping
     public ResponseEntity<BigDecimal> getAmountByThisMonth(
             @PathVariable("finGoalId") int financeGoalId,
@@ -88,14 +106,6 @@ public class DepositController {
 //        }
 
 
-    }
-
-    @PostMapping
-    public void save(@RequestParam("userId") int userId) {
-        if (this.userAccountService.checkIfExists(userId)) {
-
-        }
-        // not found user
     }
 
     private void checkIfUserExists(int userId) {

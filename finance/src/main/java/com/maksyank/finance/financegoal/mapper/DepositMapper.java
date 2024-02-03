@@ -1,6 +1,8 @@
 package com.maksyank.finance.financegoal.mapper;
 
 import com.maksyank.finance.financegoal.domain.common.Deposit;
+import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.domain.response.DepositResponse;
 import com.maksyank.finance.financegoal.domain.response.DepositViewResponse;
 
@@ -18,7 +20,11 @@ public class DepositMapper {
         return new DepositViewResponse(source.getId(), source.getType(), source.getFundingDate(), source.getAmount());
     }
 
-    public static List<DepositViewResponse> entityToViewResponse(Collection<Deposit> deposits) {
-        return deposits.stream().map(DepositMapper::entityToViewResponse).toList();
+    public static List<DepositViewResponse> entityToViewResponse(Collection<Deposit> source) {
+        return source.stream().map(DepositMapper::entityToViewResponse).toList();
+    }
+
+    public static Deposit requestToEntitySave(DepositSaveRequest source, FinanceGoal financeGoal) {
+        return new Deposit(source.type(), source.description(), source.fundingDate(), source.amount(), financeGoal);
     }
 }

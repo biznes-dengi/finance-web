@@ -1,6 +1,8 @@
 package com.maksyank.finance.financegoal.service.process;
 
+import com.maksyank.finance.financegoal.domain.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.domain.response.DepositViewResponse;
+import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.DepositMapper;
 import com.maksyank.finance.financegoal.service.repoimpl.DepositRepoImpl;
@@ -29,5 +31,11 @@ public class DepositProcess {
 
         final var foundDeposits = this.depositRepoImpl.findAllByFinanceGoalIdPageable(financeGoalId, pageNumber);
         return DepositMapper.entityToViewResponse(foundDeposits);
+    }
+
+    public boolean processSave(DepositSaveRequest depositRequest, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
+        final var financeGoal = this.financeGoalRepoImpl.findByIdAndUserId(financeGoalId, userId);
+        final var depositToSave = DepositMapper.requestToEntitySave(depositRequest, financeGoal);
+        return this.depositRepoImpl.save(depositToSave);
     }
 }
