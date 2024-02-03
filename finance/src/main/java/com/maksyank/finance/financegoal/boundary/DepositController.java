@@ -39,8 +39,8 @@ public class DepositController {
         try {
             final var response = this.depositProcess.processGetByPage(financeGoalId, pageNumber, userId);
             return ResponseEntity.ok(response);
-        } catch (NotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (NotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
     }
 
