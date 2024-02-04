@@ -1,5 +1,6 @@
 package com.maksyank.finance.financegoal.boundary;
 
+import com.maksyank.finance.financegoal.domain.request.DepositDescriptionRequest;
 import com.maksyank.finance.financegoal.domain.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.domain.response.DepositResponse;
 import com.maksyank.finance.financegoal.domain.response.DepositViewResponse;
@@ -32,15 +33,14 @@ public class DepositController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DepositViewResponse>> getByPage(
+    public List<DepositViewResponse> getByPage(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestParam("pageNumber") int pageNumber,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            final var response = this.depositProcess.processGetByPage(financeGoalId, pageNumber, userId);
-            return ResponseEntity.ok(response);
+            return this.depositProcess.processGetByPage(financeGoalId, pageNumber, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
@@ -56,7 +56,7 @@ public class DepositController {
         this.checkIfUserExists(userId);
         try {
             this.depositProcess.processSave(depositToSave, financeGoalId, userId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {
@@ -65,28 +65,36 @@ public class DepositController {
     }
 
     @GetMapping("/{depositId}")
-    public ResponseEntity<DepositResponse> getById(
+    public DepositResponse getById(
             @PathVariable("finGoalId") int financeGoalId,
             @PathVariable("depositId") int depositId,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            final var response = this.depositProcess.processGetById(depositId, financeGoalId, userId);
-            return ResponseEntity.ok(response);
+            return this.depositProcess.processGetById(depositId, financeGoalId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
     }
 
+    // TODO add validation to description
     @PatchMapping("/{depositId}")
-    public void updateDescription(
+    public ResponseEntity updateDescription(
             @PathVariable("finGoalId") int financeGoalId,
             @PathVariable("depositId") int depositId,
             @RequestParam("userId") int userId,
-            @RequestParam("description") String description
+            @RequestBody DepositDescriptionRequest descriptionToUpdateRequest
     ) {
         this.checkIfUserExists(userId);
+        try {
+            this.depositProcess.processUpdateDescription(depositId, financeGoalId, descriptionToUpdateRequest, userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
+        } catch (DbOperationException ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        }
     }
 
     // TODO move the check of fin goal to service

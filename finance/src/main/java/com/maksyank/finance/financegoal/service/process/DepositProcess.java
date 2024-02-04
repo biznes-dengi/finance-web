@@ -1,5 +1,8 @@
 package com.maksyank.finance.financegoal.service.process;
 
+import com.maksyank.finance.financegoal.domain.common.Deposit;
+import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.request.DepositDescriptionRequest;
 import com.maksyank.finance.financegoal.domain.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.domain.response.DepositResponse;
 import com.maksyank.finance.financegoal.domain.response.DepositViewResponse;
@@ -42,10 +45,21 @@ public class DepositProcess {
 
     public DepositResponse processGetById(int depositId, int financeGoalId, int userId) throws NotFoundException {
         final var financeGoal = this.financeGoalRepoImpl.findByIdAndUserId(financeGoalId, userId);
-        final var foundDeposit = financeGoal.getDeposits().stream()
+        final var foundDeposit = this.findDeposit(financeGoal, depositId);
+        return DepositMapper.entityToResponse(foundDeposit);
+    }
+
+    public boolean processUpdateDescription(int depositId, int financeGoalId, DepositDescriptionRequest descriptionRequest, int userId) throws NotFoundException, DbOperationException {
+        final var financeGoal = this.financeGoalRepoImpl.findByIdAndUserId(financeGoalId, userId);
+        final var depositToUpdate = this.findDeposit(financeGoal, depositId);
+        depositToUpdate.setDescription(descriptionRequest.description());
+        return this.depositRepoImpl.save(depositToUpdate);
+    }
+
+    private Deposit findDeposit(FinanceGoal source, int depositId) throws NotFoundException {
+        return source.getDeposits().stream()
                 .filter(deposit -> deposit.getId() == depositId)
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Entity 'Deposit' not found by attribute 'id' = " + depositId));
-        return DepositMapper.entityToResponse(foundDeposit);
     }
 }
