@@ -16,13 +16,14 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-// TO DO remove bullshit impl as getting all time users (will fix when will realize security model)
-// TO DO delete end-point must have id user maybe (check when realize security)
-// TO DO for update & save will be better use not check  just get\find
-// TO DO think about toSave \ toUpdate (refactor) (naming)
-// TO DO refactor error handling
-// TO DO refactor user error handling
-// TO DO check user isn't necessary because you can just get that user and will see if it exists
+// TODO remove bullshit impl as getting all time users (will fix when will realize security model)
+// TODO delete end-point must have id user maybe (check when realize security)
+// TODO for update & save will be better use not check  just get\find
+// TODO think about toSave \ toUpdate (refactor) (naming)
+// TODO refactor error handling
+// TODO refactor user error handling
+// TODO A check user isn't necessary because you can just get that user and will see if it exists
+// TODO validation if need
 @RestController
 @RequestMapping("/financeGoal")
 public class FinanceGoalController {
@@ -37,14 +38,13 @@ public class FinanceGoalController {
 
     // TO DO status must be enum
     @GetMapping()
-    public ResponseEntity<List<FinGoalViewResponse>> getByState(
+    public List<FinGoalViewResponse> getByState(
             @RequestParam("state") String state,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            final var response = financeGoalProcess.processGetByState(state, userId);
-            return ResponseEntity.ok(response);
+            return this.financeGoalProcess.processGetByState(state, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
@@ -54,23 +54,22 @@ public class FinanceGoalController {
     public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinGoalSaveRequest toSave) {
         this.checkIfUserExists(userId);
         try {
-            final var user = userAccountService.getById(userId);
+            final var user = this.userAccountService.getById(userId);
             this.financeGoalProcess.processSave(toSave, user);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }
     }
 
     @GetMapping("/{finGoalId}")
-    public ResponseEntity<FinGoalResponse> getById(
+    public FinGoalResponse getById(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            final var response = this.financeGoalProcess.processGetById(financeGoalId, userId);
-            return ResponseEntity.ok(response);
+            return this.financeGoalProcess.processGetById(financeGoalId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
@@ -97,7 +96,6 @@ public class FinanceGoalController {
     @DeleteMapping("/{finGoalId}")
     public ResponseEntity delete(@PathVariable("finGoalId") int financeGoalId, @RequestParam("userId") int userId) {
         this.checkIfUserExists(userId);
-
         try {
             this.financeGoalProcess.processDelete(financeGoalId);
             return new ResponseEntity<>(HttpStatus.OK);
