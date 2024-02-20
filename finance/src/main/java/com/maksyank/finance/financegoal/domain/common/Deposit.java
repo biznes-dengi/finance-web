@@ -30,7 +30,7 @@ public class Deposit {
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "id_goal")
+    @JoinColumn(name = "id_finance_goal")
     private FinanceGoal financeGoal;
 
     public Deposit(String type, String description, LocalDateTime fundingDate, BigDecimal amount, FinanceGoal financeGoal) {
@@ -39,5 +39,12 @@ public class Deposit {
         this.fundingDate = fundingDate;
         this.amount = amount;
         this.financeGoal = financeGoal;
+    }
+
+    @Override
+    public String toString() {
+        return "Deposit(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
+                this.getDescription() + ", fundingDate=" + this.getFundingDate() + ", amount=" +
+                this.getAmount() + ", financeGoalId=" + this.getFinanceGoal().getId() + ")";
     }
 }

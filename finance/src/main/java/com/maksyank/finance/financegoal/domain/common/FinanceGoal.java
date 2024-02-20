@@ -90,4 +90,14 @@ public class FinanceGoal {
         this.lastChange = lastChange;
         this.userAccount = userAccount;
     }
+
+    @Override
+    public String toString() {
+        return "FinanceGoal(id=" + this.getId() + ", title=" + this.getTitle() +
+                ", state=" + this.getState() + ", currencyCode=" + this.getCurrencyCode() +
+                ", description=" + this.getDescription() + ", amount=" + this.getAmount() +
+                ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
+                ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
+                ", lastChange=" + this.getLastChange() + ", userAccountId=" + this.getUserAccount().getId() + ")";
+    }
 }

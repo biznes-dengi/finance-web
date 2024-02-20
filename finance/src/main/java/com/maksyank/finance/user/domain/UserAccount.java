@@ -51,4 +51,14 @@ public class UserAccount extends BaseUser {
 
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY)
     private Collection<FinanceGoal> financeGoals;
+
+    @Override
+    public String toString() {
+        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole() +
+                ", email=" + this.getEmail() + ", password=" + this.getPassword() +
+                ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() +
+                ", gender=" + this.getGender() + ", dateOfBirth=" + this.getDateOfBirth() +
+                ", phoneNumber=" + this.getPhoneNumber() + ", createdOn=" + this.getCreatedOn() +
+                ", lastLogin=" + this.getLastLogin() + ")";
+    }
 }
