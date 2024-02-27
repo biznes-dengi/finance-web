@@ -25,8 +25,8 @@ public class FundProcess {
     public BigDecimal processGetFundAmountByMonth(int financeGoalId, int year, int month, int userId) throws NotFoundException {
         final var financeGoal = this.financeGoalRepoImpl.findByIdAndUserId(financeGoalId, userId);
 
-        final var startMonth = LocalDateTime.of(year, month, YearMonth.of(year, month).lengthOfMonth(), 23, 59, 59);
-        final var endMonth = LocalDateTime.of(year, month, 1, 0, 0, 0);
+        final var startMonth = LocalDateTime.of(year, month, 1, 0, 0, 0);
+        final var endMonth = LocalDateTime.of(year, month, YearMonth.of(year, month).lengthOfMonth(), 23, 59, 59);
 
         final var foundDepositsByMonth = this.findFundDepositsByMonth(financeGoal, startMonth, endMonth);
         if (foundDepositsByMonth.size() == 0) {
@@ -35,13 +35,13 @@ public class FundProcess {
         return this.computeSumAmount(foundDepositsByMonth);
     }
 
-    // TODO critical point. For big data troubles with time of response
+    // TODO critical point. For big data troubles with time of response (maybe move logic to SQL query)
     // TODO change filter fund to enum
     // TODO maybe split logic into methods by filters. It relates from if there's a need for it
-    private List<Deposit> findFundDepositsByMonth(FinanceGoal source, LocalDateTime beginMonth, LocalDateTime endMonth) {
+    private List<Deposit> findFundDepositsByMonth(FinanceGoal source, LocalDateTime startMonth, LocalDateTime endMonth) {
         return source.getDeposits().stream()
-                .filter(finGoal -> finGoal.getFundingDate().isAfter(beginMonth) && finGoal.getFundingDate().isBefore(endMonth))
-                .filter(figGoal -> Objects.equals(figGoal.getType(), "fund"))
+                .filter(deposit -> Objects.equals(deposit.getType(), "fund"))
+                .filter(deposit -> deposit.getFundingDate().isAfter(startMonth) && deposit.getFundingDate().isBefore(endMonth))
                 .toList();
     }
 
