@@ -47,7 +47,7 @@ public class FinanceGoalMapper {
     public static FinanceGoal map(FinGoalUpdateRequest source, FinanceGoal destination) {
         destination.setTitle(source.title());
         destination.setState(source.state());
-        destination.setCurrencyCode(source.currency());
+        destination.setCurrency(source.currency());
         destination.setDescription(source.description());
         destination.setAmount(source.amount());
         destination.setTargetAmount(source.targetAmount());

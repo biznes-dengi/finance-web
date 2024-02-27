@@ -1,5 +1,6 @@
 package com.maksyank.finance.financegoal.domain.common;
 
+import com.maksyank.finance.financegoal.domain.common.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class Deposit {
     private int id;
 
     @Column(name = "deposit_type")
-    private String type;
+    private TransactionType type;
 
     @Column(name = "description")
     private String description;
@@ -33,7 +34,7 @@ public class Deposit {
     @JoinColumn(name = "id_finance_goal")
     private FinanceGoal financeGoal;
 
-    public Deposit(String type, String description, LocalDateTime fundingDate, BigDecimal amount, FinanceGoal financeGoal) {
+    public Deposit(TransactionType type, String description, LocalDateTime fundingDate, BigDecimal amount, FinanceGoal financeGoal) {
         this.type = type;
         this.description = description;
         this.fundingDate = fundingDate;
@@ -43,7 +44,7 @@ public class Deposit {
 
     @Override
     public String toString() {
-        return "Deposit(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
+        return "Deposit(id=" + this.getId() + ", type=" + this.getType().type + ", description=" +
                 this.getDescription() + ", fundingDate=" + this.getFundingDate() + ", amount=" +
                 this.getAmount() + ", financeGoalId=" + this.getFinanceGoal().getId() + ")";
     }

@@ -2,6 +2,8 @@ package com.maksyank.finance.user.domain;
 
 import com.maksyank.finance.financegoal.domain.base.BaseUser;
 import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.common.enums.AppRole;
+import com.maksyank.finance.financegoal.domain.common.enums.UserGender;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,9 +19,8 @@ public class UserAccount extends BaseUser {
     @Column(name = "id_user_account")
     private int id;
 
-    // must be enum
     @Column(name = "role")
-    private String role;
+    private AppRole role;
 
     @Column(name = "email")
     private String email;
@@ -33,9 +34,8 @@ public class UserAccount extends BaseUser {
     @Column(name = "last_name")
     private String lastName;
 
-    // must be enum
     @Column(name = "gender")
-    private String gender;
+    private UserGender gender;
 
     @Column(name = "date_of_birth")
     private LocalDateTime dateOfBirth;
@@ -54,10 +54,10 @@ public class UserAccount extends BaseUser {
 
     @Override
     public String toString() {
-        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole() +
+        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole().role +
                 ", email=" + this.getEmail() + ", password=" + this.getPassword() +
                 ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() +
-                ", gender=" + this.getGender() + ", dateOfBirth=" + this.getDateOfBirth() +
+                ", gender=" + this.getGender().gender + ", dateOfBirth=" + this.getDateOfBirth() +
                 ", phoneNumber=" + this.getPhoneNumber() + ", createdOn=" + this.getCreatedOn() +
                 ", lastLogin=" + this.getLastLogin() + ")";
     }
