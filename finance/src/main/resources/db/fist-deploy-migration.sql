@@ -1,13 +1,20 @@
 CREATE DATABASE finance;
 
+CREATE TYPE fin_goal_state AS ENUM ('ACTIVE', 'ACHIEVED');
+CREATE TYPE currency_code AS ENUM ('EUR', 'USD', 'PLN', 'BYN', 'RUB');
+CREATE TYPE app_role AS ENUM ('admin', 'user');
+CREATE TYPE user_gender AS ENUM ('male', 'female');
+CREATE TYPE risk_profile_type AS ENUM ('conservative', 'moderate', 'aggressive');
+CREATE TYPE transaction_type AS ENUM ('FUND', 'WITHDRAW');
+
 CREATE TABLE user_account (
     id_user_account SERIAL PRIMARY KEY,
-    role VARCHAR(10) NOT NULL,
+    role app_role NOT NULL,
     email VARCHAR(100) NOT NULL,
     pass VARCHAR(16) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    gender VARCHAR(30) NOT NULL,
+    gender user_gender NOT NULL,
     date_of_birth TIMESTAMP NOT NULL,
     phone_number VARCHAR(16) NOT NULL,
     created_on TIMESTAMP NOT NULL,
@@ -17,13 +24,13 @@ CREATE TABLE user_account (
 CREATE TABLE finance_goal (
     id_goal SERIAL PRIMARY KEY,
     title VARCHAR(25) NOT NULL,
-    state VARCHAR(15) NOT NULL,
-    currency_code VARCHAR(3) NOT NULL,
+    state fin_goal_state NOT NULL,
+    currency currency_code NOT NULL,
     description VARCHAR(100),
     amount NUMERIC(38,2) NOT NULL,
     target_amount NUMERIC(38,2) NOT NULL,
-    deadline TIMESTAMP NOT NULL,
-    risk_profile VARCHAR(15),
+    deadline TIMESTAMP,
+    risk_profile risk_profile_type,
     created_on TIMESTAMP NOT NULL,
     last_change TIMESTAMP,
     id_user_account INT,
@@ -32,7 +39,7 @@ CREATE TABLE finance_goal (
 
 CREATE TABLE deposit (
     id_deposit SERIAL PRIMARY KEY,
-    deposit_type VARCHAR(8) NOT NULL,
+    deposit_type transaction_type NOT NULL,
     description VARCHAR(100),
     funding_date TIMESTAMP NOT NULL,
     amount NUMERIC(38,2) NOT NULL,
