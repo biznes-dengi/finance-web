@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/financeGoal/{finGoalId}/deposit/fund")
-public class FundController {
+public class DepositFundController {
     private UserAccountService userAccountService;
     private FundProcess fundProcess;
 
-    FundController(FundProcess fundProcess, UserAccountService userAccountService) {
+    DepositFundController(FundProcess fundProcess, UserAccountService userAccountService) {
         this.fundProcess = fundProcess;
         this.userAccountService = userAccountService;
     }
