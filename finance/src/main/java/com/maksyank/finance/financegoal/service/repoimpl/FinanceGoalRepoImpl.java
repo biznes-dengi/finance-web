@@ -1,6 +1,6 @@
 package com.maksyank.finance.financegoal.service.repoimpl;
 
-import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.repository.FinanceGoalRepository;

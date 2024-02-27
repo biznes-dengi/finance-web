@@ -1,6 +1,6 @@
-package com.maksyank.finance.financegoal.domain.common;
+package com.maksyank.finance.financegoal.domain;
 
-import com.maksyank.finance.financegoal.domain.common.enums.TransactionType;
+import com.maksyank.finance.financegoal.domain.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

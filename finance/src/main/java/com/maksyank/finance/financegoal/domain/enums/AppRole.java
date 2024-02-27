@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.domain.common.enums;
+package com.maksyank.finance.financegoal.domain.enums;
 
 public enum AppRole {
     ADMIN("admin"), USER("user");

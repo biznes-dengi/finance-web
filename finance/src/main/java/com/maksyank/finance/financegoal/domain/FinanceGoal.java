@@ -1,8 +1,8 @@
-package com.maksyank.finance.financegoal.domain.common;
+package com.maksyank.finance.financegoal.domain;
 
-import com.maksyank.finance.financegoal.domain.common.enums.CurrencyCode;
-import com.maksyank.finance.financegoal.domain.common.enums.FinanceGoalState;
-import com.maksyank.finance.financegoal.domain.common.enums.RiskProfileType;
+import com.maksyank.finance.financegoal.domain.enums.CurrencyCode;
+import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
+import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
 import com.maksyank.finance.user.domain.UserAccount;
 import jakarta.persistence.*;
 import lombok.Data;

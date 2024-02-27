@@ -1,9 +1,9 @@
 package com.maksyank.finance.user.domain;
 
-import com.maksyank.finance.financegoal.domain.base.BaseUser;
-import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
-import com.maksyank.finance.financegoal.domain.common.enums.AppRole;
-import com.maksyank.finance.financegoal.domain.common.enums.UserGender;
+import com.maksyank.finance.user.domain.base.BaseUser;
+import com.maksyank.finance.financegoal.domain.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.enums.AppRole;
+import com.maksyank.finance.financegoal.domain.enums.UserGender;
 import jakarta.persistence.*;
 import lombok.Data;
 

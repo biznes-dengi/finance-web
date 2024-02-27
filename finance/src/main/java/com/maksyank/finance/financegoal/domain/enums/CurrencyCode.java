@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.domain.common.enums;
+package com.maksyank.finance.financegoal.domain.enums;
 
 // TODO add naming to each currency
 public enum CurrencyCode {

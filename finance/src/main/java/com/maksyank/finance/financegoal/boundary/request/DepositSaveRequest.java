@@ -1,10 +1,9 @@
-package com.maksyank.finance.financegoal.domain.response;
+package com.maksyank.finance.financegoal.boundary.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record DepositResponse(
-        int id,
+public record DepositSaveRequest(
         String type,
         String description,
         LocalDateTime fundingDate,

@@ -1,17 +1,16 @@
-package com.maksyank.finance.financegoal.domain.request;
+package com.maksyank.finance.financegoal.boundary.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record FinGoalUpdateRequest(
+// TO DO enum: currency, riskProfile, state
+public record FinGoalSaveRequest(
         String title,
         String state,
         String currency,
-        BigDecimal amount,
         String description,
         BigDecimal targetAmount,
         LocalDateTime deadline,
         String riskProfile,
-        LocalDateTime createdOn,
-        LocalDateTime lastChange
+        LocalDateTime createdOn
 ) { }

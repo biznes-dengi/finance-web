@@ -1,6 +1,6 @@
 package com.maksyank.finance.financegoal.repository;
 
-import com.maksyank.finance.financegoal.domain.common.Deposit;
+import com.maksyank.finance.financegoal.domain.Deposit;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;

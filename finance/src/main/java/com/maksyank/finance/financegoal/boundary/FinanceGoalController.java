@@ -1,9 +1,9 @@
 package com.maksyank.finance.financegoal.boundary;
 
-import com.maksyank.finance.financegoal.domain.request.FinGoalSaveRequest;
-import com.maksyank.finance.financegoal.domain.request.FinGoalUpdateRequest;
-import com.maksyank.finance.financegoal.domain.response.FinGoalResponse;
-import com.maksyank.finance.financegoal.domain.response.FinGoalViewResponse;
+import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
+import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
+import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
+import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.service.process.FinanceGoalProcess;

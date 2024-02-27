@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.domain.response;
+package com.maksyank.finance.financegoal.boundary.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

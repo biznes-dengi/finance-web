@@ -1,7 +1,7 @@
 package com.maksyank.finance.financegoal.service.process;
 
-import com.maksyank.finance.financegoal.domain.common.Deposit;
-import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.Deposit;
+import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.service.repoimpl.FinanceGoalRepoImpl;
 import org.springframework.beans.factory.annotation.Autowired;

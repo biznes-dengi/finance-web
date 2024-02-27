@@ -1,10 +1,10 @@
 package com.maksyank.finance.financegoal.mapper;
 
-import com.maksyank.finance.financegoal.domain.common.Deposit;
-import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
-import com.maksyank.finance.financegoal.domain.request.DepositSaveRequest;
-import com.maksyank.finance.financegoal.domain.response.DepositResponse;
-import com.maksyank.finance.financegoal.domain.response.DepositViewResponse;
+import com.maksyank.finance.financegoal.domain.Deposit;
+import com.maksyank.finance.financegoal.domain.FinanceGoal;
+import com.maksyank.finance.financegoal.boundary.request.DepositSaveRequest;
+import com.maksyank.finance.financegoal.boundary.response.DepositResponse;
+import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
 
 import java.util.Collection;
 import java.util.List;

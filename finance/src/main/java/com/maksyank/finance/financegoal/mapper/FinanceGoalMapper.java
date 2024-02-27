@@ -1,10 +1,10 @@
 package com.maksyank.finance.financegoal.mapper;
 
-import com.maksyank.finance.financegoal.domain.common.FinanceGoal;
-import com.maksyank.finance.financegoal.domain.request.FinGoalSaveRequest;
-import com.maksyank.finance.financegoal.domain.request.FinGoalUpdateRequest;
-import com.maksyank.finance.financegoal.domain.response.FinGoalResponse;
-import com.maksyank.finance.financegoal.domain.response.FinGoalViewResponse;
+import com.maksyank.finance.financegoal.domain.FinanceGoal;
+import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
+import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
+import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
+import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.user.domain.UserAccount;
 
 import java.math.BigDecimal;
