@@ -14,7 +14,11 @@ import com.maksyank.finance.financegoal.service.repoimpl.FinanceGoalRepoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DepositProcess {
@@ -56,6 +60,7 @@ public class DepositProcess {
         return this.depositRepoImpl.save(depositToUpdate);
     }
 
+    // TODO critical point. For big data troubles with time of response
     private Deposit findDeposit(FinanceGoal source, int depositId) throws NotFoundException {
         return source.getDeposits().stream()
                 .filter(deposit -> deposit.getId() == depositId)

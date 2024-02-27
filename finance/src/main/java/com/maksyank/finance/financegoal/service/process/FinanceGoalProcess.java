@@ -50,8 +50,4 @@ public class FinanceGoalProcess {
     public boolean processDelete(int id) throws DbOperationException {
         return this.financeGoalRepoImpl.deleteById(id);
     }
-
-    public boolean checkIfExists(int financeGoalId, int userId) {
-        return this.financeGoalRepoImpl.ifExistsByIdAndUserId(financeGoalId, userId);
-    }
 }

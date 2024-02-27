@@ -26,7 +26,7 @@ public class FinanceGoalMapper {
     }
 
     public static List<FinGoalViewResponse> sourceToViewResponse(Collection<FinanceGoal> finGoals) {
-        return finGoals.stream().map(FinanceGoalMapper::sourceToViewResponse).collect(Collectors.toList());
+        return finGoals.stream().map(FinanceGoalMapper::sourceToViewResponse).toList();
     }
 
     public static FinGoalViewResponse sourceToViewResponse(FinanceGoal finGoal) {
@@ -47,7 +47,7 @@ public class FinanceGoalMapper {
     public static FinanceGoal map(FinGoalUpdateRequest source, FinanceGoal destination) {
         destination.setTitle(source.title());
         destination.setState(source.state());
-        destination.setCurrency(source.currency());
+        destination.setCurrencyCode(source.currency());
         destination.setDescription(source.description());
         destination.setAmount(source.amount());
         destination.setTargetAmount(source.targetAmount());

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 // TODO maybe refactor checkIfExists finGoal, probably move to service, think about it
@@ -95,20 +94,6 @@ public class DepositController {
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }
-    }
-
-    // TODO move the check of fin goal to service
-    @GetMapping
-    public ResponseEntity<BigDecimal> getAmountByThisMonth(
-            @PathVariable("finGoalId") int financeGoalId,
-            @RequestParam("userId") int userId
-    ) {
-        if (!this.userAccountService.checkIfExists(userId)) {
-            // not found user
-        }
-
-        // final var response = this.depositService.calculateAmountByThisMonth(financeGoalId, userId);
-        return null;
     }
 
     private void checkIfUserExists(int userId) {
