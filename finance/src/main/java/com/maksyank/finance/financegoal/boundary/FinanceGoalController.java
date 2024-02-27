@@ -4,6 +4,7 @@ import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
+import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.service.process.FinanceGoalProcess;
@@ -36,10 +37,9 @@ public class FinanceGoalController {
         this.userAccountService = userAccountService;
     }
 
-    // TO DO status must be enum
     @GetMapping()
     public List<FinGoalViewResponse> getByState(
-            @RequestParam("state") String state,
+            @RequestParam("state") FinanceGoalState state,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);

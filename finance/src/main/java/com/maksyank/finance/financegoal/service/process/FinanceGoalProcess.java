@@ -4,6 +4,7 @@ import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
+import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.FinanceGoalMapper;
@@ -29,7 +30,7 @@ public class FinanceGoalProcess {
         return FinanceGoalMapper.entityToResponse(foundFinanceGoal);
     }
 
-    public List<FinGoalViewResponse> processGetByState(String state, int userId) throws NotFoundException {
+    public List<FinGoalViewResponse> processGetByState(FinanceGoalState state, int userId) throws NotFoundException {
         final var foundFinanceGoals = this.financeGoalRepoImpl.findByStateAndUserId(state, userId);
         return FinanceGoalMapper.sourceToViewResponse(foundFinanceGoals);
     }

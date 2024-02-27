@@ -1,6 +1,7 @@
 package com.maksyank.finance.financegoal.service.repoimpl;
 
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.repository.FinanceGoalRepository;
@@ -24,11 +25,11 @@ public class FinanceGoalRepoImpl {
                 .orElseThrow(() -> new NotFoundException("Entity 'Finance Goal' not found by attribute 'id' = " + id));
     }
 
-    public Collection<FinanceGoal> findByStateAndUserId(String state, int userId) throws NotFoundException {
+    public Collection<FinanceGoal> findByStateAndUserId(FinanceGoalState state, int userId) throws NotFoundException {
         return this.financeGoalRepository
                 .findByStateAndUserAccount_Id(state, userId)
                 .orElseThrow(
-                        () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state)
+                        () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state.state)
                 );
     }
 

@@ -1,16 +1,20 @@
 package com.maksyank.finance.financegoal.boundary.request;
 
+import com.maksyank.finance.financegoal.domain.enums.CurrencyCode;
+import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
+import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-// TO DO enum: currency, riskProfile, state
+// TODO deadline must be optional
 public record FinGoalSaveRequest(
         String title,
-        String state,
-        String currency,
+        FinanceGoalState state,
+        CurrencyCode currency,
         String description,
         BigDecimal targetAmount,
         LocalDateTime deadline,
-        String riskProfile,
+        RiskProfileType riskProfile,
         LocalDateTime createdOn
 ) { }
