@@ -21,34 +21,24 @@ public class FinanceGoal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_goal")
     private int id;
-
     @Column(name = "title")
     private String title;
-
     @Column(name = "state")
     private FinanceGoalState state;
-
     @Column(name = "currency")
     private CurrencyCode currency;
-
     @Column(name = "description")
     private String description;
-
     @Column(name = "amount")
     private BigDecimal amount;
-
     @Column(name = "target_amount")
     private BigDecimal targetAmount;
-
     @Column(name = "deadline")
     private LocalDateTime deadline;
-
     @Column(name = "risk_profile")
     private RiskProfileType riskProfile;
-
     @Column(name = "created_on")
     private LocalDateTime createdOn;
-
     @Column(name = "last_change")
     private LocalDateTime lastChange;
 

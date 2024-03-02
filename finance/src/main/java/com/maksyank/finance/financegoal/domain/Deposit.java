@@ -17,16 +17,12 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_deposit")
     private int id;
-
     @Column(name = "deposit_type")
     private TransactionType type;
-
     @Column(name = "description")
     private String description;
-
     @Column(name = "funding_date")
     private LocalDateTime fundingDate;
-
     @Column(name = "amount")
     private BigDecimal amount;
 

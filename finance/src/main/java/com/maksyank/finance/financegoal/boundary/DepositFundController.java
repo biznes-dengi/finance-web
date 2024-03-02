@@ -1,7 +1,7 @@
 package com.maksyank.finance.financegoal.boundary;
 
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.service.process.FundProcess;
+import com.maksyank.finance.financegoal.service.process.DepositFundProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,10 @@ import java.math.BigDecimal;
 @RequestMapping("/financeGoal/{finGoalId}/deposit/fund")
 public class DepositFundController {
     private UserAccountService userAccountService;
-    private FundProcess fundProcess;
+    private DepositFundProcess depositFundProcess;
 
-    DepositFundController(FundProcess fundProcess, UserAccountService userAccountService) {
-        this.fundProcess = fundProcess;
+    DepositFundController(DepositFundProcess depositFundProcess, UserAccountService userAccountService) {
+        this.depositFundProcess = depositFundProcess;
         this.userAccountService = userAccountService;
     }
 
@@ -30,7 +30,7 @@ public class DepositFundController {
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.fundProcess.processGetFundAmountByMonth(financeGoalId, year, month, userId);
+            return this.depositFundProcess.processGetFundAmountByMonth(financeGoalId, year, month, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }

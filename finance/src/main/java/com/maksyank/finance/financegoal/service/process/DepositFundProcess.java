@@ -12,14 +12,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
-import java.util.Objects;
 
 @Service
-public class FundProcess {
+public class DepositFundProcess {
     private FinanceGoalRepoImpl financeGoalRepoImpl;
 
     @Autowired
-    FundProcess(FinanceGoalRepoImpl financeGoalRepoImpl) {
+    DepositFundProcess(FinanceGoalRepoImpl financeGoalRepoImpl) {
         this.financeGoalRepoImpl = financeGoalRepoImpl;
     }
 
