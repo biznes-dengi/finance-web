@@ -33,7 +33,7 @@ CREATE TABLE finance_goal (
     risk_profile risk_profile_type,
     created_on TIMESTAMP NOT NULL,
     last_change TIMESTAMP,
-    id_user_account INT,
+    id_user_account INT NOT NULL,
     FOREIGN KEY (id_user_account) REFERENCES user_account(id_user_account)
 );
 
@@ -43,6 +43,14 @@ CREATE TABLE deposit (
     description VARCHAR(100),
     funding_date TIMESTAMP NOT NULL,
     amount NUMERIC(38,2) NOT NULL,
-    id_finance_goal INT,
+    id_finance_goal INT NOT NULL,
+    FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal)
+);
+
+CREATE TABLE avatar_finance_goal (
+    id_image SERIAL PRIMARY KEY,
+    id_finance_goal INT NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    value bytea NOT NULL,
     FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal)
 );

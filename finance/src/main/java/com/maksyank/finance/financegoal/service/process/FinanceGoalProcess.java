@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TO DO add validation of all parameters of all methods
+// TODO add validation of all parameters of all methods
 @Service
 public class FinanceGoalProcess {
 
