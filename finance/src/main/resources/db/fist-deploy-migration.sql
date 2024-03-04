@@ -47,7 +47,7 @@ CREATE TABLE deposit (
     FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal)
 );
 
-CREATE TABLE avatar_finance_goal (
+CREATE TABLE finance_goal_image (
     id_image SERIAL PRIMARY KEY,
     id_finance_goal INT NOT NULL,
     type VARCHAR(20) NOT NULL,
