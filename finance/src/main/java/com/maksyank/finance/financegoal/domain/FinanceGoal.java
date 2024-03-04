@@ -37,7 +37,7 @@ public class FinanceGoal {
     private LocalDateTime deadline;
     @Column(name = "risk_profile")
     private RiskProfileType riskProfile;
-    @Column
+    @Embedded
     private FinanceGoalImage image;
     @Column(name = "created_on")
     private LocalDateTime createdOn;

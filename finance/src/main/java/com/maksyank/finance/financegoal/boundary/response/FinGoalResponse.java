@@ -14,5 +14,6 @@ public record FinGoalResponse(
         BigDecimal amount,
         BigDecimal targetAmount,
         LocalDateTime deadline,
-        RiskProfileType riskProfile
+        RiskProfileType riskProfile,
+        String image
 ) { }

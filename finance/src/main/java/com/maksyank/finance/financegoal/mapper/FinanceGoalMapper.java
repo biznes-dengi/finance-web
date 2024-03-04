@@ -5,6 +5,7 @@ import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
+import com.maksyank.finance.financegoal.domain.FinanceGoalImage;
 import com.maksyank.finance.user.domain.UserAccount;
 
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ public class FinanceGoalMapper {
     public static FinGoalResponse entityToResponse(FinanceGoal source) {
         return new FinGoalResponse(source.getId(), source.getTitle(), source.getState(),
                 source.getDescription(), source.getAmount(), source.getTargetAmount(),
-                source.getDeadline(), source.getRiskProfile()
+                source.getDeadline(), source.getRiskProfile(), source.getImage().getValue()
         );
     }
 
@@ -29,9 +30,9 @@ public class FinanceGoalMapper {
         return finGoals.stream().map(FinanceGoalMapper::sourceToViewResponse).toList();
     }
 
-    public static FinGoalViewResponse sourceToViewResponse(FinanceGoal finGoal) {
-        return new FinGoalViewResponse(finGoal.getId(), finGoal.getTitle(),
-                finGoal.getAmount(), finGoal.getTargetAmount()
+    public static FinGoalViewResponse sourceToViewResponse(FinanceGoal source) {
+        return new FinGoalViewResponse(source.getId(), source.getTitle(),
+                source.getAmount(), source.getTargetAmount(), source.getImage().getValue()
         );
     }
 
@@ -41,7 +42,7 @@ public class FinanceGoalMapper {
     public static FinanceGoal requestToSourceSave(FinGoalSaveRequest request, UserAccount userAccount) {
         return new FinanceGoal(request.title(), request.state(), request.currency(), request.description(),
                 new BigDecimal(0), request.targetAmount(), request.deadline(), request.riskProfile(),
-                request.createdOn(), userAccount);
+                new FinanceGoalImage(request.imageType(), request.image()),  request.createdOn(), userAccount);
     }
 
     public static FinanceGoal map(FinGoalUpdateRequest source, FinanceGoal destination) {
@@ -53,6 +54,7 @@ public class FinanceGoalMapper {
         destination.setTargetAmount(source.targetAmount());
         destination.setDeadline(source.deadline());
         destination.setRiskProfile(source.riskProfile());
+        destination.setImage(new FinanceGoalImage(source.imageType(), source.image()));
         destination.setCreatedOn(source.createdOn());
         destination.setLastChange(source.lastChange());
         return destination;

@@ -17,6 +17,8 @@ public record FinGoalUpdateRequest(
         BigDecimal targetAmount,
         LocalDateTime deadline,
         RiskProfileType riskProfile,
+        String image,
+        String imageType,
         LocalDateTime createdOn,
         LocalDateTime lastChange
 ) { }

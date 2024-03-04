@@ -6,5 +6,6 @@ public record FinGoalViewResponse(
         int id,
         String title,
         BigDecimal amount,
-        BigDecimal targetAmount
+        BigDecimal targetAmount,
+        String image
 ) { }
