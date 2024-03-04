@@ -31,6 +31,8 @@ CREATE TABLE finance_goal (
     target_amount NUMERIC(38,2) NOT NULL,
     deadline TIMESTAMP,
     risk_profile risk_profile_type,
+    image bytea,
+    type_image VARCHAR(4),
     created_on TIMESTAMP NOT NULL,
     last_change TIMESTAMP,
     id_user_account INT NOT NULL,
@@ -44,13 +46,5 @@ CREATE TABLE deposit (
     funding_date TIMESTAMP NOT NULL,
     amount NUMERIC(38,2) NOT NULL,
     id_finance_goal INT NOT NULL,
-    FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal)
-);
-
-CREATE TABLE finance_goal_image (
-    id_image SERIAL PRIMARY KEY,
-    id_finance_goal INT NOT NULL,
-    type VARCHAR(20) NOT NULL,
-    value bytea NOT NULL,
     FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal)
 );

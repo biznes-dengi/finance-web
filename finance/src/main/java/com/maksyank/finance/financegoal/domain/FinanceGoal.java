@@ -37,6 +37,8 @@ public class FinanceGoal {
     private LocalDateTime deadline;
     @Column(name = "risk_profile")
     private RiskProfileType riskProfile;
+    @Column
+    private FinanceGoalImage image;
     @Column(name = "created_on")
     private LocalDateTime createdOn;
     @Column(name = "last_change")
@@ -51,7 +53,7 @@ public class FinanceGoal {
 
     public FinanceGoal(String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal amount,
                        BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
-                       LocalDateTime createdOn, UserAccount userAccount) {
+                       FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount) {
         this.title = title;
         this.state = state;
         this.currency = currency;
@@ -60,13 +62,14 @@ public class FinanceGoal {
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
+        this.image = image;
         this.createdOn = createdOn;
         this.userAccount = userAccount;
     }
 
     public FinanceGoal(int id, String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal amount,
                        BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
-                       LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
+                       FinanceGoalImage image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
         this.id = id;
         this.title = title;
         this.state = state;
@@ -76,11 +79,13 @@ public class FinanceGoal {
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
+        this.image = image;
         this.createdOn = createdOn;
         this.lastChange = lastChange;
         this.userAccount = userAccount;
     }
 
+    // TODO will think if there is need add image to toString
     @Override
     public String toString() {
         return "FinanceGoal(id=" + this.getId() + ", title=" + this.getTitle() +
