@@ -27,7 +27,7 @@ CREATE TABLE finance_goal (
     state fin_goal_state NOT NULL,
     currency currency_code NOT NULL,
     description VARCHAR(100),
-    amount NUMERIC(38,2) NOT NULL,
+    balance NUMERIC(38,2) NOT NULL,
     target_amount NUMERIC(38,2) NOT NULL,
     deadline TIMESTAMP,
     risk_profile risk_profile_type,

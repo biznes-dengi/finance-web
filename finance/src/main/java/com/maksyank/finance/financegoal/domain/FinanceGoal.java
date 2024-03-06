@@ -29,8 +29,8 @@ public class FinanceGoal {
     private CurrencyCode currency;
     @Column(name = "description")
     private String description;
-    @Column(name = "amount")
-    private BigDecimal amount;
+    @Column(name = "balance")
+    private BigDecimal balance;
     @Column(name = "target_amount")
     private BigDecimal targetAmount;
     @Column(name = "deadline")
@@ -51,14 +51,14 @@ public class FinanceGoal {
     @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
 
-    public FinanceGoal(String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal amount,
+    public FinanceGoal(String title, FinanceGoalState state, CurrencyCode currency, String description,
                        BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
                        FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount) {
         this.title = title;
         this.state = state;
         this.currency = currency;
         this.description = description;
-        this.amount = amount;
+        this.balance = BigDecimal.ZERO;
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
@@ -67,7 +67,7 @@ public class FinanceGoal {
         this.userAccount = userAccount;
     }
 
-    public FinanceGoal(int id, String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal amount,
+    public FinanceGoal(int id, String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal balance,
                        BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
                        FinanceGoalImage image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
         this.id = id;
@@ -75,7 +75,7 @@ public class FinanceGoal {
         this.state = state;
         this.currency = currency;
         this.description = description;
-        this.amount = amount;
+        this.balance = balance;
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
@@ -90,7 +90,7 @@ public class FinanceGoal {
     public String toString() {
         return "FinanceGoal(id=" + this.getId() + ", title=" + this.getTitle() +
                 ", state=" + this.getState().state + ", currencyCode=" + this.getCurrency().code +
-                ", description=" + this.getDescription() + ", amount=" + this.getAmount() +
+                ", description=" + this.getDescription() + ", amount=" + this.getBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
                 ", riskProfile=" + this.getRiskProfile().type + ", createdOn=" + this.getCreatedOn() +
                 ", lastChange=" + this.getLastChange() + ", userAccountId=" + this.getUserAccount().getId() + ")";

@@ -1,19 +1,23 @@
 package com.maksyank.finance.financegoal.service.process;
 
+import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.boundary.request.DepositDescriptionRequest;
 import com.maksyank.finance.financegoal.boundary.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.boundary.response.DepositResponse;
 import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
+import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.DepositMapper;
+import com.maksyank.finance.financegoal.mapper.FinanceGoalMapper;
 import com.maksyank.finance.financegoal.service.repoimpl.DepositRepoImpl;
 import com.maksyank.finance.financegoal.service.repoimpl.FinanceGoalRepoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -37,10 +41,20 @@ public class DepositProcess {
         return DepositMapper.entityToViewResponse(foundDeposits);
     }
 
-    public boolean processSave(DepositSaveRequest depositRequest, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
+    public UpdatedStateFinGoal processSave(DepositSaveRequest depositRequest, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
         final var financeGoal = this.financeGoalRepoImpl.findByIdAndUserId(financeGoalId, userId);
         final var depositToSave = DepositMapper.requestToEntitySave(depositRequest, financeGoal);
-        return this.depositRepoImpl.save(depositToSave);
+
+        final var newBalance = financeGoal.getBalance().add(depositRequest.amount());
+        financeGoal.setBalance(newBalance);
+
+        if (newBalance.compareTo(financeGoal.getTargetAmount()) >= 0) {
+            financeGoal.setState(FinanceGoalState.ACHIEVED);
+        }
+        this.financeGoalRepoImpl.save(financeGoal);
+        this.depositRepoImpl.save(depositToSave);
+
+        return FinanceGoalMapper.mapToUpdateStateRequest(financeGoal);
     }
 
     public DepositResponse processGetById(int depositId, int financeGoalId, int userId) throws NotFoundException {
@@ -62,5 +76,9 @@ public class DepositProcess {
                 .filter(deposit -> deposit.getId() == depositId)
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Entity 'Deposit' not found by attribute 'id' = " + depositId));
+    }
+
+    private void checkIfGoalAchieved(BigDecimal balance, BigDecimal goal) {
+
     }
 }

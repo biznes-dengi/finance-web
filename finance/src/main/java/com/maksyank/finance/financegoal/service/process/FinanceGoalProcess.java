@@ -18,7 +18,6 @@ import java.util.List;
 // TODO add validation of all parameters of all methods
 @Service
 public class FinanceGoalProcess {
-
     private FinanceGoalRepoImpl financeGoalRepoImpl;
     @Autowired
     FinanceGoalProcess(FinanceGoalRepoImpl financeGoalRepoImpl) {

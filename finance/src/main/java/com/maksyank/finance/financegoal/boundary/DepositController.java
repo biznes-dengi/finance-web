@@ -4,6 +4,7 @@ import com.maksyank.finance.financegoal.boundary.request.DepositDescriptionReque
 import com.maksyank.finance.financegoal.boundary.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.boundary.response.DepositResponse;
 import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
+import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.service.process.DepositProcess;
@@ -45,17 +46,15 @@ public class DepositController {
         }
     }
 
-    // TODO A realization of amount field. When a deposit comes then calculate amount of finance goal
     @PostMapping
-    public ResponseEntity save(
+    public UpdatedStateFinGoal save(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestBody DepositSaveRequest depositToSave,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            this.depositProcess.processSave(depositToSave, financeGoalId, userId);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return this.depositProcess.processSave(depositToSave, financeGoalId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {

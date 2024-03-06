@@ -1,5 +1,6 @@
 package com.maksyank.finance.financegoal.mapper;
 
+import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
@@ -21,7 +22,7 @@ public class FinanceGoalMapper {
 
     public static FinGoalResponse entityToResponse(FinanceGoal source) {
         return new FinGoalResponse(source.getId(), source.getTitle(), source.getState(),
-                source.getDescription(), source.getAmount(), source.getTargetAmount(),
+                source.getDescription(), source.getBalance(), source.getTargetAmount(),
                 source.getDeadline(), source.getRiskProfile(), source.getImage().getValue()
         );
     }
@@ -32,16 +33,14 @@ public class FinanceGoalMapper {
 
     public static FinGoalViewResponse sourceToViewResponse(FinanceGoal source) {
         return new FinGoalViewResponse(source.getId(), source.getTitle(),
-                source.getAmount(), source.getTargetAmount(), source.getImage().getValue()
+                source.getBalance(), source.getTargetAmount(), source.getImage().getValue()
         );
     }
 
-    // TO DO amount from start mocked (from start 0)
-    // TO DO separate bussines logic and mapping
-    // no impl currency, state, riskProfile
+    // TODO separate business logic and mapping
     public static FinanceGoal requestToSourceSave(FinGoalSaveRequest request, UserAccount userAccount) {
         return new FinanceGoal(request.title(), request.state(), request.currency(), request.description(),
-                new BigDecimal(0), request.targetAmount(), request.deadline(), request.riskProfile(),
+                request.targetAmount(), request.deadline(), request.riskProfile(),
                 new FinanceGoalImage(request.imageType(), request.image()),  request.createdOn(), userAccount);
     }
 
@@ -50,7 +49,7 @@ public class FinanceGoalMapper {
         destination.setState(source.state());
         destination.setCurrency(source.currency());
         destination.setDescription(source.description());
-        destination.setAmount(source.amount());
+        destination.setBalance(source.amount());
         destination.setTargetAmount(source.targetAmount());
         destination.setDeadline(source.deadline());
         destination.setRiskProfile(source.riskProfile());
@@ -58,6 +57,10 @@ public class FinanceGoalMapper {
         destination.setCreatedOn(source.createdOn());
         destination.setLastChange(source.lastChange());
         return destination;
+    }
+
+    public static UpdatedStateFinGoal mapToUpdateStateRequest(FinanceGoal source) {
+        return new UpdatedStateFinGoal(source.getBalance(), source.getState());
     }
 
 }
