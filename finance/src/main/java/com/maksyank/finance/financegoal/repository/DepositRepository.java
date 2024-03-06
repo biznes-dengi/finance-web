@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DepositRepository extends JpaRepository<Deposit, Integer>{
     Slice<Deposit> findAllByFinanceGoal_Id(int financeGoalId, Pageable pageable);
+    void deleteAllByFinanceGoal_Id(int financeGoalId);
 }

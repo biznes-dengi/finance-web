@@ -8,6 +8,7 @@ import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.FinanceGoalMapper;
+import com.maksyank.finance.financegoal.service.repoimpl.DepositRepoImpl;
 import com.maksyank.finance.financegoal.service.repoimpl.FinanceGoalRepoImpl;
 import com.maksyank.finance.user.domain.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,11 @@ import java.util.List;
 @Service
 public class FinanceGoalProcess {
     private FinanceGoalRepoImpl financeGoalRepoImpl;
+    private DepositRepoImpl depositRepoImpl;
     @Autowired
-    FinanceGoalProcess(FinanceGoalRepoImpl financeGoalRepoImpl) {
+    FinanceGoalProcess(FinanceGoalRepoImpl financeGoalRepoImpl, DepositRepoImpl depositRepoImpl) {
         this.financeGoalRepoImpl = financeGoalRepoImpl;
+        this.depositRepoImpl = depositRepoImpl;
     }
 
     public FinGoalResponse processGetById(int id, int userId) throws NotFoundException {
@@ -48,6 +51,7 @@ public class FinanceGoalProcess {
     }
 
     public boolean processDelete(int id) throws DbOperationException {
+        this.depositRepoImpl.removeAllByFinanceGoalId(id);
         return this.financeGoalRepoImpl.deleteById(id);
     }
 }

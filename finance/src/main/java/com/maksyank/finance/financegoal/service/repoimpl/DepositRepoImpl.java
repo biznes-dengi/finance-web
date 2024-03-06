@@ -41,4 +41,14 @@ public class DepositRepoImpl {
             throw new DbOperationException(ex.getMessage(), ex);
         }
     }
+
+    // TODO Must be return boolean?
+    // TODO refactor handling type
+    public void removeAllByFinanceGoalId(int financeGoalId) throws DbOperationException {
+        try {
+            this.depositRepository.deleteAllByFinanceGoal_Id(financeGoalId);
+        } catch (Exception ex) {
+            throw new DbOperationException(ex.getMessage(), ex);
+        }
+    }
 }
