@@ -46,7 +46,7 @@ public class FinanceGoalProcess {
             throws NotFoundException, DbOperationException
     {
         final var oldFinanceGoal = this.financeGoalRepoImpl.findByIdAndUserId(id, user.getId());
-        final var updatedFinanceGoal = FinanceGoalMapper.map(newFinanceGoal, oldFinanceGoal);
+        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntityUpdate(newFinanceGoal, oldFinanceGoal);
         return this.financeGoalRepoImpl.save(updatedFinanceGoal);
     }
 

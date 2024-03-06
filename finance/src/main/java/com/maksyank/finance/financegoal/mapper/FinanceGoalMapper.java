@@ -9,7 +9,6 @@ import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.domain.FinanceGoalImage;
 import com.maksyank.finance.user.domain.UserAccount;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,19 +36,17 @@ public class FinanceGoalMapper {
         );
     }
 
-    // TODO separate business logic and mapping
     public static FinanceGoal requestToSourceSave(FinGoalSaveRequest request, UserAccount userAccount) {
-        return new FinanceGoal(request.title(), request.state(), request.currency(), request.description(),
-                request.targetAmount(), request.deadline(), request.riskProfile(),
-                new FinanceGoalImage(request.imageType(), request.image()),  request.createdOn(), userAccount);
+        return new FinanceGoal(request.title(), request.currency(), request.description(), request.targetAmount(),
+                request.deadline(), request.riskProfile(), new FinanceGoalImage(request.imageType(), request.image()),
+                request.createdOn(), userAccount
+        );
     }
 
-    public static FinanceGoal map(FinGoalUpdateRequest source, FinanceGoal destination) {
+    public static FinanceGoal mapToEntityUpdate(FinGoalUpdateRequest source, FinanceGoal destination) {
         destination.setTitle(source.title());
-        destination.setState(source.state());
         destination.setCurrency(source.currency());
         destination.setDescription(source.description());
-        destination.setBalance(source.amount());
         destination.setTargetAmount(source.targetAmount());
         destination.setDeadline(source.deadline());
         destination.setRiskProfile(source.riskProfile());

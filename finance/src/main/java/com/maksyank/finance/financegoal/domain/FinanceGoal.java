@@ -51,11 +51,11 @@ public class FinanceGoal {
     @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
 
-    public FinanceGoal(String title, FinanceGoalState state, CurrencyCode currency, String description,
+    public FinanceGoal(String title, CurrencyCode currency, String description,
                        BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
                        FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount) {
         this.title = title;
-        this.state = state;
+        this.state = FinanceGoalState.ACTIVE;
         this.currency = currency;
         this.description = description;
         this.balance = BigDecimal.ZERO;
