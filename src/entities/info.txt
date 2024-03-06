@@ -1,0 +1,1 @@
+Domain entities -> User, Product etc

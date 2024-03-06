@@ -1,0 +1,2 @@
+Компоновка /features and /entities/ui
+CommentsList -> request for comments + comments.map(() => CommentCard)
