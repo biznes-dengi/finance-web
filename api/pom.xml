@@ -9,9 +9,9 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.maksyank</groupId>
-	<artifactId>finance</artifactId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>finance</name>
+	<name>api</name>
 	<description>Finance project by Mikita and Anton.</description>
 	<properties>
 		<java.version>21</java.version>
