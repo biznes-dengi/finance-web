@@ -27,7 +27,7 @@ export function Tabs(props: Props) {
 	}
 
 	return (
-		<div role='tabs-wrapper' className={cn('bg-[#EDEFF2] p-1', className, isOutsideCard && 'bg-transparent')}>
+		<div role='tabs-wrapper' className={cn('bg-[#EDEFF2]', className, isOutsideCard && 'bg-transparent')}>
 			<Tab.Group selectedIndex={value || tabValue} onChange={handleChangeClick}>
 				<Tab.List>
 					{tabConfigs.map(({label}, index) => {

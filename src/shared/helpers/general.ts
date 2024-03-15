@@ -1,5 +1,7 @@
+import {twMerge} from 'tailwind-merge';
+
 export function cn(...classes: Array<undefined | null | string | boolean>) {
-	return classes.filter(Boolean).join(' ');
+	return twMerge(classes.filter(Boolean).join(' '));
 }
 
 export function cloneDeep<T>(value: T): T {

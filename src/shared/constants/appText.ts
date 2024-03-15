@@ -3,6 +3,6 @@ export const APP_TEXT = {
 	forgotPassword: 'Forgot your password?',
 	dontHaveAccount: 'Don’t have an account yet?',
 	pageNotFound: 'Page not found',
-	goBackHome: 'Go back home',
+	goBackHome: 'Go back home-page',
 	dontHaveAccess: 'Sorry, but you do not have access to this page',
 };

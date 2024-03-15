@@ -2,17 +2,30 @@ import {ReactElement} from 'react';
 
 import {BriefcaseIcon} from '@heroicons/react/24/outline';
 
-// @ts-ignore
-import userIconPath from '@shared/assets/user.svg';
-// @ts-ignore
-import pyramidIconPath from '@shared/assets/pyramid.svg';
 import {cn} from '@shared/helpers';
+
+// @ts-ignore
+import userIconPath from '@shared/assets/user.svg'; // @ts-ignore
+import pyramidIconPath from '@shared/assets/pyramid.svg'; // @ts-ignore
+import homeIconPath from '@shared/assets/home.svg'; // @ts-ignore
+import calculatorIconPath from '@shared/assets/calculator.svg'; // @ts-ignore
+import trackerIconPath from '@shared/assets/tracker.svg'; // @ts-ignore
+import investIconPath from '@shared/assets/invest.svg';
 
 export const APP_ICON = {
 	USER: 'USER',
 	APP_LOGO: 'APP_LOGO',
 	PORTFOLIO: 'PORTFOLIO',
+	HOME: 'HOME',
+	CALCULATOR: 'CALCULATOR',
+	TRACKER: 'TRACKER',
+	INVEST: 'INVEST',
 } as const;
+
+// TODO: automate process
+//   1. Get values from APP_ICON and make iconMap
+//   2. Make config {iconPath, alt}
+//   3. Rest reuse
 
 const iconMap = {
 	[APP_ICON.USER]: ({className}: {className: string}) => (
@@ -23,6 +36,18 @@ const iconMap = {
 	),
 	[APP_ICON.PORTFOLIO]: ({className}: {className: string}) => (
 		<BriefcaseIcon className={cn(className, 'h-6 w-6 text-primary-grey')} />
+	),
+	[APP_ICON.HOME]: ({className}: {className: string}) => (
+		<img src={homeIconPath} alt='home icon' className={cn(className)} />
+	),
+	[APP_ICON.CALCULATOR]: ({className}: {className: string}) => (
+		<img src={calculatorIconPath} alt='home icon' className={cn(className)} />
+	),
+	[APP_ICON.INVEST]: ({className}: {className: string}) => (
+		<img src={investIconPath} alt='home icon' className={cn(className)} />
+	),
+	[APP_ICON.TRACKER]: ({className}: {className: string}) => (
+		<img src={trackerIconPath} alt='home icon' className={cn(className)} />
 	),
 } as any;
 
