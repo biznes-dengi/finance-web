@@ -9,8 +9,6 @@ type Props = {
 export function List(props: Props) {
 	const {rows, className, withTopMargin} = props;
 
-	//TODO withTopMargin && 'mt-4', className
-
 	return (
 		<div role='list-wrapper' className={cn('rounded-2xl bg-white', withTopMargin && 'mt-4', className)}>
 			{rows.map((row) => (

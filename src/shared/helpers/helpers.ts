@@ -31,14 +31,7 @@ export function isEmpty(value: any): boolean {
 		return true;
 	}
 
-	if (
-		Array.isArray(value) ||
-		typeof value === 'string' ||
-		value instanceof String ||
-		value instanceof Map ||
-		value instanceof Set
-	) {
-		// @ts-ignore
+	if (Array.isArray(value) || typeof value === 'string' || value instanceof String) {
 		return value.length === 0;
 	}
 
@@ -74,7 +67,7 @@ export function isEqual(value: any, other: any): boolean {
 	return true;
 }
 
-// TODO: возвращает не boolean, у kobezzza был тип
+/** возвращает не boolean, у kobezzza был тип */
 export function isObject(value: any): boolean {
 	return value !== null && typeof value === 'object' && !Array.isArray(value);
 }

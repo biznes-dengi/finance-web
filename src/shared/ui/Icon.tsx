@@ -4,12 +4,23 @@ import {BriefcaseIcon} from '@heroicons/react/24/outline';
 
 import {cn} from '@shared/helpers';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import userIconPath from '@shared/assets/user.svg'; // @ts-ignore
-import pyramidIconPath from '@shared/assets/pyramid.svg'; // @ts-ignore
-import homeIconPath from '@shared/assets/home.svg'; // @ts-ignore
-import calculatorIconPath from '@shared/assets/calculator.svg'; // @ts-ignore
-import trackerIconPath from '@shared/assets/tracker.svg'; // @ts-ignore
+import userIconPath from '@shared/assets/user.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import pyramidIconPath from '@shared/assets/pyramid.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import homeIconPath from '@shared/assets/home.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import calculatorIconPath from '@shared/assets/calculator.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import trackerIconPath from '@shared/assets/tracker.svg';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import investIconPath from '@shared/assets/invest.svg';
 
 export const APP_ICON = {
@@ -22,10 +33,11 @@ export const APP_ICON = {
 	INVEST: 'INVEST',
 } as const;
 
-// TODO: automate process
-//   1. Get values from APP_ICON and make iconMap
-//   2. Make config {iconPath, alt}
-//   3. Rest reuse
+/** automate process
+  1. Get values from APP_ICON and make iconMap
+  2. Make config {iconPath, alt}
+  3. Rest reuse
+	*/
 
 const iconMap = {
 	[APP_ICON.USER]: ({className}: {className: string}) => (

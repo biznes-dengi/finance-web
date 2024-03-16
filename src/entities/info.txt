@@ -20,6 +20,6 @@ Goal (иерархия слоев для cohesion)
 /enities/goal
     /model
         useGoalData
-        TODO: Вырать степень абстракции
+            Вырать степень абстракции
             1. useGoalData() = useFetch(queryConfig) + imports from api (+ specificQueries, to extend useFetch)
             2. useGoalData() = react-query + imports from api

@@ -26,9 +26,10 @@ const sidebarConfigs = [
 	},
 ];
 
-//TODO:
-// 1. navigate(path) = history.push(path) -- const navigate = useNavigate();
-// 2. for nav items hover box shadow (with space between active and hovered elements)
+/**
+ * 1. navigate(path) = history.push(path) -- const navigate = useNavigate();
+ *  2. for nav items hover box shadow (with space between active and hovered elements)
+ */
 
 export function AppSidebar() {
 	return (

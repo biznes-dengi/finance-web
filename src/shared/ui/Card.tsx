@@ -9,9 +9,10 @@ type Props = {
 	withoutBottomRounded?: boolean;
 };
 
-// TODO:
-//  я карточка, рендерю какой-то тайтл слева, какую-то иконку справа, какие-то кнопки снизу и какие-то list-items
-//  1. add prop featureConfig -> map -> <button />
+/**
+ * я карточка, рендерю какой-то тайтл слева, какую-то иконку справа, какие-то кнопки снизу и какие-то list-items
+ * add prop featureConfig -> map -> <button />
+ */
 
 export function Card(props: Props) {
 	const {children, className, withoutTopRounded, withoutBottomRounded} = props;
