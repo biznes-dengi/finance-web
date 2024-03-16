@@ -1,1 +1,1 @@
-export {setTokenToInstance} from './config.ts';
+export * from './httpClient.ts';

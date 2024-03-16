@@ -1,7 +1,7 @@
 import {AppProvider} from '@app/providers';
 import {AppRouter} from '@app/router';
-import {AppHeader} from '@widgets/app-header';
-import {AppSidebar} from '@widgets/app-sidebar';
+import {AppHeader} from '@widgets/app/app-header';
+import {AppSidebar} from '@widgets/app/app-sidebar';
 
 import {cn} from '@shared/helpers';
 

@@ -1,3 +1,0 @@
-// TODO: entity/features
-//  create-goal, withdraw-from-goal, fund-goal...
-//  тут будет логика для работы с целью

@@ -7,3 +7,10 @@ add-name (инпут для добавления имени, будь то ка�
     /model
     /lib
     /ui
+
+/features
+    /article
+        /delete
+            /ui -- delete button = icon + label, onClick -> import from /entities/article
+        /favorite-article
+        /unfavorite-article

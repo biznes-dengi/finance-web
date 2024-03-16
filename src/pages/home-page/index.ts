@@ -1,3 +1,3 @@
-import {HomePage} from './HomePage.tsx';
+import {HomePage} from './ui/HomePage.tsx';
 
 export default HomePage;

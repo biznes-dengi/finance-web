@@ -4,7 +4,7 @@ Goal (иерархия слоев для cohesion)
     3. model - server state (BLL в рамках сущности) - логика компонентов (reducers, логика на хуках - что угодно, без зависимости от стэка)
     4. configs - button config
     5. helpers - lib/utils - getTableHeaders() / mapApiDataToClientData
-    5. ui - компоненты, специфичные для сущности
+    5. ui - группировка компонентов, чтобы не было кросс импортов в /shared (Card + Button = EntityCard, специфический компонент)
 
 
 В рамках модуля Goal возможны кросс-импорты между модулями (@entity/goal/api -> @entity/goal/model)
@@ -15,3 +15,11 @@ Goal (иерархия слоев для cohesion)
 Что касается домена, я хочу, чтобы я просто взял вырезал с этого проекта, вставил в другой, и все заработало.
 И ненадо бегать по всему проекту собирать разманные модули (конфиги, экшены, компоненты, а каждый компонент тянет
 новый конфиг и тд)
+
+
+/enities/goal
+    /model
+        useGoalData
+        TODO: Вырать степень абстракции
+            1. useGoalData() = useFetch(queryConfig) + imports from api (+ specificQueries, to extend useFetch)
+            2. useGoalData() = react-query + imports from api
