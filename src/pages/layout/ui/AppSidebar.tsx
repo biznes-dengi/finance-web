@@ -1,27 +1,27 @@
 import {APP_ICON, Icon} from '@shared/ui';
 
-import {cn} from '@shared/helpers';
-import {APP_ROUTER} from '@shared/constants';
+import {cn} from '@shared/lib';
+import {APP_PATH} from '@shared/constants';
 
 const sidebarConfigs = [
 	{
 		label: 'Home',
-		path: APP_ROUTER.root,
+		path: APP_PATH.root,
 		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.HOME} />,
 	},
 	{
 		label: 'Tracker',
-		path: APP_ROUTER.root,
+		path: APP_PATH.root,
 		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.TRACKER} />,
 	},
 	{
 		label: 'Invest',
-		path: APP_ROUTER.root,
+		path: APP_PATH.root,
 		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.INVEST} />,
 	},
 	{
 		label: 'Calculator',
-		path: APP_ROUTER.root,
+		path: APP_PATH.root,
 		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.CALCULATOR} />,
 	},
 ];

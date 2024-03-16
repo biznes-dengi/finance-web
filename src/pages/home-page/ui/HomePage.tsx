@@ -1,13 +1,13 @@
 import {useNavigate} from 'react-router-dom';
 
-import {Goal} from '@entities/goal';
+import {Goal} from '@widgets/goal';
 import {TabConfig, Tabs} from '@shared/ui';
 
-import {APP_ROUTER} from '@shared/constants';
+import {APP_PATH} from '@shared/constants';
 
 /** В будущем может переименоваться из HomePage в ЛичныеФинансыPage **/
 
-const tabConfigs = [{label: 'Goals', path: APP_ROUTER.root}, {label: 'Expenses'}];
+const tabConfigs = [{label: 'Goals', path: APP_PATH.root}, {label: 'Expenses'}];
 
 export function HomePage() {
 	const navigate = useNavigate();

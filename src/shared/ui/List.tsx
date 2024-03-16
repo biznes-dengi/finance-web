@@ -1,4 +1,4 @@
-import {cn} from '@shared/helpers';
+import {cn} from '@shared/lib';
 
 type Props = {
 	className?: string;

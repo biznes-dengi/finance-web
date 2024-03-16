@@ -1,0 +1,4 @@
+/pages
+    /home-page
+        /ui
+        /route

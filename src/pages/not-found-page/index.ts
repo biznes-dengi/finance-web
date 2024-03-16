@@ -1,3 +1,1 @@
-import {NotFoundPage} from './ui/NotFoundPage.tsx';
-
-export default NotFoundPage;
+export {pageNotFoundRoute} from './route/pageNotFound.route.tsx';

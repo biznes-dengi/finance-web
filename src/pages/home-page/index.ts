@@ -1,3 +1,1 @@
-import {HomePage} from './ui/HomePage.tsx';
-
-export default HomePage;
+export {homePageRoute} from './route/homePage.route.tsx';

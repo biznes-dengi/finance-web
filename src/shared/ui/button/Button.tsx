@@ -1,4 +1,5 @@
-import {cn} from '@shared/helpers';
+import {cn} from '@shared/lib';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import style from './Button.module.css';
 

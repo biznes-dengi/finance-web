@@ -2,7 +2,7 @@ import {ReactElement} from 'react';
 
 import {BriefcaseIcon} from '@heroicons/react/24/outline';
 
-import {cn} from '@shared/helpers';
+import {cn} from '@shared/lib';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

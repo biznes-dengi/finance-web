@@ -1,12 +1,10 @@
-import {ReactNode} from 'react';
+import {RoutingProvider} from './RoutingProvider.tsx';
+import {QueryClientProvider} from './QueryClientProvider.tsx';
 
-import {RoutingProvider} from '@app/providers/RoutingProvider.tsx';
-import {QueryClientProvider} from '@app/providers/QueryClientProvider.tsx';
-
-export function AppProvider({children}: {children: ReactNode}) {
+export function AppProvider() {
 	return (
-		<RoutingProvider>
-			<QueryClientProvider>{children}</QueryClientProvider>
-		</RoutingProvider>
+		<QueryClientProvider>
+			<RoutingProvider />
+		</QueryClientProvider>
 	);
 }

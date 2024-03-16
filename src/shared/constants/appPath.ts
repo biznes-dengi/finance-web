@@ -1,4 +1,4 @@
-export const APP_ROUTER = {
+export const APP_PATH = {
 	root: '/',
 	pageNotFound: '/page-not-found',
 };

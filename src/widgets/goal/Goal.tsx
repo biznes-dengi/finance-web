@@ -1,7 +1,7 @@
 import {Button, Card} from '@shared/ui';
 
 import {goalModel} from '@entities/goal';
-import {cn} from '@shared/helpers';
+import {cn} from '@shared/lib';
 
 export function Goal() {
 	const {rows} = goalModel.useData();

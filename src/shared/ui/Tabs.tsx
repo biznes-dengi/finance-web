@@ -1,6 +1,6 @@
 import {Tab} from '@headlessui/react';
 import {Fragment, ReactElement, useState} from 'react';
-import {cn} from '@shared/helpers';
+import {cn} from '@shared/lib';
 
 export type TabConfig = {
 	label: string;
