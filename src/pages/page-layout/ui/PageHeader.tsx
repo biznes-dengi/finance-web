@@ -1,6 +1,6 @@
 import {APP_ICON, Icon, IconButton} from '@shared/ui';
 
-export function AppHeader() {
+export function PageHeader() {
 	return (
 		<header className='flex min-w-full items-center justify-between'>
 			<IconButton handleClick={() => alert('click user icon')}>

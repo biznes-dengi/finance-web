@@ -31,7 +31,7 @@ const sidebarConfigs = [
  *  2. for nav items hover box shadow (with space between active and hovered elements)
  */
 
-export function AppSidebar() {
+export function PageSidebar() {
 	return (
 		<>
 			<div className='mb-12 flex pl-4 text-2xl font-bold'>
