@@ -3,6 +3,7 @@ import {cn} from '@shared/lib';
 // @ts-ignore
 import style from './Button.module.css';
 import {APP_ICON, Icon} from '@shared/ui';
+import {ReactNode} from 'react';
 
 export enum BUTTON_TYPE {
 	circle = 'circle',
@@ -10,7 +11,7 @@ export enum BUTTON_TYPE {
 }
 
 type Props = {
-	children: string;
+	children: string | ReactNode;
 	onClick?: (...args: unknown[]) => void;
 	type?: BUTTON_TYPE;
 	icon?: (typeof APP_ICON)[keyof typeof APP_ICON];

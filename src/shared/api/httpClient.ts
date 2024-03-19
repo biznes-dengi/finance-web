@@ -1,6 +1,10 @@
 export class HttpClient {
 	static get() {
-		return [{name: 'some-item-1'}, {name: 'some-item-2'}, {name: 'some-item-3'}];
+		return [
+			{name: 'Mustang', savedAmount: 100, targetAmount: 30000},
+			{name: 'House', savedAmount: 200, targetAmount: 200000},
+			{name: 'Guitar', savedAmount: 300, targetAmount: 1500},
+		];
 	}
 }
 

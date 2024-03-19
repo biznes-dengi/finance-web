@@ -1,6 +1,6 @@
 import {twMerge} from 'tailwind-merge';
 
-export function cn(...classes: Array<undefined | null | string | boolean>) {
+export function cn(...classes: Array<unknown>) {
 	return twMerge(classes.filter(Boolean).join(' '));
 }
 

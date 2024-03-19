@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
-import {Goal} from '@widgets/goal';
 import {TabConfig, Tabs} from '@shared/ui';
+import {GoalManagement} from '@widgets/goal-management';
 
 import {APP_PATH} from '@shared/constants';
 
@@ -19,7 +19,7 @@ export function GoalOverview() {
 	return (
 		<>
 			<Tabs tabConfigs={tabConfigs} handleChange={handleTabChange} className='my-8 min-w-full' isOutsideCard />
-			<Goal />
+			<GoalManagement />
 		</>
 	);
 }

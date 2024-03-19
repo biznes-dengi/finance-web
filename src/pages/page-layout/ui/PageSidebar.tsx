@@ -48,7 +48,7 @@ export function PageSidebar() {
 						onClick={() => alert(label + ' module')}
 					>
 						<Icon className='mr-4' />
-						<div className={cn('font-medium text-primary-grey', index === 0 && 'text-primary-blue')}>{label}</div>
+						<div className={cn('font-medium text-primary-grey', index === 0 && 'text-primary-violet')}>{label}</div>
 					</div>
 				))}
 			</nav>

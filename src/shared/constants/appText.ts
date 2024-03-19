@@ -5,4 +5,7 @@ export const APP_TEXT = {
 	pageNotFound: 'Page not found',
 	goBackHome: 'Go back home',
 	dontHaveAccess: 'Sorry, but you do not have access to this page',
+	accumulated: 'Accumulated',
+	goal: 'Goal',
+	items: 'Items',
 };

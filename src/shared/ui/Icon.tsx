@@ -18,7 +18,7 @@ import userIconPath from '@shared/assets/user.svg';
 import pyramidIconPath from '@shared/assets/pyramid.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import homeIconPath from '@shared/assets/home.svg';
+import homeIconPath from '@shared/assets/home-primary-violet.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import calculatorIconPath from '@shared/assets/calculator.svg';
@@ -42,6 +42,8 @@ export const APP_ICON = {
 	MOVE: 'MOVE',
 	MORE: 'MORE',
 } as const;
+
+export type Icon = (typeof APP_ICON)[keyof typeof APP_ICON];
 
 /** automate process
   1. Get values from APP_ICON and make iconMap
