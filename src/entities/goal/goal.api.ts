@@ -5,6 +5,14 @@ function fetchList(): Goal[] {
 	return HttpClient.get();
 }
 
+function fetchItem(): {amount: number; currency: 'USD'} {
+	return {
+		amount: 3000,
+		currency: 'USD',
+	};
+}
+
 export const goalApi = {
 	fetchList,
+	fetchItem,
 };

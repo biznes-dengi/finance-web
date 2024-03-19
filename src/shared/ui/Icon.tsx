@@ -1,6 +1,12 @@
 import {ReactElement} from 'react';
 
-import {BriefcaseIcon} from '@heroicons/react/24/outline';
+import {
+	ArrowRightIcon,
+	BriefcaseIcon,
+	EllipsisVerticalIcon,
+	FolderPlusIcon,
+	PlusIcon,
+} from '@heroicons/react/24/outline';
 
 import {cn} from '@shared/lib';
 
@@ -31,6 +37,10 @@ export const APP_ICON = {
 	CALCULATOR: 'CALCULATOR',
 	TRACKER: 'TRACKER',
 	INVEST: 'INVEST',
+	CREATE_GOAL: 'CREATE_GOAL',
+	FUND: 'FUND',
+	MOVE: 'MOVE',
+	MORE: 'MORE',
 } as const;
 
 /** automate process
@@ -61,10 +71,22 @@ const iconMap = {
 	[APP_ICON.TRACKER]: ({className}: {className: string}) => (
 		<img src={trackerIconPath} alt='home icon' className={cn(className)} />
 	),
+	[APP_ICON.CREATE_GOAL]: ({className}: {className: string}) => (
+		<FolderPlusIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
+	),
+	[APP_ICON.FUND]: ({className}: {className: string}) => (
+		<PlusIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
+	),
+	[APP_ICON.MOVE]: ({className}: {className: string}) => (
+		<ArrowRightIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
+	),
+	[APP_ICON.MORE]: ({className}: {className: string}) => (
+		<EllipsisVerticalIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
+	),
 } as any;
 
 type IconProps = {
-	name: string;
+	name: (typeof APP_ICON)[keyof typeof APP_ICON];
 	className?: string;
 };
 
