@@ -1,5 +1,3 @@
-import {ReactElement} from 'react';
-
 import {
 	ArrowRightIcon,
 	BriefcaseIcon,
@@ -30,97 +28,17 @@ import trackerIconPath from '@shared/assets/tracker.svg';
 import investIconPath from '@shared/assets/invest.svg';
 import {ArrowLeftIcon} from '@heroicons/react/24/solid';
 
-export enum APP_ICON {
-	USER,
-	APP_LOGO,
-	PORTFOLIO,
-	HOME,
-	CALCULATOR,
-	TRACKER,
-	INVEST,
-	createGoal,
-	fund,
-	move,
-	more,
-	backButton,
-}
-
-export type Icon = (typeof APP_ICON)[keyof typeof APP_ICON];
-
-/** automate process
-  1. Get values from APP_ICON and make iconMap
-  2. Make lib {iconPath, alt}
-  3. Rest reuse
-	*/
-
-const iconMap = {
-	[APP_ICON.USER]: ({className}: {className: string}) => (
-		<img src={userIconPath} alt='user icon' className={cn(className)} />
-	),
-	[APP_ICON.APP_LOGO]: ({className}: {className: string}) => (
-		<img src={pyramidIconPath} alt='pyramid icon' className={cn(className)} />
-	),
-	[APP_ICON.PORTFOLIO]: ({className}: {className: string}) => (
-		<BriefcaseIcon className={cn(className, 'h-6 w-6 text-primary-grey')} />
-	),
-	[APP_ICON.HOME]: ({className}: {className: string}) => (
-		<img src={homeIconPath} alt='home icon' className={cn(className)} />
-	),
-	[APP_ICON.CALCULATOR]: ({className}: {className: string}) => (
-		<img src={calculatorIconPath} alt='home icon' className={cn(className)} />
-	),
-	[APP_ICON.INVEST]: ({className}: {className: string}) => (
-		<img src={investIconPath} alt='home icon' className={cn(className)} />
-	),
-	[APP_ICON.TRACKER]: ({className}: {className: string}) => (
-		<img src={trackerIconPath} alt='home icon' className={cn(className)} />
-	),
-	[APP_ICON.createGoal]: ({className}: {className: string}) => (
-		<FolderPlusIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
-	),
-	[APP_ICON.fund]: ({className}: {className: string}) => (
-		<PlusIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
-	),
-	[APP_ICON.move]: ({className}: {className: string}) => (
-		<ArrowRightIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
-	),
-	[APP_ICON.more]: ({className}: {className: string}) => (
-		<EllipsisVerticalIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
-	),
-	[APP_ICON.backButton]: ({className}: {className: string}) => (
-		<ArrowLeftIcon className={cn(className, 'text-primary-violet')} />
-	),
-} as any;
-
-type IconProps = {
-	name: (typeof APP_ICON)[keyof typeof APP_ICON];
-	className?: string;
+export const APP_ICON = {
+	USER: <img src={userIconPath} alt='user icon' />,
+	APP_LOGO: <img src={pyramidIconPath} alt='pyramid icon' />,
+	PORTFOLIO: <BriefcaseIcon className={cn('h-6 w-6 text-primary-grey')} />,
+	HOME: <img src={homeIconPath} alt='home icon' />,
+	CALCULATOR: <img src={calculatorIconPath} alt='calculator icon' />,
+	INVEST: <img src={investIconPath} alt='invest icon' />,
+	TRACKER: <img src={trackerIconPath} alt='tracket icon' />,
+	createGoal: <FolderPlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
+	fund: <PlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
+	move: <ArrowRightIcon className={cn('h-6 w-6 text-primary-violet')} />,
+	more: <EllipsisVerticalIcon className={cn('h-6 w-6 text-primary-violet')} />,
+	backButton: <ArrowLeftIcon className={cn('h-6 w-6 text-primary-violet')} />,
 };
-
-export const Icon = ({name, className}: IconProps) => {
-	const AppIcon = iconMap[name];
-
-	return (
-		<div className={className}>
-			<AppIcon />
-		</div>
-	);
-};
-
-type IconButtonProps = {
-	children: ReactElement;
-	handleClick: () => void;
-};
-
-export function IconButton(props: IconButtonProps) {
-	const {children, handleClick} = props;
-
-	return (
-		<button
-			className='flex h-10 w-10 cursor-pointer items-center justify-center rounded-2xl bg-secondary-violet'
-			onClick={handleClick}
-		>
-			<div className='h-5 w-5'>{children}</div>
-		</button>
-	);
-}

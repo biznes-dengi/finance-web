@@ -67,32 +67,31 @@ export function isEqual(value: any, other: any): boolean {
 	return true;
 }
 
-/** возвращает не boolean, у kobezzza был тип */
-export function isObject(value: any): boolean {
-	return value !== null && typeof value === 'object' && !Array.isArray(value);
+export function isObject(value: unknown): value is object {
+	return typeof value === 'object';
 }
 
-export function isArray(value: any[]): boolean {
+export function isArray(value: unknown[]): value is unknown[] {
 	return Array.isArray(value);
 }
 
-export function isNull(value: any): boolean {
+export function isNull(value: unknown): value is null {
 	return value === null;
 }
 
-export function isNumber(value: any): boolean {
-	return typeof value === 'number' && isFinite(value);
+export function isNumber(value: unknown): value is number {
+	return typeof value === 'number';
 }
 
-export function isString(value: any): boolean {
-	return typeof value === 'string' || value instanceof String;
+export function isString(value: unknown): value is string {
+	return typeof value === 'string';
 }
 
 export function isUndefined(value: unknown): value is undefined {
 	return typeof value === 'undefined';
 }
 
-export function isBoolean(value: any): boolean {
+export function isBoolean(value: unknown): value is boolean {
 	return typeof value === 'boolean';
 }
 

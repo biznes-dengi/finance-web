@@ -1,6 +1,5 @@
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {APP_ICON} from '@shared/ui';
-import {ButtonConfig} from '@shared/types';
+import {APP_ICON, ButtonConfig} from '@shared/ui';
 
 export const buttonConfigs = [
 	{

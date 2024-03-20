@@ -1,11 +1,9 @@
-import {APP_ICON, Icon, IconButton} from '@shared/ui';
+import {APP_ICON, Button, BUTTON_TYPE} from '@shared/ui';
 
 export function PageHeader() {
 	return (
 		<header>
-			<IconButton handleClick={() => alert('click user icon')}>
-				<Icon name={APP_ICON.USER} />
-			</IconButton>
+			<Button onClick={() => alert('click user icon')} type={BUTTON_TYPE.circle} icon={APP_ICON.USER} />
 		</header>
 	);
 }

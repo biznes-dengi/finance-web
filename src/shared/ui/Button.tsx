@@ -1,10 +1,8 @@
 import {ReactNode} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import {cn, isUndefined} from '@shared/lib';
 
-import {APP_ICON, Icon} from '@shared/ui/index.ts';
-import {ButtonOnClick} from '@shared/types';
 import {boxShadow} from '@shared/constants';
 
 export enum BUTTON_TYPE {
@@ -12,13 +10,20 @@ export enum BUTTON_TYPE {
 	block = 'block',
 }
 
-type Props = {
-	children?: string | ReactNode;
-	onClick: ButtonOnClick;
+interface CommonButtonSettings {
+	icon?: ReactNode;
 	type?: BUTTON_TYPE;
-	icon?: APP_ICON;
+	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
+}
+
+export interface ButtonConfig extends CommonButtonSettings {
+	name: string;
+}
+
+interface Props extends CommonButtonSettings {
+	children?: string | ReactNode;
 	className?: string;
-};
+}
 
 export function Button(props: Props) {
 	const {children, onClick, type = BUTTON_TYPE.block, icon, className} = props;
@@ -36,8 +41,12 @@ export function Button(props: Props) {
 
 	if (type === BUTTON_TYPE.circle && !isUndefined(icon)) {
 		return (
-			<div {...defaultButtonProps} className={getButtonClassName('flex flex-col items-center')}>
-				<Icon name={icon} className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet' />
+			<div {...defaultButtonProps} className={getButtonClassName('flex w-fit flex-col items-center')}>
+				{icon && (
+					<div className={cn('flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet')}>
+						{icon}
+					</div>
+				)}
 				{children && <div className='mt-1 text-primary-violet'>{children}</div>}
 			</div>
 		);

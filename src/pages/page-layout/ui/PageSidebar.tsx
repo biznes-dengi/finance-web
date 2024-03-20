@@ -1,28 +1,27 @@
-import {APP_ICON, Icon} from '@shared/ui';
-
 import {cn} from '@shared/lib';
 import {APP_PATH} from '@shared/constants';
+import {APP_ICON} from '@shared/ui';
 
 const sidebarConfigs = [
 	{
 		label: 'Home',
 		path: APP_PATH.root,
-		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.HOME} />,
+		icon: APP_ICON.HOME,
 	},
 	{
 		label: 'Tracker',
 		path: APP_PATH.root,
-		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.TRACKER} />,
+		icon: APP_ICON.TRACKER,
 	},
 	{
 		label: 'Invest',
 		path: APP_PATH.root,
-		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.INVEST} />,
+		icon: APP_ICON.INVEST,
 	},
 	{
 		label: 'Calculator',
 		path: APP_PATH.root,
-		Icon: ({className}: {className?: string}) => <Icon className={className} name={APP_ICON.CALCULATOR} />,
+		icon: APP_ICON.CALCULATOR,
 	},
 ];
 
@@ -34,11 +33,9 @@ const sidebarConfigs = [
 export function PageSidebar() {
 	return (
 		<>
-			<div className='mb-12 flex pl-4 text-2xl font-bold'>
-				<Icon name={APP_ICON.APP_LOGO} />
-			</div>
+			<div className='mb-12 flex pl-4 text-2xl font-bold'>{APP_ICON.APP_LOGO}</div>
 			<nav>
-				{sidebarConfigs.map(({label, path, Icon}, index) => (
+				{sidebarConfigs.map(({label, path, icon}, index) => (
 					<div
 						className={cn(
 							'flex cursor-pointer rounded-2xl px-4 py-3 hover:bg-secondary-grey',
@@ -47,7 +44,7 @@ export function PageSidebar() {
 						key={label + path}
 						onClick={() => alert(label + ' module')}
 					>
-						<Icon className='mr-4' />
+						<div className={cn('mr-4')}>{icon}</div>
 						<div className={cn('font-medium text-primary-grey', index === 0 && 'text-primary-violet')}>{label}</div>
 					</div>
 				))}

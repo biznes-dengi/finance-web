@@ -1,8 +1,7 @@
-import {Box, Button, BUTTON_TYPE} from '@shared/ui';
+import {Box, Button, BUTTON_TYPE, ButtonConfig} from '@shared/ui';
 
 import {cn, textHelpers} from '@shared/lib';
 import {CURRENCY} from '@entities/goal';
-import {ButtonConfig} from '@shared/types';
 
 type Props = {
 	item: {
