@@ -1,34 +1,23 @@
-import {APP_ICON, Button, Card} from '@shared/ui';
+import {Button, Card} from '@shared/ui';
 
 import {List, ListItem, Management} from '@entities/ui';
 
-import {CURRENCY, Goal, goalModel} from '@entities/goal';
-import {textHelpers} from '@shared/lib';
-
-const buttonConfigs = [
-	{name: 'Create', icon: APP_ICON.CREATE_GOAL},
-	{name: 'Fund', icon: APP_ICON.FUND},
-	{name: 'Transfer', icon: APP_ICON.MOVE},
-	{name: 'More', icon: APP_ICON.MORE},
-];
+import {buttonConfigs} from '../lib/button.config.ts';
+import {getSubtitle} from '../lib/layout.helpers.ts';
+import {Goal, goalModel} from '@entities/goal';
+import {APP_TEXT} from '@shared/constants';
 
 export function GoalManagement() {
 	const {rows, goalItem} = goalModel.useData();
 
 	return (
 		<Card>
-			<Management item={goalItem} buttonConfigs={buttonConfigs} />
+			<Management item={goalItem} buttonConfigs={buttonConfigs} subtitle={APP_TEXT.accumulated} />
 			<List<Goal>
 				rows={rows}
 				renderRow={(row) => (
-					<Button key={row.name} onClick={() => alert('click button')}>
-						<ListItem
-							title={row.name}
-							subtitle={textHelpers.getAmountWithCurrency(
-								textHelpers.getRatio(textHelpers.getAmount(row.savedAmount), textHelpers.getAmount(row.targetAmount)),
-								CURRENCY.USD,
-							)}
-						/>
+					<Button key={row.name} className='items-center' onClick={() => alert(`go to ${row.name} details`)}>
+						<ListItem title={row.name} subtitle={getSubtitle(row)} />
 					</Button>
 				)}
 			/>

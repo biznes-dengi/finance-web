@@ -34,10 +34,10 @@ export class HttpClient {
  const setTokenToInstance = (token: string) => {
  localStorage.setItem('token', token);
 
- axiosInstance.interceptors.request.use((config) => {
- config.headers.authorization = localStorage.getItem('token');
+ axiosInstance.interceptors.request.use((lib) => {
+ lib.headers.authorization = localStorage.getItem('token');
 
- return config;
+ return lib;
  });
  };
 

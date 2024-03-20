@@ -1,7 +1,6 @@
 import {Box, Button, BUTTON_TYPE} from '@shared/ui';
 
 import {cn, textHelpers} from '@shared/lib';
-import {APP_TEXT} from '@shared/constants';
 import {CURRENCY} from '@entities/goal';
 import {ButtonConfig} from '@shared/types';
 
@@ -11,10 +10,11 @@ type Props = {
 		currency: CURRENCY;
 	};
 	buttonConfigs: ButtonConfig[];
+	subtitle?: string;
 };
 
 export function Management(props: Props) {
-	const {item, buttonConfigs} = props;
+	const {item, buttonConfigs, subtitle} = props;
 
 	return (
 		<div role='management' className='p-4'>
@@ -23,14 +23,19 @@ export function Management(props: Props) {
 					<Box type='title' isMainTitle>
 						{textHelpers.getAmountWithCurrency(textHelpers.getAmount(item.amount), item.currency)}
 					</Box>
-					<Box type='subtitle'>{APP_TEXT.accumulated}</Box>
+					{subtitle && <Box type='subtitle'>{subtitle}</Box>}
 				</div>
 				<div className='h-10 w-10 rounded-xl bg-secondary-grey' />
 			</div>
 
 			<div className='flex justify-between'>
 				{buttonConfigs.map((buttonConfig) => (
-					<Button key={buttonConfig.name} type={BUTTON_TYPE.circle} icon={buttonConfig.icon}>
+					<Button
+						key={buttonConfig.name}
+						type={BUTTON_TYPE.circle}
+						icon={buttonConfig.icon}
+						onClick={buttonConfig.onClick}
+					>
 						{buttonConfig.name}
 					</Button>
 				))}

@@ -28,26 +28,28 @@ import trackerIconPath from '@shared/assets/tracker.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import investIconPath from '@shared/assets/invest.svg';
+import {ArrowLeftIcon} from '@heroicons/react/24/solid';
 
-export const APP_ICON = {
-	USER: 'USER',
-	APP_LOGO: 'APP_LOGO',
-	PORTFOLIO: 'PORTFOLIO',
-	HOME: 'HOME',
-	CALCULATOR: 'CALCULATOR',
-	TRACKER: 'TRACKER',
-	INVEST: 'INVEST',
-	CREATE_GOAL: 'CREATE_GOAL',
-	FUND: 'FUND',
-	MOVE: 'MOVE',
-	MORE: 'MORE',
-} as const;
+export enum APP_ICON {
+	USER,
+	APP_LOGO,
+	PORTFOLIO,
+	HOME,
+	CALCULATOR,
+	TRACKER,
+	INVEST,
+	createGoal,
+	fund,
+	move,
+	more,
+	backButton,
+}
 
 export type Icon = (typeof APP_ICON)[keyof typeof APP_ICON];
 
 /** automate process
   1. Get values from APP_ICON and make iconMap
-  2. Make config {iconPath, alt}
+  2. Make lib {iconPath, alt}
   3. Rest reuse
 	*/
 
@@ -73,17 +75,20 @@ const iconMap = {
 	[APP_ICON.TRACKER]: ({className}: {className: string}) => (
 		<img src={trackerIconPath} alt='home icon' className={cn(className)} />
 	),
-	[APP_ICON.CREATE_GOAL]: ({className}: {className: string}) => (
+	[APP_ICON.createGoal]: ({className}: {className: string}) => (
 		<FolderPlusIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
 	),
-	[APP_ICON.FUND]: ({className}: {className: string}) => (
+	[APP_ICON.fund]: ({className}: {className: string}) => (
 		<PlusIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
 	),
-	[APP_ICON.MOVE]: ({className}: {className: string}) => (
+	[APP_ICON.move]: ({className}: {className: string}) => (
 		<ArrowRightIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
 	),
-	[APP_ICON.MORE]: ({className}: {className: string}) => (
+	[APP_ICON.more]: ({className}: {className: string}) => (
 		<EllipsisVerticalIcon className={cn(className, 'h-6 w-6 text-primary-violet')} />
+	),
+	[APP_ICON.backButton]: ({className}: {className: string}) => (
+		<ArrowLeftIcon className={cn(className, 'text-primary-violet')} />
 	),
 } as any;
 
@@ -95,7 +100,11 @@ type IconProps = {
 export const Icon = ({name, className}: IconProps) => {
 	const AppIcon = iconMap[name];
 
-	return <AppIcon {...{className}} />;
+	return (
+		<div className={className}>
+			<AppIcon />
+		</div>
+	);
 };
 
 type IconButtonProps = {
@@ -103,7 +112,9 @@ type IconButtonProps = {
 	handleClick: () => void;
 };
 
-export function IconButton({children, handleClick}: IconButtonProps) {
+export function IconButton(props: IconButtonProps) {
+	const {children, handleClick} = props;
+
 	return (
 		<button
 			className='flex h-10 w-10 cursor-pointer items-center justify-center rounded-2xl bg-secondary-violet'

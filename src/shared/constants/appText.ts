@@ -8,4 +8,8 @@ export const APP_TEXT = {
 	accumulated: 'Accumulated',
 	goal: 'Goal',
 	items: 'Items',
+	create: 'Create',
+	fund: 'Fund',
+	transfer: 'Transfer',
+	more: 'More',
 };

@@ -9,7 +9,7 @@ import {APP_PATH} from '@shared/constants';
 
 const tabConfigs = [{label: 'Goals', path: APP_PATH.root}, {label: 'Expenses'}];
 
-export function GoalOverview() {
+export function GoalOverviewPage() {
 	const navigate = useNavigate();
 
 	function handleTabChange(tabConfig: TabConfig) {

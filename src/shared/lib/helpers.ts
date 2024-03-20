@@ -88,8 +88,8 @@ export function isString(value: any): boolean {
 	return typeof value === 'string' || value instanceof String;
 }
 
-export function isUndefined(value: any): boolean {
-	return value === undefined;
+export function isUndefined(value: unknown): value is undefined {
+	return typeof value === 'undefined';
 }
 
 export function isBoolean(value: any): boolean {
