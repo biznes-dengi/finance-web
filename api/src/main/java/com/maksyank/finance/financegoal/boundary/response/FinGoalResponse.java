@@ -4,7 +4,7 @@ import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record FinGoalResponse(
         int id,
@@ -13,7 +13,7 @@ public record FinGoalResponse(
         String description,
         BigDecimal amount,
         BigDecimal targetAmount,
-        LocalDateTime deadline,
+        LocalDate deadline,
         RiskProfileType riskProfile,
         String image
 ) { }

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -34,7 +35,7 @@ public class FinanceGoal {
     @Column(name = "target_amount")
     private BigDecimal targetAmount;
     @Column(name = "deadline")
-    private LocalDateTime deadline;
+    private LocalDate deadline;
     @Column(name = "risk_profile")
     private RiskProfileType riskProfile;
     @Embedded
@@ -52,7 +53,7 @@ public class FinanceGoal {
     private Collection<Deposit> deposits;
 
     public FinanceGoal(String title, CurrencyCode currency, String description,
-                       BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
+                       BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
                        FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount) {
         this.title = title;
         this.state = FinanceGoalState.ACTIVE;
@@ -68,7 +69,7 @@ public class FinanceGoal {
     }
 
     public FinanceGoal(int id, String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal balance,
-                       BigDecimal targetAmount, LocalDateTime deadline, RiskProfileType riskProfile,
+                       BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
                        FinanceGoalImage image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
         this.id = id;
         this.title = title;

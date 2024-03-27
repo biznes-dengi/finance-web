@@ -30,7 +30,7 @@ CREATE TABLE finance_goal (
     description VARCHAR(100),
     balance NUMERIC(38,2) NOT NULL,
     target_amount NUMERIC(38,2) NOT NULL,
-    deadline TIMESTAMP,
+    deadline DATE,
     risk_profile risk_profile_type,
     image bytea,
     type_image fin_goal_image_type,

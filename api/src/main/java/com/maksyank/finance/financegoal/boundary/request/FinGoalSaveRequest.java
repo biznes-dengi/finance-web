@@ -4,6 +4,7 @@ import com.maksyank.finance.financegoal.domain.enums.CurrencyCode;
 import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 // TODO deadline must be optional
@@ -12,7 +13,7 @@ public record FinGoalSaveRequest(
         CurrencyCode currency,
         String description,
         BigDecimal targetAmount,
-        LocalDateTime deadline,
+        LocalDate deadline,
         RiskProfileType riskProfile,
         String image,
         String imageType,
