@@ -7,6 +7,7 @@ import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.domain.FinanceGoalImage;
+import com.maksyank.finance.financegoal.domain.businessrules.InitRulesFinanceGoal;
 import com.maksyank.finance.user.domain.UserAccount;
 
 import java.util.Collection;
@@ -36,8 +37,12 @@ public class FinanceGoalMapper {
         );
     }
 
-    public static FinanceGoal requestToSourceSave(FinGoalSaveRequest request, UserAccount userAccount) {
-        return new FinanceGoal(request.title(), request.currency(), request.description(), request.targetAmount(),
+    public static FinanceGoal requestToSourceSave(
+            FinGoalSaveRequest request,
+            InitRulesFinanceGoal rulesFinanceGoal,
+            UserAccount userAccount
+    ) {
+        return new FinanceGoal(rulesFinanceGoal, request.title(), request.currency(), request.description(), request.targetAmount(),
                 request.deadline(), request.riskProfile(), new FinanceGoalImage(request.imageType(), request.image()),
                 request.createdOn(), userAccount
         );

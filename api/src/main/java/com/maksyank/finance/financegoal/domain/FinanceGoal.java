@@ -1,5 +1,6 @@
 package com.maksyank.finance.financegoal.domain;
 
+import com.maksyank.finance.financegoal.domain.businessrules.InitRulesFinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.CurrencyCode;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
@@ -52,14 +53,15 @@ public class FinanceGoal {
     @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
 
-    public FinanceGoal(String title, CurrencyCode currency, String description,
+    public FinanceGoal(InitRulesFinanceGoal initRulesFinanceGoal, String title, CurrencyCode currency, String description,
                        BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                       FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount) {
+                       FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount
+    ) {
         this.title = title;
-        this.state = FinanceGoalState.ACTIVE;
+        this.state = initRulesFinanceGoal.state();
         this.currency = currency;
         this.description = description;
-        this.balance = BigDecimal.ZERO;
+        this.balance = initRulesFinanceGoal.balance();
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
@@ -70,7 +72,8 @@ public class FinanceGoal {
 
     public FinanceGoal(int id, String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal balance,
                        BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                       FinanceGoalImage image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount) {
+                       FinanceGoalImage image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount
+    ) {
         this.id = id;
         this.title = title;
         this.state = state;
