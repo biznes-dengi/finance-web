@@ -1,10 +1,10 @@
-package com.maksyank.finance.financegoal.service.process;
+package com.maksyank.finance.financegoal.service;
 
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.TransactionType;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.service.repoimpl.FinanceGoalRepoImpl;
+import com.maksyank.finance.financegoal.persistence.FinanceGoalPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,15 @@ import java.util.List;
 
 @Service
 public class DepositFundProcess {
-    private FinanceGoalRepoImpl financeGoalRepoImpl;
+    private FinanceGoalPersistence financeGoalPersistence;
 
     @Autowired
-    DepositFundProcess(FinanceGoalRepoImpl financeGoalRepoImpl) {
-        this.financeGoalRepoImpl = financeGoalRepoImpl;
+    DepositFundProcess(FinanceGoalPersistence financeGoalPersistence) {
+        this.financeGoalPersistence = financeGoalPersistence;
     }
 
     public BigDecimal processGetFundAmountByMonth(int financeGoalId, int year, int month, int userId) throws NotFoundException {
-        final var financeGoal = this.financeGoalRepoImpl.findByIdAndUserId(financeGoalId, userId);
+        final var financeGoal = this.financeGoalPersistence.findByIdAndUserId(financeGoalId, userId);
 
         final var startMonth = LocalDateTime.of(year, month, 1, 0, 0, 0);
         final var endMonth = LocalDateTime.of(year, month, YearMonth.of(year, month).lengthOfMonth(), 23, 59, 59);

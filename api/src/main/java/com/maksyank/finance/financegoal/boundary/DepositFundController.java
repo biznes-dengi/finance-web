@@ -1,7 +1,7 @@
 package com.maksyank.finance.financegoal.boundary;
 
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.service.process.DepositFundProcess;
+import com.maksyank.finance.financegoal.service.DepositFundProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

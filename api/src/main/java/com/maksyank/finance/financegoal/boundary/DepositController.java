@@ -7,7 +7,7 @@ import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
 import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.service.process.DepositProcess;
+import com.maksyank.finance.financegoal.service.DepositProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.service.repoimpl;
+package com.maksyank.finance.financegoal.persistence;
 
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 @Service
-public class FinanceGoalRepoImpl {
+public class FinanceGoalPersistence {
     private FinanceGoalRepository financeGoalRepository;
 
     @Autowired
-    FinanceGoalRepoImpl(FinanceGoalRepository financeGoalRepository) {
+    FinanceGoalPersistence(FinanceGoalRepository financeGoalRepository) {
         this.financeGoalRepository = financeGoalRepository;
     }
 

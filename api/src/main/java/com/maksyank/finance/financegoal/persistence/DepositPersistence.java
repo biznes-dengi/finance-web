@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.service.repoimpl;
+package com.maksyank.finance.financegoal.persistence;
 
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DepositRepoImpl {
+public class DepositPersistence {
     private DepositRepository depositRepository;
 
     @Autowired
-    DepositRepoImpl(DepositRepository depositRepository) {
+    DepositPersistence(DepositRepository depositRepository) {
         this.depositRepository = depositRepository;
     }
 

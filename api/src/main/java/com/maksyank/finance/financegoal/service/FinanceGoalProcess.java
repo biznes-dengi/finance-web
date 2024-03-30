@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.service.process;
+package com.maksyank.finance.financegoal.service;
 
 import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
@@ -8,32 +8,33 @@ import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.FinanceGoalMapper;
-import com.maksyank.finance.financegoal.service.repoimpl.DepositRepoImpl;
-import com.maksyank.finance.financegoal.service.repoimpl.FinanceGoalRepoImpl;
+import com.maksyank.finance.financegoal.persistence.DepositPersistence;
+import com.maksyank.finance.financegoal.persistence.FinanceGoalPersistence;
 import com.maksyank.finance.user.domain.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 // TODO add validation of all parameters of all methods
 @Service
 public class FinanceGoalProcess {
-    private FinanceGoalRepoImpl financeGoalRepoImpl;
-    private DepositRepoImpl depositRepoImpl;
+    private FinanceGoalPersistence financeGoalPersistence;
+    private DepositPersistence depositPersistence;
     @Autowired
-    FinanceGoalProcess(FinanceGoalRepoImpl financeGoalRepoImpl, DepositRepoImpl depositRepoImpl) {
-        this.financeGoalRepoImpl = financeGoalRepoImpl;
-        this.depositRepoImpl = depositRepoImpl;
+    FinanceGoalProcess(FinanceGoalPersistence financeGoalPersistence, DepositPersistence depositPersistence) {
+        this.financeGoalPersistence = financeGoalPersistence;
+        this.depositPersistence = depositPersistence;
     }
 
     public FinGoalResponse processGetById(int id, int userId) throws NotFoundException {
-        final var foundFinanceGoal = this.financeGoalRepoImpl.findByIdAndUserId(id, userId);
+        final var foundFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(id, userId);
         return FinanceGoalMapper.entityToResponse(foundFinanceGoal);
     }
 
     public List<FinGoalViewResponse> processGetByState(FinanceGoalState state, int userId) throws NotFoundException {
-        final var foundFinanceGoals = this.financeGoalRepoImpl.findByStateAndUserId(state, userId);
+        final var foundFinanceGoals = this.financeGoalPersistence.findByStateAndUserId(state, userId);
         return FinanceGoalMapper.sourceToViewResponse(foundFinanceGoals);
     }
 
@@ -45,13 +46,13 @@ public class FinanceGoalProcess {
     public boolean processUpdate(int id, FinGoalUpdateRequest newFinanceGoal, UserAccount user)
             throws NotFoundException, DbOperationException
     {
-        final var oldFinanceGoal = this.financeGoalRepoImpl.findByIdAndUserId(id, user.getId());
+        final var oldFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(id, user.getId());
         final var updatedFinanceGoal = FinanceGoalMapper.mapToEntityUpdate(newFinanceGoal, oldFinanceGoal);
-        return this.financeGoalRepoImpl.save(updatedFinanceGoal);
+        return this.financeGoalPersistence.save(updatedFinanceGoal);
     }
 
     public boolean processDelete(int id) throws DbOperationException {
-        this.depositRepoImpl.removeAllByFinanceGoalId(id);
-        return this.financeGoalRepoImpl.deleteById(id);
+        this.depositPersistence.removeAllByFinanceGoalId(id);
+        return this.financeGoalPersistence.deleteById(id);
     }
 }

@@ -4,7 +4,9 @@ import com.maksyank.finance.financegoal.domain.Deposit;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DepositRepository extends JpaRepository<Deposit, Integer>{
     Slice<Deposit> findAllByFinanceGoal_Id(int financeGoalId, Pageable pageable);
     void deleteAllByFinanceGoal_Id(int financeGoalId);
