@@ -4,6 +4,8 @@ import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
 import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
+import com.maksyank.finance.financegoal.domain.FinanceGoal;
+import com.maksyank.finance.financegoal.domain.businessrules.InitRulesFinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
@@ -38,21 +40,35 @@ public class FinanceGoalProcess {
         return FinanceGoalMapper.sourceToViewResponse(foundFinanceGoals);
     }
 
-    public boolean processSave(FinGoalSaveRequest toSaveRequest, UserAccount user) throws DbOperationException {
-        final var financeGoalToSave = FinanceGoalMapper.requestToSourceSave(toSaveRequest, user);
-        return this.financeGoalRepoImpl.save(financeGoalToSave);
+    public void processSave(FinGoalSaveRequest toSaveRequest, UserAccount user) throws DbOperationException {
+        final var rulesFinanceGoal = new InitRulesFinanceGoal(FinanceGoalState.ACTIVE, BigDecimal.ZERO);
+        final var financeGoalToSave = FinanceGoalMapper.requestToSourceSave(toSaveRequest, rulesFinanceGoal, user);
+        this.financeGoalPersistence.save(financeGoalToSave);
     }
 
-    public boolean processUpdate(int id, FinGoalUpdateRequest newFinanceGoal, UserAccount user)
+    public void processUpdate(int id, FinGoalUpdateRequest newFinanceGoal, UserAccount user)
             throws NotFoundException, DbOperationException
     {
         final var oldFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(id, user.getId());
         final var updatedFinanceGoal = FinanceGoalMapper.mapToEntityUpdate(newFinanceGoal, oldFinanceGoal);
-        return this.financeGoalPersistence.save(updatedFinanceGoal);
+        this.financeGoalPersistence.save(updatedFinanceGoal);
     }
 
-    public boolean processDelete(int id) throws DbOperationException {
+    public void processDelete(int id) throws DbOperationException {
         this.depositPersistence.removeAllByFinanceGoalId(id);
-        return this.financeGoalPersistence.deleteById(id);
+        this.financeGoalPersistence.deleteById(id);
+    }
+
+    public FinanceGoal updateBalance(BigDecimal depositAmount, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
+        final var foundFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(financeGoalId, userId);
+        final var newBalance = foundFinanceGoal.getBalance().add(depositAmount);
+        foundFinanceGoal.setBalance(newBalance);
+
+        if (newBalance.compareTo(foundFinanceGoal.getTargetAmount()) >= 0) {
+            foundFinanceGoal.setState(FinanceGoalState.ACHIEVED);
+        }
+        this.financeGoalPersistence.save(foundFinanceGoal);
+        
+        return foundFinanceGoal;
     }
 }

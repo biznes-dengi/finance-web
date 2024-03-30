@@ -23,7 +23,7 @@ public class DepositMapper {
         return source.stream().map(DepositMapper::entityToViewResponse).toList();
     }
 
-    public static Deposit requestToEntitySave(DepositSaveRequest source, FinanceGoal financeGoal) {
+    public static Deposit mapRequestToEntitySave(DepositSaveRequest source, FinanceGoal financeGoal) {
         return new Deposit(source.type(), source.description(), source.fundingDate(), source.amount(), financeGoal);
     }
 }

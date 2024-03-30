@@ -34,20 +34,18 @@ public class FinanceGoalPersistence {
     }
 
     // TODO refactor handling type
-    public boolean save(FinanceGoal preparedToPersist) throws DbOperationException {
+    public void save(FinanceGoal preparedToPersist) throws DbOperationException {
         try {
             this.financeGoalRepository.save(preparedToPersist);
-            return true;
         } catch (Exception e) {
             throw new DbOperationException(e.getMessage(), e);
         }
     }
 
     // TODO refactor handling type
-    public boolean deleteById(int id) throws DbOperationException {
+    public void deleteById(int id) throws DbOperationException {
         try {
             this.financeGoalRepository.deleteById(id);
-            return true;
         } catch (Exception e) {
             throw new DbOperationException(e.getMessage(), e);
         }

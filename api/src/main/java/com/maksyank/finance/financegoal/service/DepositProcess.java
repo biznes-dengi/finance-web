@@ -7,7 +7,6 @@ import com.maksyank.finance.financegoal.boundary.request.DepositDescriptionReque
 import com.maksyank.finance.financegoal.boundary.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.boundary.response.DepositResponse;
 import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
-import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.DepositMapper;
@@ -24,11 +23,17 @@ import java.util.List;
 public class DepositProcess {
     private DepositPersistence depositPersistence;
     private FinanceGoalPersistence financeGoalPersistence;
+    private FinanceGoalProcess financeGoalProcess;
 
     @Autowired
-    DepositProcess(DepositPersistence depositPersistence, FinanceGoalPersistence financeGoalPersistence) {
+    DepositProcess(
+            DepositPersistence depositPersistence,
+            FinanceGoalPersistence financeGoalPersistence,
+            FinanceGoalProcess financeGoalProcess
+    ) {
         this.depositPersistence = depositPersistence;
         this.financeGoalPersistence = financeGoalPersistence;
+        this.financeGoalProcess = financeGoalProcess;
     }
 
     public List<DepositViewResponse> processGetByPage(int financeGoalId, int pageNumber, int userId) throws NotFoundException {
@@ -42,18 +47,9 @@ public class DepositProcess {
     }
 
     public UpdatedStateFinGoal processSave(DepositSaveRequest depositRequest, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
-        final var financeGoal = this.financeGoalPersistence.findByIdAndUserId(financeGoalId, userId);
-        final var depositToSave = DepositMapper.requestToEntitySave(depositRequest, financeGoal);
-
-        final var newBalance = financeGoal.getBalance().add(depositRequest.amount());
-        financeGoal.setBalance(newBalance);
-
-        if (newBalance.compareTo(financeGoal.getTargetAmount()) >= 0) {
-            financeGoal.setState(FinanceGoalState.ACHIEVED);
-        }
-        this.financeGoalPersistence.save(financeGoal);
+        final var financeGoal = this.financeGoalProcess.updateBalance(depositRequest.amount(), financeGoalId, userId);
+        final var depositToSave = DepositMapper.mapRequestToEntitySave(depositRequest, financeGoal);
         this.depositPersistence.save(depositToSave);
-
         return FinanceGoalMapper.mapToUpdateStateRequest(financeGoal);
     }
 
