@@ -1,27 +1,38 @@
 import {ReactNode} from 'react';
 
-import {Box} from '@shared/ui';
+import {APP_ICON, Box} from '@shared/ui';
 
 import {cn} from '@shared/lib';
 
 type Props = {
 	imgSrc?: string;
-	title: ReactNode;
-	subtitle: ReactNode;
+	name: ReactNode;
+	description: ReactNode;
+	checked?: boolean;
 };
 
+/** Rename or move into button, used in list, in select just for same composition */
+
 export function ListItem(props: Props) {
-	const {title, subtitle} = props;
+	const {name, description, checked} = props;
 
 	return (
-		<div className='flex items-center'>
+		<div className={cn('flex items-center', checked && 'bg-secondary-violet')}>
 			<div
-				role='image'
-				className={cn('mr-4 h-10 w-10 rounded-3xl border-2 border-dashed border-primary-violet bg-secondary-grey')}
-			/>
+				role='mask'
+				className={cn(
+					'relative mr-4 h-10 w-10 rounded-3xl border-2 border-dashed border-primary-violet bg-secondary-grey',
+				)}
+			>
+				{checked && (
+					<div className='absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-violet text-white'>
+						{APP_ICON.check}
+					</div>
+				)}
+			</div>
 			<div>
-				<Box type='title'>{title}</Box>
-				<Box type='subtitle'>{subtitle}</Box>
+				<Box type='title'>{name}</Box>
+				<Box type='subtitle'>{description}</Box>
 			</div>
 		</div>
 	);

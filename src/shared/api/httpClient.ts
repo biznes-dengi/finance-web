@@ -1,9 +1,9 @@
 export class HttpClient {
 	static get() {
 		return [
-			{name: 'Mustang', savedAmount: 100, targetAmount: 30000},
-			{name: 'House', savedAmount: 200, targetAmount: 200000},
-			{name: 'Guitar', savedAmount: 300, targetAmount: 1500},
+			{name: 'Mustang', savedAmount: 100, targetAmount: 30000, currencySymbol: '$'},
+			{name: 'House', savedAmount: 200, targetAmount: 200000, currencySymbol: '$'},
+			{name: 'Guitar', savedAmount: 300, targetAmount: 1500, currencySymbol: '$'},
 		];
 	}
 }

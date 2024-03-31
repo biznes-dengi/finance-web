@@ -18,5 +18,9 @@ const routing = createBrowserRouter([
 ]);
 
 export function RoutingProvider() {
-	return <RouterProvider router={routing} />;
+	return (
+		<div className='bg-light-grey'>
+			<RouterProvider router={routing} />
+		</div>
+	);
 }

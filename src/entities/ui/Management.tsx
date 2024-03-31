@@ -1,13 +1,10 @@
 import {Box, Button, BUTTON_TYPE, ButtonConfig} from '@shared/ui';
 
 import {cn, textHelpers} from '@shared/lib';
-import {CURRENCY} from '@entities/goal';
+import {TotalGoal} from '@entities/goal';
 
 type Props = {
-	item: {
-		amount: number;
-		currency: CURRENCY;
-	};
+	item: TotalGoal;
 	buttonConfigs: ButtonConfig[];
 	subtitle?: string;
 };
@@ -20,7 +17,7 @@ export function Management(props: Props) {
 			<div className={cn('mb-4 flex justify-between')}>
 				<div>
 					<Box type='title' isMainTitle>
-						{textHelpers.getAmountWithCurrency(textHelpers.getAmount(item.amount), item.currency)}
+						{textHelpers.getAmountWithCurrency(item.amount, item.currencySymbol)}
 					</Box>
 					{subtitle && <Box type='subtitle'>{subtitle}</Box>}
 				</div>

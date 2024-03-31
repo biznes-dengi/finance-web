@@ -1,5 +1,3 @@
-import {CURRENCY} from '@entities/goal';
-
 type Amount = number | string;
 
 export class textHelpers {
@@ -8,11 +6,11 @@ export class textHelpers {
 	}
 
 	static getRatio(currentAmount: Amount, targetAmount: Amount) {
-		return `${currentAmount} / ${targetAmount}`;
+		return `${this.getAmount(currentAmount)} / ${this.getAmount(targetAmount)}`;
 	}
 
-	static getAmountWithCurrency(amount: Amount, currency: CURRENCY) {
-		return `${amount} ${currency}`;
+	static getAmountWithCurrency(amount: Amount, currencySymbol: string) {
+		return `${this.getAmount(amount)} ${currencySymbol}`;
 	}
 
 	static getAmount(amount: Amount) {

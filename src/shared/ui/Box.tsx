@@ -8,12 +8,12 @@ type Props = {
 	className?: string;
 
 	withMediumVertical?: unknown;
-	withMediumVerticalTop?: unknown;
-	withMediumVerticalBottom?: unknown;
+	withMediumTop?: unknown;
+	withMediumBottom?: unknown;
 
 	withBaseVertical?: unknown;
-	withBaseVerticalTop?: unknown;
-	withBaseVerticalBottom?: unknown;
+	withBaseTop?: unknown;
+	withBaseBottom?: unknown;
 
 	withBaseHorizontal?: unknown;
 };
@@ -26,12 +26,12 @@ export function Box(props: Props) {
 		className,
 
 		withMediumVertical,
-		withMediumVerticalTop,
-		withMediumVerticalBottom,
+		withMediumTop,
+		withMediumBottom,
 
 		withBaseVertical,
-		withBaseVerticalTop,
-		withBaseVerticalBottom,
+		withBaseTop,
+		withBaseBottom,
 
 		withBaseHorizontal,
 	} = props;
@@ -40,12 +40,12 @@ export function Box(props: Props) {
 		className,
 
 		withMediumVertical && 'py-6',
-		withMediumVerticalTop && 'pt-6',
-		withMediumVerticalBottom && 'pb-6',
+		withMediumTop && 'pt-6',
+		withMediumBottom && 'pb-6',
 
 		withBaseVertical && 'py-4',
-		withBaseVerticalTop && 'pt-4',
-		withBaseVerticalBottom && 'pb-4',
+		withBaseTop && 'pt-4',
+		withBaseBottom && 'pb-4',
 
 		withBaseHorizontal && 'px-4',
 	);

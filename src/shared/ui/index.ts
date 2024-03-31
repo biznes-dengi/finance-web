@@ -4,3 +4,5 @@ export * from '@shared/ui/Card.tsx';
 export * from '@shared/ui/Button.tsx';
 export * from '@shared/ui/EmptyState.tsx';
 export * from '@shared/ui/Box.tsx';
+export * from '@shared/ui/TextField.tsx';
+export * from '@shared/ui/NumericField.tsx';

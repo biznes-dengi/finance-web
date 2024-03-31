@@ -12,4 +12,7 @@ export const APP_TEXT = {
 	fund: 'Fund',
 	transfer: 'Transfer',
 	more: 'More',
-};
+	continue: 'Continue',
+	chooseCurrency: 'Choose Currency',
+	search: 'Search',
+} as const;
