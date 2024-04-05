@@ -1,5 +1,7 @@
+-- DB
 CREATE DATABASE finance;
 
+-- CUSTOM TYPES
 CREATE TYPE fin_goal_state AS ENUM ('ACTIVE', 'ACHIEVED');
 CREATE TYPE currency_code AS ENUM ('EUR', 'USD', 'PLN', 'BYN', 'RUB');
 CREATE TYPE app_role AS ENUM ('admin', 'user');
@@ -8,6 +10,7 @@ CREATE TYPE risk_profile_type AS ENUM ('conservative', 'moderate', 'aggressive')
 CREATE TYPE transaction_type AS ENUM ('FUND', 'WITHDRAW');
 CREATE TYPE fin_goal_image_type AS ENUM ('JPEG', 'JPG', 'PNG');
 
+-- TABLES
 CREATE TABLE user_account (
     id_user_account SERIAL PRIMARY KEY,
     role app_role NOT NULL,
@@ -37,8 +40,7 @@ CREATE TABLE finance_goal (
     created_on TIMESTAMP NOT NULL,
     last_change TIMESTAMP,
     id_user_account INT NOT NULL,
-    FOREIGN KEY (id_user_account) REFERENCES user_account(id_user_account),
-    CHECK (last_change > created_on)
+    FOREIGN KEY (id_user_account) REFERENCES user_account(id_user_account)
 );
 
 CREATE TABLE deposit (
@@ -48,5 +50,5 @@ CREATE TABLE deposit (
     funding_date TIMESTAMP NOT NULL,
     amount NUMERIC(38,2) NOT NULL,
     id_finance_goal INT NOT NULL,
-    FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal),
+    FOREIGN KEY (id_finance_goal) REFERENCES finance_goal(id_goal)
 );
