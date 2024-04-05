@@ -55,7 +55,7 @@ public class FinanceGoal {
 
     public FinanceGoal(InitRulesFinanceGoal initRulesFinanceGoal, String title, CurrencyCode currency, String description,
                        BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                       FinanceGoalImage image, LocalDateTime createdOn, UserAccount userAccount
+                       FinanceGoalImage image, UserAccount userAccount
     ) {
         this.title = title;
         this.state = initRulesFinanceGoal.state();
@@ -66,7 +66,6 @@ public class FinanceGoal {
         this.deadline = deadline;
         this.riskProfile = riskProfile;
         this.image = image;
-        this.createdOn = createdOn;
         this.userAccount = userAccount;
     }
 

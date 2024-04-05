@@ -5,7 +5,6 @@ import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 // TODO deadline must be optional
 public record FinGoalSaveRequest(
@@ -16,6 +15,5 @@ public record FinGoalSaveRequest(
         LocalDate deadline,
         RiskProfileType riskProfile,
         String image,
-        String imageType,
-        LocalDateTime createdOn
+        String imageType
 ) { }

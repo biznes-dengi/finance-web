@@ -37,14 +37,14 @@ public class FinanceGoalMapper {
         );
     }
 
-    public static FinanceGoal requestToSourceSave(
+    public static FinanceGoal mapToEntitySave(
             FinGoalSaveRequest request,
             InitRulesFinanceGoal rulesFinanceGoal,
             UserAccount userAccount
     ) {
-        return new FinanceGoal(rulesFinanceGoal, request.title(), request.currency(), request.description(), request.targetAmount(),
-                request.deadline(), request.riskProfile(), new FinanceGoalImage(request.imageType(), request.image()),
-                request.createdOn(), userAccount
+        return new FinanceGoal(
+                rulesFinanceGoal, request.title(), request.currency(), request.description(), request.targetAmount(),
+                request.deadline(), request.riskProfile(), new FinanceGoalImage(request.imageType(), request.image()), userAccount
         );
     }
 
@@ -56,8 +56,6 @@ public class FinanceGoalMapper {
         destination.setDeadline(source.deadline());
         destination.setRiskProfile(source.riskProfile());
         destination.setImage(new FinanceGoalImage(source.imageType(), source.image()));
-        destination.setCreatedOn(source.createdOn());
-        destination.setLastChange(source.lastChange());
         return destination;
     }
 

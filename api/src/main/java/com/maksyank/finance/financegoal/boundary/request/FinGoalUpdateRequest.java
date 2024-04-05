@@ -5,7 +5,6 @@ import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 // TODO if there wasn't deadline then it is null
 public record FinGoalUpdateRequest(
@@ -16,7 +15,5 @@ public record FinGoalUpdateRequest(
         LocalDate deadline,
         RiskProfileType riskProfile,
         String image,
-        String imageType,
-        LocalDateTime createdOn,
-        LocalDateTime lastChange
+        String imageType
 ) { }

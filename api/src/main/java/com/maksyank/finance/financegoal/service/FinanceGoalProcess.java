@@ -42,7 +42,7 @@ public class FinanceGoalProcess {
 
     public void processSave(FinGoalSaveRequest toSaveRequest, UserAccount user) throws DbOperationException {
         final var rulesFinanceGoal = new InitRulesFinanceGoal(FinanceGoalState.ACTIVE, BigDecimal.ZERO);
-        final var financeGoalToSave = FinanceGoalMapper.requestToSourceSave(toSaveRequest, rulesFinanceGoal, user);
+        final var financeGoalToSave = FinanceGoalMapper.mapToEntitySave(toSaveRequest, rulesFinanceGoal, user);
         this.financeGoalPersistence.save(financeGoalToSave);
     }
 
