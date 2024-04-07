@@ -41,15 +41,13 @@ public class FinanceGoalProcess {
 
     public void processSave(FinGoalRequest toSaveRequest, UserAccount user) throws DbOperationException {
         final var rulesFinanceGoal = new InitRulesFinanceGoal(FinanceGoalState.ACTIVE, BigDecimal.ZERO);
-        final var financeGoalToSave = FinanceGoalMapper.mapToEntity(toSaveRequest, rulesFinanceGoal, user);
+        final var financeGoalToSave = FinanceGoalMapper.mapToNewEntity(toSaveRequest, rulesFinanceGoal, user);
         this.financeGoalPersistence.save(financeGoalToSave);
     }
 
-    public void processUpdate(int id, FinGoalRequest newFinanceGoal, UserAccount user)
-            throws NotFoundException, DbOperationException
-    {
+    public void processUpdate(int id, FinGoalRequest newFinanceGoal, UserAccount user) throws NotFoundException, DbOperationException {
         final var oldFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(id, user.getId());
-        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntityUpdate(newFinanceGoal, oldFinanceGoal);
+        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntity(newFinanceGoal, oldFinanceGoal);
         this.financeGoalPersistence.save(updatedFinanceGoal);
     }
 

@@ -1,6 +1,6 @@
 package com.maksyank.finance.financegoal.service;
 
-import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
+import com.maksyank.finance.financegoal.boundary.response.StateOfFinGoalResponse;
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.boundary.request.DepositDescriptionRequest;
@@ -46,11 +46,11 @@ public class DepositProcess {
         return DepositMapper.entityToViewResponse(foundDeposits);
     }
 
-    public UpdatedStateFinGoal processSave(DepositSaveRequest depositRequest, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
+    public StateOfFinGoalResponse processSave(DepositSaveRequest depositRequest, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
         final var financeGoal = this.financeGoalProcess.updateBalance(depositRequest.amount(), financeGoalId, userId);
         final var depositToSave = DepositMapper.mapRequestToEntitySave(depositRequest, financeGoal);
         this.depositPersistence.save(depositToSave);
-        return FinanceGoalMapper.mapToUpdateStateRequest(financeGoal);
+        return FinanceGoalMapper.mapToStateResponse(financeGoal);
     }
 
     public DepositResponse processGetById(int depositId, int financeGoalId, int userId) throws NotFoundException {

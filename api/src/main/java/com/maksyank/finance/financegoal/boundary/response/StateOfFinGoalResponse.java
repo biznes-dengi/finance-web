@@ -4,7 +4,7 @@ import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 
 import java.math.BigDecimal;
 
-public record UpdatedStateFinGoal(
+public record StateOfFinGoalResponse(
         BigDecimal balance,
         FinanceGoalState state
 ) { }

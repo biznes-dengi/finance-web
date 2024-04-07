@@ -4,7 +4,7 @@ import com.maksyank.finance.financegoal.boundary.request.DepositDescriptionReque
 import com.maksyank.finance.financegoal.boundary.request.DepositSaveRequest;
 import com.maksyank.finance.financegoal.boundary.response.DepositResponse;
 import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
-import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
+import com.maksyank.finance.financegoal.boundary.response.StateOfFinGoalResponse;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.service.DepositProcess;
@@ -47,7 +47,7 @@ public class DepositController {
     }
 
     @PostMapping
-    public UpdatedStateFinGoal save(
+    public StateOfFinGoalResponse save(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestBody DepositSaveRequest depositToSave,
             @RequestParam("userId") int userId
