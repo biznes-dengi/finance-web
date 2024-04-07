@@ -2,8 +2,7 @@ package com.maksyank.finance.financegoal.mapper;
 
 import com.maksyank.finance.financegoal.boundary.response.UpdatedStateFinGoal;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
-import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
-import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
+import com.maksyank.finance.financegoal.boundary.request.FinGoalRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.domain.FinanceGoalImage;
@@ -37,8 +36,8 @@ public class FinanceGoalMapper {
         );
     }
 
-    public static FinanceGoal mapToEntitySave(
-            FinGoalSaveRequest request,
+    public static FinanceGoal mapToEntity(
+            FinGoalRequest request,
             InitRulesFinanceGoal rulesFinanceGoal,
             UserAccount userAccount
     ) {
@@ -48,7 +47,7 @@ public class FinanceGoalMapper {
         );
     }
 
-    public static FinanceGoal mapToEntityUpdate(FinGoalUpdateRequest source, FinanceGoal destination) {
+    public static FinanceGoal mapToEntityUpdate(FinGoalRequest source, FinanceGoal destination) {
         destination.setTitle(source.title());
         destination.setCurrency(source.currency());
         destination.setDescription(source.description());

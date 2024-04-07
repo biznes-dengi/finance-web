@@ -1,7 +1,6 @@
 package com.maksyank.finance.financegoal.boundary;
 
-import com.maksyank.finance.financegoal.boundary.request.FinGoalSaveRequest;
-import com.maksyank.finance.financegoal.boundary.request.FinGoalUpdateRequest;
+import com.maksyank.finance.financegoal.boundary.request.FinGoalRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
@@ -51,7 +50,7 @@ public class FinanceGoalController {
     }
 
     @PostMapping()
-    public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinGoalSaveRequest toSave) {
+    public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinGoalRequest toSave) {
         this.checkIfUserExists(userId);
         try {
             final var user = this.userAccountService.getById(userId);
@@ -79,7 +78,7 @@ public class FinanceGoalController {
     public ResponseEntity update(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestParam("userId") int userId,
-            @RequestBody FinGoalUpdateRequest toUpdate
+            @RequestBody FinGoalRequest toUpdate
     ) {
         this.checkIfUserExists(userId);
         try {

@@ -6,8 +6,8 @@ import com.maksyank.finance.financegoal.domain.enums.RiskProfileType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-// TODO if there wasn't deadline then it is null
-public record FinGoalUpdateRequest(
+// TODO deadline must be optional
+public record FinGoalRequest(
         String title,
         CurrencyCode currency,
         String description,
