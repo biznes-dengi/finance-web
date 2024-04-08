@@ -3,8 +3,9 @@ import {useState} from 'react';
 import {ListItem} from './ListItem.tsx';
 import {Box, Button, Card, TextField} from '@shared/ui';
 
-import {APP_TEXT, CURRENCY} from '@shared/constants';
+import {APP_TEXT} from '@shared/config';
 import {cn, isNumber} from '@shared/lib';
+import {CURRENCY} from '@shared/constants';
 
 type Props = {
 	options?: {

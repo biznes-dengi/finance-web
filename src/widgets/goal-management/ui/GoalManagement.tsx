@@ -4,7 +4,7 @@ import {List, ListItem, Management} from '@entities/ui';
 
 import {buttonConfigs} from '../lib/button.config.ts';
 import {Goal, goalModel} from '@entities/goal';
-import {APP_TEXT} from '@shared/constants';
+import {APP_TEXT} from '@shared/config';
 import {textHelpers} from '@shared/lib';
 
 export function GoalManagement() {

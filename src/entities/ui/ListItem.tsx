@@ -11,7 +11,9 @@ type Props = {
 	checked?: boolean;
 };
 
-/** Rename or move into button, used in list, in select just for same composition */
+/**
+ * Rename or move into button, used in list, in select just for same composition
+ */
 
 export function ListItem(props: Props) {
 	const {name, description, checked} = props;
@@ -25,7 +27,12 @@ export function ListItem(props: Props) {
 				)}
 			>
 				{checked && (
-					<div className='absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary-violet text-white'>
+					<div
+						className={cn(
+							'shadow-[0_0_0_2px_white_inset]',
+							'absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary-violet text-white',
+						)}
+					>
 						{APP_ICON.check}
 					</div>
 				)}

@@ -13,6 +13,6 @@ export const APP_TEXT = {
 	transfer: 'Transfer',
 	more: 'More',
 	continue: 'Continue',
-	chooseCurrency: 'Choose Currency',
 	search: 'Search',
+	targetAmount: 'Target amount',
 } as const;

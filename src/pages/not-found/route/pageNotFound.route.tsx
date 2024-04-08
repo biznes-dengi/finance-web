@@ -1,6 +1,6 @@
 import {NotFoundPage} from '../ui/NotFoundPage.tsx';
 
-import {APP_PATH} from '@shared/constants';
+import {APP_PATH} from '@shared/config';
 import {withRouteGuard} from '@shared/lib';
 
 export const pageNotFoundRoute = {

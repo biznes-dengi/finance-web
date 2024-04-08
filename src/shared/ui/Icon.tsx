@@ -1,10 +1,4 @@
-import {
-	ArrowRightIcon,
-	BriefcaseIcon,
-	EllipsisVerticalIcon,
-	FolderPlusIcon,
-	PlusIcon,
-} from '@heroicons/react/24/outline';
+import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
 
 import {cn} from '@shared/lib';
 
@@ -26,7 +20,14 @@ import trackerIconPath from '@shared/assets/tracker.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import investIconPath from '@shared/assets/invest.svg';
-import {ArrowLeftIcon, CameraIcon, CheckIcon, MagnifyingGlassIcon, XMarkIcon} from '@heroicons/react/24/solid';
+import {
+	ArrowLeftIcon,
+	ArrowUpRightIcon,
+	CameraIcon,
+	CheckIcon,
+	MagnifyingGlassIcon,
+	XMarkIcon,
+} from '@heroicons/react/24/solid';
 
 export const APP_ICON = {
 	USER: <img src={userIconPath} alt='user icon' />,
@@ -38,10 +39,10 @@ export const APP_ICON = {
 	TRACKER: <img src={trackerIconPath} alt='tracket icon' />,
 	createGoal: <FolderPlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
 	fund: <PlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
-	move: <ArrowRightIcon className={cn('h-6 w-6 text-primary-violet')} />,
+	transfer: <ArrowUpRightIcon className={cn('h-6 w-6 text-primary-violet')} />,
 	more: <EllipsisVerticalIcon className={cn('h-6 w-6 text-primary-violet')} />,
 	backButton: <ArrowLeftIcon />,
-	reset: <XMarkIcon className={cn('h-4 w-4')} />,
+	reset: <XMarkIcon className={cn('h-2 w-2')} />,
 	search: <MagnifyingGlassIcon className={cn('h-4 w-4')} />,
 	camera: <CameraIcon className={cn('h-5 w-5')} />,
 	check: <CheckIcon className={cn('h-3 w-3')} />,

@@ -1,5 +1,5 @@
 import {cn} from '@shared/lib';
-import {APP_PATH} from '@shared/constants';
+import {APP_PATH} from '@shared/config';
 import {APP_ICON} from '@shared/ui';
 
 const sidebarConfigs = [

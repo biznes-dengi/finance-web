@@ -2,7 +2,7 @@ import {ReactNode} from 'react';
 
 import {textHelpers} from '@shared/lib';
 import {EmptyState} from '@shared/ui/EmptyState.tsx';
-import {APP_TEXT} from '@shared/constants';
+import {APP_TEXT} from '@shared/config';
 
 const {getDontHaveAny} = textHelpers;
 

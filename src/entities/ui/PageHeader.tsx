@@ -9,6 +9,8 @@ type Props = {
 	handleBackButtonClick?: () => void;
 };
 
+/** Make sticky */
+
 export function PageHeader(props: Props) {
 	const {title, handleBackButtonClick} = props;
 

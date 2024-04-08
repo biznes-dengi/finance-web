@@ -24,7 +24,7 @@ export function Management(props: Props) {
 				<div className='h-10 w-10 rounded-xl bg-secondary-grey' />
 			</div>
 
-			<div className='flex justify-between'>
+			<div className='flex justify-around'>
 				{buttonConfigs.map((buttonConfig) => (
 					<Button
 						key={buttonConfig.name}

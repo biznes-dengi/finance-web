@@ -1,6 +1,6 @@
 import {GoalOverviewPage} from '../ui/GoalOverview.page.tsx';
 
-import {APP_PATH} from '@shared/constants';
+import {APP_PATH} from '@shared/config';
 import {withRouteGuard} from '@shared/lib';
 
 export const goalsOverviewRoute = {

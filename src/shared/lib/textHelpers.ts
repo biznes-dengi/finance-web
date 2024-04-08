@@ -14,6 +14,8 @@ export class textHelpers {
 	}
 
 	static getAmount(amount: Amount) {
-		return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+		const [int] = amount.toString().split('.');
+
+		return int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 	}
 }

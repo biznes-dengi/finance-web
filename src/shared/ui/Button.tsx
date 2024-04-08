@@ -3,8 +3,6 @@ import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import {cn, isUndefined} from '@shared/lib';
 
-import {boxShadow} from '@shared/constants';
-
 export enum BUTTON_TYPE {
 	circle,
 	primary,
@@ -52,11 +50,19 @@ export function Button(props: Props) {
 	}
 
 	if (type === BUTTON_TYPE.primary) {
+		/**
+		 * Когда активная кнопка появл box-shadow
+		 * взять с моего прошлого проекта, где логин как в старом революте
+		 * */
 		return (
 			<div
 				{...defaultButtonProps}
 				className={getButtonClassName(
-					cn('rounded-2xl bg-black py-2 text-center text-white', disabled && 'bg-secondary-grey'),
+					cn(
+						'rounded-2xl py-2 text-center text-white',
+						!disabled && 'bg-primary-violet',
+						disabled && 'bg-secondary-grey',
+					),
 				)}
 				onClick={!disabled ? defaultButtonProps.onClick : undefined}
 			>
@@ -74,7 +80,10 @@ export function Button(props: Props) {
 	}
 
 	return (
-		<div {...defaultButtonProps} className={getButtonClassName(`w-full ${boxShadow} rounded-2xl p-4`)}>
+		<div
+			{...defaultButtonProps}
+			className={getButtonClassName('w-full rounded-2xl p-4 shadow-[0_0_0_4px_white_inset]')}
+		>
 			{children}
 		</div>
 	);

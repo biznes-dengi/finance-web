@@ -9,7 +9,10 @@ export function PageLayout() {
 	const isDesktop = false;
 
 	return (
-		<div role='app-container' className='relative flex h-full justify-between bg-[#F7F7F7] px-6 py-8'>
+		<div
+			role='app-container'
+			className={cn('relative flex h-full justify-between bg-[#F7F7F7]', !isDesktop && 'p-4', isDesktop && 'px-6 py-8')}
+		>
 			{isDesktop && (
 				<div role='app-sidebar' className='w-52'>
 					<PageSidebar />

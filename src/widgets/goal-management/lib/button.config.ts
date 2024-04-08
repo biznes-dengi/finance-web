@@ -1,4 +1,4 @@
-import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {APP_PATH, APP_TEXT} from '@shared/config';
 import {APP_ICON, ButtonConfig} from '@shared/ui';
 
 export const buttonConfigs = [
@@ -10,11 +10,6 @@ export const buttonConfigs = [
 	{
 		name: APP_TEXT.fund,
 		icon: APP_ICON.fund,
-		onClick: () => {},
-	},
-	{
-		name: APP_TEXT.transfer,
-		icon: APP_ICON.move,
 		onClick: () => {},
 	},
 	{

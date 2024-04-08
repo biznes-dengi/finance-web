@@ -3,7 +3,6 @@ import {ReactNode} from 'react';
 import {Box} from '@shared/ui';
 
 import {cn} from '@shared/lib';
-import {boxShadow} from '@shared/constants';
 
 type Props = {
 	activeStepIndex: number;
@@ -20,13 +19,13 @@ export function Stepper(props: Props) {
 					<div
 						key={'' + item + index}
 						className={cn(
-							boxShadow,
-							'h-2.5 w-12 rounded-2xl bg-primary-grey shadow-light-grey',
-							activeStepIndex === index && 'bg-primary-blue',
+							'mr-1 h-0.5 w-10 rounded-2xl bg-primary-grey shadow-light-grey last:mr-0',
+							index <= activeStepIndex && 'bg-primary-violet',
 						)}
 					/>
 				))}
 			</Box>
+
 			{steps[activeStepIndex]}
 		</>
 	);

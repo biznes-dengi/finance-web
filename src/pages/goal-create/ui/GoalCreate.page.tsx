@@ -3,19 +3,19 @@ import {useState} from 'react';
 import {PageHeader, Select, Stepper} from '@entities/ui';
 
 import {APP_ICON, Box, Button, BUTTON_TYPE, NumericField, TextField} from '@shared/ui';
-import {APP_TEXT, boxShadow, CURRENCY} from '@shared/constants';
+import {APP_TEXT} from '@shared/config';
+import {CURRENCY} from '@shared/constants';
 import {cn} from '@shared/lib';
 
-const initialStepIndex = 0;
-
-const hints = ['hint 1', 'hint 2', 'hint 3', 'hint 4', 'hint 5', 'hint 6', 'hint 7', 'hint 8'];
+const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 
 const currencyOptions = [
-	{description: 'PLN', name: 'Polish Zloty', value: CURRENCY.PLN},
-	{description: 'USD', name: 'US Dollar', value: CURRENCY.USD},
-	{description: 'BYN', name: 'BLR rubel', value: CURRENCY.BYN},
+	{description: 'PLN', symbol: 'zł', name: 'Polish Zloty', value: CURRENCY.PLN},
+	{description: 'USD', symbol: '$', name: 'US Dollar', value: CURRENCY.USD},
+	{description: 'BYN', symbol: 'byn', name: 'BLR rubel', value: CURRENCY.BYN},
 ];
 
+const initialStepIndex = 0;
 const initialName = '';
 const initialCurrencyValue = null;
 const initialTargetAmount = '';
@@ -30,19 +30,21 @@ export function GoalCreatePage() {
 
 	const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
 
+	function handleCurrencyValueChange(value: CURRENCY) {
+		setCurrencyValue(value);
+		setTargetAmount(initialTargetAmount);
+	}
+
 	return (
 		<>
 			<PageHeader
 				handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
 			/>
 
-			<div role='image-wrapper' className='relative h-[293px] bg-secondary-grey'>
+			<div role='image-wrapper' className='relative h-[290px] bg-secondary-grey'>
 				{activeStepIndex === initialStepIndex && (
 					<div
-						className={cn(
-							'absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary-blue text-white',
-							boxShadow,
-						)}
+						className='absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary-blue text-white shadow-[0_0_0_4px_white_inset]'
 						onClick={() => alert('Upload a photo')}
 					>
 						{APP_ICON.camera}
@@ -50,7 +52,7 @@ export function GoalCreatePage() {
 				)}
 			</div>
 
-			<div className={cn('flex h-2/3 flex-col')}>
+			<div className={cn('flex h-[calc(100%-290px)] flex-col')}>
 				<div className={cn('flex-1')}>
 					<Stepper
 						activeStepIndex={activeStepIndex}
@@ -64,7 +66,7 @@ export function GoalCreatePage() {
 										{hints.map((hint, index) => (
 											<div
 												key={hint + index}
-												className={cn('mb-2 mr-1 w-fit rounded-2xl bg-secondary-grey px-2 py-0.5')}
+												className={cn('mb-2 mr-1 w-fit rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
 												onClick={() => setName(hint)}
 											>
 												{hint}
@@ -74,11 +76,8 @@ export function GoalCreatePage() {
 								)}
 							</>,
 							<>
-								<Box withBaseHorizontal withBaseBottom>
-									<span className='text-xl font-semibold'>{APP_TEXT.chooseCurrency}</span>
-								</Box>
 								<Box withBaseHorizontal>
-									<Select options={currencyOptions} onChange={setCurrencyValue} value={currencyValue} />
+									<Select options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
 								</Box>
 							</>,
 							<>
@@ -86,7 +85,8 @@ export function GoalCreatePage() {
 									<NumericField
 										value={targetAmount}
 										onChange={setTargetAmount}
-										currencySymbol={selectedCurrencyOption?.description}
+										currencyCode={selectedCurrencyOption?.description}
+										currencySymbol={selectedCurrencyOption?.symbol}
 									/>
 								</Box>
 							</>,
@@ -96,7 +96,11 @@ export function GoalCreatePage() {
 
 				<Box withBaseHorizontal withMediumVertical>
 					<Button
-						onClick={() => setActiveStepIndex(activeStepIndex + 1)}
+						onClick={
+							activeStepIndex === 2
+								? () => alert('Goal successfully created')
+								: () => setActiveStepIndex(activeStepIndex + 1)
+						}
 						type={BUTTON_TYPE.primary}
 						disabled={(() => {
 							if (activeStepIndex === 0) return name === initialName;
@@ -104,7 +108,7 @@ export function GoalCreatePage() {
 							if (activeStepIndex === 2) return targetAmount === initialTargetAmount;
 						})()}
 					>
-						{APP_TEXT.continue}
+						{activeStepIndex === 2 ? APP_TEXT.create : APP_TEXT.continue}
 					</Button>
 				</Box>
 			</div>
