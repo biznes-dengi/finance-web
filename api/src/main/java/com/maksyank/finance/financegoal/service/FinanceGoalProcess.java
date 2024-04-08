@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
-// TODO add validation of all parameters of all methods
 @Service
 public class FinanceGoalProcess {
     private FinanceGoalPersistence financeGoalPersistence;
@@ -39,15 +38,15 @@ public class FinanceGoalProcess {
         return FinanceGoalMapper.sourceToViewResponse(foundFinanceGoals);
     }
 
-    public void processSave(FinGoalRequest toSaveRequest, UserAccount user) throws DbOperationException {
+    public void processSave(FinGoalRequest finGoalToSave, UserAccount user) throws DbOperationException {
         final var rulesFinanceGoal = new InitRulesFinanceGoal(FinanceGoalState.ACTIVE, BigDecimal.ZERO);
-        final var financeGoalToSave = FinanceGoalMapper.mapToNewEntity(toSaveRequest, rulesFinanceGoal, user);
-        this.financeGoalPersistence.save(financeGoalToSave);
+        final var newFinGoal = FinanceGoalMapper.mapToNewEntity(finGoalToSave, rulesFinanceGoal, user);
+        this.financeGoalPersistence.save(newFinGoal);
     }
 
-    public void processUpdate(int id, FinGoalRequest newFinanceGoal, UserAccount user) throws NotFoundException, DbOperationException {
+    public void processUpdate(int id, FinGoalRequest finGoalToSave, UserAccount user) throws NotFoundException, DbOperationException {
         final var oldFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(id, user.getId());
-        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntity(newFinanceGoal, oldFinanceGoal);
+        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntity(finGoalToSave, oldFinanceGoal);
         this.financeGoalPersistence.save(updatedFinanceGoal);
     }
 
