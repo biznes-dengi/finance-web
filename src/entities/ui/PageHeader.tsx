@@ -21,15 +21,15 @@ export function PageHeader(props: Props) {
 	}
 
 	return (
-		<>
-			<div className={cn('absolute top-0 z-10 px-4 pt-2')}>
+		<div role='page-header' className='w-full'>
+			<div className={cn('z-10 w-fit px-4 pt-2')}>
 				<Button onClick={onBackButtonClick} icon={<div className={cn('h-8 w-8')}>{APP_ICON.backButton}</div>} />
 			</div>
 			{title && (
-				<Box withMediumVertical className={cn('text-4xl font-bold')}>
+				<Box withBaseHorizontal withBaseTop className={cn('text-4xl font-bold')}>
 					{title}
 				</Box>
 			)}
-		</>
+		</div>
 	);
 }

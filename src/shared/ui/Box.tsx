@@ -3,8 +3,6 @@ import {cn} from '@shared/lib';
 
 type Props = {
 	children: ReactNode;
-	type?: 'subtitle' | 'title';
-	isMainTitle?: unknown;
 	className?: string;
 
 	withMediumVertical?: unknown;
@@ -14,6 +12,7 @@ type Props = {
 	withBaseVertical?: unknown;
 	withBaseTop?: unknown;
 	withBaseBottom?: unknown;
+	withTitleBottom?: unknown;
 
 	withBaseHorizontal?: unknown;
 };
@@ -21,8 +20,6 @@ type Props = {
 export function Box(props: Props) {
 	const {
 		children,
-		type,
-		isMainTitle,
 		className,
 
 		withMediumVertical,
@@ -32,31 +29,29 @@ export function Box(props: Props) {
 		withBaseVertical,
 		withBaseTop,
 		withBaseBottom,
+		withTitleBottom,
 
 		withBaseHorizontal,
 	} = props;
 
-	const boxClassName = cn(
-		className,
+	return (
+		<div
+			className={cn(
+				className,
 
-		withMediumVertical && 'py-6',
-		withMediumTop && 'pt-6',
-		withMediumBottom && 'pb-6',
+				withMediumVertical && 'py-6',
+				withMediumTop && 'pt-6',
+				withMediumBottom && 'pb-6',
 
-		withBaseVertical && 'py-4',
-		withBaseTop && 'pt-4',
-		withBaseBottom && 'pb-4',
+				withBaseVertical && 'py-4',
+				withBaseTop && 'pt-4',
+				withBaseBottom && 'pb-4',
+				withTitleBottom && 'pb-3',
 
-		withBaseHorizontal && 'px-4',
+				withBaseHorizontal && 'px-4',
+			)}
+		>
+			{children}
+		</div>
 	);
-
-	if (type === 'title') {
-		return <div className={cn('mb-1 font-semibold', !!isMainTitle && 'text-2xl', boxClassName)}>{children}</div>;
-	}
-
-	if (type === 'subtitle') {
-		return <div className={cn('text-sm font-light text-primary-grey', boxClassName)}>{children}</div>;
-	}
-
-	return <div className={boxClassName}>{children}</div>;
 }

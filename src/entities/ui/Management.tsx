@@ -1,4 +1,4 @@
-import {Box, Button, BUTTON_TYPE, ButtonConfig} from '@shared/ui';
+import {Button, BUTTON_TYPE, ButtonConfig} from '@shared/ui';
 
 import {cn, textHelpers} from '@shared/lib';
 import {TotalGoal} from '@entities/goal';
@@ -16,10 +16,10 @@ export function Management(props: Props) {
 		<div role='management' className='p-4'>
 			<div className={cn('mb-4 flex justify-between')}>
 				<div>
-					<Box type='title' isMainTitle>
+					<div className='mb-1 text-2xl font-semibold'>
 						{textHelpers.getAmountWithCurrency(item.amount, item.currencySymbol)}
-					</Box>
-					{subtitle && <Box type='subtitle'>{subtitle}</Box>}
+					</div>
+					{subtitle && <div className='text-sm font-light text-primary-grey'>{subtitle}</div>}
 				</div>
 				<div className='h-10 w-10 rounded-xl bg-secondary-grey' />
 			</div>

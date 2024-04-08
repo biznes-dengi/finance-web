@@ -7,6 +7,7 @@ type Props = {
 	className?: string;
 	withoutTopRounded?: boolean;
 	withoutBottomRounded?: boolean;
+	withBaseHorizontal?: boolean;
 };
 
 /**
@@ -15,7 +16,7 @@ type Props = {
  */
 
 export function Card(props: Props) {
-	const {children, className, withoutTopRounded, withoutBottomRounded} = props;
+	const {children, className, withoutTopRounded, withoutBottomRounded, withBaseHorizontal} = props;
 
 	return (
 		<div
@@ -24,6 +25,7 @@ export function Card(props: Props) {
 				'rounded-2xl bg-white',
 				withoutTopRounded && 'rounded-tl-none rounded-tr-none',
 				withoutBottomRounded && 'rounded-bl-none rounded-br-none',
+				withBaseHorizontal && 'px-4',
 				className,
 			)}
 		>

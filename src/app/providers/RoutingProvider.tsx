@@ -6,6 +6,7 @@ import {APP_PATH} from '@shared/config';
 import {goalsOverviewRoute} from '@pages/goals-overview';
 import {pageNotFoundRoute} from '@pages/not-found';
 import {goalCreateRoute} from '@pages/goal-create';
+import {goalDetailsRoute} from '@pages/goal-details';
 
 /**
  * MainPageLayout vs PageLayout
@@ -15,6 +16,7 @@ const routing = createBrowserRouter([
 	/* module routes */
 	{element: <PageLayout />, children: [goalsOverviewRoute]},
 	goalCreateRoute,
+	goalDetailsRoute,
 
 	/* app ux routes */
 	pageNotFoundRoute,

@@ -15,4 +15,7 @@ export const APP_TEXT = {
 	continue: 'Continue',
 	search: 'Search',
 	targetAmount: 'Target amount',
+	progress: 'Progress',
+	transactions: 'Transactions',
+	seeAll: 'See all',
 } as const;

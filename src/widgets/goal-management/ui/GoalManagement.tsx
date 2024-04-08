@@ -1,13 +1,16 @@
-import {Button, Card} from '@shared/ui';
+import {useNavigate} from 'react-router-dom';
 
+import {Button, Card} from '@shared/ui';
 import {List, ListItem, Management} from '@entities/ui';
 
 import {buttonConfigs} from '../lib/button.config.ts';
 import {Goal, goalModel} from '@entities/goal';
-import {APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/config';
 import {textHelpers} from '@shared/lib';
 
 export function GoalManagement() {
+	const navigate = useNavigate();
+
 	const {rows, goalItem} = goalModel.useData();
 
 	return (
@@ -16,7 +19,7 @@ export function GoalManagement() {
 			<List<Goal>
 				rows={rows}
 				renderRow={(row) => (
-					<Button key={row.name} className='items-center' onClick={() => alert(`go to ${row.name} details`)}>
+					<Button key={row.name} onClick={() => navigate(APP_PATH.goalDetails)}>
 						<ListItem
 							name={row.name}
 							description={textHelpers.getAmountWithCurrency(

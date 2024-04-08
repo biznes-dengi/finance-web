@@ -11,7 +11,7 @@ type Props = {
 };
 
 /**
- * when isSearch and focused, input to the top with animation
+ * when isSearch and focused, pin search-input to the top with animation + cancel text at right
  */
 
 export function TextField(props: Props) {
@@ -32,7 +32,7 @@ export function TextField(props: Props) {
 	return (
 		<>
 			<div
-				className={cn('flex items-center rounded-3xl bg-secondary-grey px-4 py-3', isSearch && 'p-1')}
+				className={cn('flex items-center rounded-2xl bg-secondary-grey px-4 py-3', isSearch && 'rounded-3xl p-1')}
 				onClick={handleInputFocus}
 			>
 				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{APP_ICON.search}</div>}

@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 
-import {APP_ICON, Box} from '@shared/ui';
+import {APP_ICON} from '@shared/ui';
 
 import {cn} from '@shared/lib';
 
@@ -9,6 +9,7 @@ type Props = {
 	name: ReactNode;
 	description: ReactNode;
 	checked?: boolean;
+	amount?: string;
 };
 
 /**
@@ -16,7 +17,7 @@ type Props = {
  */
 
 export function ListItem(props: Props) {
-	const {name, description, checked} = props;
+	const {name, description, checked, amount} = props;
 
 	return (
 		<div className={cn('flex items-center', checked && 'bg-secondary-violet')}>
@@ -37,9 +38,12 @@ export function ListItem(props: Props) {
 					</div>
 				)}
 			</div>
-			<div>
-				<Box type='title'>{name}</Box>
-				<Box type='subtitle'>{description}</Box>
+			<div className='flex w-[calc(100%-40px-16px)] justify-between'>
+				<div>
+					<div className='mb-1 font-semibold'>{name}</div>
+					<div className='text-sm font-light text-primary-grey'>{description}</div>
+				</div>
+				<div>{amount}</div>
 			</div>
 		</div>
 	);
