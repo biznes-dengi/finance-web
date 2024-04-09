@@ -1,5 +1,6 @@
 package com.maksyank.finance.financegoal.domain;
 
+import com.maksyank.finance.financegoal.domain.enums.ImageType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
@@ -12,16 +13,16 @@ import java.util.Base64;
 @Embeddable
 public class FinanceGoalImage {
     @Column(name = "type_image")
-    private String type;
+    private ImageType type;
     @Column(name = "image")
     private byte[] value;
 
-    public FinanceGoalImage(String type, byte[] value) {
+    public FinanceGoalImage(ImageType type, byte[] value) {
         this.type = type;
         this.setValue(value);
     }
 
-    public FinanceGoalImage(String type, String value) {
+    public FinanceGoalImage(ImageType type, String value) {
         this.type = type;
         this.setValue(value);
     }

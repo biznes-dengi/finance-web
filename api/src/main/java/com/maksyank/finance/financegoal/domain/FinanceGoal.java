@@ -92,10 +92,10 @@ public class FinanceGoal {
     @Override
     public String toString() {
         return "FinanceGoal(id=" + this.getId() + ", title=" + this.getTitle() +
-                ", state=" + this.getState().state + ", currencyCode=" + this.getCurrency().code +
+                ", state=" + this.getState() + ", currencyCode=" + this.getCurrency() +
                 ", description=" + this.getDescription() + ", amount=" + this.getBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
-                ", riskProfile=" + this.getRiskProfile().type + ", createdOn=" + this.getCreatedOn() +
+                ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
                 ", lastChange=" + this.getLastChange() + ", userAccountId=" + this.getUserAccount().getId() + ")";
     }
 }

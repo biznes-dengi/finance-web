@@ -4,9 +4,9 @@ CREATE DATABASE finance;
 -- CUSTOM TYPES
 CREATE TYPE fin_goal_state AS ENUM ('ACTIVE', 'ACHIEVED');
 CREATE TYPE currency_code AS ENUM ('EUR', 'USD', 'PLN', 'BYN', 'RUB');
-CREATE TYPE app_role AS ENUM ('admin', 'user');
-CREATE TYPE user_gender AS ENUM ('male', 'female');
-CREATE TYPE risk_profile_type AS ENUM ('conservative', 'moderate', 'aggressive');
+CREATE TYPE app_role AS ENUM ('ADMIN', 'USER');
+CREATE TYPE user_gender AS ENUM ('MALE', 'FEMALE');
+CREATE TYPE risk_profile_type AS ENUM ('CONSERVATIVE', 'MODERATE', 'AGGRESSIVE');
 CREATE TYPE transaction_type AS ENUM ('FUND', 'WITHDRAW');
 CREATE TYPE fin_goal_image_type AS ENUM ('JPEG', 'JPG', 'PNG');
 

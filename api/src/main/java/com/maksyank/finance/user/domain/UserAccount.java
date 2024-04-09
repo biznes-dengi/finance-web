@@ -1,9 +1,9 @@
 package com.maksyank.finance.user.domain;
 
 import com.maksyank.finance.user.domain.base.BaseUser;
+import com.maksyank.finance.user.domain.enums.AppRole;
+import com.maksyank.finance.user.domain.enums.UserGender;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
-import com.maksyank.finance.financegoal.domain.enums.AppRole;
-import com.maksyank.finance.financegoal.domain.enums.UserGender;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -54,10 +54,10 @@ public class UserAccount extends BaseUser {
 
     @Override
     public String toString() {
-        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole().role +
+        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole() +
                 ", email=" + this.getEmail() + ", password=" + this.getPassword() +
                 ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() +
-                ", gender=" + this.getGender().gender + ", dateOfBirth=" + this.getDateOfBirth() +
+                ", gender=" + this.getGender() + ", dateOfBirth=" + this.getDateOfBirth() +
                 ", phoneNumber=" + this.getPhoneNumber() + ", createdOn=" + this.getCreatedOn() +
                 ", lastLogin=" + this.getLastLogin() + ")";
     }

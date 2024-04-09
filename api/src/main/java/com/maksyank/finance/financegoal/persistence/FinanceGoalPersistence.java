@@ -29,7 +29,7 @@ public class FinanceGoalPersistence {
         return this.financeGoalRepository
                 .findByStateAndUserAccount_Id(state, userId)
                 .orElseThrow(
-                        () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state.state)
+                        () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state)
                 );
     }
 

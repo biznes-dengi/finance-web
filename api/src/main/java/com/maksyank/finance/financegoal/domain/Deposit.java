@@ -40,7 +40,7 @@ public class Deposit {
 
     @Override
     public String toString() {
-        return "Deposit(id=" + this.getId() + ", type=" + this.getType().type + ", description=" +
+        return "Deposit(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
                 this.getDescription() + ", fundingDate=" + this.getFundingDate() + ", amount=" +
                 this.getAmount() + ", financeGoalId=" + this.getFinanceGoal().getId() + ")";
     }
