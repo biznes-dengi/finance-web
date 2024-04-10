@@ -4,11 +4,18 @@ CREATE DATABASE finance;
 -- CUSTOM TYPES
 CREATE TYPE fin_goal_state AS ENUM ('ACTIVE', 'ACHIEVED');
 CREATE TYPE currency_code AS ENUM ('EUR', 'USD', 'PLN', 'BYN', 'RUB');
-CREATE TYPE app_role AS ENUM ('admin', 'user');
-CREATE TYPE user_gender AS ENUM ('male', 'female');
-CREATE TYPE risk_profile_type AS ENUM ('conservative', 'moderate', 'aggressive');
-CREATE TYPE transaction_type AS ENUM ('FUND', 'WITHDRAW');
+CREATE TYPE app_role AS ENUM ('ADMIN', 'USER');
+CREATE TYPE user_gender AS ENUM ('MALE', 'FEMALE');
+CREATE TYPE risk_profile_type AS ENUM ('CONSERVATIVE', 'MODERATE', 'AGGRESSIVE');
+CREATE TYPE deposit_type AS ENUM ('FUND', 'WITHDRAW');
 CREATE TYPE fin_goal_image_type AS ENUM ('JPEG', 'JPG', 'PNG');
+
+-- CASTS
+CREATE CAST (varchar AS currency_code) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS fin_goal_state) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS risk_profile_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS fin_goal_image_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS deposit_type) WITH INOUT AS IMPLICIT;
 
 -- TABLES
 CREATE TABLE user_account (
@@ -19,7 +26,7 @@ CREATE TABLE user_account (
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     gender user_gender NOT NULL,
-    date_of_birth TIMESTAMP NOT NULL,
+    date_of_birth DATE NOT NULL,
     phone_number VARCHAR(16) NOT NULL,
     created_on TIMESTAMP NOT NULL,
     last_login TIMESTAMP
@@ -45,7 +52,7 @@ CREATE TABLE finance_goal (
 
 CREATE TABLE deposit (
     id_deposit SERIAL PRIMARY KEY,
-    deposit_type transaction_type NOT NULL,
+    type deposit_type NOT NULL,
     description VARCHAR(100),
     funding_date TIMESTAMP NOT NULL,
     amount NUMERIC(38,2) NOT NULL,

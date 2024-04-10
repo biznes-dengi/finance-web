@@ -1,12 +1,13 @@
 package com.maksyank.finance.user.domain;
 
 import com.maksyank.finance.user.domain.base.BaseUser;
+import com.maksyank.finance.user.domain.enums.AppRole;
+import com.maksyank.finance.user.domain.enums.UserGender;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
-import com.maksyank.finance.financegoal.domain.enums.AppRole;
-import com.maksyank.finance.financegoal.domain.enums.UserGender;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -20,6 +21,7 @@ public class UserAccount extends BaseUser {
     private int id;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private AppRole role;
 
     @Column(name = "email")
@@ -35,10 +37,11 @@ public class UserAccount extends BaseUser {
     private String lastName;
 
     @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     private UserGender gender;
 
     @Column(name = "date_of_birth")
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -54,10 +57,10 @@ public class UserAccount extends BaseUser {
 
     @Override
     public String toString() {
-        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole().role +
+        return "UserAccount(id=" + this.getId() + ", role=" + this.getRole() +
                 ", email=" + this.getEmail() + ", password=" + this.getPassword() +
                 ", firstName=" + this.getFirstName() + ", lastName=" + this.getLastName() +
-                ", gender=" + this.getGender().gender + ", dateOfBirth=" + this.getDateOfBirth() +
+                ", gender=" + this.getGender() + ", dateOfBirth=" + this.getDateOfBirth() +
                 ", phoneNumber=" + this.getPhoneNumber() + ", createdOn=" + this.getCreatedOn() +
                 ", lastLogin=" + this.getLastLogin() + ")";
     }

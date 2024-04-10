@@ -26,8 +26,10 @@ public class FinanceGoal {
     @Column(name = "title")
     private String title;
     @Column(name = "state")
+    @Enumerated(EnumType.STRING)
     private FinanceGoalState state;
     @Column(name = "currency")
+    @Enumerated(EnumType.STRING)
     private CurrencyCode currency;
     @Column(name = "description")
     private String description;
@@ -38,9 +40,10 @@ public class FinanceGoal {
     @Column(name = "deadline")
     private LocalDate deadline;
     @Column(name = "risk_profile")
+    @Enumerated(EnumType.STRING)
     private RiskProfileType riskProfile;
     @Embedded
-    private FinanceGoalImage image;
+    private ImageFinanceGoal image;
     @Column(name = "created_on")
     private LocalDateTime createdOn;
     @Column(name = "last_change")
@@ -55,7 +58,7 @@ public class FinanceGoal {
 
     public FinanceGoal(InitRulesFinanceGoal initRulesFinanceGoal, String title, CurrencyCode currency, String description,
                        BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                       FinanceGoalImage image, UserAccount userAccount
+                       ImageFinanceGoal image, UserAccount userAccount
     ) {
         this.title = title;
         this.state = initRulesFinanceGoal.state();
@@ -71,7 +74,7 @@ public class FinanceGoal {
 
     public FinanceGoal(int id, String title, FinanceGoalState state, CurrencyCode currency, String description, BigDecimal balance,
                        BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                       FinanceGoalImage image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount
+                       ImageFinanceGoal image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount
     ) {
         this.id = id;
         this.title = title;
@@ -92,10 +95,10 @@ public class FinanceGoal {
     @Override
     public String toString() {
         return "FinanceGoal(id=" + this.getId() + ", title=" + this.getTitle() +
-                ", state=" + this.getState().state + ", currencyCode=" + this.getCurrency().code +
+                ", state=" + this.getState() + ", currencyCode=" + this.getCurrency() +
                 ", description=" + this.getDescription() + ", amount=" + this.getBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
-                ", riskProfile=" + this.getRiskProfile().type + ", createdOn=" + this.getCreatedOn() +
+                ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
                 ", lastChange=" + this.getLastChange() + ", userAccountId=" + this.getUserAccount().getId() + ")";
     }
 }

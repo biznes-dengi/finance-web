@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.persistence;
+package com.maksyank.finance.financegoal.service.persistence;
 
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
@@ -29,7 +29,7 @@ public class FinanceGoalPersistence {
         return this.financeGoalRepository
                 .findByStateAndUserAccount_Id(state, userId)
                 .orElseThrow(
-                        () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state.state)
+                        () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state)
                 );
     }
 
