@@ -1,5 +1,5 @@
 package com.maksyank.finance.financegoal.domain.enums;
 
-public enum TransactionType {
+public enum DepositType {
     FUND, WITHDRAW
 }

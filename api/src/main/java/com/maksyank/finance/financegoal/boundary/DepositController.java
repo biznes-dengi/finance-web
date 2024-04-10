@@ -1,12 +1,14 @@
 package com.maksyank.finance.financegoal.boundary;
 
-import com.maksyank.finance.financegoal.boundary.request.DepositDescriptionRequest;
-import com.maksyank.finance.financegoal.boundary.request.DepositSaveRequest;
+import com.maksyank.finance.financegoal.boundary.request.DepositUpdateRequest;
+import com.maksyank.finance.financegoal.boundary.request.DepositRequest;
 import com.maksyank.finance.financegoal.boundary.response.DepositResponse;
 import com.maksyank.finance.financegoal.boundary.response.DepositViewResponse;
 import com.maksyank.finance.financegoal.boundary.response.StateOfFinGoalResponse;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
+import com.maksyank.finance.financegoal.exception.ValidationException;
+import com.maksyank.finance.financegoal.mapper.DepositMapper;
 import com.maksyank.finance.financegoal.service.process.DepositProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +51,18 @@ public class DepositController {
     @PostMapping
     public StateOfFinGoalResponse save(
             @PathVariable("finGoalId") int financeGoalId,
-            @RequestBody DepositSaveRequest depositToSave,
+            @RequestBody DepositRequest requestToSave,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.depositProcess.processSave(depositToSave, financeGoalId, userId);
+            return this.depositProcess.processSave(DepositMapper.mapToDto(requestToSave), financeGoalId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        } catch (ValidationException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
@@ -78,20 +82,22 @@ public class DepositController {
 
     // TODO add validation to description
     @PatchMapping("/{depositId}")
-    public ResponseEntity updateDescription(
+    public ResponseEntity update(
             @PathVariable("finGoalId") int financeGoalId,
             @PathVariable("depositId") int depositId,
             @RequestParam("userId") int userId,
-            @RequestBody DepositDescriptionRequest descriptionToUpdateRequest
+            @RequestBody DepositUpdateRequest requestToUpdate
     ) {
         this.checkIfUserExists(userId);
         try {
-            this.depositProcess.processUpdateDescription(depositId, financeGoalId, descriptionToUpdateRequest, userId);
+            this.depositProcess.processUpdate(depositId, financeGoalId, DepositMapper.mapToUpdateDto(requestToUpdate), userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        } catch (ValidationException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 

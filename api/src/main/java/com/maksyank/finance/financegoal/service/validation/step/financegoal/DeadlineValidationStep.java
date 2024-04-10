@@ -1,7 +1,8 @@
-package com.maksyank.finance.financegoal.service.validation.step;
+package com.maksyank.finance.financegoal.service.validation.step.financegoal;
 
 import com.maksyank.finance.financegoal.dto.FinanceGoalDto;
 import com.maksyank.finance.financegoal.service.validation.ValidationResult;
+import com.maksyank.finance.financegoal.service.validation.step.ValidationStep;
 
 import java.time.LocalDate;
 

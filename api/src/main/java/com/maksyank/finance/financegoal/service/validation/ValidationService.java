@@ -1,7 +1,17 @@
 package com.maksyank.finance.financegoal.service.validation;
 
-import com.maksyank.finance.financegoal.dto.FinanceGoalDto;
+import jakarta.validation.Validator;
 
-public interface ValidationService<T> {
-    ValidationResult validate(T toValidate);
+public abstract class ValidationService {
+    protected final Validator validator;
+    ValidationService(Validator validator) {
+        this.validator = validator;
+    }
+    protected <T> ValidationResult validateConstraint(T toValidate) {
+        final var result = this.validator.validate(toValidate);
+        if (!result.isEmpty())
+            return ValidationResult.invalid(result.iterator().next().getMessage());
+
+        return ValidationResult.valid();
+    }
 }

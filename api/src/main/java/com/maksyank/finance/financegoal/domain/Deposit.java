@@ -1,6 +1,6 @@
 package com.maksyank.finance.financegoal.domain;
 
-import com.maksyank.finance.financegoal.domain.enums.TransactionType;
+import com.maksyank.finance.financegoal.domain.enums.DepositType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +17,9 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_deposit")
     private int id;
-    @Column(name = "deposit_type")
-    private TransactionType type;
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private DepositType type;
     @Column(name = "description")
     private String description;
     @Column(name = "funding_date")
@@ -30,7 +31,7 @@ public class Deposit {
     @JoinColumn(name = "id_finance_goal")
     private FinanceGoal financeGoal;
 
-    public Deposit(TransactionType type, String description, LocalDateTime fundingDate, BigDecimal amount, FinanceGoal financeGoal) {
+    public Deposit(DepositType type, String description, LocalDateTime fundingDate, BigDecimal amount, FinanceGoal financeGoal) {
         this.type = type;
         this.description = description;
         this.fundingDate = fundingDate;

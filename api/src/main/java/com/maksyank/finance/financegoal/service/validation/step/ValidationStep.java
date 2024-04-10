@@ -21,9 +21,8 @@ public abstract class ValidationStep<T> {
     public abstract ValidationResult validate(T toValidate);
 
     protected ValidationResult checkNext(T toValidate) {
-        if (next == null) {
+        if (next == null)
             return ValidationResult.valid();
-        }
 
         return next.validate(toValidate);
     }

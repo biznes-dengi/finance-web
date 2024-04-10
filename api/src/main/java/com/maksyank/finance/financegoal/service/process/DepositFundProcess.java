@@ -2,7 +2,7 @@ package com.maksyank.finance.financegoal.service.process;
 
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
-import com.maksyank.finance.financegoal.domain.enums.TransactionType;
+import com.maksyank.finance.financegoal.domain.enums.DepositType;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.service.persistence.FinanceGoalPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class DepositFundProcess {
     // TODO maybe split logic into methods by filters. It relates from if there's a need for it
     private List<Deposit> findFundDepositsByMonth(FinanceGoal source, LocalDateTime startMonth, LocalDateTime endMonth) {
         return source.getDeposits().stream()
-                .filter(deposit -> deposit.getType() == TransactionType.FUND)
+                .filter(deposit -> deposit.getType() == DepositType.FUND)
                 .filter(deposit -> deposit.getFundingDate().isAfter(startMonth) && deposit.getFundingDate().isBefore(endMonth))
                 .toList();
     }
