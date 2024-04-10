@@ -6,6 +6,7 @@ import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.businessrules.InitRulesFinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
+import com.maksyank.finance.financegoal.dto.FinanceGoalDto;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.exception.ValidationException;
@@ -46,23 +47,23 @@ public class FinanceGoalProcess {
         return FinanceGoalMapper.sourceToViewResponse(foundFinanceGoals);
     }
 
-    public void processSave(FinanceGoalRequest finGoalToSave, UserAccount user) throws DbOperationException, ValidationException {
-        final var resultOfValidation = this.financeGoalValidationService.validate(FinanceGoalMapper.mapToDto(finGoalToSave));
+    public void processSave(FinanceGoalDto finGoalToSaveDto, UserAccount user) throws DbOperationException, ValidationException {
+        final var resultOfValidation = this.financeGoalValidationService.validate(finGoalToSaveDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
         final var rulesFinanceGoal = new InitRulesFinanceGoal(FinanceGoalState.ACTIVE, BigDecimal.ZERO);
-        final var newFinGoal = FinanceGoalMapper.mapToNewEntity(finGoalToSave, rulesFinanceGoal, user);
+        final var newFinGoal = FinanceGoalMapper.mapToNewEntity(finGoalToSaveDto, rulesFinanceGoal, user);
         this.financeGoalPersistence.save(newFinGoal);
     }
 
-    public void processUpdate(int id, FinanceGoalRequest finGoalToSave, UserAccount user) throws NotFoundException, DbOperationException, ValidationException {
-        final var resultOfValidation = this.financeGoalValidationService.validate(FinanceGoalMapper.mapToDto(finGoalToSave));
+    public void processUpdate(int id, FinanceGoalDto finGoalToSaveDto, UserAccount user) throws NotFoundException, DbOperationException, ValidationException {
+        final var resultOfValidation = this.financeGoalValidationService.validate(finGoalToSaveDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
         final var oldFinanceGoal = this.financeGoalPersistence.findByIdAndUserId(id, user.getId());
-        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntity(finGoalToSave, oldFinanceGoal);
+        final var updatedFinanceGoal = FinanceGoalMapper.mapToEntity(finGoalToSaveDto, oldFinanceGoal);
         this.financeGoalPersistence.save(updatedFinanceGoal);
     }
 

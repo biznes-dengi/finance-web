@@ -7,6 +7,7 @@ import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.exception.ValidationException;
+import com.maksyank.finance.financegoal.mapper.FinanceGoalMapper;
 import com.maksyank.finance.financegoal.service.process.FinanceGoalProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,11 @@ public class FinanceGoalController {
     }
 
     @PostMapping()
-    public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinanceGoalRequest toSave) {
+    public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinanceGoalRequest toSaveRequest) {
         this.checkIfUserExists(userId);
         try {
             final var user = this.userAccountService.getById(userId);
-            this.financeGoalProcess.processSave(toSave, user);
+            this.financeGoalProcess.processSave(FinanceGoalMapper.mapToDto(toSaveRequest), user);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
@@ -81,12 +82,12 @@ public class FinanceGoalController {
     public ResponseEntity update(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestParam("userId") int userId,
-            @RequestBody FinanceGoalRequest toUpdate
+            @RequestBody FinanceGoalRequest toUpdateRequest
     ) {
         this.checkIfUserExists(userId);
         try {
             final var user = userAccountService.getById(userId);
-            this.financeGoalProcess.processUpdate(financeGoalId, toUpdate, user);
+            this.financeGoalProcess.processUpdate(financeGoalId, FinanceGoalMapper.mapToDto(toUpdateRequest), user);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);

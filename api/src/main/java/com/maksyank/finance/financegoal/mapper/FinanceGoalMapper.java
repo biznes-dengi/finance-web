@@ -45,17 +45,17 @@ public class FinanceGoalMapper {
     }
 
     public static FinanceGoal mapToNewEntity(
-            FinanceGoalRequest request,
+            FinanceGoalDto source,
             InitRulesFinanceGoal rulesFinanceGoal,
-            UserAccount userAccount
+            UserAccount user
     ) {
         return new FinanceGoal(
-                rulesFinanceGoal, request.title(), request.currency(), request.description(), request.targetAmount(),
-                request.deadline(), request.riskProfile(), new ImageFinanceGoal(request.imageType(), request.image()), userAccount
+                rulesFinanceGoal, source.title(), source.currency(), source.description(), source.targetAmount(),
+                source.deadline(), source.riskProfile(), new ImageFinanceGoal(source.imageType(), source.image()), user
         );
     }
 
-    public static FinanceGoal mapToEntity(FinanceGoalRequest source, FinanceGoal destination) {
+    public static FinanceGoal mapToEntity(FinanceGoalDto source, FinanceGoal destination) {
         destination.setTitle(source.title());
         destination.setCurrency(source.currency());
         destination.setDescription(source.description());
