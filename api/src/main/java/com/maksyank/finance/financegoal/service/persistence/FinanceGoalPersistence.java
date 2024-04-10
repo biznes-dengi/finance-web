@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.persistence;
+package com.maksyank.finance.financegoal.service.persistence;
 
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;

@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.service;
+package com.maksyank.finance.financegoal.service.process;
 
 import com.maksyank.finance.financegoal.boundary.response.StateOfFinGoalResponse;
 import com.maksyank.finance.financegoal.domain.Deposit;
@@ -11,8 +11,8 @@ import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
 import com.maksyank.finance.financegoal.mapper.DepositMapper;
 import com.maksyank.finance.financegoal.mapper.FinanceGoalMapper;
-import com.maksyank.finance.financegoal.persistence.DepositPersistence;
-import com.maksyank.finance.financegoal.persistence.FinanceGoalPersistence;
+import com.maksyank.finance.financegoal.service.persistence.DepositPersistence;
+import com.maksyank.finance.financegoal.service.persistence.FinanceGoalPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

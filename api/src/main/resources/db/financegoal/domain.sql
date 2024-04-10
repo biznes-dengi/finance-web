@@ -10,6 +10,12 @@ CREATE TYPE risk_profile_type AS ENUM ('CONSERVATIVE', 'MODERATE', 'AGGRESSIVE')
 CREATE TYPE transaction_type AS ENUM ('FUND', 'WITHDRAW');
 CREATE TYPE fin_goal_image_type AS ENUM ('JPEG', 'JPG', 'PNG');
 
+-- CASTS
+CREATE CAST (varchar AS currency_code) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS fin_goal_state) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS risk_profile_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS fin_goal_image_type) WITH INOUT AS IMPLICIT;
+
 -- TABLES
 CREATE TABLE user_account (
     id_user_account SERIAL PRIMARY KEY,
@@ -19,7 +25,7 @@ CREATE TABLE user_account (
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     gender user_gender NOT NULL,
-    date_of_birth TIMESTAMP NOT NULL,
+    date_of_birth DATE NOT NULL,
     phone_number VARCHAR(16) NOT NULL,
     created_on TIMESTAMP NOT NULL,
     last_login TIMESTAMP

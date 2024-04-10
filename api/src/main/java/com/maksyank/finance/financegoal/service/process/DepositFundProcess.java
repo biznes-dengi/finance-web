@@ -1,10 +1,10 @@
-package com.maksyank.finance.financegoal.service;
+package com.maksyank.finance.financegoal.service.process;
 
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import com.maksyank.finance.financegoal.domain.enums.TransactionType;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.persistence.FinanceGoalPersistence;
+import com.maksyank.finance.financegoal.service.persistence.FinanceGoalPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

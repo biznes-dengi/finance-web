@@ -1,5 +1,5 @@
 -- last_change
-CREATE FUNCTION update_last_change()
+CREATE FUNCTION finance_goal_update_last_change()
     RETURNS TRIGGER
     LANGUAGE PLPGSQL AS
 $$
@@ -9,13 +9,13 @@ BEGIN
 END
 $$;
 
-CREATE TRIGGER finance_goal_refresh_last_change
+CREATE TRIGGER refresh_last_change
 BEFORE UPDATE ON finance_goal
 FOR EACH ROW
-EXECUTE PROCEDURE update_last_change();
+EXECUTE PROCEDURE finance_goal_update_last_change();
 
 -- created_on
-CREATE FUNCTION init_created_on()
+CREATE FUNCTION finance_goal_init_created_on()
     RETURNS TRIGGER
     LANGUAGE PLPGSQL AS
 $$
@@ -25,7 +25,7 @@ BEGIN
 END
 $$;
 
-CREATE TRIGGER finance_goal_init_created_on
+CREATE TRIGGER init_created_on
 BEFORE INSERT ON finance_goal
 FOR EACH ROW
-EXECUTE PROCEDURE init_created_on();
+EXECUTE PROCEDURE finance_goal_init_created_on();

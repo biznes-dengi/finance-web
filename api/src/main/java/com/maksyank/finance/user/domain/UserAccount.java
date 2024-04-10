@@ -7,6 +7,7 @@ import com.maksyank.finance.financegoal.domain.FinanceGoal;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -20,6 +21,7 @@ public class UserAccount extends BaseUser {
     private int id;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private AppRole role;
 
     @Column(name = "email")
@@ -35,10 +37,11 @@ public class UserAccount extends BaseUser {
     private String lastName;
 
     @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     private UserGender gender;
 
     @Column(name = "date_of_birth")
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name = "phone_number")
     private String phoneNumber;

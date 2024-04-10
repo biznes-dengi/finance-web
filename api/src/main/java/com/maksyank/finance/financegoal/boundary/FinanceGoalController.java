@@ -1,12 +1,13 @@
 package com.maksyank.finance.financegoal.boundary;
 
-import com.maksyank.finance.financegoal.boundary.request.FinGoalRequest;
+import com.maksyank.finance.financegoal.boundary.request.FinanceGoalRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
 import com.maksyank.finance.financegoal.domain.enums.FinanceGoalState;
 import com.maksyank.finance.financegoal.exception.DbOperationException;
 import com.maksyank.finance.financegoal.exception.NotFoundException;
-import com.maksyank.finance.financegoal.service.FinanceGoalProcess;
+import com.maksyank.finance.financegoal.exception.ValidationException;
+import com.maksyank.finance.financegoal.service.process.FinanceGoalProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class FinanceGoalController {
     }
 
     @PostMapping()
-    public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinGoalRequest toSave) {
+    public ResponseEntity save(@RequestParam("userId") int userId, @RequestBody FinanceGoalRequest toSave) {
         this.checkIfUserExists(userId);
         try {
             final var user = this.userAccountService.getById(userId);
@@ -58,6 +59,8 @@ public class FinanceGoalController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        } catch (ValidationException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
@@ -78,7 +81,7 @@ public class FinanceGoalController {
     public ResponseEntity update(
             @PathVariable("finGoalId") int financeGoalId,
             @RequestParam("userId") int userId,
-            @RequestBody FinGoalRequest toUpdate
+            @RequestBody FinanceGoalRequest toUpdate
     ) {
         this.checkIfUserExists(userId);
         try {
@@ -89,6 +92,8 @@ public class FinanceGoalController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        } catch (ValidationException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 

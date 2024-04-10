@@ -1,4 +1,4 @@
-package com.maksyank.finance.financegoal.persistence;
+package com.maksyank.finance.financegoal.service.persistence;
 
 import com.maksyank.finance.financegoal.domain.Deposit;
 import com.maksyank.finance.financegoal.exception.DbOperationException;

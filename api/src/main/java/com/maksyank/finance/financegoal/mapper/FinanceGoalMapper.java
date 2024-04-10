@@ -2,11 +2,12 @@ package com.maksyank.finance.financegoal.mapper;
 
 import com.maksyank.finance.financegoal.boundary.response.StateOfFinGoalResponse;
 import com.maksyank.finance.financegoal.domain.FinanceGoal;
-import com.maksyank.finance.financegoal.boundary.request.FinGoalRequest;
+import com.maksyank.finance.financegoal.boundary.request.FinanceGoalRequest;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalResponse;
 import com.maksyank.finance.financegoal.boundary.response.FinGoalViewResponse;
-import com.maksyank.finance.financegoal.domain.FinanceGoalImage;
+import com.maksyank.finance.financegoal.domain.ImageFinanceGoal;
 import com.maksyank.finance.financegoal.domain.businessrules.InitRulesFinanceGoal;
+import com.maksyank.finance.financegoal.dto.FinanceGoalDto;
 import com.maksyank.finance.user.domain.UserAccount;
 
 import java.util.Collection;
@@ -36,25 +37,32 @@ public class FinanceGoalMapper {
         );
     }
 
+    public static FinanceGoalDto mapToDto(FinanceGoalRequest source) {
+        return new FinanceGoalDto(
+                source.title(), source.currency(), source.description(), source.targetAmount(),
+                source.deadline(), source.riskProfile(), source.image(), source.imageType()
+        );
+    }
+
     public static FinanceGoal mapToNewEntity(
-            FinGoalRequest request,
+            FinanceGoalRequest request,
             InitRulesFinanceGoal rulesFinanceGoal,
             UserAccount userAccount
     ) {
         return new FinanceGoal(
                 rulesFinanceGoal, request.title(), request.currency(), request.description(), request.targetAmount(),
-                request.deadline(), request.riskProfile(), new FinanceGoalImage(request.imageType(), request.image()), userAccount
+                request.deadline(), request.riskProfile(), new ImageFinanceGoal(request.imageType(), request.image()), userAccount
         );
     }
 
-    public static FinanceGoal mapToEntity(FinGoalRequest source, FinanceGoal destination) {
+    public static FinanceGoal mapToEntity(FinanceGoalRequest source, FinanceGoal destination) {
         destination.setTitle(source.title());
         destination.setCurrency(source.currency());
         destination.setDescription(source.description());
         destination.setTargetAmount(source.targetAmount());
         destination.setDeadline(source.deadline());
         destination.setRiskProfile(source.riskProfile());
-        destination.setImage(new FinanceGoalImage(source.imageType(), source.image()));
+        destination.setImage(new ImageFinanceGoal(source.imageType(), source.image()));
         return destination;
     }
 
