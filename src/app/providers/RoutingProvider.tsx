@@ -9,7 +9,6 @@ import {goalCreateRoute} from '@pages/goal-create';
 import {goalDetailsRoute} from '@pages/goal-details';
 
 const router = createBrowserRouter([
-	/* module routes */
 	{element: <HomePageLayout />, children: [goalsOverviewRoute]},
 	{element: <BaseLayout />, children: [goalCreateRoute]},
 	{element: <BaseLayout />, children: [goalDetailsRoute]},
