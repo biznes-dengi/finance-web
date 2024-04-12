@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 
-import {Box} from '@shared/ui';
+import {Box} from '@shared/ui/index.ts';
 
 import {cn} from '@shared/lib';
 

@@ -1,6 +1,6 @@
 import {NavigateFunction} from 'react-router-dom';
 
-import {APP_ICON, Box, Button} from '@shared/ui';
+import {APP_ICON, Box, Button} from '@shared/ui/index.ts';
 
 import {cn} from '@shared/lib';
 

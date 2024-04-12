@@ -1,7 +1,6 @@
 import {useState} from 'react';
 
-import {ListItem} from './ListItem.tsx';
-import {Box, Button, Card, TextField} from '@shared/ui';
+import {Box, Button, Card, ListItem, TextField} from '@shared/ui';
 
 import {APP_TEXT} from '@shared/config';
 import {cn, isNumber} from '@shared/lib';

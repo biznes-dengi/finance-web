@@ -1,5 +1,5 @@
-import {ListItem, PageHeader} from '@entities/ui';
-import {Box, Button, Card} from '@shared/ui';
+import {Box, Button, Card, ListItem, PageHeader} from '@shared/ui';
+
 import {APP_TEXT} from '@shared/config';
 
 const transactions = [

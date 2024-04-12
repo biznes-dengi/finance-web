@@ -1,4 +1,4 @@
-import {Button, BUTTON_TYPE, ButtonConfig} from '@shared/ui';
+import {Button, BUTTON_TYPE, ButtonConfig} from '@shared/ui/index.ts';
 
 import {cn, textHelpers} from '@shared/lib';
 import {TotalGoal} from '@entities/goal';

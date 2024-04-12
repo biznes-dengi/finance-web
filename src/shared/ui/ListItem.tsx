@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 
-import {APP_ICON} from '@shared/ui';
+import {APP_ICON} from '@shared/ui/index.ts';
 
 import {cn} from '@shared/lib';
 

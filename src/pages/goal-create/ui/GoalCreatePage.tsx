@@ -1,8 +1,7 @@
 import {useState} from 'react';
 
-import {PageHeader, Select, Stepper} from '@entities/ui';
+import {APP_ICON, Box, Button, BUTTON_TYPE, NumericField, PageHeader, Select, Stepper, TextField} from '@shared/ui';
 
-import {APP_ICON, Box, Button, BUTTON_TYPE, NumericField, TextField} from '@shared/ui';
 import {APP_TEXT} from '@shared/config';
 import {CURRENCY} from '@shared/constants';
 import {cn} from '@shared/lib';
@@ -64,7 +63,7 @@ export function GoalCreatePage() {
 								<TextField value={name} onChange={setName} maxLength={25} placeholder='Goal name' />
 							</Box>
 							{!name && (
-								<Box withBaseHorizontal className={cn('flex flex-wrap')}>
+								<Box withBaseHorizontal className={cn('flex flex-wrap pt-4')}>
 									{hints.map((hint, index) => (
 										<div
 											key={hint + index}

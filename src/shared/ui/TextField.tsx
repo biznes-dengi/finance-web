@@ -32,14 +32,14 @@ export function TextField(props: Props) {
 	return (
 		<>
 			<div
-				className={cn('flex items-center rounded-2xl bg-secondary-grey px-4 py-3', isSearch && 'rounded-3xl p-1')}
+				className={cn('flex items-center rounded-2xl bg-secondary-grey p-4', isSearch && 'rounded-3xl p-1')}
 				onClick={handleInputFocus}
 			>
 				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{APP_ICON.search}</div>}
 
 				<input
 					ref={inputRef}
-					className={cn('w-full bg-inherit outline-0')}
+					className={cn('w-full bg-inherit caret-primary-violet outline-0')}
 					value={value}
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={placeholder}
@@ -50,7 +50,7 @@ export function TextField(props: Props) {
 					<div
 						onClick={() => onChange('')}
 						className={cn(
-							'ml-2 h-4 w-4 cursor-pointer rounded-full bg-primary-grey p-1 text-secondary-grey',
+							'ml-2 h-5 w-5 cursor-pointer rounded-full bg-primary-grey p-1 text-secondary-grey',
 							isSearch && 'mx-1',
 						)}
 					>
@@ -60,7 +60,7 @@ export function TextField(props: Props) {
 			</div>
 
 			{maxLength && (
-				<div className={cn('mb-2 mr-4 mt-1 flex cursor-default justify-end text-sm text-primary-grey')}>
+				<div className={cn('flex cursor-default justify-end pr-4 pt-1 text-sm text-primary-grey')}>
 					{value.length} / {maxLength}
 				</div>
 			)}

@@ -46,7 +46,10 @@ export function NumericField(props: Props) {
 
 				<input
 					ref={inputRef}
-					className={cn('w-full bg-inherit text-right text-xl font-semibold outline-0')}
+					className={cn(
+						'w-full bg-inherit text-right text-xl font-semibold caret-primary-violet outline-0',
+						isError && 'caret-red-600',
+					)}
 					value={textHelpers.getAmount(value.replace(/\s/g, ''))}
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={`${placeholder || 0}`}

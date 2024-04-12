@@ -1,7 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-import {Button, Card} from '@shared/ui';
-import {List, ListItem, Management} from '@entities/ui';
+import {Button, Card, List, ListItem, Management} from '@shared/ui';
 
 import {buttonConfigs} from '../lib/button.config.ts';
 import {Goal, goalModel} from '@entities/goal';
