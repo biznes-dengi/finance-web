@@ -22,9 +22,9 @@ export function GoalManagement() {
 					<Button key={row.name} onClick={() => navigate(APP_PATH.goalDetails)}>
 						<ListItem
 							name={row.name}
-							description={textHelpers.getAmountWithCurrency(
-								textHelpers.getRatio(row.savedAmount, row.targetAmount),
-								row.currencySymbol,
+							description={textHelpers.getRatio(
+								textHelpers.getAmountWithCurrency(row.savedAmount, row.currencySymbol),
+								textHelpers.getAmountWithCurrency(row.targetAmount, row.currencySymbol),
 							)}
 						/>
 					</Button>
