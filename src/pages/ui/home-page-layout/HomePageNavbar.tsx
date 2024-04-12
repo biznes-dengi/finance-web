@@ -30,7 +30,7 @@ const sidebarConfigs = [
  *  2. for nav items hover box shadow (with space between active and hovered elements)
  */
 
-export function PageSidebar() {
+export function HomePageNavbar() {
 	return (
 		<>
 			<div className='mb-12 flex pl-4 text-2xl font-bold'>{APP_ICON.APP_LOGO}</div>

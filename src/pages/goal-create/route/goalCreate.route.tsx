@@ -1,4 +1,4 @@
-import {GoalCreatePage} from '../ui/GoalCreate.page.tsx';
+import {GoalCreatePage} from '../ui/GoalCreatePage.tsx';
 
 import {APP_PATH} from '@shared/config';
 

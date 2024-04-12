@@ -1,6 +1,6 @@
 import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
 
-import {PageLayout} from '@pages/page-layout';
+import {BaseLayout, HomePageLayout} from '@pages/ui';
 
 import {APP_PATH} from '@shared/config';
 import {goalsOverviewRoute} from '@pages/goals-overview';
@@ -8,25 +8,16 @@ import {pageNotFoundRoute} from '@pages/not-found';
 import {goalCreateRoute} from '@pages/goal-create';
 import {goalDetailsRoute} from '@pages/goal-details';
 
-/**
- * MainPageLayout vs PageLayout
- */
-
-const routing = createBrowserRouter([
+const router = createBrowserRouter([
 	/* module routes */
-	{element: <PageLayout />, children: [goalsOverviewRoute]},
-	goalCreateRoute,
-	goalDetailsRoute,
+	{element: <HomePageLayout />, children: [goalsOverviewRoute]},
+	{element: <BaseLayout />, children: [goalCreateRoute]},
+	{element: <BaseLayout />, children: [goalDetailsRoute]},
 
-	/* app ux routes */
 	pageNotFoundRoute,
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},
 ]);
 
 export function RoutingProvider() {
-	return (
-		<div role='app-container' className='h-full bg-light-grey'>
-			<RouterProvider router={routing} />
-		</div>
-	);
+	return <RouterProvider router={router} />;
 }

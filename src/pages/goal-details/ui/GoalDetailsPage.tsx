@@ -29,14 +29,14 @@ export function GoalDetailsPage() {
 				<Card withBaseHorizontal>
 					<Box withBaseTop>
 						<div className='flex justify-between'>
-							<div className='text-sm'>50 %</div>
+							<div className='text-sm font-semibold'>Saved 50%</div>
 							<div className='text-sm'>12 500 / 25 000 $</div>
 						</div>
 					</Box>
-					<Box className='py-4'>
+					<Box withBaseTop>
 						<div className='h-1 w-full rounded-2xl bg-primary-grey' />
 					</Box>
-					<div className='flex justify-between pb-4'>
+					<div className='flex justify-between py-4'>
 						<div className='text-sm text-primary-grey'>Deadline: 15 june 2024</div>
 						<div className='text-sm text-primary-grey'>127d left</div>
 					</div>
