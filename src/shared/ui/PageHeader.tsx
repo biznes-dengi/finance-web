@@ -6,18 +6,18 @@ import {cn} from '@shared/lib';
 
 type Props = {
 	title?: string;
+	backPath?: string;
 	handleBackButtonClick?: () => void;
 };
 
 /** Make sticky */
 
 export function PageHeader(props: Props) {
-	const {title, handleBackButtonClick} = props;
+	const {title, handleBackButtonClick, backPath} = props;
 
 	function onBackButtonClick({navigate}: {navigate: NavigateFunction}) {
-		if (handleBackButtonClick) return handleBackButtonClick();
-
-		navigate(-1);
+		handleBackButtonClick?.();
+		backPath ? navigate(backPath) : navigate(-1);
 	}
 
 	return (

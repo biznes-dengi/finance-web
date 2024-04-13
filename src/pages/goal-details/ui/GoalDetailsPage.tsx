@@ -1,6 +1,6 @@
 import {Box, Button, Card, ListItem, PageHeader} from '@shared/ui';
 
-import {APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/config';
 
 const transactions = [
 	{name: 'Add money', description: 'Today, 15:45', amount: '+37 $'},
@@ -12,7 +12,7 @@ export function GoalDetailsPage() {
 	return (
 		<>
 			<div role='image-wrapper' className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
-				<PageHeader title='Mustang' />
+				<PageHeader title='Mustang' backPath={APP_PATH.root} />
 
 				<div className='mb-4 flex justify-between px-6'>
 					<div className='h-12 w-12 rounded-full bg-primary-grey' />
