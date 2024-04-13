@@ -1,1 +1,1 @@
-export {goalRoutes} from './goal.route.tsx';
+export {goalRoutes} from './route/goal.route.tsx';

@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {Button, Card, List, ListItem, Management} from '@shared/ui';
 
 import {buttonConfigs} from '../lib/button.config.ts';
-import {Goal, goalModel} from '@entities/goal';
+import {type Goal, goalModel} from '@entities/goal';
 import {APP_PATH, APP_TEXT} from '@shared/config';
 import {textHelpers} from '@shared/lib';
 

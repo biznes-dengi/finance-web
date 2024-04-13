@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {
 	APP_ICON,
@@ -16,7 +17,6 @@ import {
 import {APP_PATH, APP_TEXT} from '@shared/config';
 import {CURRENCY} from '@shared/constants';
 import {cn} from '@shared/lib';
-import {useNavigate} from 'react-router-dom';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 

@@ -5,8 +5,6 @@ import {GoalManagement} from '@widgets/goal-management';
 
 import {APP_PATH} from '@shared/config';
 
-/** В будущем может переименоваться из HomePage в ЛичныеФинансыPage **/
-
 const tabConfigs = [{label: 'Goals', path: APP_PATH.root}, {label: 'Expenses'}];
 
 export function GoalListPage() {
