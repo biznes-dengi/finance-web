@@ -34,7 +34,7 @@ export function ListItem(props: Props) {
 							'absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary-violet text-white',
 						)}
 					>
-						{APP_ICON.check}
+						<div className='h-3 w-3'>{APP_ICON.check}</div>
 					</div>
 				)}
 			</div>

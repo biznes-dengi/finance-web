@@ -18,4 +18,5 @@ export const APP_TEXT = {
 	progress: 'Progress',
 	transactions: 'Transactions',
 	seeAll: 'See all',
+	createdSuccess: 'has been successfully created',
 } as const;

@@ -45,5 +45,5 @@ export const APP_ICON = {
 	reset: <XMarkIcon className={cn('h-3 w-3')} />,
 	search: <MagnifyingGlassIcon className={cn('h-4 w-4')} />,
 	camera: <CameraIcon className={cn('h-5 w-5')} />,
-	check: <CheckIcon className={cn('h-3 w-3')} />,
+	check: <CheckIcon />,
 };

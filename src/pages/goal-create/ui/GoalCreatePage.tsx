@@ -1,10 +1,22 @@
 import {useState} from 'react';
 
-import {APP_ICON, Box, Button, BUTTON_TYPE, NumericField, PageHeader, Select, Stepper, TextField} from '@shared/ui';
+import {
+	APP_ICON,
+	Box,
+	Button,
+	BUTTON_TYPE,
+	NumericField,
+	PageHeader,
+	Select,
+	Stepper,
+	TextField,
+	useDrawer,
+} from '@shared/ui';
 
-import {APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/config';
 import {CURRENCY} from '@shared/constants';
 import {cn} from '@shared/lib';
+import {useNavigate} from 'react-router-dom';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 
@@ -23,12 +35,16 @@ const initialCurrencyValue = null;
 const initialTargetAmount = '';
 
 export function GoalCreatePage() {
+	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
+
 	/** Form state */
 	const [name, setName] = useState(initialName);
 	const [currencyValue, setCurrencyValue] = useState<CURRENCY | null>(initialCurrencyValue);
 	const [targetAmount, setTargetAmount] = useState(initialTargetAmount);
 
-	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
+	const {openDrawer, Drawer} = useDrawer();
+
+	const navigate = useNavigate();
 
 	const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
 
@@ -76,32 +92,24 @@ export function GoalCreatePage() {
 								</Box>
 							)}
 						</>,
-						<>
-							<Box withBaseHorizontal>
-								<Select options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
-							</Box>
-						</>,
-						<>
-							<Box withBaseHorizontal>
-								<NumericField
-									value={targetAmount}
-									onChange={setTargetAmount}
-									currencyCode={selectedCurrencyOption?.description}
-									currencySymbol={selectedCurrencyOption?.symbol}
-								/>
-							</Box>
-						</>,
+						<Box key={activeStepIndex} withBaseHorizontal>
+							<Select options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
+						</Box>,
+						<Box key={activeStepIndex} withBaseHorizontal>
+							<NumericField
+								value={targetAmount}
+								onChange={setTargetAmount}
+								currencyCode={selectedCurrencyOption?.description}
+								currencySymbol={selectedCurrencyOption?.symbol}
+							/>
+						</Box>,
 					]}
 				/>
 			</div>
 
 			<Box withBaseHorizontal withMediumVertical>
 				<Button
-					onClick={
-						activeStepIndex === 2
-							? () => alert('Goal successfully created')
-							: () => setActiveStepIndex(activeStepIndex + 1)
-					}
+					onClick={activeStepIndex === 2 ? () => openDrawer() : () => setActiveStepIndex(activeStepIndex + 1)}
 					type={BUTTON_TYPE.primary}
 					disabled={(() => {
 						if (activeStepIndex === 0) return name === initialName;
@@ -112,6 +120,19 @@ export function GoalCreatePage() {
 					{activeStepIndex === 2 ? APP_TEXT.create : APP_TEXT.continue}
 				</Button>
 			</Box>
+
+			<Drawer
+				content={
+					<div className='flex flex-col items-center pb-4'>
+						<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{APP_ICON.check}</div>
+						<div className='text-center font-semibold'>
+							{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
+						</div>
+					</div>
+				}
+				afterAutoCloseAction={() => navigate(APP_PATH.goalDetails)}
+				closeDisabled
+			/>
 		</>
 	);
 }
