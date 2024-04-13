@@ -22,7 +22,7 @@ const goalListRoute = {
 	element: withRouteGuard({page: <GoalListPage />}),
 };
 
-export const goalRoute = [
+export const goalRoutes = [
 	{element: <HomePageLayout />, children: [goalListRoute]},
 	{element: <BaseLayout />, children: [goalCreateRoute, goalDetailsRoute]},
 ];
