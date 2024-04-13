@@ -1,17 +1,11 @@
 import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
 
-import {BaseLayout, HomePageLayout} from '@pages/ui';
-
 import {APP_PATH} from '@shared/config';
-import {goalsOverviewRoute} from '@pages/goals-overview';
 import {pageNotFoundRoute} from '@pages/not-found';
-import {goalCreateRoute} from '@pages/goal-create';
-import {goalDetailsRoute} from '@pages/goal-details';
+import {goalRoute} from '@pages/goal';
 
 const router = createBrowserRouter([
-	{element: <HomePageLayout />, children: [goalsOverviewRoute]},
-	{element: <BaseLayout />, children: [goalCreateRoute]},
-	{element: <BaseLayout />, children: [goalDetailsRoute]},
+	...goalRoute,
 
 	pageNotFoundRoute,
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},
