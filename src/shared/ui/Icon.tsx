@@ -4,22 +4,22 @@ import {cn} from '@shared/lib';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import userIconPath from '@shared/assets/user.svg';
+import userIconPath from '../../../assets/user.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import pyramidIconPath from '@shared/assets/pyramid.svg';
+import pyramidIconPath from '../../../assets/pyramid.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import homeIconPath from '@shared/assets/home-primary-violet.svg';
+import homeIconPath from '../../../assets/home-primary-violet.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import calculatorIconPath from '@shared/assets/calculator.svg';
+import calculatorIconPath from '../../../assets/calculator.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import trackerIconPath from '@shared/assets/tracker.svg';
+import trackerIconPath from '../../../assets/tracker.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import investIconPath from '@shared/assets/invest.svg';
+import investIconPath from '../../../assets/invest.svg';
 import {
 	ArrowLeftIcon,
 	ArrowUpRightIcon,
