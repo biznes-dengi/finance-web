@@ -1,9 +1,9 @@
 import {APP_PATH} from '@shared/config';
 
 import {BaseLayout, HomePageLayout} from '@pages/ui';
-import {GoalCreatePage} from './GoalCreatePage.tsx';
-import {GoalDetailsPage} from './GoalDetailsPage.tsx';
-import {GoalListPage} from './GoalListPage.tsx';
+import {GoalCreatePage} from './ui/GoalCreatePage.tsx';
+import {GoalDetailsPage} from './ui/GoalDetailsPage.tsx';
+import {GoalListPage} from './ui/GoalListPage.tsx';
 
 import {withRouteGuard} from '@shared/lib';
 
