@@ -5,7 +5,7 @@ import {BottomDrawer} from './BottomDrawer.tsx';
 export type DrawerProps = {
 	content: ReactNode;
 	afterAutoCloseAction?: () => void;
-	closeDisabled?: boolean;
+	isCloseDisabled?: boolean;
 };
 
 export function useDrawer() {

@@ -16,7 +16,7 @@ export function PageHeader(props: Props) {
 	const {title, handleBackButtonClick, backPath} = props;
 
 	function onBackButtonClick({navigate}: {navigate: NavigateFunction}) {
-		handleBackButtonClick?.();
+		if (handleBackButtonClick) return handleBackButtonClick();
 		backPath ? navigate(backPath) : navigate(-1);
 	}
 

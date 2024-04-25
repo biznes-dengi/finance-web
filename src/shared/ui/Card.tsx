@@ -10,11 +10,6 @@ type Props = {
 	withBaseHorizontal?: boolean;
 };
 
-/**
- * я карточка, рендерю какой-то тайтл слева, какую-то иконку справа, какие-то кнопки снизу и какие-то list-items
- * add prop featureConfig -> map -> <button />
- */
-
 export function Card(props: Props) {
 	const {children, className, withoutTopRounded, withoutBottomRounded, withBaseHorizontal} = props;
 

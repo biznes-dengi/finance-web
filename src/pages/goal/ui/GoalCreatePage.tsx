@@ -26,13 +26,12 @@ const currencyOptions = [
 	{description: 'BYN', symbol: 'byn', name: 'BLR rubel', value: CURRENCY.BYN},
 	{description: 'EUR', symbol: 'eur', name: 'Euro', value: CURRENCY.EUR},
 	{description: 'GBP', symbol: 'gbp', name: 'British pound', value: CURRENCY.GBP},
-	{description: 'GBP', symbol: 'gbp', name: 'British pound', value: CURRENCY.GBP},
 ];
 
 const initialStepIndex = 0;
 const initialName = '';
 const initialCurrencyValue = null;
-const initialTargetAmount = '';
+const initialTargetAmount = undefined;
 
 export function GoalCreatePage() {
 	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
@@ -40,7 +39,7 @@ export function GoalCreatePage() {
 	/** Form state */
 	const [name, setName] = useState(initialName);
 	const [currencyValue, setCurrencyValue] = useState<CURRENCY | null>(initialCurrencyValue);
-	const [targetAmount, setTargetAmount] = useState(initialTargetAmount);
+	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 
 	const {openDrawer, Drawer} = useDrawer();
 
@@ -55,14 +54,17 @@ export function GoalCreatePage() {
 
 	return (
 		<>
-			<div role='image-wrapper' className='flex h-[290px] flex-col items-end justify-between bg-secondary-grey'>
+			<div
+				role='image-wrapper'
+				className='flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey'
+			>
 				<PageHeader
 					handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
 				/>
 
 				{activeStepIndex === initialStepIndex && (
 					<div
-						className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-blue text-white shadow-[0_0_0_4px_white_inset]'
+						className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
 						onClick={() => alert('Upload a photo')}
 					>
 						{APP_ICON.camera}
@@ -83,7 +85,7 @@ export function GoalCreatePage() {
 									{hints.map((hint, index) => (
 										<div
 											key={hint + index}
-											className={cn('mb-2 mr-1 w-fit rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
+											className={cn('mb-2 mr-2 w-fit rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
 											onClick={() => setName(hint)}
 										>
 											{hint}
@@ -131,7 +133,7 @@ export function GoalCreatePage() {
 					</div>
 				}
 				afterAutoCloseAction={() => navigate(APP_PATH.goalDetails)}
-				closeDisabled
+				isCloseDisabled
 			/>
 		</>
 	);

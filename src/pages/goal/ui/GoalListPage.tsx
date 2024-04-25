@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
 import {TabConfig, Tabs} from '@shared/ui';
-import {GoalManagement} from '@widgets/goal-management';
+import {GoalManagement} from '@widgets/goal';
 
 import {APP_PATH} from '@shared/config';
 
