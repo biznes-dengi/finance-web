@@ -1,7 +1,3 @@
-import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
-
-import {cn} from '@shared/lib';
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import userIconPath from '../../../assets/user.svg';
@@ -20,14 +16,19 @@ import trackerIconPath from '../../../assets/tracker.svg';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import investIconPath from '../../../assets/invest.svg';
+
 import {
 	ArrowLeftIcon,
 	ArrowUpRightIcon,
 	CameraIcon,
 	CheckIcon,
+	CloudArrowUpIcon,
 	MagnifyingGlassIcon,
 	XMarkIcon,
 } from '@heroicons/react/24/solid';
+import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
+
+import {cn} from '@shared/lib';
 
 export const APP_ICON = {
 	USER: <img src={userIconPath} alt='user icon' />,
@@ -46,4 +47,5 @@ export const APP_ICON = {
 	search: <MagnifyingGlassIcon className={cn('h-4 w-4')} />,
 	camera: <CameraIcon className={cn('h-5 w-5')} />,
 	check: <CheckIcon />,
+	uploadImage: <CloudArrowUpIcon className={cn('h-5 w-5')} />,
 };

@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 
-import {cn} from '@shared/lib';
+import {cn, isNumber} from '@shared/lib';
 import {APP_TEXT} from '@shared/config';
 
 type Props = {
@@ -14,7 +14,12 @@ type Props = {
 
 /**
  * make with spaces, when value is number
+ * when first input value is 0, next value can be only "," or "."
+ * can provide "e"
  * */
+// When focus
+// const isMobile = true;
+// isMobile && inputRef.current?.setSelectionRange(value.length, value.length);
 
 export function NumericField(props: Props) {
 	const {value, onChange, placeholder, currencySymbol, disabled, currencyCode} = props;
@@ -34,15 +39,8 @@ export function NumericField(props: Props) {
 		// }
 	}
 
-	function focusInput() {
-		inputRef.current?.focus();
-
-		// const isMobile = true;
-		// isMobile && inputRef.current?.setSelectionRange(value.length, value.length);
-	}
-
 	return (
-		<div className={cn('rounded-2xl bg-secondary-grey p-4', isError && 'bg-[#FDE3E5]')} onClick={focusInput}>
+		<label className={cn('block rounded-2xl bg-secondary-grey p-4', isError && 'bg-[#FDE3E5]')}>
 			<div className='flex items-center justify-between'>
 				<div className='mr-4 flex items-center'>
 					<div className='mr-2 h-5 w-5 rounded-full bg-primary-grey' />
@@ -65,13 +63,13 @@ export function NumericField(props: Props) {
 					// value={textHelpers.getAmount(mappedValue.replace(/\s/g, ''))}
 				/>
 
-				<div className={cn('ml-2 text-xl font-semibold', !value && 'text-[#9CA3AF]')}>{currencySymbol}</div>
+				<div className={cn('ml-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>{currencySymbol}</div>
 			</div>
 
 			<div className='mt-1 flex justify-between'>
-				<div className={cn('text-sm font-light text-primary-grey', isError && 'text-[#B51F2D]')}>{APP_TEXT.target}</div>
+				<div className={cn('text-sm font-light text-primary-grey', isError && 'text-[#B51F2D]')}>{APP_TEXT.amount}</div>
 				{isError && <div className='text-sm font-light text-[#B51F2D]'>exceeds balance (with small letter)</div>}
 			</div>
-		</div>
+		</label>
 	);
 }

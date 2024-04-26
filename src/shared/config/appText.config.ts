@@ -14,7 +14,7 @@ export const APP_TEXT = {
 	more: 'More',
 	continue: 'Continue',
 	search: 'Search',
-	target: 'Target',
+	amount: 'Amount',
 	progress: 'Progress',
 	transactions: 'Transactions',
 	seeAll: 'See all',

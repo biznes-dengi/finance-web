@@ -25,16 +25,9 @@ export function TextField(props: Props) {
 		onChange(value);
 	}
 
-	function handleInputFocus() {
-		inputRef.current && inputRef.current.focus();
-	}
-
 	return (
 		<>
-			<div
-				className={cn('flex items-center rounded-2xl bg-secondary-grey p-4', isSearch && 'rounded-3xl p-1')}
-				onClick={handleInputFocus}
-			>
+			<label className={cn('flex items-center rounded-2xl bg-secondary-grey p-4', isSearch && 'rounded-3xl p-1')}>
 				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{APP_ICON.search}</div>}
 
 				<input
@@ -57,7 +50,7 @@ export function TextField(props: Props) {
 						{APP_ICON.reset}
 					</div>
 				)}
-			</div>
+			</label>
 
 			{maxLength && (
 				<div className={cn('flex cursor-default justify-end pr-4 pt-1 text-sm text-primary-grey')}>

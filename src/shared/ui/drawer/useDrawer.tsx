@@ -1,6 +1,7 @@
 import {ReactNode, useRef} from 'react';
 
 import {BottomDrawer} from './BottomDrawer.tsx';
+import {SuccessDrawerContent} from './SuccessDrawerContent.tsx';
 
 export type DrawerProps = {
 	content: ReactNode;
@@ -14,6 +15,7 @@ export function useDrawer() {
 
 	return {
 		Drawer: (props: DrawerProps) => <BottomDrawer {...{openDrawerRef, closeDrawerRef}} {...props} />,
+		SuccessDrawerContent,
 		openDrawer: () => openDrawerRef.current(),
 		closeDrawer: () => closeDrawerRef.current(),
 	};

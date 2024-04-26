@@ -11,6 +11,7 @@ import {
 	Select,
 	Stepper,
 	TextField,
+	UploadField,
 	useDrawer,
 } from '@shared/ui';
 
@@ -41,7 +42,7 @@ export function GoalCreatePage() {
 	const [currencyValue, setCurrencyValue] = useState<CURRENCY | null>(initialCurrencyValue);
 	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 
-	const {openDrawer, Drawer} = useDrawer();
+	const {openDrawer, Drawer, SuccessDrawerContent} = useDrawer();
 
 	const navigate = useNavigate();
 
@@ -54,24 +55,20 @@ export function GoalCreatePage() {
 
 	return (
 		<>
-			<div
-				role='image-wrapper'
-				className='flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey'
-			>
+			<div className='flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey'>
 				<PageHeader
 					handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
 				/>
 
 				{activeStepIndex === initialStepIndex && (
-					<div
+					<UploadField
+						onUpload={alert}
 						className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
-						onClick={() => alert('Upload a photo')}
 					>
 						{APP_ICON.camera}
-					</div>
+					</UploadField>
 				)}
 			</div>
-
 			<div className='flex-grow'>
 				<Stepper
 					activeStepIndex={activeStepIndex}
@@ -124,14 +121,7 @@ export function GoalCreatePage() {
 			</Box>
 
 			<Drawer
-				content={
-					<div className='flex flex-col items-center pb-4'>
-						<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{APP_ICON.check}</div>
-						<div className='text-center font-semibold'>
-							{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
-						</div>
-					</div>
-				}
+				content={<SuccessDrawerContent preText={APP_TEXT.goal} primaryText={name} postText={APP_TEXT.createdSuccess} />}
 				afterAutoCloseAction={() => navigate(APP_PATH.goalDetails)}
 				isCloseDisabled
 			/>
