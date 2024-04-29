@@ -7,6 +7,7 @@ export const APP_TEXT = {
 	dontHaveAccess: 'Sorry, but you do not have access to this page',
 	accumulation: 'Accumulation',
 	goal: 'Goal',
+	goalName: 'Goal name',
 	items: 'Items',
 	create: 'Create',
 	fund: 'Fund',

@@ -1,7 +1,7 @@
 import {ReactNode, useRef} from 'react';
 
-import {BottomDrawer} from './BottomDrawer.tsx';
-import {SuccessDrawerContent} from './SuccessDrawerContent.tsx';
+import {BottomDrawer} from './ui/BottomDrawer.tsx';
+import {SuccessDrawerContent} from './ui/SuccessDrawerContent.tsx';
 
 export type DrawerProps = {
 	content: ReactNode;

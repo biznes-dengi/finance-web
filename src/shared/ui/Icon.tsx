@@ -47,5 +47,5 @@ export const APP_ICON = {
 	search: <MagnifyingGlassIcon className={cn('h-4 w-4')} />,
 	camera: <CameraIcon className={cn('h-5 w-5')} />,
 	check: <CheckIcon />,
-	uploadImage: <CloudArrowUpIcon className={cn('h-5 w-5')} />,
+	uploadImage: <CloudArrowUpIcon />,
 };

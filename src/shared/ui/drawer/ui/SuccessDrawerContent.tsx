@@ -24,7 +24,7 @@ export function SuccessDrawerContent(props: Props) {
 			<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{APP_ICON.check}</div>
 			<div className='text-center font-semibold'>
 				{preText}
-				{primaryText && <span className='text-primary-violet'>{primaryText}</span>}
+				{primaryText && <span className='text-primary-violet'>{` ${primaryText} `}</span>}
 				{type && SuccessDrawerType.create && APP_TEXT.createdSuccess}
 				{postText}
 			</div>

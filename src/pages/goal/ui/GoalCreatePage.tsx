@@ -9,10 +9,11 @@ import {
 	NumericField,
 	PageHeader,
 	Select,
+	Spinner,
 	Stepper,
 	TextField,
-	UploadField,
 	useDrawer,
+	useUploadField,
 } from '@shared/ui';
 
 import {APP_PATH, APP_TEXT} from '@shared/config';
@@ -35,54 +36,81 @@ const initialCurrencyValue = null;
 const initialTargetAmount = undefined;
 
 export function GoalCreatePage() {
+	const navigate = useNavigate();
+
 	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
 
 	/** Form state */
 	const [name, setName] = useState(initialName);
 	const [currencyValue, setCurrencyValue] = useState<CURRENCY | null>(initialCurrencyValue);
-	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
-
-	const {openDrawer, Drawer, SuccessDrawerContent} = useDrawer();
-
-	const navigate = useNavigate();
-
 	const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
+	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 
 	function handleCurrencyValueChange(value: CURRENCY) {
 		setCurrencyValue(value);
 		setTargetAmount(initialTargetAmount);
 	}
 
+	const {openDrawer, Drawer, SuccessDrawerContent} = useDrawer();
+
+	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
+		useUploadField();
+
+	const Header = (
+		<PageHeader
+			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
+			backPath={APP_PATH.root}
+		/>
+	);
+
 	return (
 		<>
-			<div className='flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey'>
-				<PageHeader
-					handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
-				/>
-
-				{activeStepIndex === initialStepIndex && (
-					<UploadField
-						onUpload={alert}
-						className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
+			{activeStepIndex === initialStepIndex ? (
+				<UploadField onUpload={alert}>
+					<div
+						className={cn(
+							'flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey',
+							isUploading && 'bg-secondary-grey',
+						)}
 					>
-						{APP_ICON.camera}
-					</UploadField>
-				)}
-			</div>
+						{Header}
+
+						{isFileDragging && <div className='h-10 w-10 self-center text-primary-violet'>{APP_ICON.uploadImage}</div>}
+						{isUploading && (
+							<div className='cursor-default self-center text-center'>
+								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
+								<div className='cursor-pointer text-sm underline hover:text-primary-violet' onClick={abortUploading}>
+									Cancel loading
+								</div>
+							</div>
+						)}
+
+						<div
+							className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
+							onClick={startUploading}
+						>
+							{!isUploading ? APP_ICON.camera : <Spinner className='z-20 h-5 w-5' />}
+						</div>
+					</div>
+				</UploadField>
+			) : (
+				Header
+			)}
+
 			<div className='flex-grow'>
 				<Stepper
 					activeStepIndex={activeStepIndex}
 					steps={[
 						<>
 							<Box withBaseHorizontal>
-								<TextField value={name} onChange={setName} maxLength={25} placeholder='Goal name' />
+								<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
 							</Box>
 							{!name && (
-								<Box withBaseHorizontal className={cn('flex flex-wrap pt-4')}>
+								<Box withBaseHorizontal className={cn('flex flex-wrap gap-2 pt-4')}>
 									{hints.map((hint, index) => (
 										<div
 											key={hint + index}
-											className={cn('mb-2 mr-2 w-fit rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
+											className={cn('w-fit rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
 											onClick={() => setName(hint)}
 										>
 											{hint}

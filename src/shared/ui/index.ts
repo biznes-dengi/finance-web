@@ -1,6 +1,6 @@
 export * from './fields/TextField.tsx';
 export * from './fields/NumericField.tsx';
-export * from './fields/upload-field/UploadField.tsx';
+export * from './fields/upload-field/useUploadField.tsx';
 
 export * from './Tabs.tsx';
 export * from './Icon.tsx';
@@ -16,3 +16,4 @@ export * from './Stepper.tsx';
 export * from './Select.tsx';
 export * from './drawer/useDrawer.tsx';
 export * from './Transfer.tsx';
+export * from './Spinner.tsx';

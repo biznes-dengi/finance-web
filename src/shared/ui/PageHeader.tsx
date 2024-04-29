@@ -17,6 +17,7 @@ export function PageHeader(props: Props) {
 
 	function onBackButtonClick({navigate}: {navigate: NavigateFunction}) {
 		if (handleBackButtonClick) return handleBackButtonClick();
+		/** navigate(-1) не сработает если в новой вкладке открываем */
 		backPath ? navigate(backPath) : navigate(-1);
 	}
 
