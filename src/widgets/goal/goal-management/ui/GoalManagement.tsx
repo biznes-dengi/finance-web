@@ -25,6 +25,11 @@ export function GoalManagement() {
 			onClick: openDrawer,
 		},
 		{
+			name: APP_TEXT.transfer,
+			icon: APP_ICON.transfer,
+			onClick: openDrawer,
+		},
+		{
 			name: APP_TEXT.more,
 			icon: APP_ICON.more,
 			onClick: () => {},
