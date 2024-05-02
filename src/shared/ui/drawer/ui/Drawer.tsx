@@ -47,7 +47,7 @@ export function Drawer(props: DrawerProps) {
 	}
 
 	useEffect(() => {
-		// Not in render to assign to ref only one time, even when component renders
+		// Not in render to assign to ref only one time, even when component rerenders
 		openDrawerRef.current = openDrawer;
 		closeDrawerRef.current = closeDrawer;
 	}, []);
