@@ -1,5 +1,5 @@
 export * from './fields/TextField.tsx';
-export * from './fields/NumericField.tsx';
+export * from './fields/CurrencyField.tsx';
 export * from './fields/upload-field/useUploadField.tsx';
 
 export * from './Tabs.tsx';

@@ -6,7 +6,7 @@ import {
 	Box,
 	Button,
 	BUTTON_TYPE,
-	NumericField,
+	CurrencyField,
 	PageHeader,
 	Select,
 	Spinner,
@@ -123,11 +123,15 @@ export function GoalCreatePage() {
 							<Select options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
 						</Box>,
 						<Box key={activeStepIndex} withBaseHorizontal>
-							<NumericField
+							<CurrencyField
 								value={targetAmount}
 								onChange={setTargetAmount}
-								currencyCode={selectedCurrencyOption?.description}
-								currencySymbol={selectedCurrencyOption?.symbol}
+								option={{
+									currencyCode: selectedCurrencyOption?.description ?? '',
+									currencySymbol: selectedCurrencyOption?.symbol ?? '',
+									mask: <div className='h-full rounded-full bg-primary-grey' />,
+								}}
+								leftLabel={APP_TEXT.amount}
 							/>
 						</Box>,
 					]}

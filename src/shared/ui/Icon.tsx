@@ -18,12 +18,16 @@ import trackerIconPath from '../../../assets/tracker.svg';
 import investIconPath from '../../../assets/invest.svg';
 
 import {
+	ArrowDownIcon,
 	ArrowLeftIcon,
+	ArrowTrendingUpIcon,
 	ArrowUpRightIcon,
+	CalendarIcon,
 	CameraIcon,
 	CheckIcon,
 	CloudArrowUpIcon,
 	MagnifyingGlassIcon,
+	PencilIcon,
 	XMarkIcon,
 } from '@heroicons/react/24/solid';
 import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
@@ -48,4 +52,8 @@ export const APP_ICON = {
 	camera: <CameraIcon className={cn('h-5 w-5')} />,
 	check: <CheckIcon />,
 	uploadImage: <CloudArrowUpIcon />,
+	transferTo: <ArrowDownIcon />,
+	trendUp: <ArrowTrendingUpIcon />,
+	edit: <PencilIcon />,
+	calendar: <CalendarIcon />,
 };
