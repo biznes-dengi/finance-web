@@ -152,11 +152,9 @@ export function GoalCreatePage() {
 				</Button>
 			</Box>
 
-			<Drawer
-				content={<SuccessDrawerContent preText={APP_TEXT.goal} primaryText={name} postText={APP_TEXT.createdSuccess} />}
-				afterAutoCloseAction={() => navigate(APP_PATH.goalDetails)}
-				isCloseDisabled
-			/>
+			<Drawer afterAutoCloseAction={() => navigate(APP_PATH.goalDetails)} isCloseDisabled>
+				<SuccessDrawerContent preText={APP_TEXT.goal} primaryText={name} postText={APP_TEXT.createdSuccess} />
+			</Drawer>
 		</>
 	);
 }

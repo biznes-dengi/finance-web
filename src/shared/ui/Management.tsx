@@ -14,9 +14,9 @@ export function Management(props: Props) {
 
 	return (
 		<div role='management' className='p-4'>
-			<div className={cn('mb-4 flex justify-between')}>
+			<div className={cn('flex justify-between pb-4')}>
 				<div>
-					<div className='mb-1 text-2xl font-semibold'>
+					<div className='mb-1 text-3xl font-semibold'>
 						{textHelpers.getAmountWithCurrency(item.amount, item.currencySymbol)}
 					</div>
 					{subtitle && <div className='text-sm font-light text-primary-grey'>{subtitle}</div>}

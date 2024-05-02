@@ -22,7 +22,6 @@ export function GoalManagement() {
 		{
 			name: APP_TEXT.fund,
 			icon: APP_ICON.fund,
-			onClick: openDrawer,
 		},
 		{
 			name: APP_TEXT.transfer,
@@ -56,7 +55,9 @@ export function GoalManagement() {
 				/>
 			</Card>
 
-			<Drawer content={<Transfer />} />
+			<Drawer>
+				<Transfer />
+			</Drawer>
 		</>
 	);
 }

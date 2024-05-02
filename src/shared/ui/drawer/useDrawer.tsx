@@ -1,30 +1,25 @@
-import {ReactNode, useRef} from 'react';
+import {useRef} from 'react';
 
-import {BottomDrawer} from './ui/BottomDrawer.tsx';
+import {Drawer, type DrawerWrapperProps} from './ui/Drawer.tsx';
 import {SuccessDrawerContent} from './ui/SuccessDrawerContent.tsx';
 
-export type DrawerProps = {
-	content: ReactNode;
-	afterAutoCloseAction?: () => void;
-	isCloseDisabled?: boolean;
+export type useDrawerProps = {
+	direction?: 'right';
+	withOverlay?: boolean;
 };
 
-export function useDrawer() {
+export function useDrawer(props: useDrawerProps = {}) {
+	const {direction, withOverlay} = props;
+
 	const openDrawerRef = useRef<() => void>(() => {});
 	const closeDrawerRef = useRef<() => void>(() => {});
 
 	return {
-		Drawer: (props: DrawerProps) => <BottomDrawer {...{openDrawerRef, closeDrawerRef}} {...props} />,
+		Drawer: (props: DrawerWrapperProps) => (
+			<Drawer {...{openDrawerRef, closeDrawerRef, direction, withOverlay}} {...props} />
+		),
 		SuccessDrawerContent,
 		openDrawer: () => openDrawerRef.current(),
 		closeDrawer: () => closeDrawerRef.current(),
 	};
 }
-
-/**
- * const Component = {
- *   [key]: BottomDrawer
- * }
- *
- * <Component />
- */
