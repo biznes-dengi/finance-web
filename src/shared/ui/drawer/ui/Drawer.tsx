@@ -11,6 +11,7 @@ export type DrawerWrapperProps = {
 	afterAutoCloseAction?: () => void;
 	isCloseDisabled?: boolean;
 	withOverlay?: boolean;
+	isFullScreen?: boolean;
 };
 
 type DrawerProps = {
@@ -28,6 +29,7 @@ export function Drawer(props: DrawerProps) {
 		isCloseDisabled,
 		direction,
 		withOverlay = true,
+		isFullScreen,
 	} = props;
 
 	const withAutoClose = !!afterAutoCloseAction;
@@ -60,7 +62,12 @@ export function Drawer(props: DrawerProps) {
 			<Portal>
 				<Overlay className={cn('fixed inset-0', withOverlay && 'bg-black/40')} />
 
-				<Content className='fixed bottom-0 left-0 right-0 flex max-h-[96%] flex-col rounded-t-2xl bg-white transition-all duration-500'>
+				<Content
+					className={cn(
+						'fixed bottom-0 left-0 right-0 flex flex-col rounded-t-2xl bg-white transition-all duration-500',
+						isFullScreen ? 'h-[96%]' : 'max-h-[96%]',
+					)}
+				>
 					<div className='mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-[10px] p-4'>
 						{withAutoClose ? (
 							<div className='text-center'>animated progress</div>

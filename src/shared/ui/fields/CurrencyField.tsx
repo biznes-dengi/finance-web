@@ -89,7 +89,7 @@ export function CurrencyField(props: Props) {
 			</label>
 
 			{options && (
-				<Drawer isCloseDisabled>
+				<Drawer isCloseDisabled withOverlay={false}>
 					<div className='mb-4' onClick={closeDrawer}>
 						Close
 					</div>
