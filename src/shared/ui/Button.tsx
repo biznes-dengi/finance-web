@@ -28,7 +28,6 @@ export function Button(props: Props) {
 	const navigate = useNavigate();
 
 	const defaultButtonProps = {
-		role: 'button',
 		onClick: () => onClick({navigate}),
 	};
 
@@ -80,11 +79,11 @@ export function Button(props: Props) {
 	}
 
 	return (
-		<div
+		<button
 			{...defaultButtonProps}
-			className={getButtonClassName('w-full rounded-2xl p-4 shadow-[0_0_0_4px_white_inset]')}
+			className={getButtonClassName('block w-full rounded-2xl p-4 text-left shadow-[0_0_0_4px_white_inset]')}
 		>
 			{children}
-		</div>
+		</button>
 	);
 }

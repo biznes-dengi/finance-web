@@ -1,10 +1,6 @@
 export class HttpClient {
 	static get() {
-		return [
-			{name: 'Mustang', savedAmount: 100, targetAmount: 30000, currencySymbol: '$'},
-			{name: 'House', savedAmount: 200, targetAmount: 200000, currencySymbol: '$'},
-			{name: 'Guitar', savedAmount: 300, targetAmount: 1500, currencySymbol: '$'},
-		];
+		return;
 	}
 }
 
@@ -23,7 +19,7 @@ export class HttpClient {
  }
 
  function handleGeneralPromiseResolve<T>(response: AxiosResponse<T>) {
-	 //add general error handling, 401, 403, error page
+ //add general error handling, 401, 403, error page
  return response.data;
  }
 

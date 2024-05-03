@@ -1,13 +1,13 @@
-import {ReactNode} from 'react';
+import {cloneElement, ReactElement, ReactNode} from 'react';
 
 import {APP_ICON} from '@shared/ui/index.ts';
 
 import {cn} from '@shared/lib';
 
 type Props = {
-	imgSrc?: string;
+	mask?: ReactElement;
 	name: ReactNode;
-	description: ReactNode;
+	description?: ReactNode;
 	checked?: boolean;
 	amount?: string;
 };
@@ -17,16 +17,17 @@ type Props = {
  */
 
 export function ListItem(props: Props) {
-	const {name, description, checked, amount} = props;
+	const {name, description, checked, amount, mask} = props;
 
 	return (
-		<div className={cn('flex items-center', checked && 'bg-secondary-violet')}>
-			<div
-				role='mask'
-				className={cn(
-					'relative mr-4 h-10 w-10 rounded-3xl border-2 border-dashed border-primary-violet bg-secondary-grey',
+		<div className={cn('flex', checked && 'bg-secondary-violet')}>
+			<div className='relative my-0.5 mr-4 h-10 w-10 flex-shrink-0 rounded-full'>
+				{mask ? (
+					cloneElement(mask, {style: {height: '100%', borderRadius: '50%'}})
+				) : (
+					<div className='h-full rounded-full bg-primary-grey' />
 				)}
-			>
+
 				{checked && (
 					<div
 						className={cn(
@@ -38,13 +39,14 @@ export function ListItem(props: Props) {
 					</div>
 				)}
 			</div>
-			<div className='flex w-[calc(100%-40px-16px)] justify-between'>
-				<div>
-					<div className='mb-1 font-semibold'>{name}</div>
-					<div className='text-sm font-light text-primary-grey'>{description}</div>
-				</div>
-				<div>{amount}</div>
+
+			<div className='self-stretch'>
+				<div className='font-medium'>{name}</div>
+				{description && <div className='text-sm font-light text-primary-grey'>{description}</div>}
 			</div>
+
+			{/*Not working, can add to wraper justify-between and 2 child div */}
+			{amount && <div className='justify-self-end'>{amount}</div>}
 		</div>
 	);
 }

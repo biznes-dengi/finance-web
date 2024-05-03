@@ -16,11 +16,6 @@ export function List<R>(props: Props<R>) {
 
 	return (
 		<>
-			<div className='flex justify-between px-4 py-3 text-sm'>
-				<div className='text-primary-grey'>{APP_TEXT.items}</div>
-				<div className='text-primary-violet'>{APP_TEXT.seeAll}</div>
-			</div>
-
 			<EmptyState text={getDontHaveAny(APP_TEXT.goal)} visible={!rows.length} />
 
 			{rows.map((row) => {

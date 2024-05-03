@@ -25,6 +25,7 @@ import {
 	CalendarIcon,
 	CameraIcon,
 	CheckIcon,
+	ChevronDownIcon,
 	CloudArrowUpIcon,
 	MagnifyingGlassIcon,
 	PencilIcon,
@@ -56,4 +57,5 @@ export const APP_ICON = {
 	trendUp: <ArrowTrendingUpIcon />,
 	edit: <PencilIcon />,
 	calendar: <CalendarIcon />,
+	selectArrow: <ChevronDownIcon />,
 };

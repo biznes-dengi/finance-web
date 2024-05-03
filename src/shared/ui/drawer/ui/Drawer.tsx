@@ -47,17 +47,18 @@ export function Drawer(props: DrawerProps) {
 	}
 
 	useEffect(() => {
-		// Not in render to assign to ref only one time, even when component rerenders
 		openDrawerRef.current = openDrawer;
 		closeDrawerRef.current = closeDrawer;
 	}, []);
 
 	return (
 		<Root dismissible={!isCloseDisabled} direction={direction}>
-			<Trigger ref={openButtonRef} />
-			<Close ref={closeButtonRef} />
+			<Trigger ref={openButtonRef} className='hidden' />
+			<Close ref={closeButtonRef} className='hidden' />
+
 			<Portal>
 				{withOverlay && <Overlay className='fixed inset-0 bg-black/40' />}
+
 				<Content className='fixed bottom-0 left-0 right-0 flex max-h-[96%] flex-col rounded-t-2xl bg-white transition-all duration-500'>
 					<div className='mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-[10px] p-4'>
 						{withAutoClose ? (

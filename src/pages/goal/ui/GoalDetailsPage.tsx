@@ -22,14 +22,11 @@ export function GoalDetailsPage() {
 				</div>
 			</div>
 
-			<Box withMediumTop withTitleBottom withBaseHorizontal>
-				<div className='font-semibold'>{APP_TEXT.progress}</div>
-			</Box>
-			<Box withBaseHorizontal>
+			<Box withBaseHorizontal withMediumTop>
 				<Card withBaseHorizontal>
 					<Box withBaseTop>
 						<div className='flex justify-between'>
-							<div className='text-sm font-semibold'>Saved 50%</div>
+							<div className='text-sm font-medium'>Saved 50%</div>
 							<div className='text-sm'>12 500 / 25 000 $</div>
 						</div>
 					</Box>

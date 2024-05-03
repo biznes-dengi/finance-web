@@ -34,9 +34,9 @@ export function Transfer() {
 			</div>
 
 			<div role='transfer'>
-				<div className='pb-3 text-2xl font-semibold'>{APP_TEXT.transfer}</div>
+				<div className='pb-6 text-2xl font-semibold'>{APP_TEXT.transfer}</div>
 
-				<div className='flex flex-col gap-1.5 pb-6 text-sm'>
+				<div className='flex flex-col gap-2 pb-4 text-sm'>
 					<div className='flex items-center justify-between'>
 						<div className='flex items-center gap-1 text-primary-violet'>
 							<div className='h-4 w-4'>{APP_ICON.calendar}</div>
@@ -52,8 +52,9 @@ export function Transfer() {
 							<div className='h-4 w-4'>{APP_ICON.trendUp}</div>
 							<div>1 $ = {exchangeRate} zł</div>
 						</div>
-						<div className='rounded-2xl bg-primary-violet px-2 text-white' onClick={handleSlideRight}>
-							Custom
+						<div className='flex items-center gap-1.5 text-primary-violet' onClick={handleSlideRight}>
+							<div className='h-3 w-3'>{APP_ICON.edit}</div>
+							<div>Edit</div>
 						</div>
 					</div>
 				</div>
