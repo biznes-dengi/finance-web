@@ -2,6 +2,7 @@ import {MutableRefObject, ReactNode, useEffect, useRef} from 'react';
 import {Drawer as VaulDrawer} from 'vaul';
 
 import {type useDrawerProps} from '@shared/ui';
+import {cn} from '@shared/lib';
 
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
@@ -57,7 +58,7 @@ export function Drawer(props: DrawerProps) {
 			<Close ref={closeButtonRef} className='hidden' />
 
 			<Portal>
-				{withOverlay && <Overlay className='fixed inset-0 bg-black/40' />}
+				<Overlay className={cn('fixed inset-0', withOverlay && 'bg-black/40')} />
 
 				<Content className='fixed bottom-0 left-0 right-0 flex max-h-[96%] flex-col rounded-t-2xl bg-white transition-all duration-500'>
 					<div className='mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-[10px] p-4'>

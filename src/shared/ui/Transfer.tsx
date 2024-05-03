@@ -2,6 +2,7 @@ import {useState} from 'react';
 
 import {APP_ICON, CurrencyField, useSlider} from '@shared/ui';
 import {APP_TEXT} from '@shared/config';
+import {goalModel} from '@entities/goal';
 
 type Value = number | undefined;
 
@@ -23,6 +24,9 @@ export function Transfer() {
 		setFirstItemValue(value);
 		setSecondItemValue(Number((value * exchangeRate).toFixed(2)));
 	}
+
+	const {rows} = goalModel.useData();
+	console.log('goals ', rows);
 
 	return (
 		<Slider activeSlideIndex={1}>
@@ -61,7 +65,7 @@ export function Transfer() {
 
 				<div className='relative'>
 					<CurrencyField
-						option={{currencyCode: 'Mustang', currencySymbol: '$'}}
+						options={rows}
 						value={firstItemValue}
 						onChange={handleValueChange}
 						leftLabel={{balance: firstItemBalance}}
@@ -75,7 +79,7 @@ export function Transfer() {
 						className='mt-2'
 						value={secondItemValue}
 						onChange={handleValueChange}
-						option={{currencyCode: 'House', currencySymbol: 'zł'}}
+						option={{name: 'House', currencySymbol: 'zł'}}
 						leftLabel={{balance: secondItemBalance}}
 					/>
 				</div>

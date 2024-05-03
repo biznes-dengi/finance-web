@@ -127,7 +127,7 @@ export function GoalCreatePage() {
 								value={targetAmount}
 								onChange={setTargetAmount}
 								option={{
-									currencyCode: selectedCurrencyOption?.description ?? '',
+									name: selectedCurrencyOption?.description ?? '',
 									currencySymbol: selectedCurrencyOption?.symbol ?? '',
 									mask: <div className='h-full rounded-full bg-primary-grey' />,
 								}}
