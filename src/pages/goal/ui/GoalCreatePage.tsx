@@ -80,7 +80,7 @@ export function GoalCreatePage() {
 							<div className='cursor-default self-center text-center'>
 								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
 								<div className='cursor-pointer text-sm underline hover:text-primary-violet' onClick={abortUploading}>
-									Cancel loading
+									Cancel uploading
 								</div>
 							</div>
 						)}
