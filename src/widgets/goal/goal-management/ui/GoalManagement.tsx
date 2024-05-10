@@ -11,7 +11,7 @@ export function GoalManagement() {
 
 	const {rows, goalItem} = goalModel.useData();
 
-	const {openDrawer, Drawer} = useDrawer();
+	const {openDrawer, Drawer} = useDrawer('right');
 
 	const buttonConfigs = [
 		{
@@ -41,7 +41,7 @@ export function GoalManagement() {
 				<Management item={goalItem} buttonConfigs={buttonConfigs} subtitle={APP_TEXT.accumulation} />
 
 				<div className='flex justify-between px-4 py-3 text-sm'>
-					<div className='text-primary-grey'>{APP_TEXT.items}</div>
+					<div className='text-primary-grey'>{APP_TEXT.goals}</div>
 					<div className='text-primary-violet'>{APP_TEXT.seeAll}</div>
 				</div>
 
@@ -59,7 +59,7 @@ export function GoalManagement() {
 				))}
 			</Card>
 
-			<Drawer isFullScreen>
+			<Drawer>
 				<Transfer />
 			</Drawer>
 		</>

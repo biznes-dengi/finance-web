@@ -8,7 +8,7 @@ export const APP_TEXT = {
 	accumulation: 'Accumulation',
 	goal: 'Goal',
 	goalName: 'Goal name',
-	items: 'Items',
+	goals: 'Goals',
 	create: 'Create',
 	fund: 'Fund',
 	transfer: 'Transfer',
