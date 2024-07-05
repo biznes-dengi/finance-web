@@ -3,7 +3,7 @@ package com.maksyank.finance.user.domain;
 import com.maksyank.finance.user.domain.base.BaseUser;
 import com.maksyank.finance.user.domain.enums.AppRole;
 import com.maksyank.finance.user.domain.enums.UserGender;
-import com.maksyank.finance.financegoal.domain.FinanceGoal;
+import com.maksyank.finance.saving.domain.Saving;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -53,7 +53,7 @@ public class UserAccount extends BaseUser {
     private LocalDateTime lastLogin;
 
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY)
-    private Collection<FinanceGoal> financeGoals;
+    private Collection<Saving> savings;
 
     @Override
     public String toString() {
