@@ -50,21 +50,22 @@ public class DepositProcess {
         return DepositMapper.entityToViewResponse(foundDeposits);
     }
 
+    // TODO add validation to fundingDate
     public StateOfSavingResponse processSave(DepositDto depositToSaveDto, int financeGoalId, int userId) throws NotFoundException, DbOperationException, ValidationException {
         final var resultOfValidation = this.depositValidationService.validate(depositToSaveDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var financeGoal = this.savingProcess.updateBalance(depositToSaveDto.amount(), financeGoalId, userId);
-        final var depositToSave = DepositMapper.mapToNewEntity(depositToSaveDto, financeGoal);
+        final var saving = this.savingProcess.updateBalance(depositToSaveDto.amount(), financeGoalId, userId);
+        final var depositToSave = DepositMapper.mapToNewEntity(depositToSaveDto, saving);
         this.depositPersistence.save(depositToSave);
 
-        return SavingMapper.mapToStateResponse(financeGoal);
+        return SavingMapper.mapToStateResponse(saving);
     }
 
-    public DepositResponse processGetById(int depositId, int financeGoalId, int userId) throws NotFoundException {
-        final var financeGoal = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
-        final var foundDeposit = this.findDeposit(financeGoal, depositId);
+    public DepositResponse processGetById(int depositId, int savingId, int userId) throws NotFoundException {
+        final var saving = this.savingPersistence.findByIdAndUserId(savingId, userId);
+        final var foundDeposit = this.findDeposit(saving, depositId);
         return DepositMapper.entityToResponse(foundDeposit);
     }
 
@@ -73,8 +74,8 @@ public class DepositProcess {
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var financeGoal = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
-        final var depositToUpdate = this.findDeposit(financeGoal, depositId);
+        final var saving = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
+        final var depositToUpdate = this.findDeposit(saving, depositId);
         depositToUpdate.setDescription(depositUpdateDto.description());
         return this.depositPersistence.save(depositToUpdate);
     }

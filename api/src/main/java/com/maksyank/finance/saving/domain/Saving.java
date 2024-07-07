@@ -21,7 +21,7 @@ import java.util.Collection;
 public class Saving {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_goal")
+    @Column(name = "id_saving")
     private int id;
     @Column(name = "title")
     private String title;
@@ -53,7 +53,7 @@ public class Saving {
     @JoinColumn(name = "id_user_account")
     private UserAccount userAccount;
 
-    @OneToMany(mappedBy = "financeGoal", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "saving", fetch = FetchType.LAZY)
     private Collection<Deposit> deposits;
 
     public Saving(InitRulesSaving initRulesSaving, String title, CurrencyCode currency, String description,

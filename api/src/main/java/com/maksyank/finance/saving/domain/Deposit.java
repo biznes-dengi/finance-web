@@ -2,6 +2,7 @@ package com.maksyank.finance.saving.domain;
 
 import com.maksyank.finance.saving.domain.enums.DepositType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "deposit")
 public class Deposit {
@@ -28,7 +30,7 @@ public class Deposit {
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "id_finance_goal")
+    @JoinColumn(name = "id_saving")
     private Saving saving;
 
     public Deposit(DepositType type, String description, LocalDateTime fundingDate, BigDecimal amount, Saving saving) {

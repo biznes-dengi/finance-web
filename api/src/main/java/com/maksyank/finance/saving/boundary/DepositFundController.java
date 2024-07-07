@@ -21,6 +21,8 @@ public class DepositFundController {
     }
 
     // TODO add validation for month / year
+    // TODO month = 1 to 12
+    // TODO year from 1970 to current
     @GetMapping("/month")
     public BigDecimal getFundAmountByMonth(
             @PathVariable("savingId") int savingId,

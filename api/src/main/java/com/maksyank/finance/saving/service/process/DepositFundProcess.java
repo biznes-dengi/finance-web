@@ -22,13 +22,10 @@ public class DepositFundProcess {
         this.savingPersistence = savingPersistence;
     }
 
-    public BigDecimal processGetFundAmountByMonth(int financeGoalId, int year, int month, int userId) throws NotFoundException {
-        final var financeGoal = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
+    public BigDecimal processGetFundAmountByMonth(int savingId, int year, int month, int userId) throws NotFoundException {
+        final var savingForCalculateAmount = this.savingPersistence.findByIdAndUserId(savingId, userId);
 
-        final var startMonth = LocalDateTime.of(year, month, 1, 0, 0, 0);
-        final var endMonth = LocalDateTime.of(year, month, YearMonth.of(year, month).lengthOfMonth(), 23, 59, 59);
-
-        final var foundDepositsByMonth = this.findFundDepositsByMonth(financeGoal, startMonth, endMonth);
+        final var foundDepositsByMonth = this.findFundDepositsByMonth(savingForCalculateAmount, year, month);
         if (foundDepositsByMonth.size() == 0) {
             throw new NotFoundException("Entities 'Deposit' were not found in " + year + "/" + month);
         }
@@ -38,10 +35,11 @@ public class DepositFundProcess {
     // TODO critical point. For big data troubles with time of response (maybe move logic to SQL query)
     // TODO change filter fund to enum
     // TODO maybe split logic into methods by filters. It relates from if there's a need for it
-    private List<Deposit> findFundDepositsByMonth(Saving source, LocalDateTime startMonth, LocalDateTime endMonth) {
+    private List<Deposit> findFundDepositsByMonth(Saving source, int year, int month) {
         return source.getDeposits().stream()
                 .filter(deposit -> deposit.getType() == DepositType.FUND)
-                .filter(deposit -> deposit.getFundingDate().isAfter(startMonth) && deposit.getFundingDate().isBefore(endMonth))
+                .filter(deposit -> deposit.getFundingDate().getYear() == year)
+                .filter(deposit -> deposit.getFundingDate().getMonthValue() == month)
                 .toList();
     }
 
