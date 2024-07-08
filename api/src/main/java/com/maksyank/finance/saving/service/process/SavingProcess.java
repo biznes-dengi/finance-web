@@ -37,13 +37,13 @@ public class SavingProcess {
     }
 
     public SavingResponse processGetById(int id, int userId) throws NotFoundException {
-        final var foundFinanceGoal = this.savingPersistence.findByIdAndUserId(id, userId);
-        return SavingMapper.entityToResponse(foundFinanceGoal);
+        final var foundSaving = this.savingPersistence.findByIdAndUserId(id, userId);
+        return SavingMapper.entityToResponse(foundSaving);
     }
 
     public List<SavingViewResponse> processGetByState(SavingState state, int userId) throws NotFoundException {
-        final var foundFinanceGoals = this.savingPersistence.findByStateAndUserId(state, userId);
-        return SavingMapper.sourceToViewResponse(foundFinanceGoals);
+        final var foundSavings = this.savingPersistence.findByStateAndUserId(state, userId);
+        return SavingMapper.sourceToViewResponse(foundSavings);
     }
 
     public void processSave(SavingDto finGoalToSaveDto, UserAccount user) throws DbOperationException, ValidationException {
@@ -51,9 +51,9 @@ public class SavingProcess {
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var rulesFinanceGoal = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
-        final var newFinGoal = SavingMapper.mapToNewEntity(finGoalToSaveDto, rulesFinanceGoal, user);
-        this.savingPersistence.save(newFinGoal);
+        final var rulesSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
+        final var newSaving = SavingMapper.mapToNewEntity(finGoalToSaveDto, rulesSaving, user);
+        this.savingPersistence.save(newSaving);
     }
 
     public void processUpdate(int id, SavingDto finGoalToSaveDto, UserAccount user) throws NotFoundException, DbOperationException, ValidationException {
@@ -61,9 +61,9 @@ public class SavingProcess {
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var oldFinanceGoal = this.savingPersistence.findByIdAndUserId(id, user.getId());
-        final var updatedFinanceGoal = SavingMapper.mapToEntity(finGoalToSaveDto, oldFinanceGoal);
-        this.savingPersistence.save(updatedFinanceGoal);
+        final var oldSaving = this.savingPersistence.findByIdAndUserId(id, user.getId());
+        final var updatedSaving = SavingMapper.mapToEntity(finGoalToSaveDto, oldSaving);
+        this.savingPersistence.save(updatedSaving);
     }
 
     public void processDelete(int id) throws DbOperationException {
@@ -71,16 +71,16 @@ public class SavingProcess {
         this.savingPersistence.deleteById(id);
     }
 
-    public Saving updateBalance(BigDecimal amountOfNewDeposit, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
-        final var finGoalForUpdateBalance = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
-        final var newBalance = finGoalForUpdateBalance.getBalance().add(amountOfNewDeposit);
-        finGoalForUpdateBalance.setBalance(newBalance);
+    public Saving updateBalance(BigDecimal amountNewDeposit, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
+        final var savingForUpdateBalance = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
+        final var newBalance = savingForUpdateBalance.getBalance().add(amountNewDeposit);
+        savingForUpdateBalance.setBalance(newBalance);
 
-        if (newBalance.compareTo(finGoalForUpdateBalance.getTargetAmount()) >= 0) {
-            finGoalForUpdateBalance.setState(SavingState.ACHIEVED);
+        if (newBalance.compareTo(savingForUpdateBalance.getTargetAmount()) >= 0) {
+            savingForUpdateBalance.setState(SavingState.ACHIEVED);
         }
-        this.savingPersistence.save(finGoalForUpdateBalance);
+        this.savingPersistence.save(savingForUpdateBalance);
         
-        return finGoalForUpdateBalance;
+        return savingForUpdateBalance;
     }
 }

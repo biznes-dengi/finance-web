@@ -69,7 +69,8 @@ public class DepositProcess {
         return DepositMapper.entityToResponse(foundDeposit);
     }
 
-    public boolean processUpdate(int depositId, int financeGoalId, DepositUpdateDto depositUpdateDto, int userId) throws NotFoundException, DbOperationException, ValidationException {
+    public boolean processUpdate(int depositId, int financeGoalId, DepositUpdateDto depositUpdateDto, int userId)
+            throws NotFoundException, DbOperationException, ValidationException {
         final var resultOfValidation = this.depositValidationService.validate(depositUpdateDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
