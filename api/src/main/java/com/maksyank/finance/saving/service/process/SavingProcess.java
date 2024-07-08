@@ -10,7 +10,7 @@ import com.maksyank.finance.saving.exception.DbOperationException;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.SavingMapper;
-import com.maksyank.finance.saving.service.persistence.DepositPersistence;
+import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.validation.SavingValidationService;
 import com.maksyank.finance.user.domain.UserAccount;
@@ -23,16 +23,16 @@ import java.util.List;
 @Service
 public class SavingProcess {
     private SavingPersistence savingPersistence;
-    private DepositPersistence depositPersistence;
+    private TransactionPersistence transactionPersistence;
     private SavingValidationService savingValidationService;
     @Autowired
     SavingProcess(
             SavingPersistence savingPersistence,
-            DepositPersistence depositPersistence,
+            TransactionPersistence transactionPersistence,
             SavingValidationService savingValidationService
     ) {
         this.savingPersistence = savingPersistence;
-        this.depositPersistence = depositPersistence;
+        this.transactionPersistence = transactionPersistence;
         this.savingValidationService = savingValidationService;
     }
 
@@ -67,7 +67,7 @@ public class SavingProcess {
     }
 
     public void processDelete(int id) throws DbOperationException {
-        this.depositPersistence.removeAllBySavingId(id);
+        this.transactionPersistence.removeAllBySavingId(id);
         this.savingPersistence.deleteById(id);
     }
 

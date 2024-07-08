@@ -1,15 +1,15 @@
 package com.maksyank.finance.saving.boundary;
 
-import com.maksyank.finance.saving.boundary.request.DepositUpdateRequest;
-import com.maksyank.finance.saving.boundary.request.DepositRequest;
-import com.maksyank.finance.saving.boundary.response.DepositResponse;
-import com.maksyank.finance.saving.boundary.response.DepositViewResponse;
+import com.maksyank.finance.saving.boundary.request.TransactionUpdateRequest;
+import com.maksyank.finance.saving.boundary.request.TransactionRequest;
+import com.maksyank.finance.saving.boundary.response.TransactionResponse;
+import com.maksyank.finance.saving.boundary.response.TransactionViewResponse;
 import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
 import com.maksyank.finance.saving.exception.DbOperationException;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
-import com.maksyank.finance.saving.mapper.DepositMapper;
-import com.maksyank.finance.saving.service.process.DepositProcess;
+import com.maksyank.finance.saving.mapper.TransactionMapper;
+import com.maksyank.finance.saving.service.process.TransactionProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,26 +23,26 @@ import java.util.List;
 // TODO A check user isn't necessary because you can just get that user and will see if it exists
 // TODO validation if need
 @RestController
-@RequestMapping("/saving/{savingId}/deposit")
-public class DepositController {
+@RequestMapping("/saving/{savingId}/transaction")
+public class TransactionController {
     private UserAccountService userAccountService;
-    private DepositProcess depositProcess;
+    private TransactionProcess transactionProcess;
 
     @Autowired
-    DepositController(DepositProcess depositProcess, UserAccountService userAccountService) {
-        this.depositProcess = depositProcess;
+    TransactionController(TransactionProcess transactionProcess, UserAccountService userAccountService) {
+        this.transactionProcess = transactionProcess;
         this.userAccountService = userAccountService;
     }
 
     @GetMapping
-    public List<DepositViewResponse> getByPage(
-            @PathVariable("finGoalId") int financeGoalId,
+    public List<TransactionViewResponse> getByPage(
+            @PathVariable("savingId") int savingId,
             @RequestParam("pageNumber") int pageNumber,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.depositProcess.processGetByPage(financeGoalId, pageNumber, userId);
+            return this.transactionProcess.processGetByPage(savingId, pageNumber, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
@@ -51,12 +51,12 @@ public class DepositController {
     @PostMapping
     public StateOfSavingResponse save(
             @PathVariable("savingId") int savingId,
-            @RequestBody DepositRequest requestToSave,
+            @RequestBody TransactionRequest requestToSave,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.depositProcess.processSave(DepositMapper.mapToDto(requestToSave), savingId, userId);
+            return this.transactionProcess.processSave(TransactionMapper.mapToDto(requestToSave), savingId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {
@@ -66,31 +66,31 @@ public class DepositController {
         }
     }
 
-    @GetMapping("/{depositId}")
-    public DepositResponse getById(
+    @GetMapping("/{transactionId}")
+    public TransactionResponse getById(
             @PathVariable("savingId") int savingId,
-            @PathVariable("depositId") int depositId,
+            @PathVariable("transactionId") int depositId,
             @RequestParam("userId") int userId
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.depositProcess.processGetById(depositId, savingId, userId);
+            return this.transactionProcess.processGetById(depositId, savingId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }
     }
 
     // TODO add validation to description
-    @PatchMapping("/{depositId}")
+    @PatchMapping("/{transactionId}")
     public ResponseEntity update(
             @PathVariable("savingId") int savingId,
-            @PathVariable("depositId") int depositId,
+            @PathVariable("transactionId") int depositId,
             @RequestParam("userId") int userId,
-            @RequestBody DepositUpdateRequest requestToUpdate
+            @RequestBody TransactionUpdateRequest requestToUpdate
     ) {
         this.checkIfUserExists(userId);
         try {
-            this.depositProcess.processUpdate(depositId, savingId, DepositMapper.mapToUpdateDto(requestToUpdate), userId);
+            this.transactionProcess.processUpdate(depositId, savingId, TransactionMapper.mapToUpdateDto(requestToUpdate), userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);

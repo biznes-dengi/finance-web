@@ -1,7 +1,7 @@
 package com.maksyank.finance.saving.service.process;
 
 import com.maksyank.finance.saving.exception.NotFoundException;
-import com.maksyank.finance.saving.service.GeneratorDataDeposit;
+import com.maksyank.finance.saving.service.GeneratorDataTransaction;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,23 +18,23 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class DepositFundProcessTest {
+public class TransactionDepositProcessTest {
     @Mock
     private SavingPersistence savingPersistence;
     @InjectMocks
-    private DepositFundProcess depositFundProcess;
+    private TransactionDepositProcess transactionDepositProcess;
 
     @Test
     @DisplayName("Check if fund deposits will be summed correctly")
-    void testProcessGetFundAmountByMonth_01() throws NotFoundException {
+    void testProcessGetDepositAmountByMonth_01() throws NotFoundException {
         // Given
         final int year = 2023;
         final int month = 3;
-        final var saving = GeneratorDataDeposit.getTestData_testProcessGetFundAmountByMonth_01();
+        final var saving = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_01();
 
         // When
         when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
-        final var result = depositFundProcess.processGetFundAmountByMonth(1, year, month,1);
+        final var result = transactionDepositProcess.processGetFundAmountByMonth(1, year, month,1);
 
         // Then
         assertEquals(BigDecimal.valueOf(3447.22), result);
@@ -42,17 +42,17 @@ public class DepositFundProcessTest {
 
     @Test
     @DisplayName("Check if it will throw NotFoundException, if the month do not have any deposits")
-    void testProcessGetFundAmountByMonth_02() throws NotFoundException {
+    void testProcessGetDepositAmountByMonth_02() throws NotFoundException {
         // Given
         final int year = 2023;
         final int month = 8;
-        final var saving = GeneratorDataDeposit.getTestData_testProcessGetFundAmountByMonth_02();
+        final var saving = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_02();
 
         // When
         when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
 
         // Then
         assertThrows(NotFoundException.class,
-                () -> depositFundProcess.processGetFundAmountByMonth(1, year, month,1));
+                () -> transactionDepositProcess.processGetFundAmountByMonth(1, year, month,1));
     }
 }

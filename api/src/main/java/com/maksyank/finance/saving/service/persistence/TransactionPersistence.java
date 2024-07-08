@@ -1,9 +1,9 @@
 package com.maksyank.finance.saving.service.persistence;
 
-import com.maksyank.finance.saving.domain.Deposit;
+import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.exception.DbOperationException;
 import com.maksyank.finance.saving.exception.NotFoundException;
-import com.maksyank.finance.saving.repository.DepositRepository;
+import com.maksyank.finance.saving.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DepositPersistence {
-    private DepositRepository depositRepository;
+public class TransactionPersistence {
+    private TransactionRepository transactionRepository;
 
     @Autowired
-    DepositPersistence(DepositRepository depositRepository) {
-        this.depositRepository = depositRepository;
+    TransactionPersistence(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
     }
 
     // TODO (refactor) A client will have the same exceptions two cases:
     // TODO If there were 10 items and they just ran out or were not there originally
-    public List<Deposit> findAllBySavingIdPageable(int savingId, int pageNumber) throws NotFoundException {
+    public List<Transaction> findAllBySavingIdPageable(int savingId, int pageNumber) throws NotFoundException {
         final var response =
-                this.depositRepository.findAllBySaving_Id(savingId, PageRequest.of(pageNumber, 5));
+                this.transactionRepository.findAllBySaving_Id(savingId, PageRequest.of(pageNumber, 5));
 
         if (response.getNumberOfElements() == 0) {
             throw new NotFoundException("Entities 'Deposit' not found by attribute " +
@@ -33,9 +33,9 @@ public class DepositPersistence {
     }
 
     // TODO refactor handling type
-    public boolean save(Deposit preparedDeposit) throws DbOperationException {
+    public boolean save(Transaction preparedTransaction) throws DbOperationException {
         try {
-            this.depositRepository.save(preparedDeposit);
+            this.transactionRepository.save(preparedTransaction);
             return true;
         } catch (Exception ex) {
             throw new DbOperationException(ex.getMessage(), ex);
@@ -46,7 +46,7 @@ public class DepositPersistence {
     // TODO refactor handling type
     public void removeAllBySavingId(int financeGoalId) throws DbOperationException {
         try {
-            this.depositRepository.deleteAllBySaving_Id(financeGoalId);
+            this.transactionRepository.deleteAllBySaving_Id(financeGoalId);
         } catch (Exception ex) {
             throw new DbOperationException(ex.getMessage(), ex);
         }

@@ -1,7 +1,7 @@
 package com.maksyank.finance.saving.boundary;
 
 import com.maksyank.finance.saving.exception.NotFoundException;
-import com.maksyank.finance.saving.service.process.DepositFundProcess;
+import com.maksyank.finance.saving.service.process.TransactionDepositProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +10,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/saving/{savingId}/deposit/fund")
-public class DepositFundController {
+@RequestMapping("/saving/{savingId}/transaction/deposit")
+public class TransactionDepositController {
     private UserAccountService userAccountService;
-    private DepositFundProcess depositFundProcess;
+    private TransactionDepositProcess transactionDepositProcess;
 
-    DepositFundController(DepositFundProcess depositFundProcess, UserAccountService userAccountService) {
-        this.depositFundProcess = depositFundProcess;
+    TransactionDepositController(TransactionDepositProcess transactionDepositProcess, UserAccountService userAccountService) {
+        this.transactionDepositProcess = transactionDepositProcess;
         this.userAccountService = userAccountService;
     }
 
@@ -24,7 +24,7 @@ public class DepositFundController {
     // TODO month = 1 to 12
     // TODO year from 1970 to current
     @GetMapping("/month")
-    public BigDecimal getFundAmountByMonth(
+    public BigDecimal getDepositAmountByMonth(
             @PathVariable("savingId") int savingId,
             @RequestParam("month") int month,
             @RequestParam("year") int year,
@@ -32,7 +32,7 @@ public class DepositFundController {
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.depositFundProcess.processGetFundAmountByMonth(savingId, year, month, userId);
+            return this.transactionDepositProcess.processGetFundAmountByMonth(savingId, year, month, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         }

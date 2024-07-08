@@ -1,6 +1,6 @@
 package com.maksyank.finance.saving.domain;
 
-import com.maksyank.finance.saving.domain.enums.DepositType;
+import com.maksyank.finance.saving.domain.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "deposit")
-public class Deposit {
+@Table(name = "transaction")
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_deposit")
+    @Column(name = "id_transaction")
     private int id;
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private DepositType type;
+    private TransactionType type;
     @Column(name = "description")
     private String description;
-    @Column(name = "funding_date")
-    private LocalDateTime fundingDate;
+    @Column(name = "deal_date")
+    private LocalDateTime deal_date;
     @Column(name = "amount")
     private BigDecimal amount;
 
@@ -33,18 +33,18 @@ public class Deposit {
     @JoinColumn(name = "id_saving")
     private Saving saving;
 
-    public Deposit(DepositType type, String description, LocalDateTime fundingDate, BigDecimal amount, Saving saving) {
+    public Transaction(TransactionType type, String description, LocalDateTime deal_date, BigDecimal amount, Saving saving) {
         this.type = type;
         this.description = description;
-        this.fundingDate = fundingDate;
+        this.deal_date = deal_date;
         this.amount = amount;
         this.saving = saving;
     }
 
     @Override
     public String toString() {
-        return "Deposit(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
-                this.getDescription() + ", fundingDate=" + this.getFundingDate() + ", amount=" +
-                this.getAmount() + ", financeGoalId=" + this.getSaving().getId() + ")";
+        return "Transaction(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
+                this.getDescription() + ", dealDate=" + this.getDeal_date() + ", amount=" +
+                this.getAmount() + ", savingId=" + this.getSaving().getId() + ")";
     }
 }

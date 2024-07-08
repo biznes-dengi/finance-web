@@ -54,7 +54,7 @@ public class Saving {
     private UserAccount userAccount;
 
     @OneToMany(mappedBy = "saving", fetch = FetchType.LAZY)
-    private Collection<Deposit> deposits;
+    private Collection<Transaction> transactions;
 
     public Saving(InitRulesSaving initRulesSaving, String title, CurrencyCode currency, String description,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
