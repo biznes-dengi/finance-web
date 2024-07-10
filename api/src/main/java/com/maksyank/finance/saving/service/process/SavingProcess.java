@@ -14,23 +14,32 @@ import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.validation.SavingValidationService;
 import com.maksyank.finance.user.domain.UserAccount;
+import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@EnableAsync
 public class SavingProcess {
     private SavingPersistence savingPersistence;
     private TransactionPersistence transactionPersistence;
     private SavingValidationService savingValidationService;
+    private UserAccountService userAccountService;
     @Autowired
     SavingProcess(
+            UserAccountService userAccountService,
             SavingPersistence savingPersistence,
             TransactionPersistence transactionPersistence,
             SavingValidationService savingValidationService
     ) {
+        this.userAccountService = userAccountService;
         this.savingPersistence = savingPersistence;
         this.transactionPersistence = transactionPersistence;
         this.savingValidationService = savingValidationService;
@@ -76,11 +85,37 @@ public class SavingProcess {
         final var newBalance = savingForUpdateBalance.getBalance().add(amountNewDeposit);
         savingForUpdateBalance.setBalance(newBalance);
 
-        if (newBalance.compareTo(savingForUpdateBalance.getTargetAmount()) >= 0) {
-            savingForUpdateBalance.setState(SavingState.ACHIEVED);
+        if (savingForUpdateBalance.getState() != SavingState.OVERDUE) {
+            if (newBalance.compareTo(savingForUpdateBalance.getTargetAmount()) >= 0) {
+                savingForUpdateBalance.setState(SavingState.ACHIEVED);
+            } else {
+                savingForUpdateBalance.setState(SavingState.ACTIVE);
+            }
         }
         this.savingPersistence.save(savingForUpdateBalance);
         
         return savingForUpdateBalance;
+    }
+
+    // TODO it's temporary impl, task in Notion
+    @Async
+    @Scheduled(cron = "0 0 * * *")
+    public void scheduledCheckSavingsIfOverdue() {
+        this.userAccountService.getListIdsOfUsers().stream()
+                .map(userId -> this.savingPersistence.findByUserIdAndTargetAmountAndState(SavingState.ACTIVE, userId))
+                .filter(listSaving -> !listSaving.isEmpty())
+                .forEach(listSaving ->
+                    listSaving.stream()
+                            .filter(saving -> saving.getDeadline().isAfter(LocalDate.now()) ||
+                                    saving.getDeadline().isEqual(LocalDate.now()))
+                            .forEach(saving -> {
+                                saving.setState(SavingState.OVERDUE);
+                                try {
+                                    this.savingPersistence.save(saving);
+                                } catch (DbOperationException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                );
     }
 }

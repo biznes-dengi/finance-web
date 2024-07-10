@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class SavingPersistence {
@@ -31,6 +33,12 @@ public class SavingPersistence {
                 .orElseThrow(
                         () -> new NotFoundException("Entities 'Finance Goal' not found by attribute 'state' = " + state)
                 );
+    }
+
+    public List<Saving> findByUserIdAndTargetAmountAndState(SavingState state, int userId) {
+        return this.savingRepository
+                .findByUserAccount_IdAndTargetAmountNotNullAndState(userId, state)
+                .orElse(Collections.emptyList());
     }
 
     // TODO refactor handling type

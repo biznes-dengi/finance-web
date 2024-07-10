@@ -5,6 +5,8 @@ import com.maksyank.finance.user.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 // TO DO refactor userAccount vs user (additionally task in notion 'refactor entity UserAccount')
 @Service
 public class UserAccountService {
@@ -42,4 +44,7 @@ public class UserAccountService {
         return this.userAccountRepository.existsById(id);
     }
 
+    public List<Integer> getListIdsOfUsers() {
+        return this.userAccountRepository.findAll().stream().map(UserAccount::getId).toList();
+    }
 }

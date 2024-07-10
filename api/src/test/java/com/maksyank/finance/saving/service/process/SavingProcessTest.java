@@ -3,6 +3,7 @@ package com.maksyank.finance.saving.service.process;
 import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.validation.SavingValidationService;
+import com.maksyank.finance.user.service.UserAccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,8 @@ public class SavingProcessTest {
     private TransactionPersistence transactionPersistence;
     @Mock
     private SavingValidationService savingValidationService;
+    @Mock
+    private UserAccountService userAccountService;
     @InjectMocks
     private SavingProcess savingProcess;
 

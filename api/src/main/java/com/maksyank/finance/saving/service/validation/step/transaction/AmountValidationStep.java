@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.service.validation.step.deposit;
+package com.maksyank.finance.saving.service.validation.step.transaction;
 
 import com.maksyank.finance.saving.domain.enums.TransactionType;
 import com.maksyank.finance.saving.dto.TransactionDto;
