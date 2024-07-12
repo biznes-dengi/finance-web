@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SavingValidationService extends ValidationService {
-    private final ValidationStep<SavingDto> defaultPathValidation;
+    private final ValidationStep<SavingDto> defaultValidationPath;
 
     SavingValidationService(Validator validator) {
         super(validator);
-        this.defaultPathValidation = new TargetAmountValidationStep()
+        this.defaultValidationPath = new TargetAmountValidationStep()
                 .linkWith(new DeadlineValidationStep())
                 .linkWith(new ImageValidationStep());
     }
@@ -23,6 +23,6 @@ public class SavingValidationService extends ValidationService {
         final var result = this.validateConstraint(toValidate);
         if (result.notValid()) return result;
 
-        return this.defaultPathValidation.validate(toValidate);
+        return this.defaultValidationPath.validate(toValidate);
     }
 }

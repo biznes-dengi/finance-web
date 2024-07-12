@@ -55,13 +55,13 @@ public class SavingProcess {
         return SavingMapper.sourceToViewResponse(foundSavings);
     }
 
-    public void processSave(SavingDto finGoalToSaveDto, UserAccount user) throws DbOperationException, ValidationException {
-        final var resultOfValidation = this.savingValidationService.validate(finGoalToSaveDto);
+    public void processSave(SavingDto savingDto, UserAccount user) throws DbOperationException, ValidationException {
+        final var resultOfValidation = this.savingValidationService.validate(savingDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
         final var rulesSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
-        final var newSaving = SavingMapper.mapToNewEntity(finGoalToSaveDto, rulesSaving, user);
+        final var newSaving = SavingMapper.mapToNewEntity(savingDto, rulesSaving, user);
         this.savingPersistence.save(newSaving);
     }
 
@@ -85,19 +85,25 @@ public class SavingProcess {
         final var newBalance = savingForUpdateBalance.getBalance().add(amountNewDeposit);
         savingForUpdateBalance.setBalance(newBalance);
 
-        if (savingForUpdateBalance.getState() != SavingState.OVERDUE) {
-            if (newBalance.compareTo(savingForUpdateBalance.getTargetAmount()) >= 0) {
-                savingForUpdateBalance.setState(SavingState.ACHIEVED);
-            } else {
-                savingForUpdateBalance.setState(SavingState.ACTIVE);
-            }
-        }
+        this.updateState(savingForUpdateBalance);
         this.savingPersistence.save(savingForUpdateBalance);
         
         return savingForUpdateBalance;
     }
 
+    private void updateState(Saving saving) {
+        if (saving.getState() == SavingState.OVERDUE || saving.getTargetAmount() == null)
+            return;
+
+        if (saving.getBalance().compareTo(saving.getTargetAmount()) >= 0) {
+            saving.setState(SavingState.ACHIEVED);
+        } else {
+            saving.setState(SavingState.ACTIVE);
+        }
+    }
+
     // TODO it's temporary impl, task in Notion
+    // TODO there's bug with time zone, right now the impl only for one time zone
     @Async
     @Scheduled(cron = "0 0 * * *")
     public void scheduledCheckSavingsIfOverdue() {

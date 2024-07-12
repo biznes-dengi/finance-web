@@ -39,7 +39,7 @@ CREATE TABLE saving (
     currency currency_code NOT NULL,
     description VARCHAR(100),
     balance NUMERIC(38,2) NOT NULL,
-    target_amount NUMERIC(38,2) NOT NULL,
+    target_amount NUMERIC(38,2),
     deadline DATE,
     risk_profile risk_profile_type,
     image bytea,
