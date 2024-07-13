@@ -2,9 +2,14 @@ package com.maksyank.finance.saving.service;
 
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.Saving;
+import com.maksyank.finance.saving.domain.enums.CurrencyCode;
+import com.maksyank.finance.saving.domain.enums.ImageType;
+import com.maksyank.finance.saving.domain.enums.RiskProfileType;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
+import com.maksyank.finance.saving.dto.SavingDto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,4 +37,95 @@ public class GeneratorDataSaving {
     }
 
     // public static Saving getTestData_testUpdateBalance_1() {}
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_01() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                null,
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_02() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.ZERO,
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_03() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(-120.03),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_04() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(120),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_05() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(120.1),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_06() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(120.182),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_07() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(120.18),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
 }
