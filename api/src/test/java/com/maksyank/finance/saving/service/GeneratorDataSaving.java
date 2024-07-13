@@ -128,4 +128,56 @@ public class GeneratorDataSaving {
                 ImageType.JPEG
         );
     }
+
+    public static SavingDto getTestData_testDeadlineValidationStep_01() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                null,
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testDeadlineValidationStep_02() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                null,
+                null,
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testDeadlineValidationStep_03() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2020, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testDeadlineValidationStep_04() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
 }

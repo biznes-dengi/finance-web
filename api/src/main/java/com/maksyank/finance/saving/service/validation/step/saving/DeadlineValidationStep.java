@@ -11,7 +11,7 @@ public class DeadlineValidationStep extends ValidationStep<SavingDto> {
     public ValidationResult validate(SavingDto toValidate) {
         // 01 Check if Deadline exists without TargetAmount
         if (toValidate.targetAmount() == null && toValidate.deadline() != null) {
-            return ValidationResult.invalid("The 'deadline' field ");
+            return ValidationResult.invalid("The 'deadline' field can not exist without field 'targetAmount'");
         }
 
         // 02 Check if NULL, Deadline is optional field
@@ -20,6 +20,7 @@ public class DeadlineValidationStep extends ValidationStep<SavingDto> {
         }
 
         // 03 Deadline must have a date that is greater than the current day
+        // must be bug with checking current localdate because there isn't a time zone, now it works only for one tine zone
         LocalDate currentDate = LocalDate.now();
         if (toValidate.deadline().isBefore(currentDate) || toValidate.deadline().isEqual(currentDate)) {
             return ValidationResult.invalid("The 'deadline' field must contain at least the next day.");
