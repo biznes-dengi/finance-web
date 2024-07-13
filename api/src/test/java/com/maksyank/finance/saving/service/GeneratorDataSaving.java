@@ -180,4 +180,69 @@ public class GeneratorDataSaving {
                 ImageType.JPEG
         );
     }
+
+    public static SavingDto getTestData_testImageValidationStep_01() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                null,
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testImageTypeValidationStep_01() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "sfkfdskl",
+                null
+        );
+    }
+
+    public static SavingDto getTestData_testImageTypeValidationStep_02() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                null,
+                ImageType.JPG
+        );
+    }
+
+    public static SavingDto getTestData_testImageTypeValidationStep_03() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                null,
+                null
+        );
+    }
+
+    public static SavingDto getTestData_testImageTypeValidationStep_04() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(1102.32),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "fdsfdsfds",
+                ImageType.JPEG
+        );
+    }
 }

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class TargetAmountValidationStep extends ValidationStep<SavingDto> {
     @Override
     public ValidationResult validate(SavingDto toValidate) {
-        // 01 Check if NULL, TargetAmount is optional field
+        // 01 Check on NULL, TargetAmount is optional field
         if (toValidate.targetAmount() == null) {
             return this.checkNext(toValidate);
         }

@@ -4,6 +4,8 @@ import com.maksyank.finance.saving.dto.SavingDto;
 import com.maksyank.finance.saving.service.GeneratorDataSaving;
 import com.maksyank.finance.saving.service.validation.step.ValidationStep;
 import com.maksyank.finance.saving.service.validation.step.saving.DeadlineValidationStep;
+import com.maksyank.finance.saving.service.validation.step.saving.ImageTypeValidationStep;
+import com.maksyank.finance.saving.service.validation.step.saving.ImageValidationStep;
 import com.maksyank.finance.saving.service.validation.step.saving.TargetAmountValidationStep;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -167,6 +169,76 @@ public class SavingValidationTest {
 
         // When
         final var response = stepDeadline.validate(savingToValid);
+
+        // Then
+        assertTrue(response.isValid());
+    }
+
+    @Test
+    @DisplayName(value = "Test Image step, check if Image is null")
+    public void testImageValidationStep_01() {
+        // Given
+        ValidationStep<SavingDto> stepImage = new ImageValidationStep();
+        final var savingToValid = GeneratorDataSaving.getTestData_testImageValidationStep_01();
+
+        // When
+        final var response = stepImage.validate(savingToValid);
+
+        // Then
+        assertTrue(response.isValid());
+    }
+
+    @Test
+    @DisplayName(value = "Test ImageType step, check if ImageType is null & Image isn't null")
+    public void testImageTypeValidationStep_01() {
+        // Given
+        ValidationStep<SavingDto> stepImage = new ImageTypeValidationStep();
+        final var savingToValid = GeneratorDataSaving.getTestData_testImageTypeValidationStep_01();
+
+        // When
+        final var response = stepImage.validate(savingToValid);
+
+        // Then
+        assertFalse(response.isValid());
+    }
+
+    @Test
+    @DisplayName(value = "Test ImageType step, check if ImageType isn't null & Image is null")
+    public void testImageTypeValidationStep_02() {
+        // Given
+        ValidationStep<SavingDto> stepImage = new ImageTypeValidationStep();
+        final var savingToValid = GeneratorDataSaving.getTestData_testImageTypeValidationStep_02();
+
+        // When
+        final var response = stepImage.validate(savingToValid);
+
+        // Then
+        assertFalse(response.isValid());
+    }
+
+    @Test
+    @DisplayName(value = "Test ImageType step, check if ImageType is null & Image is null")
+    public void testImageTypeValidationStep_03() {
+        // Given
+        ValidationStep<SavingDto> stepImage = new ImageTypeValidationStep();
+        final var savingToValid = GeneratorDataSaving.getTestData_testImageTypeValidationStep_03();
+
+        // When
+        final var response = stepImage.validate(savingToValid);
+
+        // Then
+        assertTrue(response.isValid());
+    }
+
+    @Test
+    @DisplayName(value = "Test ImageType step, check if ImageType isn't null & Image isn't null")
+    public void testImageTypeValidationStep_04() {
+        // Given
+        ValidationStep<SavingDto> stepImage = new ImageTypeValidationStep();
+        final var savingToValid = GeneratorDataSaving.getTestData_testImageTypeValidationStep_04();
+
+        // When
+        final var response = stepImage.validate(savingToValid);
 
         // Then
         assertTrue(response.isValid());

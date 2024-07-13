@@ -3,6 +3,7 @@ package com.maksyank.finance.saving.service.validation;
 import com.maksyank.finance.saving.dto.SavingDto;
 import com.maksyank.finance.saving.service.validation.step.*;
 import com.maksyank.finance.saving.service.validation.step.saving.DeadlineValidationStep;
+import com.maksyank.finance.saving.service.validation.step.saving.ImageTypeValidationStep;
 import com.maksyank.finance.saving.service.validation.step.saving.ImageValidationStep;
 import com.maksyank.finance.saving.service.validation.step.saving.TargetAmountValidationStep;
 import jakarta.validation.Validator;
@@ -16,7 +17,8 @@ public class SavingValidationService extends ValidationService {
         super(validator);
         this.defaultValidationPath = new TargetAmountValidationStep()
                 .linkWith(new DeadlineValidationStep())
-                .linkWith(new ImageValidationStep());
+                .linkWith(new ImageValidationStep())
+                .linkWith(new ImageTypeValidationStep());
     }
 
     public ValidationResult validate(SavingDto toValidate) {
