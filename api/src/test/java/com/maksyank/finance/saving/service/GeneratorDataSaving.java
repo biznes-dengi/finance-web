@@ -116,7 +116,20 @@ public class GeneratorDataSaving {
         );
     }
 
-    public static SavingDto getTestData_testTargetAmountValidationStep_07() {
+    public static SavingDto getTestData_testTargetAmountValidationStep_AllValidData() {
+        return new SavingDto(
+                "test",
+                CurrencyCode.EUR,
+                "test",
+                BigDecimal.valueOf(120.18),
+                LocalDate.of(2025, 8, 18),
+                RiskProfileType.MODERATE,
+                "",
+                ImageType.JPEG
+        );
+    }
+
+    public static SavingDto getTestData_testTargetAmountValidationStep_08() {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
@@ -168,7 +181,7 @@ public class GeneratorDataSaving {
         );
     }
 
-    public static SavingDto getTestData_testDeadlineValidationStep_04() {
+    public static SavingDto getTestData_testDeadlineValidationStep_AllValidData() {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
