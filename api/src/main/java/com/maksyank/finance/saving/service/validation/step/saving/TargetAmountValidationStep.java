@@ -19,9 +19,9 @@ public class TargetAmountValidationStep extends ValidationStep<SavingDto> {
             return ValidationResult.invalid("The 'target_amount' field must contain positive number.");
         }
 
-        // 03 Check if TargetAmount has 2 digits after comma
-        if (toValidate.targetAmount().scale() != 2) {
-            return ValidationResult.invalid("The 'target_amount' field must contain two digits after a decimal point.");
+        // 03 Check if TargetAmount has one or two digits after comma
+        if (toValidate.targetAmount().scale() != 1 && toValidate.targetAmount().scale() != 2) {
+            return ValidationResult.invalid("The 'target_amount' field must contain one or two digits after a decimal point.");
         }
 
         return this.checkNext(toValidate);

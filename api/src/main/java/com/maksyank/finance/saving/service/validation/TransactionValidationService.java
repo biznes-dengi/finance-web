@@ -13,7 +13,8 @@ public class TransactionValidationService extends ValidationService {
 
     TransactionValidationService(Validator validator) {
         super(validator);
-        this.transactionDtoPathValidation = new AmountValidationStep();
+        this.transactionDtoPathValidation = new AmountValidationStep.AmountValidationStepScale()
+                .linkWith(new AmountValidationStep.AmountValidationStepCorrectValue());
     }
 
     public ValidationResult validate(TransactionDto toValidate) {

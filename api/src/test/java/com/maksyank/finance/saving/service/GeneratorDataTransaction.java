@@ -3,6 +3,7 @@ package com.maksyank.finance.saving.service;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
+import com.maksyank.finance.saving.dto.TransactionDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -107,5 +108,86 @@ public class GeneratorDataTransaction {
         transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 1, 5, 18, 0), new BigDecimal("-104.54"), saving));
         saving.setTransactions(transactions);
         return saving;
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_01() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "test",
+                null,
+                BigDecimal.valueOf(100)
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_02() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "test",
+                null,
+                BigDecimal.valueOf(100.176)
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_03() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "test",
+                null,
+                BigDecimal.valueOf(100.12)
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_04() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "test",
+                null,
+                BigDecimal.valueOf(-98.98)
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_05() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "test",
+                null,
+                BigDecimal.ZERO
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_06() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "test",
+                null,
+                BigDecimal.valueOf(98.20)
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_07() {
+        return new TransactionDto(
+                TransactionType.WITHDRAW,
+                "test",
+                null,
+                BigDecimal.valueOf(-98.10)
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_08() {
+        return new TransactionDto(
+                TransactionType.WITHDRAW,
+                "test",
+                null,
+                BigDecimal.ZERO
+        );
+    }
+
+    public static TransactionDto getTestData_testAmountValidationStep_09() {
+        return new TransactionDto(
+                TransactionType.WITHDRAW,
+                "test",
+                null,
+                BigDecimal.valueOf(98.13)
+        );
     }
 }
