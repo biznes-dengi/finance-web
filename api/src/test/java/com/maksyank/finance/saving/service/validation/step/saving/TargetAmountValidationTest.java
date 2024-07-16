@@ -82,8 +82,7 @@ public class TargetAmountValidationTest {
         var response = stepTargetAmount.validate(savingToValid);
 
         // Then
-        assertFalse(response.isValid());
-        assertEquals("The 'target_amount' field must contain one or two digits after a decimal point.", response.errorMsg());
+        assertTrue(response.isValid());
     }
 
     @Test

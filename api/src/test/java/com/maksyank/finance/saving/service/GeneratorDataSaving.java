@@ -2,11 +2,9 @@ package com.maksyank.finance.saving.service;
 
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.Saving;
-import com.maksyank.finance.saving.domain.enums.CurrencyCode;
-import com.maksyank.finance.saving.domain.enums.ImageType;
-import com.maksyank.finance.saving.domain.enums.RiskProfileType;
-import com.maksyank.finance.saving.domain.enums.TransactionType;
+import com.maksyank.finance.saving.domain.enums.*;
 import com.maksyank.finance.saving.dto.SavingDto;
+import com.maksyank.finance.user.domain.UserAccount;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,27 +14,15 @@ import java.util.List;
 
 public class GeneratorDataSaving {
 
-    public static Saving getTestData_testUpdateBalance_0() {
+    public static Saving getTestData_testUpdateBalance_01() {
         Saving saving = new Saving();
         List<Transaction> transactions = new ArrayList<>();
-        transactions.add(new Transaction(TransactionType.DEPOSIT, "test", LocalDateTime.of(2023, 3, 10, 10, 0), new BigDecimal("932.02"), saving));
-        transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 3, 11, 9, 0), new BigDecimal("-150.22"), saving));
-        transactions.add(new Transaction(TransactionType.DEPOSIT, "test", LocalDateTime.of(2023, 3, 12, 6, 0), new BigDecimal("222.23"), saving));
-        transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 3, 13, 12, 0), new BigDecimal("-99.12"), saving));
-        transactions.add(new Transaction(TransactionType.DEPOSIT, "test", LocalDateTime.of(2023, 3, 14, 15, 0), new BigDecimal("428.93"), saving));
-        transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 3, 5, 18, 0), new BigDecimal("-104.54"), saving));
-
-        transactions.add(new Transaction(TransactionType.DEPOSIT, "test", LocalDateTime.of(2023, 5, 10, 10, 0), new BigDecimal("44.21"), saving));
-        transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 5, 11, 9, 0), new BigDecimal("-88.22"), saving));
-        transactions.add(new Transaction(TransactionType.DEPOSIT, "test", LocalDateTime.of(2023, 5, 12, 6, 0), new BigDecimal("-222.23"), saving));
-        transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 5, 13, 12, 0), new BigDecimal("-991.12"), saving));
-        transactions.add(new Transaction(TransactionType.DEPOSIT, "test", LocalDateTime.of(2023, 5, 14, 15, 0), new BigDecimal("1092.97"), saving));
-        transactions.add(new Transaction(TransactionType.WITHDRAW, "test", LocalDateTime.of(2023, 5, 5, 18, 0), new BigDecimal("-104.54"), saving));
+        saving.setBalance(BigDecimal.ZERO);
+        saving.setState(SavingState.ACTIVE);
+        saving.setTargetAmount(BigDecimal.valueOf(900));
         saving.setTransactions(transactions);
         return saving;
     }
-
-    // public static Saving getTestData_testUpdateBalance_1() {}
 
     public static SavingDto getTestData_testTargetAmountValidationStep_01() {
         return new SavingDto(
@@ -194,19 +180,6 @@ public class GeneratorDataSaving {
         );
     }
 
-    public static SavingDto getTestData_testImageValidationStep_01() {
-        return new SavingDto(
-                "test",
-                CurrencyCode.EUR,
-                "test",
-                BigDecimal.valueOf(1102.32),
-                LocalDate.of(2025, 8, 18),
-                RiskProfileType.MODERATE,
-                null,
-                ImageType.JPEG
-        );
-    }
-
     public static SavingDto getTestData_testImageTypeValidationStep_01() {
         return new SavingDto(
                 "test",
@@ -257,5 +230,42 @@ public class GeneratorDataSaving {
                 "fdsfdsfds",
                 ImageType.JPEG
         );
+    }
+
+    public static Saving getTestData_testUpdateState_01() {
+        Saving saving = new Saving();
+        saving.setBalance(BigDecimal.valueOf(120.2));
+        saving.setState(SavingState.OVERDUE);
+        return saving;
+    }
+
+    public static Saving getTestData_testUpdateState_02() {
+        Saving saving = new Saving();
+        saving.setBalance(BigDecimal.valueOf(120.2));
+        saving.setTargetAmount(BigDecimal.valueOf(150));
+        saving.setState(SavingState.ACTIVE);
+        return saving;
+    }
+
+    public static Saving getTestData_testUpdateState_03() {
+        Saving saving = new Saving();
+        saving.setBalance(BigDecimal.valueOf(160.9));
+        saving.setTargetAmount(BigDecimal.valueOf(150));
+        saving.setState(SavingState.ACHIEVED);
+        return saving;
+    }
+
+    public static List<Saving> getTestData_testScheduledCheckSavingsIfOverdue_01() {
+        var saving = new Saving();
+        saving.setState(SavingState.ACTIVE);
+        saving.setDeadline(LocalDate.of(2024, 1, 23));
+        return List.of(saving);
+    }
+
+    public static List<Saving> getTestData_testScheduledCheckSavingsIfOverdue_02() {
+        var saving = new Saving();
+        saving.setState(SavingState.ACTIVE);
+        saving.setDeadline(LocalDate.of(2100, 1, 23));
+        return List.of(saving);
     }
 }

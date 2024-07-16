@@ -11,10 +11,10 @@ public class AmountValidation {
     public static class StepValidIfScaleOneOrTwo extends ValidationStep<TransactionDto> {
         @Override
         public ValidationResult validate(TransactionDto toValidate) {
-            if (toValidate.amount().scale() != 1 && toValidate.amount().scale() != 2)
-                return ValidationResult.invalid("The 'amount' field must contain one or two digits after a decimal point.");
+            if (0 <= toValidate.amount().scale() && toValidate.amount().scale() <= 2)
+                return this.checkNext(toValidate);
 
-            return this.checkNext(toValidate);
+            return ValidationResult.invalid("The 'amount' field must contain one or two digits after a decimal point.");
         }
     }
     public static class StepValidIfDepositHasAmountMoreThenZero extends ValidationStep<TransactionDto> {

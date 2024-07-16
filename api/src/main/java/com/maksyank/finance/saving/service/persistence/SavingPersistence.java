@@ -35,9 +35,9 @@ public class SavingPersistence {
                 );
     }
 
-    public List<Saving> findByUserIdAndTargetAmountAndState(SavingState state, int userId) {
+    public List<Saving> findByUserIdAndStateAndIfDeadlineIsNotNull(SavingState state, int userId) {
         return this.savingRepository
-                .findByUserAccount_IdAndTargetAmountNotNullAndState(userId, state)
+                .findByUserAccount_IdAndDeadlineNotNullAndState(userId, state)
                 .orElse(Collections.emptyList());
     }
 

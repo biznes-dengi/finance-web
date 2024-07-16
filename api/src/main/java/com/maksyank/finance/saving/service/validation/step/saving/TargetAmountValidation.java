@@ -28,10 +28,10 @@ public class TargetAmountValidation {
             if (toValidate.targetAmount() == null)
                 return this.checkNext(toValidate);
 
-            if (toValidate.targetAmount().scale() != 1 && toValidate.targetAmount().scale() != 2) {
-                return ValidationResult.invalid("The 'target_amount' field must contain one or two digits after a decimal point.");
-            }
-            return this.checkNext(toValidate);
+            if (0 <= toValidate.targetAmount().scale() && toValidate.targetAmount().scale() <= 2)
+                return this.checkNext(toValidate);
+
+            return ValidationResult.invalid("The 'target_amount' field must contain one or two digits after a decimal point.");
         }
     }
 }

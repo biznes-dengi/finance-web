@@ -108,11 +108,11 @@ public class SavingProcess {
     @Scheduled(cron = "0 0 * * *")
     public void scheduledCheckSavingsIfOverdue() {
         this.userAccountService.getListIdsOfUsers().stream()
-                .map(userId -> this.savingPersistence.findByUserIdAndTargetAmountAndState(SavingState.ACTIVE, userId))
+                .map(userId -> this.savingPersistence.findByUserIdAndStateAndIfDeadlineIsNotNull(SavingState.ACTIVE, userId))
                 .filter(listSaving -> !listSaving.isEmpty())
                 .forEach(listSaving ->
                     listSaving.stream()
-                            .filter(saving -> saving.getDeadline().isAfter(LocalDate.now()) ||
+                            .filter(saving -> saving.getDeadline().isBefore(LocalDate.now()) ||
                                     saving.getDeadline().isEqual(LocalDate.now()))
                             .forEach(saving -> {
                                 saving.setState(SavingState.OVERDUE);

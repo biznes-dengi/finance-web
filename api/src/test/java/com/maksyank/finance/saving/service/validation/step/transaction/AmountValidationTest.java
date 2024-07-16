@@ -20,8 +20,7 @@ public class AmountValidationTest {
         final var response = stepAmount.validate(transactionDtoToValid);
 
         // Then
-        assertFalse(response.isValid());
-        assertEquals("The 'amount' field must contain one or two digits after a decimal point.", response.errorMsg());
+        assertTrue(response.isValid());
     }
 
     @Test
