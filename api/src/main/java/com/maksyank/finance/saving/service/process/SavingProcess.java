@@ -105,7 +105,7 @@ public class SavingProcess {
     // TODO it's temporary impl, task in Notion
     // TODO there's bug with time zone, right now the impl only for one time zone
     @Async
-    @Scheduled(cron = "0 0 * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void scheduledCheckSavingsIfOverdue() {
         this.userAccountService.getListIdsOfUsers().stream()
                 .map(userId -> this.savingPersistence.findByUserIdAndStateAndIfDeadlineIsNotNull(SavingState.ACTIVE, userId))
