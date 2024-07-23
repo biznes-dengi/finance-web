@@ -27,12 +27,12 @@ const sidebarConfigs = [
 
 /**
  * 1. navigate(path) = history.push(path) -- const navigate = useNavigate();
- *  2. for nav items hover box shadow (with space between active and hovered elements)
+ * 2. for nav items hover box shadow (with space between active and hovered elements)
  */
 
-export function HomePageNavbar() {
+export function AppNavbar() {
 	return (
-		<>
+		<div role='app-navbar' className='w-52'>
 			<div className='mb-12 flex pl-4 text-2xl font-bold'>{APP_ICON.APP_LOGO}</div>
 			<nav>
 				{sidebarConfigs.map(({label, path, icon}, index) => (
@@ -49,6 +49,6 @@ export function HomePageNavbar() {
 					</div>
 				))}
 			</nav>
-		</>
+		</div>
 	);
 }

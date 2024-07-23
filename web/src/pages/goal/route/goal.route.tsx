@@ -1,6 +1,6 @@
 import {APP_PATH} from '@shared/config';
 
-import {BaseLayout, HomePageLayout} from '@pages/ui';
+import {AppScreenLayout, AppLayout} from '@pages/ui';
 import {GoalCreatePage} from '../ui/GoalCreatePage.tsx';
 import {GoalDetailsPage} from '../ui/GoalDetailsPage.tsx';
 import {GoalListPage} from '../ui/GoalListPage.tsx';
@@ -23,6 +23,6 @@ const goalListRoute = {
 };
 
 export const goalRoutes = [
-	{element: <HomePageLayout />, children: [goalListRoute]},
-	{element: <BaseLayout />, children: [goalCreateRoute, goalDetailsRoute]},
+	{element: <AppLayout />, children: [goalListRoute]},
+	{element: <AppScreenLayout />, children: [goalCreateRoute, goalDetailsRoute]},
 ];
