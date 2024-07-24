@@ -6,7 +6,7 @@ import {goalModel} from '@entities/goal';
 
 type Value = number | undefined;
 
-export function Transfer() {
+export function SavingTransferPage() {
 	const [firstItemValue, setFirstItemValue] = useState<Value>();
 	const [secondItemValue, setSecondItemValue] = useState<Value>();
 

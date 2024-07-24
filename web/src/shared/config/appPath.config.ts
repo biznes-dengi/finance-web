@@ -3,4 +3,5 @@ export enum APP_PATH {
 	pageNotFound = '/page-not-found',
 	createGoal = '/create-goal',
 	goalDetails = '/goal-details',
+	goalTransfer = '/goal-transfer',
 }

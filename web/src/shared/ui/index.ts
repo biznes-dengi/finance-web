@@ -17,5 +17,4 @@ export * from './ListItem.tsx';
 export * from './PageHeader.tsx';
 export * from './Stepper.tsx';
 export * from './Select.tsx';
-export * from './Transfer.tsx';
 export * from './Spinner.tsx';
