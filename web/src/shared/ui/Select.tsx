@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {Box, Button, Card, ListItem, TextField} from '@shared/ui';
+import {Box, Button, ListItem, TextField} from '@shared/ui';
 
 import {APP_TEXT} from '@shared/config';
 import {cn, isNumber} from '@shared/lib';
@@ -46,7 +46,7 @@ export function Select(props: Props) {
 				<TextField value={search} onChange={setSearch} placeholder={APP_TEXT.search} isSearch />
 			</Box>
 
-			<Card>
+			<Box isCard>
 				{selectOptions
 					.filter((option) =>
 						search.length ? (option.name + option.description).toLowerCase().includes(search.toLowerCase()) : true,
@@ -60,7 +60,7 @@ export function Select(props: Props) {
 							<ListItem {...option} />
 						</Button>
 					))}
-			</Card>
+			</Box>
 		</>
 	);
 }

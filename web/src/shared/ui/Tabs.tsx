@@ -1,34 +1,41 @@
 import {Tab} from '@headlessui/react';
 import {Fragment, ReactElement, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
 import {cn} from '@shared/lib';
+import {APP_PATH} from '@shared/config';
 
 export type TabConfig = {
 	label: string;
-	path?: string;
+	path: (typeof APP_PATH)[keyof typeof APP_PATH];
 };
 
 type Props = {
 	tabConfigs: TabConfig[];
 	tabContentList?: ReactElement[];
 	value?: number;
-	handleChange?: (tabConfig: TabConfig, index: number, tabConfigs: TabConfig[]) => void;
 	className?: string;
 	isOutsideCard?: boolean;
 };
 
 export function Tabs(props: Props) {
-	const {tabConfigs, tabContentList, value, handleChange, className, isOutsideCard} = props;
+	const {tabConfigs, tabContentList, value, className, isOutsideCard} = props;
 
 	const [tabValue, setTabValue] = useState(0);
 
-	function handleChangeClick(index: number) {
+	const navigate = useNavigate();
+
+	function handleTabSelect(index: number) {
 		!value && setTabValue(index);
-		handleChange?.(tabConfigs[index], index, tabConfigs);
+
+		const tabConfig = tabConfigs[index];
+
+		tabConfig?.path && navigate(tabConfig.path);
 	}
 
 	return (
 		<div role='tabs-wrapper' className={cn('bg-[#EDEFF2]', className, isOutsideCard && 'bg-transparent')}>
-			<Tab.Group selectedIndex={value || tabValue} onChange={handleChangeClick}>
+			<Tab.Group selectedIndex={value || tabValue} onChange={handleTabSelect}>
 				<Tab.List>
 					{tabConfigs.map(({label}, index) => {
 						return (

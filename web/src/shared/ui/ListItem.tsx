@@ -40,7 +40,7 @@ export function ListItem(props: Props) {
 				)}
 			</div>
 
-			<div className='self-stretch'>
+			<div className={cn('self-stretch', amount && 'flex-1')}>
 				<div className='font-medium'>{name}</div>
 				{description && <div className='text-sm font-light text-primary-grey'>{description}</div>}
 			</div>

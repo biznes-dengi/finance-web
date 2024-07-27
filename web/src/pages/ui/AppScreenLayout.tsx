@@ -2,7 +2,7 @@ import {Outlet} from 'react-router-dom';
 
 export function AppScreenLayout() {
 	return (
-		<div className='flex min-h-screen flex-col'>
+		<div role='screen-layout' className='mx-auto flex min-h-screen max-w-xl flex-col'>
 			<Outlet />
 		</div>
 	);

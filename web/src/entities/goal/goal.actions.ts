@@ -1,8 +1,8 @@
 /**
  * entity-features - тут будет логика для работы с целью
- * create-goal-management
- * withdraw-from-goal-management
- * fund-goal-management
+ * create-saving-management
+ * withdraw-from-saving-management
+ * fund-saving-management
  * delete
  * addToFavorites
  * update

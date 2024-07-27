@@ -1,6 +1,6 @@
-import {NavigateFunction} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-import {APP_ICON, Box, Button} from '@shared/ui/index.ts';
+import {APP_ICON, Box} from '@shared/ui';
 
 import {cn} from '@shared/lib';
 
@@ -10,22 +10,23 @@ type Props = {
 	handleBackButtonClick?: () => void;
 };
 
-/** Make sticky */
-
 export function PageHeader(props: Props) {
 	const {title, handleBackButtonClick, backPath} = props;
 
-	function onBackButtonClick({navigate}: {navigate: NavigateFunction}) {
+	const navigate = useNavigate();
+
+	function onBackButtonClick() {
 		if (handleBackButtonClick) return handleBackButtonClick();
-		/** navigate(-1) не сработает если в новой вкладке открываем */
+
+		/** navigate(-1) не сработает, если страницу открыли в новой вкладке -> history.length = 0 */
 		backPath ? navigate(backPath) : navigate(-1);
 	}
 
 	return (
 		<div role='page-header' className='w-full'>
-			<div className={cn('z-10 w-fit px-4 pt-2')}>
-				<Button onClick={onBackButtonClick} icon={<div className={cn('h-8 w-8')}>{APP_ICON.backButton}</div>} />
-			</div>
+			<button className={cn('z-10 block w-fit cursor-pointer px-4 py-2')} onClick={onBackButtonClick}>
+				{APP_ICON.backButton}
+			</button>
 			{title && (
 				<Box withBaseHorizontal withBaseTop className={cn('text-4xl font-bold')}>
 					{title}

@@ -47,7 +47,7 @@ export const APP_ICON = {
 	fund: <PlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
 	transfer: <ArrowUpRightIcon className={cn('h-6 w-6 text-primary-violet')} />,
 	more: <EllipsisVerticalIcon className={cn('h-6 w-6 text-primary-violet')} />,
-	backButton: <ArrowLeftIcon />,
+	backButton: <ArrowLeftIcon className={'h-8 w-8'} />,
 	reset: <XMarkIcon className={cn('h-3 w-3')} />,
 	search: <MagnifyingGlassIcon className={cn('h-4 w-4')} />,
 	camera: <CameraIcon className={cn('h-5 w-5')} />,

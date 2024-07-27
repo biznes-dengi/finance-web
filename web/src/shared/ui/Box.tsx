@@ -2,56 +2,68 @@ import {ReactNode} from 'react';
 import {cn} from '@shared/lib';
 
 type Props = {
-	children: ReactNode;
-	className?: string;
-
 	withMediumVertical?: unknown;
 	withMediumTop?: unknown;
-	withMediumBottom?: unknown;
-
 	withBaseVertical?: unknown;
 	withBaseTop?: unknown;
 	withBaseBottom?: unknown;
-	withTitleBottom?: unknown;
-
 	withBaseHorizontal?: unknown;
+
+	children: ReactNode;
+	className?: string;
+	isCard?: boolean;
+	title?: ReactNode;
+	cardTitle?: ReactNode;
+	titleButton?: ReactNode;
 };
 
 export function Box(props: Props) {
 	const {
-		children,
-		className,
-
 		withMediumVertical,
 		withMediumTop,
-		withMediumBottom,
-
 		withBaseVertical,
 		withBaseTop,
 		withBaseBottom,
-		withTitleBottom,
-
 		withBaseHorizontal,
+
+		children,
+		className,
+		isCard,
+		title,
+		cardTitle,
+		titleButton,
 	} = props;
 
 	return (
-		<div
-			className={cn(
-				className,
-
-				withMediumVertical && 'py-6',
-				withMediumTop && 'pt-6',
-				withMediumBottom && 'pb-6',
-
-				withBaseVertical && 'py-4',
-				withBaseTop && 'pt-4',
-				withBaseBottom && 'pb-4',
-				withTitleBottom && 'pb-3',
-
-				withBaseHorizontal && 'px-4',
+		<>
+			{(title || titleButton) && (
+				<div
+					className={cn(
+						'flex py-6 pb-3',
+						title && titleButton && 'justify-between',
+						!title && titleButton && 'justify-end',
+					)}
+				>
+					{title && <div className='font-semibold'>{title}</div>}
+					{titleButton && <div className='place-self-end text-primary-violet'>{titleButton}</div>}
+				</div>
 			)}
-		>
-			{children}
-		</div>
+			<div
+				role='box'
+				className={cn(
+					className,
+					withMediumVertical && 'py-6',
+					withMediumTop && 'pt-6',
+					withBaseVertical && 'py-4',
+					withBaseTop && 'pt-4',
+					withBaseBottom && 'pb-4',
+					withBaseHorizontal && 'px-4',
+					isCard && 'rounded-2xl bg-white',
+				)}
+			>
+				{cardTitle && <div className='px-4 py-3 text-sm text-primary-grey'>{cardTitle}</div>}
+				{children}
+			</div>
+		</>
 	);
 }

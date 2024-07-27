@@ -5,7 +5,14 @@ export class textHelpers {
 		return `You do not have any ${item.toLowerCase()} yet`;
 	}
 
-	static getRatio(currentAmount: Amount, targetAmount: Amount) {
+	static getRatio(currentAmount: Amount, targetAmount: Amount, currencySymbol?: string) {
+		if (currencySymbol) {
+			const current = this.getAmountWithCurrency(currentAmount, currencySymbol);
+			const target = this.getAmountWithCurrency(targetAmount, currencySymbol);
+
+			return `${current} / ${target}`;
+		}
+
 		return `${this.getAmount(currentAmount)} / ${this.getAmount(targetAmount)}`;
 	}
 

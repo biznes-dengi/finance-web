@@ -5,10 +5,10 @@ export * from './fields/upload-field/useUploadField.tsx';
 export * from './drawer/useDrawer.tsx';
 export * from './slider/useSlider.tsx';
 
+export * from './button';
+
 export * from './Tabs.tsx';
 export * from './Icon.tsx';
-export * from './Card.tsx';
-export * from './Button.tsx';
 export * from './EmptyState.tsx';
 export * from './Box.tsx';
 export * from './Management.tsx';

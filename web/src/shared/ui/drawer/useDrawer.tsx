@@ -3,13 +3,17 @@ import {ReactElement, ReactNode, useRef} from 'react';
 import {Drawer, type DrawerProps as BottomDrawerProps} from './ui/Drawer.tsx';
 import {SuccessDrawerContent} from './ui/SuccessDrawerContent.tsx';
 
-type DrawerType = 'right' | 'bottom' | 'left';
-
 type RightDrawerWrapperProps = {
 	children: ReactNode;
 };
+type DrawerWrapperPropsMap = {
+	right: RightDrawerWrapperProps;
+	bottom: BottomDrawerProps;
+	left: never;
+};
 
-type DrawerWrapperPropsMap = {right: RightDrawerWrapperProps; bottom: BottomDrawerProps; left: never};
+type DrawerType = 'right' | 'bottom' | 'left';
+
 type DrawerWrapperProps<T extends DrawerType> = T extends keyof DrawerWrapperPropsMap
 	? DrawerWrapperPropsMap[T]
 	: never;
