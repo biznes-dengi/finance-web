@@ -35,6 +35,8 @@ import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@he
 
 import {cn} from '@shared/lib';
 
+const baseIconSize = 'h-6 w-6';
+
 export const APP_ICON = {
 	USER: <img src={userIconPath} alt='user icon' />,
 	APP_LOGO: <img src={pyramidIconPath} alt='pyramid icon' />,
@@ -43,14 +45,16 @@ export const APP_ICON = {
 	CALCULATOR: <img src={calculatorIconPath} alt='calculator icon' />,
 	INVEST: <img src={investIconPath} alt='invest icon' />,
 	TRACKER: <img src={trackerIconPath} alt='tracket icon' />,
-	createGoal: <FolderPlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
-	fund: <PlusIcon className={cn('h-6 w-6 text-primary-violet')} />,
-	transfer: <ArrowUpRightIcon className={cn('h-6 w-6 text-primary-violet')} />,
-	more: <EllipsisVerticalIcon className={cn('h-6 w-6 text-primary-violet')} />,
-	backButton: <ArrowLeftIcon className={'h-8 w-8'} />,
-	reset: <XMarkIcon className={cn('h-3 w-3')} />,
-	search: <MagnifyingGlassIcon className={cn('h-4 w-4')} />,
-	camera: <CameraIcon className={cn('h-5 w-5')} />,
+
+	createGoal: <FolderPlusIcon className={baseIconSize} />,
+	fund: <PlusIcon className={baseIconSize} />,
+	transfer: <ArrowUpRightIcon className={baseIconSize} />,
+	more: <EllipsisVerticalIcon className={baseIconSize} />,
+	backButton: <ArrowLeftIcon className={baseIconSize} />,
+	reset: <XMarkIcon className='h-3 w-3' />,
+	search: <MagnifyingGlassIcon className='h-4 w-4' />,
+	camera: <CameraIcon className='h-5 w-5' />,
+
 	check: <CheckIcon />,
 	uploadImage: <CloudArrowUpIcon />,
 	transferTo: <ArrowDownIcon />,

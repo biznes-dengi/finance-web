@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-import {APP_ICON, Box} from '@shared/ui';
+import {APP_ICON, Box, Button, BUTTON_TYPE} from '@shared/ui';
 
 import {cn} from '@shared/lib';
 
@@ -24,9 +24,9 @@ export function PageHeader(props: Props) {
 
 	return (
 		<div role='page-header' className='w-full'>
-			<button className={cn('z-10 block w-fit cursor-pointer px-4 py-2')} onClick={onBackButtonClick}>
+			<Button onClick={onBackButtonClick} type={BUTTON_TYPE.icon} className='p-4'>
 				{APP_ICON.backButton}
-			</button>
+			</Button>
 			{title && (
 				<Box withBaseHorizontal withBaseTop className={cn('text-4xl font-bold')}>
 					{title}

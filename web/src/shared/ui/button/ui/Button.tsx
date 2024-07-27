@@ -5,7 +5,6 @@ import {cn} from '@shared/lib';
 
 export enum BUTTON_TYPE {
 	default,
-	circle,
 	primary,
 	icon,
 }
@@ -19,10 +18,14 @@ interface Props extends CommonButtonSettings {
 	children?: string | ReactNode;
 	className?: string;
 	disabled?: boolean;
+	iconLabel?: string;
 }
 
+// TODO: button types
+//  - when type = icon -> icon prop required
+
 export function Button(props: Props) {
-	const {children, onClick, type = BUTTON_TYPE.default, icon, className, disabled} = props;
+	const {children, className, onClick, type = BUTTON_TYPE.default, icon, iconLabel, disabled} = props;
 
 	const navigate = useNavigate();
 
@@ -50,23 +53,13 @@ export function Button(props: Props) {
 		);
 	}
 
-	if (type === BUTTON_TYPE.circle) {
-		return (
-			<button {...defaultButtonProps} className={getButtonClassName('flex w-fit flex-col items-center')}>
-				{icon && (
-					<div className={cn('flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet')}>
-						{icon}
-					</div>
-				)}
-				{children && <div className='mt-1 text-primary-violet'>{children}</div>}
-			</button>
-		);
-	}
-
 	if (type === BUTTON_TYPE.icon) {
 		return (
-			<button {...defaultButtonProps} className={getButtonClassName('h-8 w-8')}>
-				{children}
+			<button {...defaultButtonProps} className={getButtonClassName('flex flex-col items-center text-primary-violet')}>
+				{icon && (
+					<div className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet'>{icon}</div>
+				)}
+				{iconLabel && <div className='mt-1'>{iconLabel}</div>}
 			</button>
 		);
 	}

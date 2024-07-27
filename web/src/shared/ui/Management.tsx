@@ -28,12 +28,11 @@ export function Management(props: Props) {
 				{buttonConfigs.map((buttonConfig) => (
 					<Button
 						key={buttonConfig.name}
-						type={BUTTON_TYPE.circle}
+						type={BUTTON_TYPE.icon}
 						icon={buttonConfig.icon}
+						iconLabel={buttonConfig.name}
 						onClick={buttonConfig.onClick}
-					>
-						{buttonConfig.name}
-					</Button>
+					/>
 				))}
 			</div>
 		</div>
