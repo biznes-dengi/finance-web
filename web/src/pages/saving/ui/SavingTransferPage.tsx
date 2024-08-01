@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {APP_ICON, CurrencyField, useSlider} from '@shared/ui';
+import {Icon, CurrencyField, useSlider} from '@shared/ui';
 import {APP_TEXT} from '@shared/config';
 import {goalModel} from '@entities/goal';
 
@@ -43,21 +43,21 @@ export function SavingTransferPage() {
 				<div className='flex flex-col gap-2 pb-4 text-sm'>
 					<div className='flex items-center justify-between'>
 						<div className='flex items-center gap-1 text-primary-violet'>
-							<div className='h-4 w-4'>{APP_ICON.calendar}</div>
+							<div className='h-4 w-4'>{Icon.calendar}</div>
 							<div>{currentDate}</div>
 						</div>
 						<div className='flex items-center gap-1.5 text-primary-violet' onClick={handleSlideLeft}>
-							<div className='h-3 w-3'>{APP_ICON.edit}</div>
+							<div className='h-3 w-3'>{Icon.edit}</div>
 							<div>Edit</div>
 						</div>
 					</div>
 					<div className='flex items-center justify-between'>
 						<div className='flex items-center gap-1 text-primary-violet'>
-							<div className='h-4 w-4'>{APP_ICON.trendUp}</div>
+							<div className='h-4 w-4'>{Icon.trendUp}</div>
 							<div>1 $ = {exchangeRate} zł</div>
 						</div>
 						<div className='flex items-center gap-1.5 text-primary-violet' onClick={handleSlideRight}>
-							<div className='h-3 w-3'>{APP_ICON.edit}</div>
+							<div className='h-3 w-3'>{Icon.edit}</div>
 							<div>Edit</div>
 						</div>
 					</div>
@@ -72,7 +72,7 @@ export function SavingTransferPage() {
 					/>
 
 					<div className='absolute left-[150px] top-[74px] flex h-8 w-8 items-center justify-center rounded-full bg-white'>
-						<div className='h-4 w-4 text-primary-violet'>{APP_ICON.transferTo}</div>
+						<div className='h-4 w-4 text-primary-violet'>{Icon.transferTo}</div>
 					</div>
 
 					<CurrencyField

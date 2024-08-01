@@ -1,5 +1,5 @@
 import {cn} from '@shared/lib';
-import {APP_ICON} from '@shared/ui/Icon.tsx';
+import {Icon} from '@shared/ui/Icon.tsx';
 import {useRef} from 'react';
 
 type Props = {
@@ -28,7 +28,7 @@ export function TextField(props: Props) {
 	return (
 		<>
 			<label className={cn('flex items-center rounded-2xl bg-secondary-grey p-4', isSearch && 'rounded-3xl p-1')}>
-				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{APP_ICON.search}</div>}
+				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{Icon.search}</div>}
 
 				<input
 					ref={inputRef}
@@ -47,7 +47,7 @@ export function TextField(props: Props) {
 							isSearch && 'mx-1',
 						)}
 					>
-						{APP_ICON.reset}
+						{Icon.reset}
 					</div>
 				)}
 			</label>

@@ -1,2 +1,2 @@
 export {type ButtonConfig} from './button.types.ts';
-export {Button, BUTTON_TYPE} from './ui/Button.tsx';
+export {Button, ButtonType} from './ui/Button.tsx';

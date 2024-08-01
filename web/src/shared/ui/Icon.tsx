@@ -26,6 +26,7 @@ import {
 	CameraIcon,
 	CheckIcon,
 	ChevronDownIcon,
+	ChevronRightIcon,
 	CloudArrowUpIcon,
 	MagnifyingGlassIcon,
 	PencilIcon,
@@ -35,10 +36,9 @@ import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@he
 
 import {cn} from '@shared/lib';
 
-const baseIconSize = 'h-6 w-6';
+/** Icons should be medium-bold, to corellate with text */
 
-export const APP_ICON = {
-	USER: <img src={userIconPath} alt='user icon' />,
+export const Icon = {
 	APP_LOGO: <img src={pyramidIconPath} alt='pyramid icon' />,
 	PORTFOLIO: <BriefcaseIcon className={cn('h-6 w-6 text-primary-grey')} />,
 	HOME: <img src={homeIconPath} alt='home icon' />,
@@ -46,15 +46,18 @@ export const APP_ICON = {
 	INVEST: <img src={investIconPath} alt='invest icon' />,
 	TRACKER: <img src={trackerIconPath} alt='tracket icon' />,
 
-	createGoal: <FolderPlusIcon className={baseIconSize} />,
-	fund: <PlusIcon className={baseIconSize} />,
-	transfer: <ArrowUpRightIcon className={baseIconSize} />,
-	more: <EllipsisVerticalIcon className={baseIconSize} />,
-	backButton: <ArrowLeftIcon className={baseIconSize} />,
 	reset: <XMarkIcon className='h-3 w-3' />,
 	search: <MagnifyingGlassIcon className='h-4 w-4' />,
 	camera: <CameraIcon className='h-5 w-5' />,
 
+	user: <img src={userIconPath} alt='user icon' />,
+
+	backButton: <ArrowLeftIcon />,
+	createGoal: <FolderPlusIcon />,
+	fund: <PlusIcon />,
+	transfer: <ArrowUpRightIcon />,
+	more: <EllipsisVerticalIcon />,
+	rightChevron: <ChevronRightIcon />,
 	check: <CheckIcon />,
 	uploadImage: <CloudArrowUpIcon />,
 	transferTo: <ArrowDownIcon />,

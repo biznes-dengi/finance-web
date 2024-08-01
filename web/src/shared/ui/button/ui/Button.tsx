@@ -1,78 +1,74 @@
-import {ReactNode} from 'react';
+import {cloneElement, ReactElement, ReactNode} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import {cn} from '@shared/lib';
 
-export enum BUTTON_TYPE {
-	default,
-	primary,
+export enum ButtonType {
+	main,
+	text,
 	icon,
 }
 
 export interface CommonButtonSettings {
-	icon?: ReactNode;
-	type?: BUTTON_TYPE;
+	icon?: ReactElement;
+	type?: ButtonType;
 	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
 }
 interface Props extends CommonButtonSettings {
-	children?: string | ReactNode;
+	children?: ReactNode;
 	className?: string;
 	disabled?: boolean;
-	iconLabel?: string;
 }
 
-// TODO: button types
-//  - when type = icon -> icon prop required
+// TODO: Typescript: when type = icon -> icon prop required
 
 export function Button(props: Props) {
-	const {children, className, onClick, type = BUTTON_TYPE.default, icon, iconLabel, disabled} = props;
+	const {children, className, onClick, type = ButtonType.text, icon, disabled} = props;
 
 	const navigate = useNavigate();
 
-	const defaultButtonProps = {
-		onClick: () => onClick({navigate}),
+	const buttonProps = {
+		onClick: disabled ? undefined : () => onClick({navigate}),
+		disabled,
 	};
 
-	function getButtonClassName(...buttonClassNames: Array<unknown>) {
-		return cn(disabled ? 'cursor-not-allowed' : 'cursor-pointer', ...buttonClassNames, className);
+	function gcn(...buttonClassName: Array<unknown>) {
+		return cn('block', disabled ? 'cursor-not-allowed' : 'cursor-pointer', ...buttonClassName, className);
 	}
 
-	if (type === BUTTON_TYPE.primary) {
+	if (type === ButtonType.main) {
 		return (
 			<button
-				{...defaultButtonProps}
-				className={getButtonClassName(
+				{...buttonProps}
+				className={gcn(
 					'block w-full rounded-2xl py-2 text-center text-white',
-					!disabled && 'bg-primary-violet shadow-md shadow-primary-blue',
-					disabled && 'bg-secondary-grey',
+					!disabled ? 'bg-primary-violet shadow-md shadow-primary-blue' : 'bg-secondary-grey',
 				)}
-				onClick={!disabled ? defaultButtonProps.onClick : undefined}
 			>
 				{children}
 			</button>
 		);
 	}
 
-	if (type === BUTTON_TYPE.icon) {
+	if (type === ButtonType.text) {
+		// svg-path size = 12x12
 		return (
-			<button {...defaultButtonProps} className={getButtonClassName('flex flex-col items-center text-primary-violet')}>
+			<button {...buttonProps} className={gcn('text-sm font-medium text-primary-violet', icon && 'flex items-center')}>
+				{icon && cloneElement(icon, {className: 'mr-2 h-4 w-4'})}
+				{children}
+			</button>
+		);
+	}
+
+	if (type === ButtonType.icon) {
+		return (
+			<button {...buttonProps} className={gcn('flex flex-col items-center text-primary-violet')}>
 				{icon && (
-					<div className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet'>{icon}</div>
+					<div className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet'>
+						{cloneElement(icon, {className: 'h-6 w-6'})}
+					</div>
 				)}
-				{iconLabel && <div className='mt-1'>{iconLabel}</div>}
-			</button>
-		);
-	}
-
-	if (type === BUTTON_TYPE.default) {
-		return (
-			<button
-				{...defaultButtonProps}
-				className={getButtonClassName(
-					'block w-full rounded-2xl bg-white p-4 text-left duration-300 hover:bg-light-grey hover:shadow-[0_0_0_4px_white_inset]',
-				)}
-			>
-				{children}
+				{children && <div className='mt-1'>{children}</div>}
 			</button>
 		);
 	}

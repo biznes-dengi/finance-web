@@ -1,9 +1,9 @@
-import {APP_ICON, Button, BUTTON_TYPE} from '@shared/ui';
+import {Button, ButtonType, Icon} from '@shared/ui';
 
 export function AppHeader() {
 	return (
 		<header role='app-header' className='mb-8'>
-			<Button onClick={() => alert('click user icon')} type={BUTTON_TYPE.icon} icon={APP_ICON.USER} />
+			<Button onClick={() => alert('click user icon')} type={ButtonType.icon} icon={Icon.user} />
 		</header>
 	);
 }

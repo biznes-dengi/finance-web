@@ -1,27 +1,27 @@
 import {cn} from '@shared/lib';
 import {APP_PATH} from '@shared/config';
-import {APP_ICON} from '@shared/ui';
+import {Icon} from '@shared/ui';
 
 const sidebarConfigs = [
 	{
 		label: 'Home',
 		path: APP_PATH.root,
-		icon: APP_ICON.HOME,
+		icon: Icon.HOME,
 	},
 	{
 		label: 'Tracker',
 		path: APP_PATH.root,
-		icon: APP_ICON.TRACKER,
+		icon: Icon.TRACKER,
 	},
 	{
 		label: 'Invest',
 		path: APP_PATH.root,
-		icon: APP_ICON.INVEST,
+		icon: Icon.INVEST,
 	},
 	{
 		label: 'Calculator',
 		path: APP_PATH.root,
-		icon: APP_ICON.CALCULATOR,
+		icon: Icon.CALCULATOR,
 	},
 ];
 
@@ -33,7 +33,7 @@ const sidebarConfigs = [
 export function AppNavbar() {
 	return (
 		<div role='app-navbar' className='w-52'>
-			<div className='mb-12 flex pl-4 text-2xl font-bold'>{APP_ICON.APP_LOGO}</div>
+			<div className='mb-12 flex pl-4 text-2xl font-bold'>{Icon.APP_LOGO}</div>
 			<nav>
 				{sidebarConfigs.map(({label, path, icon}, index) => (
 					<div

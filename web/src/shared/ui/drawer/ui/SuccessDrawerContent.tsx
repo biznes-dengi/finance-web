@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 
-import {APP_ICON} from '@shared/ui';
+import {Icon} from '@shared/ui';
 import {APP_TEXT} from '@shared/config';
 
 export enum SuccessDrawerType {
@@ -21,7 +21,7 @@ export function SuccessDrawerContent(props: Props) {
 
 	return (
 		<div className='flex flex-col items-center pb-4'>
-			<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{APP_ICON.check}</div>
+			<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{Icon.check}</div>
 			<div className='text-center font-semibold'>
 				{preText}
 				{primaryText && <span className='text-primary-violet'>{` ${primaryText} `}</span>}

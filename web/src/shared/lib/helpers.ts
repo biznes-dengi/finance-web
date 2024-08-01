@@ -4,6 +4,12 @@ export function cn(...classes: Array<unknown>) {
 	return twMerge(classes.filter(Boolean).join(' '));
 }
 
+export function createGcn(generalClassName: string, className?: string) {
+	return function (...buttonClassName: Array<unknown>) {
+		return cn(generalClassName, ...buttonClassName, className);
+	};
+}
+
 export function cloneDeep<T>(value: T): T {
 	if (typeof value !== 'object' || value === null) {
 		return value;

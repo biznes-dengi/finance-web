@@ -1,5 +1,6 @@
 import {ReactNode} from 'react';
 import {cn} from '@shared/lib';
+import {Button} from '@shared/ui/button';
 
 type Props = {
 	withMediumVertical?: unknown;
@@ -45,20 +46,20 @@ export function Box(props: Props) {
 					)}
 				>
 					{title && <div className='font-semibold'>{title}</div>}
-					{titleButton && <div className='place-self-end text-primary-violet'>{titleButton}</div>}
+					{titleButton && <Button onClick={() => alert('q')}>{titleButton}</Button>}
 				</div>
 			)}
 			<div
 				role='box'
 				className={cn(
-					className,
-					withMediumVertical && 'py-6',
-					withMediumTop && 'pt-6',
-					withBaseVertical && 'py-4',
-					withBaseTop && 'pt-4',
-					withBaseBottom && 'pb-4',
+					withMediumVertical && 'my-6',
+					withMediumTop && 'mt-6',
+					withBaseVertical && 'my-4',
+					withBaseTop && 'mt-4',
+					withBaseBottom && 'mb-4',
 					withBaseHorizontal && 'px-4',
 					isCard && 'rounded-2xl bg-white',
+					className,
 				)}
 			>
 				{cardTitle && <div className='px-4 py-3 text-sm text-primary-grey'>{cardTitle}</div>}

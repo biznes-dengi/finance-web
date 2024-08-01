@@ -2,10 +2,9 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {
-	APP_ICON,
+	Icon,
 	Box,
 	Button,
-	BUTTON_TYPE,
 	CurrencyField,
 	PageHeader,
 	Select,
@@ -75,7 +74,7 @@ export function SavingCreatePage() {
 					>
 						{Header}
 
-						{isFileDragging && <div className='h-10 w-10 self-center text-primary-violet'>{APP_ICON.uploadImage}</div>}
+						{isFileDragging && <div className='h-10 w-10 self-center text-primary-violet'>{Icon.uploadImage}</div>}
 						{isUploading && (
 							<div className='cursor-default self-center text-center'>
 								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
@@ -89,7 +88,7 @@ export function SavingCreatePage() {
 							className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
 							onClick={startUploading}
 						>
-							{!isUploading ? APP_ICON.camera : <Spinner className='z-20 h-5 w-5' />}
+							{!isUploading ? Icon.camera : <Spinner className='z-20 h-5 w-5' />}
 						</div>
 					</div>
 				</UploadField>
@@ -141,7 +140,7 @@ export function SavingCreatePage() {
 			<Box withBaseHorizontal withMediumVertical>
 				<Button
 					onClick={activeStepIndex === 2 ? () => openDrawer() : () => setActiveStepIndex(activeStepIndex + 1)}
-					type={BUTTON_TYPE.primary}
+					type='filled'
 					disabled={(() => {
 						if (activeStepIndex === 0) return name === initialName;
 						if (activeStepIndex === 1) return currencyValue === initialCurrencyValue;

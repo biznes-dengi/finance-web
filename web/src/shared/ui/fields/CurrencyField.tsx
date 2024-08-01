@@ -1,6 +1,6 @@
 import {ReactNode, useRef, useState} from 'react';
 
-import {APP_ICON, Button, ListItem, useDrawer} from '@shared/ui';
+import {Icon, Button, Item, useDrawer} from '@shared/ui';
 
 import {cn, isNumber, isString} from '@shared/lib';
 import {APP_TEXT} from '@shared/config';
@@ -59,7 +59,7 @@ export function CurrencyField(props: Props) {
 					<div role='left-option' className='mr-4 flex items-center' onClick={openDrawer}>
 						{activeOption.mask && <div className='mr-2 h-5 w-5 rounded-full'>{activeOption.mask}</div>}
 						<div className='text-xl'>{activeOption.name}</div>
-						{options?.length && <div className='ml-1 h-4 w-4 text-black'>{APP_ICON.selectArrow}</div>}
+						{options?.length && <div className='ml-1 h-4 w-4 text-black'>{Icon.selectArrow}</div>}
 					</div>
 
 					<input
@@ -96,7 +96,7 @@ export function CurrencyField(props: Props) {
 
 					{options.map((option) => (
 						<Button key={option.name} onClick={() => alert('change active option')}>
-							<ListItem name={option.name} />
+							<Item name={option.name} />
 						</Button>
 					))}
 				</Drawer>

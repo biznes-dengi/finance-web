@@ -1,4 +1,4 @@
-import {Box, Button, ListItem, PageHeader} from '@shared/ui';
+import {Box, Button, Item, PageHeader} from '@shared/ui';
 
 import {APP_PATH, APP_TEXT} from '@shared/config';
 import {SavingProgress} from '@widgets/saving';
@@ -29,7 +29,7 @@ export function SavingDetailsPage() {
 				<Box title={APP_TEXT.transactions} titleButton={APP_TEXT.seeAll} isCard>
 					{transactions.map((row, index) => (
 						<Button key={index} onClick={() => {}}>
-							<ListItem name={row.name} description={row.description} amount={row.amount} />
+							<Item name={row.name} description={row.description} />
 						</Button>
 					))}
 				</Box>

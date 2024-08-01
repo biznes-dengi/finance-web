@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {Box, Button, ListItem, TextField} from '@shared/ui';
+import {Box, Button, Item, TextField} from '@shared/ui';
 
 import {APP_TEXT} from '@shared/config';
 import {cn, isNumber} from '@shared/lib';
@@ -57,7 +57,7 @@ export function Select(props: Props) {
 							onClick={() => handleOptionClick(option.value)}
 							className={cn(option.checked && 'bg-secondary-violet')}
 						>
-							<ListItem {...option} />
+							<Item {...option} />
 						</Button>
 					))}
 			</Box>
