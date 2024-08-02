@@ -42,8 +42,6 @@ export function SavingManagement() {
 						icon={<div className='border-2 border-primary-violet bg-secondary-grey' />}
 						name={row.name}
 						description={textHelpers.getRatio(row.savedAmount, row.targetAmount, row.currencySymbol)}
-						rightName={'28 372'}
-						rightDescription={'+10%'}
 						onClick={(navigate) => navigate(APP_PATH.goalDetails)}
 					/>
 				))}

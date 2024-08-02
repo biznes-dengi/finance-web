@@ -1,9 +1,9 @@
 import {useState} from 'react';
 
-import {Box, Button, Item, TextField} from '@shared/ui';
+import {Box, Item, TextField} from '@shared/ui';
 
 import {APP_TEXT} from '@shared/config';
-import {cn, isNumber} from '@shared/lib';
+import {isNumber} from '@shared/lib';
 import {CURRENCY} from '@shared/constants';
 
 type Props = {
@@ -15,17 +15,22 @@ type Props = {
 	fetchOptions?: () => void;
 	onChange: (value: CURRENCY) => void;
 	value: CURRENCY | null;
+	withMultipleSelection?: boolean;
 };
 
 export function Select(props: Props) {
-	const {options, onChange, value} = props;
+	const {options, onChange, value, withMultipleSelection} = props;
 
 	const initialOptions = options?.map((option) => ({
 		...option,
 		checked: isNumber(option.value) && option.value === value,
 	}));
 
-	const [selectOptions, setSelectOptions] = useState(initialOptions || []);
+	const filteredOptions = !initialOptions?.filter((option) => option.checked).length
+		? initialOptions?.map((option, index) => (index === 0 ? {...option, checked: true} : option))
+		: initialOptions;
+
+	const [selectOptions, setSelectOptions] = useState(filteredOptions || []);
 	const [search, setSearch] = useState('');
 
 	function handleOptionClick(value: CURRENCY) {
@@ -52,13 +57,15 @@ export function Select(props: Props) {
 						search.length ? (option.name + option.description).toLowerCase().includes(search.toLowerCase()) : true,
 					)
 					.map((option) => (
-						<Button
+						<Item
 							key={option.name}
+							name={option.name}
+							description={option.description}
+							icon={<div className={'bg-primary-grey'} />}
 							onClick={() => handleOptionClick(option.value)}
-							className={cn(option.checked && 'bg-secondary-violet')}
-						>
-							<Item {...option} />
-						</Button>
+							checked={option.checked}
+							withMultipleSelection={withMultipleSelection}
+						/>
 					))}
 			</Box>
 		</>

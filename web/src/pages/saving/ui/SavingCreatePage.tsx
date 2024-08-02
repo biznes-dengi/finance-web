@@ -2,10 +2,11 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {
-	Icon,
 	Box,
 	Button,
+	ButtonType,
 	CurrencyField,
+	Icon,
 	PageHeader,
 	Select,
 	Spinner,
@@ -140,7 +141,7 @@ export function SavingCreatePage() {
 			<Box withBaseHorizontal withMediumVertical>
 				<Button
 					onClick={activeStepIndex === 2 ? () => openDrawer() : () => setActiveStepIndex(activeStepIndex + 1)}
-					type='filled'
+					type={ButtonType.main}
 					disabled={(() => {
 						if (activeStepIndex === 0) return name === initialName;
 						if (activeStepIndex === 1) return currencyValue === initialCurrencyValue;

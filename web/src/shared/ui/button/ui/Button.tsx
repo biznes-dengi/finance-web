@@ -65,7 +65,7 @@ export function Button(props: Props) {
 			<button {...buttonProps} className={gcn('flex flex-col items-center text-primary-violet')}>
 				{icon && (
 					<div className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet'>
-						{cloneElement(icon, {className: 'h-6 w-6'})}
+						{cloneElement(icon, {className: icon.type === 'img' ? 'h-5 w-5' : 'h-6 w-6'})}
 					</div>
 				)}
 				{children && <div className='mt-1'>{children}</div>}

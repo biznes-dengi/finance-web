@@ -1,4 +1,9 @@
 import {twMerge} from 'tailwind-merge';
+import {cloneElement, ReactElement} from 'react';
+
+export function styleElement(element: ReactElement, className: string) {
+	return cloneElement(element, {className});
+}
 
 export function cn(...classes: Array<unknown>) {
 	return twMerge(classes.filter(Boolean).join(' '));
