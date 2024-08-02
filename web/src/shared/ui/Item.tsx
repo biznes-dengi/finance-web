@@ -3,7 +3,7 @@ import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import {Icon} from '@shared/ui';
 
-import {cn, styleElement} from '@shared/lib';
+import {cn, isBoolean, styleElement} from '@shared/lib';
 
 type Props = {
 	name: ReactNode;
@@ -19,8 +19,8 @@ type Props = {
 
 	checked?: boolean;
 	withMultipleSelection?: boolean;
+
 	added?: boolean;
-	showAddIcon?: boolean;
 
 	rightNode?: ReactElement;
 	withChevron?: boolean;
@@ -42,8 +42,8 @@ export function Item(props: Props) {
 
 		checked,
 		withMultipleSelection,
+
 		added,
-		showAddIcon,
 
 		rightNode,
 		withChevron,
@@ -106,7 +106,7 @@ export function Item(props: Props) {
 
 			{showRightCheckmark && styleElement(Icon.check, 'size-5 text-primary-violet flex self-center')}
 
-			{showAddIcon &&
+			{isBoolean(added) &&
 				styleElement(
 					added ? Icon.check : Icon.fund,
 					cn('size-5 self-center', added ? 'text-primary-grey' : 'text-primary-violet'),

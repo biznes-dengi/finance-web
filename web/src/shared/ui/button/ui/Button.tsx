@@ -1,7 +1,7 @@
-import {cloneElement, ReactElement, ReactNode} from 'react';
+import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
-import {cn} from '@shared/lib';
+import {cn, styleElement} from '@shared/lib';
 
 export enum ButtonType {
 	main,
@@ -54,7 +54,7 @@ export function Button(props: Props) {
 		// svg-path size = 12x12
 		return (
 			<button {...buttonProps} className={gcn('text-sm font-medium text-primary-violet', icon && 'flex items-center')}>
-				{icon && cloneElement(icon, {className: 'mr-2 h-4 w-4'})}
+				{icon && styleElement(icon, 'mr-2 size-4')}
 				{children}
 			</button>
 		);
@@ -64,8 +64,8 @@ export function Button(props: Props) {
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center text-primary-violet')}>
 				{icon && (
-					<div className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary-violet'>
-						{cloneElement(icon, {className: icon.type === 'img' ? 'h-5 w-5' : 'h-6 w-6'})}
+					<div className='size-10 flex items-center justify-center rounded-full bg-secondary-violet'>
+						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-6')}
 					</div>
 				)}
 				{children && <div className='mt-1'>{children}</div>}

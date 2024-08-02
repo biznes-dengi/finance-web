@@ -14,7 +14,7 @@ type Props = {
 	className?: string;
 	isCard?: boolean;
 	title?: ReactNode;
-	cardTitle?: ReactNode;
+	inCardTitle?: ReactNode;
 	titleButton?: ReactNode;
 };
 
@@ -31,7 +31,7 @@ export function Box(props: Props) {
 		className,
 		isCard,
 		title,
-		cardTitle,
+		inCardTitle,
 		titleButton,
 	} = props;
 
@@ -62,7 +62,7 @@ export function Box(props: Props) {
 					className,
 				)}
 			>
-				{cardTitle && <div className='px-4 py-3 text-sm text-primary-grey'>{cardTitle}</div>}
+				{inCardTitle && <div className='px-4 py-3 text-sm text-primary-grey'>{inCardTitle}</div>}
 				{children}
 			</div>
 		</>
