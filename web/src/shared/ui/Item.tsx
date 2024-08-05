@@ -66,10 +66,10 @@ export function Item(props: Props) {
 	return (
 		<div
 			className={cn(
-				'flex w-full rounded-2xl bg-white p-4 text-left duration-300  hover:bg-light-grey',
+				'flex w-full rounded-2xl bg-white p-4 text-left',
 				isSingle ? 'shadow-[0_0_0_4px_white_inset]' : 'mb-1 last:mb-0',
 				showIconCheckmark && 'bg-secondary-violet hover:bg-secondary-violet',
-				onClick && 'cursor-pointer',
+				onClick && 'cursor-pointer duration-300 hover:bg-light-grey',
 			)}
 			onClick={() => onClick?.(navigate)}
 		>
@@ -115,7 +115,8 @@ export function Item(props: Props) {
 
 			{showRightCheckmark && styleElement(Icon.check, 'size-5 text-primary-violet flex self-center')}
 
-			{/* Is it used that often? rightNode handle next 2 cases */}
+			{/** Is it used that often? rightNode handle next 2 cases */}
+
 			{isBoolean(added) &&
 				styleElement(
 					added ? Icon.check : Icon.fund,

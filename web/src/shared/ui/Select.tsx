@@ -47,7 +47,7 @@ export function Select(props: Props) {
 
 	return (
 		<>
-			<Box withBaseBottom>
+			<Box baseMarginBottom>
 				<TextField value={search} onChange={setSearch} placeholder={APP_TEXT.search} isSearch />
 			</Box>
 

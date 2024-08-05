@@ -29,7 +29,7 @@ export function PageHeader(props: Props) {
 				{cloneElement(Icon.backButton, {className: 'h-6 w-6'})}
 			</Button>
 			{title && (
-				<Box withBaseHorizontal withBaseTop className={cn('text-4xl font-bold')}>
+				<Box basePaddingX baseMarginTop className={cn('text-4xl font-bold')}>
 					{title}
 				</Box>
 			)}

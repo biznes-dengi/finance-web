@@ -1,7 +1,7 @@
-import {Box, Button, Item, PageHeader} from '@shared/ui';
+import {SavingProgress} from '@widgets/saving';
+import {Box, Button, Item, List, PageHeader} from '@shared/ui';
 
 import {APP_PATH, APP_TEXT} from '@shared/config';
-import {SavingProgress} from '@widgets/saving';
 
 const transactions = [
 	{name: 'Add money', description: 'Today, 15:45', amount: '+37 $'},
@@ -12,27 +12,34 @@ const transactions = [
 export function SavingDetailsPage() {
 	return (
 		<>
-			<div role='image-wrapper' className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
+			<Box role='image-wrapper' className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
 				<PageHeader title='Mustang' backPath={APP_PATH.root} />
 
-				<div className='mb-4 flex justify-between px-6'>
+				<Box className='mb-4 flex justify-between px-6'>
 					<div className='h-12 w-12 rounded-full bg-primary-grey' />
 					<div className='h-12 w-12 rounded-full bg-primary-grey' />
 					<div className='h-12 w-12 rounded-full bg-primary-grey' />
 					<div className='h-12 w-12 rounded-full bg-primary-grey' />
-				</div>
-			</div>
+				</Box>
+			</Box>
 
-			<Box withMediumVertical withBaseHorizontal>
+			<Box mediumMarginY basePaddingX>
 				<SavingProgress />
 
-				<Box title={APP_TEXT.transactions} titleButton={APP_TEXT.seeAll} isCard>
-					{transactions.map((row, index) => (
-						<Button key={index} onClick={() => {}}>
-							<Item name={row.name} description={row.description} />
-						</Button>
-					))}
-				</Box>
+				<List
+					title={APP_TEXT.transactions}
+					titleButton={<Button onClick={() => alert('seeAll')}>{APP_TEXT.seeAll}</Button>}
+					rows={transactions}
+					renderRow={(row) => (
+						<Item
+							icon={<div className='bg-secondary-violet' />}
+							name={row.name}
+							description={row.description}
+							onClick={() => {}}
+						/>
+					)}
+					isCard
+				/>
 			</Box>
 		</>
 	);

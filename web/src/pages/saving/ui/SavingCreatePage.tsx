@@ -102,11 +102,11 @@ export function SavingCreatePage() {
 					activeStepIndex={activeStepIndex}
 					steps={[
 						<>
-							<Box withBaseHorizontal>
+							<Box basePaddingX>
 								<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
 							</Box>
 							{!name && (
-								<Box withBaseHorizontal className={cn('flex flex-wrap gap-2 pt-4')}>
+								<Box basePaddingX className={cn('flex flex-wrap gap-2 pt-4')}>
 									{hints.map((hint, index) => (
 										<div
 											key={hint + index}
@@ -119,10 +119,10 @@ export function SavingCreatePage() {
 								</Box>
 							)}
 						</>,
-						<Box key={activeStepIndex} withBaseHorizontal>
+						<Box key={activeStepIndex} basePaddingX>
 							<Select options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
 						</Box>,
-						<Box key={activeStepIndex} withBaseHorizontal>
+						<Box key={activeStepIndex} basePaddingX>
 							<CurrencyField
 								value={targetAmount}
 								onChange={setTargetAmount}
@@ -138,7 +138,7 @@ export function SavingCreatePage() {
 				/>
 			</div>
 
-			<Box withBaseHorizontal withMediumVertical>
+			<Box basePaddingX mediumMarginY>
 				<Button
 					onClick={activeStepIndex === 2 ? () => openDrawer() : () => setActiveStepIndex(activeStepIndex + 1)}
 					type={ButtonType.main}

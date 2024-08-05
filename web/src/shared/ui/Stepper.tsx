@@ -14,7 +14,7 @@ export function Stepper(props: Props) {
 
 	return (
 		<>
-			<Box withMediumVertical className={cn('flex justify-center')}>
+			<Box mediumMarginY className={cn('flex justify-center')}>
 				{Array.from({length: steps.length}).map((item, index) => (
 					<div
 						key={'' + item + index}

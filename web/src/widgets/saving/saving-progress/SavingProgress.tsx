@@ -1,20 +1,18 @@
 import {Box} from '@shared/ui';
 
-/** Not dumb component, bc there is no such pattern in the system */
-
 export function SavingProgress() {
 	// TODO: data fetching
 
 	return (
 		<Box isCard>
-			<Box withBaseHorizontal withBaseVertical>
+			<Box basePadding>
 				<Box>
 					<div className='flex justify-between'>
 						<div className='text-sm font-medium'>Saved 50%</div>
 						<div className='text-sm'>12 500 / 25 000 $</div>
 					</div>
 				</Box>
-				<Box withBaseTop>
+				<Box baseMarginTop>
 					<div className='h-1 w-full rounded-2xl bg-primary-grey' />
 				</Box>
 				<div className='flex justify-between pt-4'>
