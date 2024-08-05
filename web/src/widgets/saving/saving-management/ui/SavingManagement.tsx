@@ -35,7 +35,7 @@ export function SavingManagement() {
 				</div>
 			</div>
 
-			<Box cardTitle={<span className='cursor-pointer duration-300 hover:text-black'>{'Active >'}</span>}>
+			<Box isList inCardTitle={<span className='cursor-pointer duration-300 hover:text-black'>{'Active >'}</span>}>
 				{rows.map((row) => (
 					<Item
 						key={row.name}

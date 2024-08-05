@@ -1,6 +1,5 @@
 import {ReactNode} from 'react';
 import {cn} from '@shared/lib';
-import {Button} from '@shared/ui/button';
 
 type Props = {
 	withMediumVertical?: unknown;
@@ -13,6 +12,7 @@ type Props = {
 	children: ReactNode;
 	className?: string;
 	isCard?: boolean;
+	isList?: boolean;
 	title?: ReactNode;
 	inCardTitle?: ReactNode;
 	titleButton?: ReactNode;
@@ -30,6 +30,7 @@ export function Box(props: Props) {
 		children,
 		className,
 		isCard,
+		isList,
 		title,
 		inCardTitle,
 		titleButton,
@@ -39,6 +40,7 @@ export function Box(props: Props) {
 		<>
 			{(title || titleButton) && (
 				<div
+					role='card-title'
 					className={cn(
 						'flex py-6 pb-3',
 						title && titleButton && 'justify-between',
@@ -46,7 +48,7 @@ export function Box(props: Props) {
 					)}
 				>
 					{title && <div className='font-semibold'>{title}</div>}
-					{titleButton && <Button onClick={() => alert('q')}>{titleButton}</Button>}
+					{titleButton}
 				</div>
 			)}
 			<div
@@ -62,8 +64,13 @@ export function Box(props: Props) {
 					className,
 				)}
 			>
-				{inCardTitle && <div className='px-4 py-3 text-sm text-primary-grey'>{inCardTitle}</div>}
-				{children}
+				{inCardTitle && (
+					<div role='in-card-title' className='px-4 py-3 text-sm text-primary-grey'>
+						{inCardTitle}
+					</div>
+				)}
+
+				{isList ? <div className='p-1'>{children}</div> : children}
 			</div>
 		</>
 	);

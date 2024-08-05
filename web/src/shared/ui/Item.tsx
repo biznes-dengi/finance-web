@@ -9,9 +9,11 @@ type Props = {
 	name: ReactNode;
 	description?: ReactNode;
 	subDescription?: ReactNode;
+
 	rightName?: ReactNode;
 	rightDescription?: ReactNode;
 	rightSubDescription?: ReactNode;
+
 	isNameText?: boolean;
 
 	icon?: ReactElement;
@@ -24,7 +26,9 @@ type Props = {
 
 	rightNode?: ReactElement;
 	withChevron?: boolean;
+
 	onClick?: (navigate: NavigateFunction) => void;
+	isSingle?: boolean;
 };
 
 export function Item(props: Props) {
@@ -32,9 +36,11 @@ export function Item(props: Props) {
 		name,
 		description,
 		subDescription,
+
 		rightName,
 		rightDescription,
 		rightSubDescription,
+
 		isNameText,
 
 		icon,
@@ -47,7 +53,9 @@ export function Item(props: Props) {
 
 		rightNode,
 		withChevron,
+
 		onClick,
+		isSingle,
 	} = props;
 
 	const navigate = useNavigate();
@@ -58,7 +66,8 @@ export function Item(props: Props) {
 	return (
 		<div
 			className={cn(
-				'flex w-full rounded-2xl bg-white p-4 text-left shadow-[0_0_0_4px_white_inset] duration-300 hover:bg-light-grey',
+				'flex w-full rounded-2xl bg-white p-4 text-left duration-300  hover:bg-light-grey',
+				isSingle ? 'shadow-[0_0_0_4px_white_inset]' : 'mb-1 last:mb-0',
 				showIconCheckmark && 'bg-secondary-violet hover:bg-secondary-violet',
 				onClick && 'cursor-pointer',
 			)}
@@ -77,12 +86,12 @@ export function Item(props: Props) {
 					{(showIconCheckmark || statusIcon) && (
 						<div
 							className={cn(
-								'size-5 absolute -bottom-1 -right-1 flex items-center justify-center rounded-full bg-primary-violet text-white',
+								'absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white',
 								// 'shadow-[0_0_0_2px_white_inset]',
 							)}
 						>
 							{styleElement(statusIcon || Icon.check, 'size-3.5')}
-							{/*<div className='h-3 w-3'>{Icon.check}</div>*/}
+							{/* for shadow <div className='h-3 w-3'>{Icon.check}</div> */}
 						</div>
 					)}
 				</div>
@@ -106,6 +115,7 @@ export function Item(props: Props) {
 
 			{showRightCheckmark && styleElement(Icon.check, 'size-5 text-primary-violet flex self-center')}
 
+			{/* Is it used that often? rightNode handle next 2 cases */}
 			{isBoolean(added) &&
 				styleElement(
 					added ? Icon.check : Icon.fund,
