@@ -4,10 +4,10 @@ import {type Saving} from './saving.types.ts';
 class SavingApi {
 	private itemsURL = 'saving';
 
-	async fetchItems(filter?: Filter): Promise<Saving[]> {
-		const url = filter ? getApiPath(this.itemsURL) + getQueryParams(filter) : getApiPath(this.itemsURL);
-
-		return await HttpClient.get<Saving[]>({url});
+	fetchItems(filter?: Filter): Promise<Saving[]> {
+		return HttpClient.get<Saving[]>({
+			url: filter ? getApiPath(this.itemsURL) + getQueryParams(filter) : getApiPath(this.itemsURL),
+		});
 	}
 }
 
