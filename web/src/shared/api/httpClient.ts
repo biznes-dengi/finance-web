@@ -1,6 +1,19 @@
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+	baseURL: 'http://localhost:8080',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	// withCredentials: true,
+});
+
 export class HttpClient {
-	static get() {
-		return;
+	static get<Data>({url, abortSignal}: {url: string; abortSignal?: AbortSignal}): Promise<Data> {
+		return axiosInstance
+			.get(url, {signal: abortSignal})
+			.then((response) => response.data)
+			.catch((error) => Promise.reject(error));
 	}
 }
 

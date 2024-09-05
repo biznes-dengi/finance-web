@@ -1,8 +1,10 @@
 import {CURRENCY} from '@shared/constants';
 
-export type Goal = {
-	name: string;
-	savedAmount: number;
+export type Saving = {
+	id: number;
+	title: string;
+	image: any;
+	amount: number;
 	targetAmount: number;
 	currencySymbol: string;
 };

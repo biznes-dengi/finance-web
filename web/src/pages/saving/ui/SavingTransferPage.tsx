@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 import {Icon, CurrencyField, useSlider} from '@shared/ui';
 import {APP_TEXT} from '@shared/config';
-import {goalModel} from '@entities/goal';
+import {savingModel} from '@entities/saving';
 
 type Value = number | undefined;
 
@@ -25,8 +25,9 @@ export function SavingTransferPage() {
 		setSecondItemValue(Number((value * exchangeRate).toFixed(2)));
 	}
 
-	const {rows} = goalModel.useData();
-	console.log('goals ', rows);
+	const {
+		queryState: {data: savings},
+	} = savingModel.useItems();
 
 	return (
 		<Slider activeSlideIndex={1}>
@@ -65,7 +66,11 @@ export function SavingTransferPage() {
 
 				<div className='relative'>
 					<CurrencyField
-						options={rows}
+						options={savings.map((saving) => ({
+							name: saving.title,
+							currencySymbol: saving.currencySymbol,
+							mask: saving.image || undefined,
+						}))}
 						value={firstItemValue}
 						onChange={handleValueChange}
 						leftLabel={{balance: firstItemBalance}}

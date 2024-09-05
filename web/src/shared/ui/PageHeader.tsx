@@ -1,9 +1,7 @@
+import {cloneElement} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {Box, Button, ButtonType, Icon} from '@shared/ui';
-
-import {cn} from '@shared/lib';
-import {cloneElement} from 'react';
 
 type Props = {
 	title?: string;
@@ -29,7 +27,7 @@ export function PageHeader(props: Props) {
 				{cloneElement(Icon.backButton, {className: 'h-6 w-6'})}
 			</Button>
 			{title && (
-				<Box basePaddingX baseMarginTop className={cn('text-4xl font-bold')}>
+				<Box basePaddingX className='text-4xl font-bold'>
 					{title}
 				</Box>
 			)}
