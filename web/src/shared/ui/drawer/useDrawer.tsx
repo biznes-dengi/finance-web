@@ -1,22 +1,8 @@
-import {ReactElement, ReactNode, useRef} from 'react';
+import {ReactElement, useRef} from 'react';
 
 import {Drawer, type DrawerProps as BottomDrawerProps} from './ui/Drawer.tsx';
 import {SuccessDrawerContent} from './ui/SuccessDrawerContent.tsx';
-
-type RightDrawerWrapperProps = {
-	children: ReactNode;
-};
-type DrawerWrapperPropsMap = {
-	right: RightDrawerWrapperProps;
-	bottom: BottomDrawerProps;
-	left: never;
-};
-
-type DrawerType = 'right' | 'bottom' | 'left';
-
-type DrawerWrapperProps<T extends DrawerType> = T extends keyof DrawerWrapperPropsMap
-	? DrawerWrapperPropsMap[T]
-	: never;
+import {DrawerType, DrawerWrapperProps, RightDrawerWrapperProps} from './drawer.types.ts';
 
 export function useDrawer<T extends DrawerType>(drawerType: T = 'bottom' as T) {
 	const openDrawerRef = useRef<() => void>(() => {});

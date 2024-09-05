@@ -26,3 +26,10 @@ export const buttonConfigs = [
 		onClick: () => {},
 	},
 ] as ButtonConfig[];
+
+export const savingStatusOptions = [
+	{name: 'All', value: null},
+	{name: 'Active', value: 'ACTIVE'},
+	{name: 'Achieved', value: 'ACHIEVED'},
+	{name: 'Overdue', value: 'OVERDUE'},
+];

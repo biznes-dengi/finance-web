@@ -68,7 +68,7 @@ export function Item(props: Props) {
 			className={cn(
 				'flex w-full rounded-2xl bg-white p-4 text-left',
 				isSingle ? 'shadow-[0_0_0_4px_white_inset]' : 'mb-1 last:mb-0',
-				showIconCheckmark && 'bg-secondary-violet hover:bg-secondary-violet',
+				(showIconCheckmark || showRightCheckmark) && 'bg-secondary-violet',
 				onClick && 'cursor-pointer duration-300 hover:bg-light-grey',
 			)}
 			onClick={() => onClick?.(navigate)}

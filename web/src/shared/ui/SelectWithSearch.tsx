@@ -18,7 +18,7 @@ type Props = {
 	withMultipleSelection?: boolean;
 };
 
-export function Select(props: Props) {
+export function SelectWithSearch(props: Props) {
 	const {options, onChange, value, withMultipleSelection} = props;
 
 	const initialOptions = options?.map((option) => ({
@@ -51,7 +51,7 @@ export function Select(props: Props) {
 				<TextField value={search} onChange={setSearch} placeholder={APP_TEXT.search} isSearch />
 			</Box>
 
-			<Box isCard isList>
+			<Box isCard>
 				{selectOptions
 					.filter((option) =>
 						search.length ? (option.name + option.description).toLowerCase().includes(search.toLowerCase()) : true,

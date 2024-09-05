@@ -8,7 +8,7 @@ import {
 	CurrencyField,
 	Icon,
 	PageHeader,
-	Select,
+	SelectWithSearch,
 	Spinner,
 	Stepper,
 	TextField,
@@ -120,7 +120,7 @@ export function SavingCreatePage() {
 							)}
 						</>,
 						<Box key={activeStepIndex} basePaddingX>
-							<Select options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
+							<SelectWithSearch options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
 						</Box>,
 						<Box key={activeStepIndex} basePaddingX>
 							<CurrencyField

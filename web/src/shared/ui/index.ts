@@ -14,6 +14,7 @@ export * from './Box.tsx';
 export * from './Item.tsx';
 export * from './PageHeader.tsx';
 export * from './Stepper.tsx';
-export * from './Select.tsx';
+export * from './SelectWithSearch.tsx';
 export * from './Spinner.tsx';
 export * from './List.tsx';
+export * from './SelectInCard.tsx';
