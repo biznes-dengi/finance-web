@@ -8,9 +8,7 @@ import {textHelpers} from '@shared/lib';
 export function SavingManagement() {
 	const filter = {state: 'ACTIVE', userId: 1};
 
-	const {
-		queryState: {data},
-	} = savingModel.useItems(filter);
+	const {data} = savingModel.useItems(filter);
 
 	return (
 		<Box isCard>

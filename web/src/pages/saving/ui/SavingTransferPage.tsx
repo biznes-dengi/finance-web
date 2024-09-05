@@ -25,9 +25,7 @@ export function SavingTransferPage() {
 		setSecondItemValue(Number((value * exchangeRate).toFixed(2)));
 	}
 
-	const {
-		queryState: {data: savings},
-	} = savingModel.useItems();
+	const {data: savings} = savingModel.useItems();
 
 	return (
 		<Slider activeSlideIndex={1}>

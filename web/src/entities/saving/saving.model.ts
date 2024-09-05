@@ -5,12 +5,13 @@ import {Filter} from '@shared/api';
 
 function useItems(filter?: Filter) {
 	const queryState = useQuery({
-		queryKey: ['goalData'],
+		queryKey: ['savingItems'],
 		queryFn: () => savingApi.fetchItems(filter),
 		initialData: [],
 	});
 
-	return {queryState};
+	// spread pattern instead of "return queryState" to cover the case if you need to return something else
+	return {...queryState};
 }
 
 export const savingModel = {
