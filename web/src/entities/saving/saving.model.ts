@@ -6,7 +6,7 @@ import {TAppFilter} from '@shared/types';
 function useItems(filter?: TAppFilter) {
 	const queryState = useQuery({
 		queryKey: ['savingItems', filter],
-		queryFn: () => savingApi.fetchItems({filter}),
+		queryFn: () => savingApi.fetchItems({filter: {...filter, userId: 1}}),
 		initialData: [],
 	});
 

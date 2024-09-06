@@ -1,5 +1,5 @@
 export enum APP_PATH {
-	root = '/saving',
+	root = '/savings',
 	pageNotFound = '/page-not-found',
 	createGoal = '/create-goal',
 	goalDetails = '/goal-details',

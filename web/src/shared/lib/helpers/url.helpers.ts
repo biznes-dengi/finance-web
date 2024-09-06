@@ -2,24 +2,14 @@ import {isBoolean, isNumber, isString} from '@shared/lib';
 import {TAppFilter} from '@shared/types';
 
 export function getQueryString(filter: TAppFilter) {
-	if (!filter) return '';
+	if (!filter) return;
 
-	const {page, pageSize, ...restFilter} = filter;
+	const queryParams = [] as string[];
 
-	const queryParams = [];
-
-	if (page) {
-		queryParams.push(`page=${page}`);
-	}
-
-	if (pageSize) {
-		queryParams.push(`pageSize=${pageSize}`);
-	}
-
-	Object.keys(restFilter)
-		.filter((key) => !!restFilter[key])
+	Object.keys(filter)
+		.filter((key) => !!filter[key])
 		.forEach((key) => {
-			const value = restFilter[key];
+			const value = filter[key];
 
 			if (isString(value) || isNumber(value) || isBoolean(value)) {
 				queryParams.push(`${key}=${encodeURIComponent(value)}`);
