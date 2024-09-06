@@ -1,8 +1,8 @@
-import {type Filter, getApiPath, HttpClient} from '@shared/api';
+import {type DefaultApiMethodProps, getApiPath, HttpClient} from '@shared/api';
 import {type Saving} from './saving.types.ts';
 
 class SavingApi {
-	fetchItems(filter?: Filter): Promise<Saving[]> {
+	fetchItems({filter}: DefaultApiMethodProps): Promise<Saving[]> {
 		return HttpClient.get<Saving[]>({url: getApiPath('saving'), filter});
 	}
 }

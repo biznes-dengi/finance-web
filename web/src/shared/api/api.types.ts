@@ -5,3 +5,5 @@ export type HttpClientMethodProps = {
 	filter?: Filter;
 	abortSignal?: AbortSignal;
 };
+
+export type DefaultApiMethodProps = Omit<HttpClientMethodProps, 'url'>;
