@@ -3,7 +3,7 @@ import {ReactNode, useRef, useState} from 'react';
 import {Icon, Button, Item, useDrawer} from '@shared/ui';
 
 import {cn, isNumber, isString} from '@shared/lib';
-import {APP_TEXT} from '@shared/config';
+import {APP_TEXT} from '@shared/constants';
 
 type Option = {
 	name: string;

@@ -3,7 +3,7 @@ import {Fragment, ReactElement, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {cn} from '@shared/lib';
-import {APP_PATH} from '@shared/config';
+import {APP_PATH} from '@shared/constants';
 
 export type TabConfig = {
 	label: string;

@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
 
 import {Icon} from '@shared/ui';
-import {APP_TEXT} from '@shared/config';
+import {APP_TEXT} from '@shared/constants';
 
 export enum SuccessDrawerType {
 	create,

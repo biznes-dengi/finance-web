@@ -1,15 +1,9 @@
-import {type Filter, getApiPath, getQueryParams, HttpClient} from '@shared/api';
+import {type Filter, getApiPath, HttpClient} from '@shared/api';
 import {type Saving} from './saving.types.ts';
 
 class SavingApi {
 	fetchItems(filter?: Filter): Promise<Saving[]> {
-		let url = getApiPath('saving');
-
-		if (filter) {
-			url += getQueryParams(filter);
-		}
-
-		return HttpClient.get<Saving[]>({url});
+		return HttpClient.get<Saving[]>({url: getApiPath('saving'), filter});
 	}
 }
 

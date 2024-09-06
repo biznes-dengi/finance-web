@@ -1,6 +1,6 @@
 import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
 
-import {APP_PATH} from '@shared/config';
+import {APP_PATH} from '@shared/constants';
 import {pageNotFoundRoute} from '@pages/not-found';
 import {savingRoutes} from '@pages/saving';
 

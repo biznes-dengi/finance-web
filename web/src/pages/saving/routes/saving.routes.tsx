@@ -1,4 +1,4 @@
-import {APP_PATH} from '@shared/config';
+import {APP_PATH} from '@shared/constants';
 
 import {AppScreenLayout, AppLayout} from '@pages/ui';
 import {SavingCreatePage} from '../ui/SavingCreatePage.tsx';

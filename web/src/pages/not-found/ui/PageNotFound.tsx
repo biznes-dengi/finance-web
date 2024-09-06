@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {APP_PATH, APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 
 export function PageNotFound() {
 	return (

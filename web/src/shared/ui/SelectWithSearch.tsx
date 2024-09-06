@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 import {Box, Item, TextField} from '@shared/ui';
 
-import {APP_TEXT} from '@shared/config';
+import {APP_TEXT} from '@shared/constants';
 import {isNumber} from '@shared/lib';
 import {CURRENCY} from '@shared/constants';
 

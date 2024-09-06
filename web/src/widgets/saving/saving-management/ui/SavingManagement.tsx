@@ -4,7 +4,7 @@ import {Box, Button, Item, List, SelectInCard} from '@shared/ui';
 
 import {buttonConfigs, savingStatusOptions} from '../config/savingManagement.config.ts';
 import {savingModel} from '@entities/saving';
-import {APP_PATH, APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {textHelpers} from '@shared/lib';
 
 export function SavingManagement() {

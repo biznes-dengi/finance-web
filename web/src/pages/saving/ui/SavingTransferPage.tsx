@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {Icon, CurrencyField, useSlider} from '@shared/ui';
-import {APP_TEXT} from '@shared/config';
+import {APP_TEXT} from '@shared/constants';
 import {savingModel} from '@entities/saving';
 
 type Value = number | undefined;

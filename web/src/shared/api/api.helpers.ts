@@ -1,3 +1,5 @@
+import {AxiosResponse} from 'axios';
+
 import {Filter} from '@shared/api/api.types.ts';
 import {isBoolean, isNumber, isString} from '@shared/lib';
 
@@ -45,4 +47,8 @@ export function getQueryParams(filter: Filter) {
 		});
 
 	return queryParams.map((queryParam, index) => (index === 0 ? '?' + queryParam : '&' + queryParam)).join('');
+}
+
+export function handleHttpClientResponse(response: Promise<AxiosResponse>) {
+	return response.then((response) => response.data).catch((error) => Promise.reject(error));
 }

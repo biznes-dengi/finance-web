@@ -5,7 +5,7 @@ import {Box} from '@shared/ui/Box.tsx';
 import {Item} from '@shared/ui/Item.tsx';
 
 import {cn, textHelpers} from '@shared/lib';
-import {APP_TEXT} from '@shared/config';
+import {APP_TEXT} from '@shared/constants';
 
 type Props<R> = {
 	title?: ReactNode;

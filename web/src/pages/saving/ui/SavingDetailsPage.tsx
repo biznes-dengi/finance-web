@@ -1,7 +1,7 @@
 import {SavingProgress} from '@widgets/saving';
 import {Box, Button, Item, List, PageHeader} from '@shared/ui';
 
-import {APP_PATH, APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 
 const transactions = [
 	{name: 'Add money', description: 'Today, 15:45', amount: '+37 $'},

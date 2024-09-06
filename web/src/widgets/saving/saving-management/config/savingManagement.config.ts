@@ -1,4 +1,4 @@
-import {APP_PATH, APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {Icon, type ButtonConfig, ButtonType} from '@shared/ui';
 
 export const buttonConfigs = [

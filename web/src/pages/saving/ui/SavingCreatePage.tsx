@@ -16,7 +16,7 @@ import {
 	useUploadField,
 } from '@shared/ui';
 
-import {APP_PATH, APP_TEXT} from '@shared/config';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {CURRENCY} from '@shared/constants';
 import {cn} from '@shared/lib';
 
