@@ -55,7 +55,7 @@ export function Button(props: Props) {
 		return (
 			<button {...buttonProps} className={gcn('text-sm font-medium text-primary-violet', icon && 'flex items-center')}>
 				{icon && styleElement(icon, 'mr-2 size-4')}
-				{children}
+				<span className='font-medium'>{children}</span>
 			</button>
 		);
 	}
@@ -64,7 +64,7 @@ export function Button(props: Props) {
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center text-primary-violet')}>
 				{icon && (
-					<div className='size-10 flex items-center justify-center rounded-full bg-secondary-violet'>
+					<div className='flex size-10 items-center justify-center rounded-full bg-secondary-violet'>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-6')}
 					</div>
 				)}

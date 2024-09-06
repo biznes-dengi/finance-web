@@ -46,12 +46,11 @@ export const Icon = {
 	INVEST: <img src={investIconPath} alt='invest icon' />,
 	TRACKER: <img src={trackerIconPath} alt='tracket icon' />,
 
-	reset: <XMarkIcon className='h-3 w-3' />,
 	search: <MagnifyingGlassIcon className='h-4 w-4' />,
 	camera: <CameraIcon className='h-5 w-5' />,
-
 	user: <img src={userIconPath} alt='user icon' />,
 
+	x: <XMarkIcon />,
 	backButton: <ArrowLeftIcon />,
 	createGoal: <FolderPlusIcon />,
 	fund: <PlusIcon />,

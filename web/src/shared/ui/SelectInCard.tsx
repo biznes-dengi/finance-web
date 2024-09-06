@@ -3,6 +3,7 @@ import Drawer from '@mui/material/Drawer';
 
 import {Box} from '@shared/ui/Box.tsx';
 import {Item} from '@shared/ui/Item.tsx';
+import {Icon} from '@shared/ui/Icon.tsx';
 
 type Value = string | null;
 
@@ -26,10 +27,10 @@ export function SelectInCard(props: Props) {
 			<Drawer anchor='bottom' open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
 				<div className='flex flex-col rounded-2xl px-6 py-3'>
 					<div
-						className='h-6 w-6 self-end rounded-full bg-secondary-grey text-center text-white'
+						className='flex h-6 w-6 items-center justify-center self-end rounded-full bg-secondary-grey text-center text-white'
 						onClick={() => setIsDrawerOpen(false)}
 					>
-						<span className='text-primary-grey'>X</span>
+						<div className='h-4 w-4 text-primary-grey'>{Icon.x}</div>
 					</div>
 
 					<Box className='text-xl font-medium' baseMarginBottom>

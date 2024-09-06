@@ -47,7 +47,7 @@ export function TextField(props: Props) {
 							isSearch && 'mx-1',
 						)}
 					>
-						{Icon.reset}
+						<div className='h-3 w-3'>{Icon.x}</div>
 					</div>
 				)}
 			</label>
