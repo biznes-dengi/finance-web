@@ -1,12 +1,12 @@
 import {useQuery} from '@tanstack/react-query';
 
 import {savingApi} from './saving.api.ts';
-import {Filter} from '@shared/api';
+import {TAppFilter} from '@shared/types';
 
-function useItems(filter?: Filter) {
+function useItems(filter?: TAppFilter) {
 	const queryState = useQuery({
-		queryKey: ['savingItems'],
-		queryFn: () => savingApi.fetchItems(filter),
+		queryKey: ['savingItems', filter],
+		queryFn: () => savingApi.fetchItems({filter}),
 		initialData: [],
 	});
 

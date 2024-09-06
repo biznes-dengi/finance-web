@@ -27,9 +27,11 @@ export const buttonConfigs = [
 	},
 ] as ButtonConfig[];
 
-export const savingStatusOptions = [
+export const savingStateOptions = [
 	{name: 'All', value: null},
 	{name: 'Active', value: 'ACTIVE'},
 	{name: 'Achieved', value: 'ACHIEVED'},
 	{name: 'Overdue', value: 'OVERDUE'},
-];
+] as const;
+
+export type TSavingStateValue = (typeof savingStateOptions)[number]['value'];

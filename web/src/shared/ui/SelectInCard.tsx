@@ -5,15 +5,13 @@ import {Box} from '@shared/ui/Box.tsx';
 import {Item} from '@shared/ui/Item.tsx';
 import {Icon} from '@shared/ui/Icon.tsx';
 
-type Value = string | null;
-
-type Props = {
-	value: Value;
-	onChange: (value: Value) => void;
-	options: {name: string; value: Value}[];
+type Props<TValue> = {
+	value: TValue;
+	onChange: (value: TValue) => void;
+	options: readonly {name: string; value: TValue}[];
 };
 
-export function SelectInCard(props: Props) {
+export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options} = props;
 
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);

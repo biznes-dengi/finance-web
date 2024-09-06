@@ -1,8 +1,8 @@
-export type Filter = Record<string, unknown>;
+import {TAppFilter} from '@shared/types';
 
 export type HttpClientMethodProps = {
 	url: string;
-	filter?: Filter;
+	filter?: TAppFilter;
 	abortSignal?: AbortSignal;
 };
 

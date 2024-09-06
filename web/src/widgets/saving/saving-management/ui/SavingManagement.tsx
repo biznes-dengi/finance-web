@@ -1,16 +1,40 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import {Box, Button, Item, List, SelectInCard} from '@shared/ui';
 
-import {buttonConfigs, savingStatusOptions} from '../config/savingManagement.config.ts';
+import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {savingModel} from '@entities/saving';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {textHelpers} from '@shared/lib';
+import {getQueryString, isEmpty, isEqual, parseQueryString, textHelpers} from '@shared/lib';
+
+const defaultFilter = {
+	state: null as TSavingStateValue,
+	userId: 1,
+};
+type TFilter = typeof defaultFilter;
 
 export function SavingManagement() {
-	const [savingStatus, setSavingStatus] = useState<string | null>(null);
+	const location = useLocation();
 
-	const {data} = savingModel.useItems({state: savingStatus, userId: 1});
+	let filtersFromURL = parseQueryString<TFilter>(location.search || '');
+
+	if (!filtersFromURL.state) {
+		filtersFromURL = {...filtersFromURL, state: defaultFilter.state};
+	}
+
+	const [filter, setFilter] = useState<TFilter>(isEmpty(filtersFromURL) ? defaultFilter : filtersFromURL);
+
+	const {data} = savingModel.useItems(filter);
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isEqual(filtersFromURL, filter)) return;
+
+		const path = location.pathname + getQueryString(filter);
+		navigate(path, {replace: true});
+	}, [filter]);
 
 	return (
 		<Box isCard>
@@ -38,7 +62,11 @@ export function SavingManagement() {
 			</Box>
 
 			<Box basePaddingX className='py-3'>
-				<SelectInCard value={savingStatus} onChange={(value) => setSavingStatus(value)} options={savingStatusOptions} />
+				<SelectInCard<TSavingStateValue>
+					value={filter.state}
+					onChange={(value) => setFilter({...filter, state: value})}
+					options={savingStateOptions}
+				/>
 			</Box>
 
 			<List
