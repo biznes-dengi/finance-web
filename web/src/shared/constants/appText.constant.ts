@@ -5,7 +5,7 @@ export const APP_TEXT = {
 	pageNotFound: 'Page not found',
 	goBackHome: 'Go back home',
 	dontHaveAccess: 'Sorry, but you do not have access to this page',
-	accumulation: 'Accumulation',
+	totalBalance: 'Total balance',
 	goal: 'Goal',
 	goalName: 'Goal name',
 	goals: 'Goals',

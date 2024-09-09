@@ -62,13 +62,13 @@ export function Button(props: Props) {
 
 	if (type === ButtonType.icon) {
 		return (
-			<button {...buttonProps} className={gcn('flex flex-col items-center text-primary-violet')}>
+			<button {...buttonProps} className={gcn('flex flex-col items-center p-1 text-primary-violet')}>
 				{icon && (
 					<div className='flex size-10 items-center justify-center rounded-full bg-secondary-violet'>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-6')}
 					</div>
 				)}
-				{children && <div className='mt-1'>{children}</div>}
+				{children && <div className='mt-2'>{children}</div>}
 			</button>
 		);
 	}

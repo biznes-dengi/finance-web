@@ -18,7 +18,10 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 
 	return (
 		<>
-			<span className='cursor-pointer text-sm text-primary-grey hover:text-black' onClick={() => setIsDrawerOpen(true)}>
+			<span
+				className='cursor-pointer text-sm font-medium text-primary-grey hover:text-black'
+				onClick={() => setIsDrawerOpen(true)}
+			>
 				{options.find((option) => option.value === value)?.name} {'>'}
 			</span>
 

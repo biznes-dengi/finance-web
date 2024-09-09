@@ -1,4 +1,4 @@
-import {Box, Button, Item, List, SelectInCard} from '@shared/ui';
+import {Box, Button, ButtonType, Item, List, SelectInCard} from '@shared/ui';
 import {textHelpers, useFilter} from '@shared/lib';
 
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
@@ -8,36 +8,35 @@ import {APP_PATH, APP_TEXT} from '@shared/constants';
 const defaultFilter = {
 	state: null as TSavingStateValue,
 };
-type TFilter = typeof defaultFilter;
 
 export function SavingManagement() {
-	const {filter, setFilter} = useFilter<TFilter>({defaultFilter});
+	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
 	const {data} = savingModel.useItems(filter);
 
 	return (
 		<Box isCard>
-			<Box basePadding>
-				<Box className='flex justify-between pb-4'>
+			<Box basePadding className='pb-0'>
+				<Box className='flex justify-between'>
 					<Box>
-						<Box className='mb-1 text-3xl font-semibold'>{textHelpers.getAmountWithCurrency(950, '$')}</Box>
-						<Box className='text-sm font-light text-primary-grey'>{APP_TEXT.accumulation}</Box>
+						<Box className='mb-2 text-4xl font-semibold'>{textHelpers.getAmountWithCurrency(950, '$')}</Box>
+						<Box className='text-sm font-light text-primary-grey'>{APP_TEXT.totalBalance}</Box>
 					</Box>
 					<div role='saving-icon' className='h-10 w-10 rounded-xl bg-secondary-grey' />
 				</Box>
+			</Box>
 
-				<Box className='flex justify-between'>
-					{buttonConfigs.map((buttonConfig) => (
-						<Button
-							type={buttonConfig.type}
-							key={buttonConfig.name}
-							icon={buttonConfig.icon}
-							onClick={buttonConfig.onClick}
-						>
-							{buttonConfig.name}
-						</Button>
-					))}
-				</Box>
+			<Box basePaddingX className='flex justify-between py-4'>
+				{buttonConfigs.map((buttonConfig) => (
+					<Button
+						type={ButtonType.icon}
+						key={buttonConfig.name}
+						icon={buttonConfig.icon}
+						onClick={buttonConfig.onClick}
+					>
+						{buttonConfig.name}
+					</Button>
+				))}
 			</Box>
 
 			<Box basePaddingX className='py-3'>
@@ -54,7 +53,7 @@ export function SavingManagement() {
 					<Item
 						icon={<div className='border-2 border-primary-violet bg-secondary-grey' />}
 						name={row.title}
-						description={textHelpers.getRatio(row.amount, row.targetAmount, row.currencySymbol || '$')}
+						description={textHelpers.getRatio(row.amount, row.targetAmount, row.currency)}
 						onClick={(navigate) => navigate(APP_PATH.goalDetails)}
 					/>
 				)}

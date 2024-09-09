@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {Icon, CurrencyField, useSlider} from '@shared/ui';
-import {APP_TEXT} from '@shared/constants';
+import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {savingModel} from '@entities/saving';
 
 type Value = number | undefined;
@@ -66,8 +66,8 @@ export function SavingTransferPage() {
 					<CurrencyField
 						options={savings.map((saving) => ({
 							name: saving.title,
-							currencySymbol: saving.currencySymbol,
-							mask: saving.image || undefined,
+							currencySymbol: CURRENCY_MAP[saving.currency].symbol,
+							mask: undefined,
 						}))}
 						value={firstItemValue}
 						onChange={handleValueChange}

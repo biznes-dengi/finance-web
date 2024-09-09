@@ -1,3 +1,5 @@
+import {CURRENCY, CURRENCY_MAP} from '@shared/constants';
+
 type Amount = number | string;
 
 export class textHelpers {
@@ -5,8 +7,10 @@ export class textHelpers {
 		return `You do not have any ${item.toLowerCase()} yet`;
 	}
 
-	static getRatio(currentAmount: Amount, targetAmount: Amount, currencySymbol?: string) {
-		if (currencySymbol) {
+	static getRatio(currentAmount: Amount, targetAmount: Amount, currency?: CURRENCY) {
+		if (currency) {
+			const currencySymbol = CURRENCY_MAP[currency].symbol;
+
 			const current = this.getAmountWithCurrency(currentAmount, currencySymbol);
 			const target = this.getAmountWithCurrency(targetAmount, currencySymbol);
 
