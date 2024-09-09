@@ -1,9 +1,20 @@
 import {type DefaultApiMethodProps, getApiPath, HttpClient} from '@shared/api';
-import {type Saving} from './saving.types.ts';
+import {savingValidator} from './saving.types.ts';
+import {CURRENCY} from '@shared/constants';
 
 class SavingApi {
-	fetchItems({filter}: DefaultApiMethodProps): Promise<Saving[]> {
-		return HttpClient.get<Saving[]>({url: getApiPath('saving'), filter});
+	async fetchItems({filter}: DefaultApiMethodProps) {
+		const response = await HttpClient.get({url: getApiPath('saving'), filter});
+
+		try {
+			return savingValidator
+				.array()
+				.parse(response)
+				.map((saving) => ({...saving, currency: 'usd' as CURRENCY}));
+		} catch (error) {
+			console.error(error);
+			return [];
+		}
 	}
 }
 

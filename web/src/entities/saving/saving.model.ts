@@ -10,7 +10,7 @@ function useItems(filter?: TAppFilter) {
 		initialData: [],
 	});
 
-	// spread pattern instead of "return queryState" to cover the case if you need to return something else
+	// use spread to cover the case if you need to return something more
 	return {...queryState};
 }
 

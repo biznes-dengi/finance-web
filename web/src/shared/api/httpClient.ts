@@ -4,7 +4,7 @@ import {handleHttpClientResponse} from '@shared/api/api.helpers.ts';
 import {getQueryString} from '@shared/lib';
 
 export class HttpClient {
-	static get<Data>({url, filter, abortSignal}: HttpClientMethodProps): Promise<Data> {
+	static get({url, filter, abortSignal}: HttpClientMethodProps): Promise<unknown> {
 		if (filter) {
 			url += getQueryString(filter);
 		}

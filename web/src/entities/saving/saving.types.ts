@@ -1,17 +1,9 @@
-import {CURRENCY} from '@shared/constants';
+import zod from 'zod';
 
-export type Saving = {
-	id: number;
-	title: string;
-	image: any;
-	amount: number;
-	targetAmount: number;
-	currencySymbol: string;
-};
-
-export type TotalGoal = {
-	amount: number;
-	currency: CURRENCY;
-	currencyCode: string;
-	currencySymbol: string;
-};
+export const savingValidator = zod.object({
+	id: zod.number(),
+	title: zod.string(),
+	amount: zod.number(),
+	targetAmount: zod.number(),
+	// currency: zod.string() as CURRENCY,
+});
