@@ -63,5 +63,5 @@ export const Icon = {
 	trendUp: <ArrowTrendingUpIcon />,
 	edit: <PencilIcon />,
 	calendar: <CalendarIcon />,
-	selectArrow: <ChevronDownIcon />,
+	chevronDown: <ChevronDownIcon />,
 };

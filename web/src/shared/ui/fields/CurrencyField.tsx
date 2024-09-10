@@ -59,7 +59,7 @@ export function CurrencyField(props: Props) {
 					<div role='left-option' className='mr-4 flex items-center' onClick={openDrawer}>
 						{activeOption.mask && <div className='mr-2 h-5 w-5 rounded-full'>{activeOption.mask}</div>}
 						<div className='text-xl'>{activeOption.name}</div>
-						{options?.length && <div className='ml-1 h-4 w-4 text-black'>{Icon.selectArrow}</div>}
+						{options?.length && <div className='ml-1 h-4 w-4 text-black'>{Icon.chevronDown}</div>}
 					</div>
 
 					<input
