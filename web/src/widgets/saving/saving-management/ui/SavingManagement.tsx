@@ -11,7 +11,6 @@ const defaultFilter = {
 
 export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
-
 	const {data} = savingModel.useItems(filter);
 
 	return (
@@ -19,14 +18,14 @@ export function SavingManagement() {
 			<Box basePadding className='pb-0'>
 				<Box className='flex justify-between'>
 					<Box>
-						<Box className='mb-2 text-4xl font-semibold'>{textHelpers.getAmountWithCurrency(950, '$')}</Box>
+						<Box className='mb-2 text-3xl font-medium'>{textHelpers.getAmountWithCurrency(35000, '$')}</Box>
 						<Box className='text-sm font-light text-primary-grey'>{APP_TEXT.totalBalance}</Box>
 					</Box>
 					<div role='saving-icon' className='h-10 w-10 rounded-xl bg-secondary-grey' />
 				</Box>
 			</Box>
 
-			<Box basePaddingX className='flex justify-between py-4'>
+			<Box basePadding className='flex justify-between'>
 				{buttonConfigs.map((buttonConfig) => (
 					<Button
 						type={ButtonType.icon}

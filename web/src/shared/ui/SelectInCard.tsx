@@ -18,12 +18,13 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 
 	return (
 		<>
-			<span
-				className='cursor-pointer text-sm font-medium text-primary-grey hover:text-black'
+			<div
+				className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:text-black'
 				onClick={() => setIsDrawerOpen(true)}
 			>
-				{options.find((option) => option.value === value)?.name} {'>'}
-			</span>
+				{options.find((option) => option.value === value)?.name}
+				<div className='ml-1 h-4 w-4'>{Icon.chevronDown}</div>
+			</div>
 
 			<Drawer anchor='bottom' open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
 				<div className='flex flex-col rounded-2xl px-6 py-3'>
