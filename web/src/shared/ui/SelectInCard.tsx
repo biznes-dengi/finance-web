@@ -1,9 +1,8 @@
 import {useState} from 'react';
-import Drawer from '@mui/material/Drawer';
 
-import {Box} from '@shared/ui/Box.tsx';
 import {Item} from '@shared/ui/Item.tsx';
 import {Icon} from '@shared/ui/Icon.tsx';
+import {Dialog} from '@shared/ui/Dialog.tsx';
 
 type Props<TValue> = {
 	value: TValue;
@@ -14,45 +13,40 @@ type Props<TValue> = {
 export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options} = props;
 
-	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+	function openDialog() {
+		setIsDialogOpen(true);
+	}
+
+	function closeDialog() {
+		setIsDialogOpen(false);
+	}
 
 	return (
 		<>
 			<div
 				className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:text-black'
-				onClick={() => setIsDrawerOpen(true)}
+				onClick={openDialog}
 			>
 				{options.find((option) => option.value === value)?.name}
 				<div className='ml-1 h-4 w-4'>{Icon.chevronDown}</div>
 			</div>
 
-			<Drawer anchor='bottom' open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-				<div className='flex flex-col rounded-2xl px-6 py-3'>
-					<div
-						className='flex h-6 w-6 items-center justify-center self-end rounded-full bg-secondary-grey text-center text-white'
-						onClick={() => setIsDrawerOpen(false)}
-					>
-						<div className='h-4 w-4 text-primary-grey'>{Icon.x}</div>
-					</div>
-
-					<Box className='text-xl font-medium' baseMarginBottom>
-						Savings
-					</Box>
-
-					{options.map((option, index) => (
-						<Item
-							key={index}
-							isNameText
-							checked={value === option.value}
-							name={option.name}
-							onClick={() => {
-								setIsDrawerOpen(false);
-								setTimeout(() => onChange(option.value), 150);
-							}}
-						/>
-					))}
-				</div>
-			</Drawer>
+			<Dialog onClose={closeDialog} isDialogOpen={isDialogOpen}>
+				{options.map((option, index) => (
+					<Item
+						key={index}
+						checked={value === option.value}
+						name={option.name}
+						onClick={() => {
+							closeDialog();
+							setTimeout(() => onChange(option.value), 150);
+						}}
+						isNameText
+					/>
+				))}
+			</Dialog>
 		</>
 	);
 }
