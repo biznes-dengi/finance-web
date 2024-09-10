@@ -21,7 +21,7 @@ export function Dialog(props: Props) {
 			PaperProps={{className: 'rounded-t-2xl'}}
 			transitionDuration={300}
 		>
-			<Box className='flex flex-col px-6 py-4'>
+			<Box className='flex flex-col bg-light-grey px-6 py-4'>
 				<Box className='flex items-center justify-between' baseMarginBottom>
 					<div />
 					<Box className='text-xl font-medium'>Savings</Box>
@@ -29,7 +29,7 @@ export function Dialog(props: Props) {
 						className='flex h-7 w-7 items-center justify-center duration-300 hover:cursor-pointer hover:rounded-full hover:bg-secondary-grey'
 						onClick={onClose}
 					>
-						<div className='h-5 w-5'>{Icon.x}</div>
+						<div className='h-6 w-6'>{Icon.x}</div>
 					</div>
 				</Box>
 

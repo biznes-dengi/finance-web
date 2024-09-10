@@ -10,13 +10,12 @@ import {APP_TEXT} from '@shared/constants';
 type Props<R> = {
 	title?: ReactNode;
 	titleButton?: ReactNode;
-	rows: R[];
+	rows: readonly R[];
 	renderRow: (row: R) => ReactElement;
-	isCard?: boolean;
 };
 
 export function List<R>(props: Props<R>) {
-	const {titleButton, title, rows, renderRow, isCard} = props;
+	const {titleButton, title, rows, renderRow} = props;
 
 	return (
 		<>
@@ -34,7 +33,7 @@ export function List<R>(props: Props<R>) {
 				</div>
 			)}
 
-			<Box isCard={isCard} className='p-1'>
+			<Box className='p-1' isCard>
 				{rows.map((row, index) => (
 					<Fragment key={index}>{renderRow(row)}</Fragment>
 				))}

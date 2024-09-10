@@ -38,7 +38,6 @@ export function SavingDetailsPage() {
 							onClick={() => {}}
 						/>
 					)}
-					isCard
 				/>
 			</Box>
 		</>

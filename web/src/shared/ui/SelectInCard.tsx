@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {Item} from '@shared/ui/Item.tsx';
 import {Icon} from '@shared/ui/Icon.tsx';
 import {Dialog} from '@shared/ui/Dialog.tsx';
+import {List} from '@shared/ui/List.tsx';
 
 type Props<TValue> = {
 	value: TValue;
@@ -34,18 +35,20 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 			</div>
 
 			<Dialog onClose={closeDialog} isDialogOpen={isDialogOpen}>
-				{options.map((option, index) => (
-					<Item
-						key={index}
-						checked={value === option.value}
-						name={option.name}
-						onClick={() => {
-							closeDialog();
-							setTimeout(() => onChange(option.value), 150);
-						}}
-						isNameText
-					/>
-				))}
+				<List
+					rows={options}
+					renderRow={(option) => (
+						<Item
+							checked={value === option.value}
+							name={option.name}
+							onClick={() => {
+								closeDialog();
+								setTimeout(() => onChange(option.value), 200);
+							}}
+							isNameText
+						/>
+					)}
+				/>
 			</Dialog>
 		</>
 	);
