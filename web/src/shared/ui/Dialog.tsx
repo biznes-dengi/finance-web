@@ -5,21 +5,21 @@ import {Icon} from '@shared/ui/Icon.tsx';
 import {Box} from '@shared/ui/Box.tsx';
 
 type Props = {
-	isDialogOpen: boolean;
-	onClose: () => void;
+	isOpen: boolean;
+	onClose?: () => void;
 	children: ReactNode;
 };
 
 export function Dialog(props: Props) {
-	const {children, isDialogOpen, onClose} = props;
+	const {children, isOpen, onClose} = props;
 
 	return (
 		<Drawer
 			anchor='bottom'
-			open={isDialogOpen}
+			open={isOpen}
 			onClose={onClose}
 			PaperProps={{className: 'rounded-t-2xl'}}
-			transitionDuration={300}
+			transitionDuration={200}
 		>
 			<Box className='flex flex-col bg-light-grey px-6 py-4'>
 				<Box className='flex items-center justify-between' baseMarginBottom>

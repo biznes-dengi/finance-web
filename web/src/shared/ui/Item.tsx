@@ -24,11 +24,12 @@ type Props = {
 
 	added?: boolean;
 
-	rightNode?: ReactElement;
+	rightNode?: ReactNode;
 	withChevron?: boolean;
 
 	onClick?: (navigate: NavigateFunction) => void;
 	isSingle?: boolean;
+	className?: string;
 };
 
 export function Item(props: Props) {
@@ -56,6 +57,7 @@ export function Item(props: Props) {
 
 		onClick,
 		isSingle,
+		className,
 	} = props;
 
 	const navigate = useNavigate();
@@ -70,6 +72,7 @@ export function Item(props: Props) {
 				isSingle ? 'shadow-[0_0_0_4px_white_inset]' : 'mb-1 last:mb-0',
 				(showIconCheckmark || showRightCheckmark) && 'bg-secondary-violet',
 				onClick && 'cursor-pointer duration-300 hover:bg-light-grey',
+				className,
 			)}
 			onClick={() => onClick?.(navigate)}
 		>

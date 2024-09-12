@@ -31,10 +31,10 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				onClick={openDialog}
 			>
 				{options.find((option) => option.value === value)?.name}
-				<div className='ml-1 h-4 w-4'>{Icon.chevronDown}</div>
+				<div className='ml-1 size-4'>{Icon.chevronDown}</div>
 			</div>
 
-			<Dialog onClose={closeDialog} isDialogOpen={isDialogOpen}>
+			<Dialog onClose={closeDialog} isOpen={isDialogOpen}>
 				<List
 					rows={options}
 					renderRow={(option) => (
