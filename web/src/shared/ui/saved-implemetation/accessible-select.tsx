@@ -46,7 +46,6 @@ export function AccessibleSelectInCard({
 									{({focus, selected}) => (
 										<Item
 											name={option.name}
-											//TODO:
 											// сраный кейс когда два выделения одного цвета
 											// когда уже заселекчено и ты долгим тапом выделяешь другой
 											// hover
@@ -61,7 +60,6 @@ export function AccessibleSelectInCard({
 													? 'bg-secondary-violet'
 													: '',
 											)}
-											//TODO
 											rightNode={selected && styleElement(Icon.check, 'size-5 text-primary-violet')}
 											isNameText
 										/>
