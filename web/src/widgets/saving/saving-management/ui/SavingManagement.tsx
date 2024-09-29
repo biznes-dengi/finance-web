@@ -7,7 +7,7 @@ import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
 
 const defaultFilter = {
 	pageNumber: 0,
-	state: 'ALL' as TSavingStateValue,
+	state: undefined as TSavingStateValue,
 };
 
 export function SavingManagement() {

@@ -1,4 +1,4 @@
-import {isBoolean, isNumber, isString, isUndefined} from '@shared/lib';
+import {isBoolean, isNull, isNumber, isString, isUndefined} from '@shared/lib';
 import {TAppFilter} from '@shared/types';
 
 export function getQueryString(filter: TAppFilter) {
@@ -9,7 +9,7 @@ export function getQueryString(filter: TAppFilter) {
 	Object.keys(filter).forEach((key) => {
 		const value = filter[key];
 
-		if (isUndefined(value)) return;
+		if (isUndefined(value) || isNull(value)) return;
 
 		if (isString(value) && value.length) {
 			queryParams.push(`${key}=${encodeURIComponent(value)}`);
