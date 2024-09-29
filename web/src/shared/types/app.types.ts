@@ -1,1 +1,1 @@
-export type TAppFilter = Record<string, string | number | null>;
+export type TAppFilter = Record<string, string | number | boolean | undefined>;

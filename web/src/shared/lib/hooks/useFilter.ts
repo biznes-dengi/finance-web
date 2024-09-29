@@ -15,12 +15,15 @@ export function useFilter<TFilter extends TAppFilter>(props: TProps<TFilter>) {
 	const location = useLocation();
 	const navigate = useNavigate();
 
+	//get filters from url
 	const filterFromURL = parseQueryString<TFilter>(location.search);
 
 	const initialFilter = !shouldSyncFilterWithURL || isEmpty(filterFromURL) ? defaultFilter : filterFromURL;
 	const [filter, setFilter] = useState<TFilter>(initialFilter);
 
 	useEffect(() => {
+		//put filters to url
+
 		if (isEqual(filterFromURL, filter) || !shouldSyncFilterWithURL) return;
 
 		const pathWithFilter = location.pathname + getQueryString(filter);

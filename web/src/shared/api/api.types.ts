@@ -6,4 +6,4 @@ export type HttpClientMethodProps = {
 	abortSignal?: AbortSignal;
 };
 
-export type DefaultApiMethodProps = Omit<HttpClientMethodProps, 'url'>;
+export type TApiMethodProps = Omit<HttpClientMethodProps, 'url'>;

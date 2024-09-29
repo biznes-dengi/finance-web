@@ -3,15 +3,18 @@ import {textHelpers, useFilter} from '@shared/lib';
 
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {savingModel} from '@entities/saving';
-import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
 
 const defaultFilter = {
-	state: null as TSavingStateValue,
+	pageNumber: 0,
+	state: 'ALL' as TSavingStateValue,
 };
 
 export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
-	const {data} = savingModel.useItems(filter);
+	const {
+		data: {savings},
+	} = savingModel.useItems(filter);
 
 	return (
 		<Box isCard>
@@ -47,12 +50,12 @@ export function SavingManagement() {
 			</Box>
 
 			<List
-				rows={data}
+				rows={savings}
 				renderRow={(row) => (
 					<Item
 						icon={<div className='border-2 border-primary-violet bg-secondary-grey' />}
-						name={row.title}
-						description={textHelpers.getRatio(row.amount, row.targetAmount, row.currency)}
+						name={row.name}
+						description={textHelpers.getRatio(row.balance, row.targetAmount, row.currency as CURRENCY)}
 						onClick={(navigate) => navigate(APP_PATH.goalDetails)}
 					/>
 				)}

@@ -8,27 +8,21 @@ import {SavingTransferPage} from '../ui/SavingTransferPage.tsx';
 
 import {withRouteGuard} from '@shared/lib';
 
-// TODO: выделить UI build blocks, какие у каждого задачи
-
-/** done */
 const savingListRoute = {
 	path: APP_PATH.root,
 	element: withRouteGuard({page: <SavingListPage />}),
 };
 
-/** done */
 const savingDetailsRoute = {
 	path: APP_PATH.goalDetails,
 	element: withRouteGuard({page: <SavingDetailsPage />}),
 };
 
-/** review */
 const savingCreateRoute = {
 	path: APP_PATH.createGoal,
 	element: withRouteGuard({page: <SavingCreatePage />}),
 };
 
-/** review */
 const savingTransferRoute = {
 	path: APP_PATH.goalTransfer,
 	element: withRouteGuard({page: <SavingTransferPage />}),

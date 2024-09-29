@@ -24,7 +24,7 @@ export const buttonConfigs = [
 ] as ButtonConfig[];
 
 export const savingStateOptions = [
-	{name: 'All', value: null},
+	{name: 'All', value: 'ALL'},
 	{name: 'Active', value: 'ACTIVE'},
 	{name: 'Achieved', value: 'ACHIEVED'},
 	{name: 'Overdue', value: 'OVERDUE'},

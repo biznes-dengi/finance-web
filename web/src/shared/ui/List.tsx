@@ -12,10 +12,11 @@ type Props<R> = {
 	titleButton?: ReactNode;
 	rows: readonly R[];
 	renderRow: (row: R) => ReactElement;
+	isLoading?: boolean;
 };
 
 export function List<R>(props: Props<R>) {
-	const {titleButton, title, rows, renderRow} = props;
+	const {titleButton, title, rows, renderRow, isLoading} = props;
 
 	return (
 		<>
@@ -33,13 +34,19 @@ export function List<R>(props: Props<R>) {
 				</div>
 			)}
 
-			<Box className='p-1' isCard>
-				{rows.map((row, index) => (
-					<Fragment key={index}>{renderRow(row)}</Fragment>
-				))}
+			{isLoading && <div>isLoading...</div>}
 
-				{!rows.length && <Item name={textHelpers.getDontHaveAny(APP_TEXT.goal)} isNameText />}
-			</Box>
+			{rows ? (
+				<Box className='p-1' isCard>
+					{rows.map((row, index) => (
+						<Fragment key={index}>{renderRow(row)}</Fragment>
+					))}
+
+					{!rows.length && <Item name={textHelpers.getDontHaveAny(APP_TEXT.goal)} isNameText />}
+				</Box>
+			) : (
+				<div className='p-4'>{APP_TEXT.noItems}</div>
+			)}
 		</>
 	);
 }
