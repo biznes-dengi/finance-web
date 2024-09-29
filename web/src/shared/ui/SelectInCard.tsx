@@ -1,9 +1,7 @@
-import {useState} from 'react';
+import {Item, Icon, List, Dialog} from '@shared/ui';
+import {useDialogState} from '@shared/lib';
 
-import {Item} from '@shared/ui/Item.tsx';
-import {Icon} from '@shared/ui/Icon.tsx';
-import {Dialog} from '@shared/ui/Dialog.tsx';
-import {List} from '@shared/ui/List.tsx';
+import {APP_TEXT} from '@shared/constants';
 
 type Props<TValue> = {
 	value: TValue;
@@ -14,27 +12,19 @@ type Props<TValue> = {
 export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options} = props;
 
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-	function openDialog() {
-		setIsDialogOpen(true);
-	}
-
-	function closeDialog() {
-		setIsDialogOpen(false);
-	}
+	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
 	return (
 		<>
 			<div
-				className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:text-black'
-				onClick={openDialog}
+				className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:cursor-pointer'
+				onClick={() => openDialog()}
 			>
 				{options.find((option) => option.value === value)?.name}
 				<div className='ml-1 size-4'>{Icon.chevronDown}</div>
 			</div>
 
-			<Dialog onClose={closeDialog} isOpen={isDialogOpen}>
+			<Dialog ref={dialogRef} title={APP_TEXT.savings}>
 				<List
 					rows={options}
 					renderRow={(option) => (

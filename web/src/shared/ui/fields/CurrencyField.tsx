@@ -1,8 +1,8 @@
 import {ReactNode, useRef, useState} from 'react';
 
-import {Icon, Button, Item, useDrawer} from '@shared/ui';
+import {Icon, Button, Item, Dialog} from '@shared/ui';
 
-import {cn, isNumber, isString} from '@shared/lib';
+import {cn, isNumber, isString, useDialogState} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
 type Option = {
@@ -43,7 +43,7 @@ export function CurrencyField(props: Props) {
 
 	const [isError, setIsError] = useState(false);
 
-	const {Drawer, openDrawer, closeDrawer} = useDrawer();
+	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
 	function handleChange(value: string) {
 		setIsError(false);
@@ -56,7 +56,7 @@ export function CurrencyField(props: Props) {
 		<>
 			<label className={cn('block rounded-2xl bg-input-grey p-4', className, isError && 'bg-[#FDE3E5]')}>
 				<div className='flex items-center justify-between'>
-					<div role='left-option' className='mr-4 flex items-center' onClick={openDrawer}>
+					<div role='left-option' className='mr-4 flex items-center' onClick={openDialog}>
 						{activeOption.mask && <div className='mr-2 h-5 w-5 rounded-full'>{activeOption.mask}</div>}
 						<div className='text-xl'>{activeOption.name}</div>
 						{options?.length && <div className='ml-1 h-4 w-4 text-black'>{Icon.chevronDown}</div>}
@@ -89,8 +89,8 @@ export function CurrencyField(props: Props) {
 			</label>
 
 			{options && (
-				<Drawer isCloseDisabled withOverlay={false}>
-					<div className='mb-4' onClick={closeDrawer}>
+				<Dialog ref={dialogRef} isCloseDisabled>
+					<div className='mb-4' onClick={closeDialog}>
 						Close
 					</div>
 
@@ -99,7 +99,7 @@ export function CurrencyField(props: Props) {
 							<Item name={option.name} />
 						</Button>
 					))}
-				</Drawer>
+				</Dialog>
 			)}
 		</>
 	);

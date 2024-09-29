@@ -2,10 +2,7 @@ export * from './fields/TextField.tsx';
 export * from './fields/CurrencyField.tsx';
 export * from './fields/upload-field/useUploadField.tsx';
 
-export * from './drawer/useDrawer.tsx';
 export * from './slider/useSlider.tsx';
-
-export * from './button';
 
 export * from './Tabs.tsx';
 export * from './Icon.tsx';
@@ -18,3 +15,6 @@ export * from './SelectWithSearch.tsx';
 export * from './Spinner.tsx';
 export * from './List.tsx';
 export * from './SelectInCard.tsx';
+
+export * from './button';
+export * from './dialog';

@@ -22,4 +22,5 @@ export const APP_TEXT = {
 	createdSuccess: 'has been successfully created',
 	getBalance: (balance: number, currencySymbol: string) => `Balance: ${balance} ${currencySymbol}`,
 	noItems: 'No items',
+	savings: 'Savings',
 } as const;

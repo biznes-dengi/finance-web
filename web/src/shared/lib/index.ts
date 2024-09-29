@@ -6,3 +6,4 @@ export * from './helpers/url.helpers.ts';
 export * from './hocs/withRouteGuard.tsx';
 
 export * from './hooks/useFilter.ts';
+export * from './hooks/useDialogState.ts';

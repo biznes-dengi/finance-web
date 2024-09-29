@@ -6,19 +6,19 @@ import {
 	Button,
 	ButtonType,
 	CurrencyField,
+	Dialog,
 	Icon,
 	PageHeader,
 	SelectWithSearch,
 	Spinner,
 	Stepper,
 	TextField,
-	useDrawer,
 	useUploadField,
 } from '@shared/ui';
 
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {CURRENCY} from '@shared/constants';
-import {cn} from '@shared/lib';
+import {cn, useDialogState} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 
@@ -51,7 +51,7 @@ export function SavingCreatePage() {
 		setTargetAmount(initialTargetAmount);
 	}
 
-	const {openDrawer, Drawer, SuccessDrawerContent} = useDrawer();
+	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
 	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
 		useUploadField();
@@ -140,7 +140,15 @@ export function SavingCreatePage() {
 
 			<Box basePaddingX mediumMarginY>
 				<Button
-					onClick={activeStepIndex === 2 ? () => openDrawer() : () => setActiveStepIndex(activeStepIndex + 1)}
+					onClick={
+						activeStepIndex === 2
+							? () => {
+									openDialog();
+									setTimeout(closeDialog, 2000);
+									setTimeout(() => navigate(APP_PATH.goalDetails), 2500);
+							  }
+							: () => setActiveStepIndex(activeStepIndex + 1)
+					}
 					type={ButtonType.main}
 					disabled={(() => {
 						if (activeStepIndex === 0) return name === initialName;
@@ -152,9 +160,17 @@ export function SavingCreatePage() {
 				</Button>
 			</Box>
 
-			<Drawer afterAutoCloseAction={() => navigate(APP_PATH.goalDetails)} isCloseDisabled>
-				<SuccessDrawerContent preText={APP_TEXT.goal} primaryText={name} postText={APP_TEXT.createdSuccess} />
-			</Drawer>
+			<Dialog ref={dialogRef} isCloseDisabled withAutoClose>
+				<div className='flex flex-col items-center pb-4'>
+					<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{Icon.check}</div>
+					<div className='text-center font-semibold'>
+						{APP_TEXT.goal}
+						<span className='text-primary-violet'>{name}</span>
+						{APP_TEXT.createdSuccess}
+						{APP_TEXT.createdSuccess}
+					</div>
+				</div>
+			</Dialog>
 		</>
 	);
 }
