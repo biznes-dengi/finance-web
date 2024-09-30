@@ -80,11 +80,11 @@ export function Button(props: Props) {
 				)}
 			>
 				{icon && (
-					<div className='my-1 flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
+					<div className='m-1 flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-6')}
 					</div>
 				)}
-				{children && <div className='mt-2 text-sm text-primary-violet'>{children}</div>}
+				{children && <div className='mt-1.5 text-sm text-primary-violet'>{children}</div>}
 			</button>
 		);
 	}
