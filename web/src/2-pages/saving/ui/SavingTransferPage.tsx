@@ -25,7 +25,9 @@ export function SavingTransferPage() {
 		setSecondItemValue(Number((value * exchangeRate).toFixed(2)));
 	}
 
-	const {data: savings} = savingModel.useItems();
+	const {
+		data: {savings},
+	} = savingModel.useItems();
 
 	return (
 		<Slider activeSlideIndex={1}>
@@ -65,7 +67,8 @@ export function SavingTransferPage() {
 				<div className='relative'>
 					<CurrencyField
 						options={savings.map((saving) => ({
-							name: saving.title,
+							name: saving.name,
+							//@ts-ignore
 							currencySymbol: CURRENCY_MAP[saving.currency].symbol,
 							mask: undefined,
 						}))}

@@ -7,16 +7,14 @@ class SavingApi {
 	async fetchBoardSavingId(accountId: number) {
 		try {
 			const response = await HttpClient.get({url: getApiPath('board-saving'), filter: {accountId}});
-			return boardSavingValidator.parse(response);
+			return boardSavingValidator.parse(response).boardSavingId;
 		} catch (error) {
 			isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-			return null;
+			return undefined;
 		}
 	}
 
-	async fetchItems(props: TApiMethodProps & {boardSavingId: number | undefined}) {
-		const {filter, boardSavingId} = props;
-
+	async fetchItems({filter, boardSavingId}: TApiMethodProps & {boardSavingId?: number}) {
 		if (!boardSavingId) {
 			return {} as TSavingPaged;
 		}

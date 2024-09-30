@@ -6,29 +6,22 @@ import {TAppFilter} from '@shared/types';
 
 function useBoardSavingData() {
 	const {data} = useQuery({
-		queryKey: ['board-saving-data'],
+		queryKey: ['board-saving-id'],
 		queryFn: () => savingApi.fetchBoardSavingId(1),
 	});
 
-	if (!data) {
-		return;
-	}
-
-	return data.boardSavingId;
+	return data;
 }
 
 function useItems(filter?: TAppFilter) {
 	const boardSavingId = useBoardSavingData();
 
-	const queryState = useQuery({
+	return useQuery({
 		queryKey: ['saving-items', filter],
 		queryFn: () => savingApi.fetchItems({filter, boardSavingId}),
 		enabled: !!boardSavingId,
 		initialData: {} as TSavingPaged,
 	});
-
-	// use spread to cover the case if you need to return something more
-	return {...queryState};
 }
 
 export const savingModel = {
