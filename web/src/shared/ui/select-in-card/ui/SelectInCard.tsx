@@ -1,13 +1,7 @@
 import {Item, Icon, List, Dialog} from '@shared/ui';
-import {useDialogState} from '@shared/lib';
-
+import {styleElement, useDialogState} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
-
-type Props<TValue> = {
-	value: TValue;
-	onChange: (value: TValue) => void;
-	options: readonly {name: string; value: TValue}[];
-};
+import {Props} from '../types/SelectInCard.types.ts';
 
 export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options} = props;
@@ -27,17 +21,21 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 			<Dialog ref={dialogRef} title={APP_TEXT.savings}>
 				<List
 					rows={options}
-					renderRow={(option) => (
-						<Item
-							checked={value === option.value}
-							name={option.name}
-							onClick={() => {
-								closeDialog();
-								setTimeout(() => onChange(option.value), 200);
-							}}
-							isNameText
-						/>
-					)}
+					renderRow={(option) => {
+						const checked = value === option.value;
+						return (
+							<Item
+								name={option.name}
+								onClick={() => {
+									closeDialog();
+									setTimeout(() => onChange(option.value), 200);
+								}}
+								rightNode={checked && styleElement(Icon.check, 'size-5 text-primary-violet flex self-center')}
+								className={checked && 'bg-light-grey'}
+								isNameText
+							/>
+						);
+					}}
 				/>
 			</Dialog>
 		</>

@@ -1,25 +1,12 @@
 import {useState} from 'react';
-
-import {Box, Item, TextField} from '@shared/ui';
-
+import {Box, Icon, Item, TextField} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
-import {isNumber} from '@shared/lib';
+import {cn, isNumber} from '@shared/lib';
 import {CURRENCY} from '@shared/constants';
-
-type Props = {
-	options?: {
-		name: string;
-		description: string;
-		value: CURRENCY;
-	}[];
-	fetchOptions?: () => void;
-	onChange: (value: CURRENCY) => void;
-	value: CURRENCY | null;
-	withMultipleSelection?: boolean;
-};
+import {Props} from '../types/SelectWithSearch.types.ts';
 
 export function SelectWithSearch(props: Props) {
-	const {options, onChange, value, withMultipleSelection} = props;
+	const {options, onChange, value} = props;
 
 	const initialOptions = options?.map((option) => ({
 		...option,
@@ -61,10 +48,10 @@ export function SelectWithSearch(props: Props) {
 							key={option.name}
 							name={option.name}
 							description={option.description}
-							icon={<div className={'bg-primary-grey'} />}
+							image={<div className={'bg-primary-grey'} />}
+							statusIcon={option.checked && Icon.check}
 							onClick={() => handleOptionClick(option.value)}
-							checked={option.checked}
-							withMultipleSelection={withMultipleSelection}
+							className={cn(option.checked && 'bg-secondary-violet')}
 						/>
 					))}
 			</Box>

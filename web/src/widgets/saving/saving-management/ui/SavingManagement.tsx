@@ -53,7 +53,7 @@ export function SavingManagement() {
 				rows={savings}
 				renderRow={(row) => (
 					<Item
-						icon={<div className='border-2 border-primary-violet bg-secondary-grey' />}
+						image={<div className='border-2 border-primary-violet bg-secondary-grey' />}
 						name={row.name}
 						description={textHelpers.getRatio(row.balance, row.targetAmount, row.currency as CURRENCY)}
 						onClick={(navigate) => navigate(APP_PATH.goalDetails)}

@@ -16,8 +16,7 @@ import {
 	useUploadField,
 } from '@shared/ui';
 
-import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {CURRENCY} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
 import {cn, useDialogState} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
@@ -110,7 +109,7 @@ export function SavingCreatePage() {
 									{hints.map((hint, index) => (
 										<div
 											key={hint + index}
-											className={cn('w-fit rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
+											className={cn('w-fit cursor-pointer rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
 											onClick={() => setName(hint)}
 										>
 											{hint}
