@@ -8,11 +8,9 @@ import {cn, isBoolean, styleElement} from '@shared/lib';
 type Props = {
 	name: ReactNode;
 	description?: ReactNode;
-	subDescription?: ReactNode;
 
 	rightName?: ReactNode;
 	rightDescription?: ReactNode;
-	rightSubDescription?: ReactNode;
 
 	isNameText?: boolean;
 
@@ -28,7 +26,6 @@ type Props = {
 	withChevron?: boolean;
 
 	onClick?: (navigate: NavigateFunction) => void;
-	isSingle?: boolean;
 	className?: string;
 };
 
@@ -36,11 +33,9 @@ export function Item(props: Props) {
 	const {
 		name,
 		description,
-		subDescription,
 
 		rightName,
 		rightDescription,
-		rightSubDescription,
 
 		isNameText,
 
@@ -56,7 +51,6 @@ export function Item(props: Props) {
 		withChevron,
 
 		onClick,
-		isSingle,
 		className,
 	} = props;
 
@@ -68,8 +62,7 @@ export function Item(props: Props) {
 	return (
 		<div
 			className={cn(
-				'flex w-full rounded-2xl bg-white p-4 text-left',
-				isSingle ? 'shadow-[0_0_0_4px_white_inset]' : 'mb-1 last:mb-0',
+				'flex w-full rounded-2xl bg-white p-4 text-left shadow-[0_0_0_4px_white_inset]',
 				(showIconCheckmark || showRightCheckmark) && 'bg-secondary-violet',
 				onClick && 'cursor-pointer duration-300 hover:bg-light-grey',
 				className,
@@ -103,14 +96,12 @@ export function Item(props: Props) {
 			<div className={cn('min-w-0 flex-1 self-center')}>
 				<div className={cn('truncate font-medium', isNameText && 'font-normal')}>{name}</div>
 				{description && <div className='truncate text-sm font-light text-primary-grey'>{description}</div>}
-				{subDescription && <div className='truncate text-sm font-light text-primary-grey'>{subDescription}</div>}
 			</div>
 
-			{(rightName || rightDescription || rightSubDescription) && (
-				<div className={cn('ml-2 flex flex-shrink-0 flex-col items-end self-center', subDescription && 'self-stretch')}>
+			{(rightName || rightDescription) && (
+				<div className={cn('ml-2 flex flex-shrink-0 flex-col items-end self-center')}>
 					{rightName && <div>{rightName}</div>}
 					{rightDescription && <div className='text-sm font-light text-primary-grey'>{rightDescription}</div>}
-					{rightSubDescription && <div className='text-sm font-light text-primary-grey'>{rightSubDescription}</div>}
 				</div>
 			)}
 

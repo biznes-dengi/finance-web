@@ -8,16 +8,15 @@ export class textHelpers {
 	}
 
 	static getRatio(currentAmount: Amount, targetAmount: Amount, currency?: CURRENCY) {
+		const current = this.getAmount(currentAmount);
+		const target = this.getAmount(targetAmount);
+
 		if (currency) {
 			const currencySymbol = CURRENCY_MAP[currency].symbol;
-
-			const current = this.getAmountWithCurrency(currentAmount, currencySymbol);
-			const target = this.getAmountWithCurrency(targetAmount, currencySymbol);
-
-			return `${current} / ${target}`;
+			return `${current} / ${target} ${currencySymbol}`;
 		}
 
-		return `${this.getAmount(currentAmount)} / ${this.getAmount(targetAmount)}`;
+		return `${current} / ${target}`;
 	}
 
 	static getAmountWithCurrency(amount: Amount, currencySymbol: string) {

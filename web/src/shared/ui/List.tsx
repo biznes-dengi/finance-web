@@ -1,10 +1,8 @@
 import {Fragment, ReactElement, ReactNode} from 'react';
 
-// full path import to prevent cycle imports
-import {Box} from '@shared/ui/Box.tsx';
-import {Item} from '@shared/ui/Item.tsx';
+import {Box, Item} from '@shared/ui';
 
-import {cn, textHelpers} from '@shared/lib';
+import {cn, styleElement, textHelpers} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
 type Props<R> = {
@@ -21,32 +19,23 @@ export function List<R>(props: Props<R>) {
 	return (
 		<>
 			{(title || titleButton) && (
-				<div
-					role='card-title'
-					className={cn(
-						'flex py-6 pb-3',
-						title && titleButton && 'justify-between',
-						!title && titleButton && 'justify-end',
-					)}
-				>
+				<div className={cn('flex py-6 pb-3', title && titleButton && 'justify-between')}>
 					{title && <div className='font-semibold'>{title}</div>}
 					{titleButton}
 				</div>
 			)}
 
+			<Box className='p-1' isCard>
+				{rows?.length ? (
+					rows.map((row, index) => (
+						<Fragment key={index}>{styleElement(renderRow(row), 'mb-1 last:mb-0 p-3 shadow-none')}</Fragment>
+					))
+				) : (
+					<Item name={textHelpers.getDontHaveAny(APP_TEXT.goal)} className='p-3 shadow-none' isNameText />
+				)}
+			</Box>
+
 			{isLoading && <div>isLoading...</div>}
-
-			{rows ? (
-				<Box className='p-1' isCard>
-					{rows.map((row, index) => (
-						<Fragment key={index}>{renderRow(row)}</Fragment>
-					))}
-
-					{!rows.length && <Item name={textHelpers.getDontHaveAny(APP_TEXT.goal)} isNameText />}
-				</Box>
-			) : (
-				<div className='p-4'>{APP_TEXT.noItems}</div>
-			)}
 		</>
 	);
 }
