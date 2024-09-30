@@ -16,6 +16,7 @@ export * from './Spinner.tsx';
 export * from './button';
 export * from './dialog';
 export * from './item';
+export * from './preload-skeleton';
 export * from './list';
 export * from './select-in-card';
 export * from './select-with-search';

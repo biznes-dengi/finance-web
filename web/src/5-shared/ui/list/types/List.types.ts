@@ -5,5 +5,5 @@ export type Props<R> = {
 	titleButton?: ReactNode;
 	rows: readonly R[];
 	renderRow: (row: R) => ReactElement;
-	isLoading?: boolean;
+	isFetching?: boolean;
 };

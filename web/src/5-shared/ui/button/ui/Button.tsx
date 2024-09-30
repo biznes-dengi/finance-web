@@ -2,6 +2,7 @@ import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import {cn, styleElement} from '@shared/lib';
+import {PRELOAD_SIZE, PreloadSkeleton} from '@shared/ui';
 
 export enum ButtonType {
 	main,
@@ -18,12 +19,13 @@ interface Props extends CommonButtonSettings {
 	children?: ReactNode;
 	className?: string;
 	disabled?: boolean;
+	isFetching?: boolean;
 }
 
 // TODO: Typescript: when type = icon -> icon prop required
 
 export function Button(props: Props) {
-	const {children, className, onClick, type = ButtonType.text, icon, disabled} = props;
+	const {children, className, onClick, type = ButtonType.text, icon, disabled, isFetching} = props;
 
 	const navigate = useNavigate();
 
@@ -61,6 +63,15 @@ export function Button(props: Props) {
 	}
 
 	if (type === ButtonType.icon) {
+		if (isFetching) {
+			return (
+				<div className='flex flex-col items-center gap-y-3 py-1.5'>
+					<PreloadSkeleton isCircular />
+					<PreloadSkeleton width={48} height={PRELOAD_SIZE.height.xs} />
+				</div>
+			);
+		}
+
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center ')}>
 				{icon && (

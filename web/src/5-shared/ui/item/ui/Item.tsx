@@ -1,4 +1,3 @@
-import {cloneElement} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Props} from '../types/Item.types.ts';
 import {cn} from '@shared/lib';
@@ -31,8 +30,8 @@ export function Item(props: Props) {
 				{leftNode && <div className='mr-4 flex flex-shrink-0 items-center'>{leftNode}</div>}
 
 				{image && (
-					<div className='relative my-0.5 mr-4 h-10 w-10 flex-shrink-0'>
-						{image && cloneElement(image, {style: {height: '100%', borderRadius: '50%'}})}
+					<div className='relative my-0.5 mr-4 flex-shrink-0'>
+						{image}
 
 						{statusIcon && (
 							<div className='absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'>

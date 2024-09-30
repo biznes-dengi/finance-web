@@ -1,5 +1,6 @@
 import {ReactNode} from 'react';
 import {cn} from '@shared/lib';
+import {PreloadSkeleton} from '@shared/ui/preload-skeleton';
 
 type Props = {
 	children: ReactNode;
@@ -13,6 +14,9 @@ type Props = {
 	basePaddingX?: unknown;
 	basePadding?: unknown;
 	smallPaddingY?: unknown;
+	isFetching?: unknown;
+	preloadWidth?: number;
+	preloadHeight?: number;
 };
 
 export function Box(props: Props) {
@@ -26,6 +30,9 @@ export function Box(props: Props) {
 		baseMarginBottom,
 		basePaddingX,
 		basePadding,
+		isFetching,
+		preloadWidth,
+		preloadHeight,
 	} = props;
 
 	return (
@@ -43,7 +50,7 @@ export function Box(props: Props) {
 			)}
 			role='box'
 		>
-			{children}
+			{isFetching ? <PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} /> : children}
 		</div>
 	);
 }
