@@ -13,7 +13,6 @@ import {textHelpers, useFilter} from '@shared/lib';
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {savingModel} from '@entities/saving';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {useState} from 'react';
 
 const defaultFilter = {
 	pageNumber: 0,
@@ -24,14 +23,8 @@ export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 	const {
 		data: {savings},
-		// isFetching,
+		isFetching,
 	} = savingModel.useItems(filter);
-
-	const [isFetching, setIsFetching] = useState(true);
-
-	setTimeout(() => {
-		setIsFetching(false);
-	}, 1000);
 
 	return (
 		<Box isCard>
@@ -79,33 +72,35 @@ export function SavingManagement() {
 				))}
 			</Box>
 
-			<Box basePaddingX className='py-3'>
-				<SelectInCard<TSavingStateValue>
-					value={filter.state}
-					onChange={(value) => setFilter({...filter, state: value})}
-					options={savingStateOptions}
+			<Box
+				titleInCard={
+					<SelectInCard<TSavingStateValue>
+						value={filter.state}
+						onChange={(value) => setFilter({...filter, state: value})}
+						options={savingStateOptions}
+						isFetching={isFetching}
+					/>
+				}
+			>
+				<List
 					isFetching={isFetching}
+					rows={savings}
+					renderRow={(row) => (
+						<Item
+							image={
+								<ItemImageWithProgress
+									image={<div className='size-10 rounded-full bg-green-200' />}
+									current={row.balance}
+									target={row.targetAmount}
+								/>
+							}
+							name={row.name}
+							description={textHelpers.getRatio(row.balance, row.targetAmount, row.currency as CURRENCY)}
+							onClick={(navigate) => navigate(APP_PATH.goalDetails)}
+						/>
+					)}
 				/>
 			</Box>
-
-			<List
-				isFetching={isFetching}
-				rows={savings}
-				renderRow={(row) => (
-					<Item
-						image={
-							<ItemImageWithProgress
-								image={<div className='size-10 rounded-full bg-green-200' />}
-								current={row.balance}
-								target={row.targetAmount}
-							/>
-						}
-						name={row.name}
-						description={textHelpers.getRatio(row.balance, row.targetAmount, row.currency as CURRENCY)}
-						onClick={(navigate) => navigate(APP_PATH.goalDetails)}
-					/>
-				)}
-			/>
 		</Box>
 	);
 }

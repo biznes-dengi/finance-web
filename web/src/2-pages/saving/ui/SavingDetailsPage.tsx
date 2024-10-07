@@ -26,19 +26,22 @@ export function SavingDetailsPage() {
 			<Box mediumMarginY basePaddingX>
 				<SavingProgress />
 
-				<List
+				<Box
 					title={APP_TEXT.transactions}
 					titleButton={<Button onClick={() => alert('seeAll')}>{APP_TEXT.seeAll}</Button>}
-					rows={transactions}
-					renderRow={(row) => (
-						<Item
-							icon={<div className='bg-secondary-violet' />}
-							name={row.name}
-							description={row.description}
-							onClick={() => {}}
-						/>
-					)}
-				/>
+				>
+					<List
+						rows={transactions}
+						renderRow={(row) => (
+							<Item
+								image={<div className='size-10 rounded-full bg-secondary-violet' />}
+								name={row.name}
+								description={row.description}
+								onClick={() => {}}
+							/>
+						)}
+					/>
+				</Box>
 			</Box>
 		</>
 	);

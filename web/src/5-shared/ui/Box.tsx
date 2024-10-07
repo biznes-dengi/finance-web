@@ -6,6 +6,9 @@ type Props = {
 	children: ReactNode;
 	className?: string;
 	role?: string;
+	title?: ReactNode;
+	titleButton?: ReactNode;
+	titleInCard?: ReactNode;
 	isCard?: boolean;
 	mediumMarginY?: unknown;
 	baseMarginY?: unknown;
@@ -24,6 +27,9 @@ export function Box(props: Props) {
 	const {
 		children,
 		className,
+		titleInCard,
+		title,
+		titleButton,
 		isCard,
 		mediumMarginY,
 		baseMarginY,
@@ -52,6 +58,15 @@ export function Box(props: Props) {
 			)}
 			role='box'
 		>
+			{(title || titleButton) && (
+				<div className={cn('flex py-6 pb-3', title && titleButton && 'justify-between')}>
+					{title && <div className='font-semibold'>{title}</div>}
+					{titleButton}
+				</div>
+			)}
+
+			{titleInCard && <div className={cn('py-3', !basePadding && !basePaddingX && 'px-4')}>{titleInCard}</div>}
+
 			{isFetching ? (
 				<PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} className={skeletonClassName} />
 			) : (
