@@ -14,10 +14,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 
 	return (
 		<>
-			<div
-				className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:cursor-pointer'
-				onClick={() => openDialog()}
-			>
+			<div className='flex w-fit cursor-pointer items-center hover:cursor-pointer' onClick={() => openDialog()}>
 				{options.find((option) => option.value === value)?.name}
 				<div className='ml-2 size-3'>{Icon.chevronDown}</div>
 			</div>

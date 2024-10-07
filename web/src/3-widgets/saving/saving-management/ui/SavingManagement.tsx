@@ -29,7 +29,7 @@ export function SavingManagement() {
 
 	return (
 		<div className='rounded-2xl bg-white'>
-			<Box basePadding className='pb-0'>
+			<Box basePadding className='pb-1'>
 				<Box className='flex justify-between'>
 					<Box>
 						<Box

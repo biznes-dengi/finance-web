@@ -15,7 +15,7 @@ export function Card(props: Props) {
 			)}
 
 			{titleInCard && (
-				<Box basePaddingX className='py-3'>
+				<Box basePaddingX className='py-3 text-sm font-medium text-primary-grey'>
 					{titleInCard}
 				</Box>
 			)}
