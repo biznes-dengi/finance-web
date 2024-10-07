@@ -8,6 +8,7 @@ import {
 	PreloadSkeleton,
 	ItemImageWithProgress,
 	SelectInCard,
+	Card,
 } from '@shared/ui';
 import {textHelpers, useFilter} from '@shared/lib';
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
@@ -27,7 +28,7 @@ export function SavingManagement() {
 	} = savingModel.useItems(filter);
 
 	return (
-		<Box isCard>
+		<div className='rounded-2xl bg-white'>
 			<Box basePadding className='pb-0'>
 				<Box className='flex justify-between'>
 					<Box>
@@ -36,7 +37,7 @@ export function SavingManagement() {
 							isFetching={isFetching}
 							preloadWidth={PRELOAD_SIZE.width.xl}
 							preloadHeight={PRELOAD_SIZE.height.xl}
-							skeletonClassName='mt-2 mb-3.5'
+							preloadClassName='mt-2 mb-3.5'
 						>
 							{textHelpers.getAmountWithCurrency(35000, '$')}
 						</Box>
@@ -45,7 +46,7 @@ export function SavingManagement() {
 							isFetching={isFetching}
 							preloadWidth={PRELOAD_SIZE.width.l}
 							preloadHeight={PRELOAD_SIZE.height.xs}
-							skeletonClassName='mb-1'
+							preloadClassName='mb-1'
 						>
 							{APP_TEXT.totalBalance}
 						</Box>
@@ -72,7 +73,7 @@ export function SavingManagement() {
 				))}
 			</Box>
 
-			<Box
+			<Card
 				titleInCard={
 					<SelectInCard<TSavingStateValue>
 						value={filter.state}
@@ -100,7 +101,7 @@ export function SavingManagement() {
 						/>
 					)}
 				/>
-			</Box>
-		</Box>
+			</Card>
+		</div>
 	);
 }

@@ -1,5 +1,5 @@
 import {SavingProgress} from '@widgets/saving';
-import {Box, Button, Item, List, PageHeader} from '@shared/ui';
+import {Box, Button, Card, Item, List, PageHeader} from '@shared/ui';
 
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 
@@ -12,7 +12,7 @@ const transactions = [
 export function SavingDetailsPage() {
 	return (
 		<>
-			<Box role='image-wrapper' className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
+			<Box className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
 				<PageHeader title='Mustang' backPath={APP_PATH.root} />
 
 				<Box className='mb-4 flex justify-between px-6'>
@@ -26,7 +26,7 @@ export function SavingDetailsPage() {
 			<Box mediumMarginY basePaddingX>
 				<SavingProgress />
 
-				<Box
+				<Card
 					title={APP_TEXT.transactions}
 					titleButton={<Button onClick={() => alert('seeAll')}>{APP_TEXT.seeAll}</Button>}
 				>
@@ -41,7 +41,7 @@ export function SavingDetailsPage() {
 							/>
 						)}
 					/>
-				</Box>
+				</Card>
 			</Box>
 		</>
 	);
