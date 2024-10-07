@@ -15,6 +15,7 @@ type Props = {
 	basePadding?: unknown;
 	smallPaddingY?: unknown;
 	isFetching?: unknown;
+	skeletonClassName?: string;
 	preloadWidth?: number;
 	preloadHeight?: number;
 };
@@ -31,6 +32,7 @@ export function Box(props: Props) {
 		basePaddingX,
 		basePadding,
 		isFetching,
+		skeletonClassName,
 		preloadWidth,
 		preloadHeight,
 	} = props;
@@ -50,7 +52,11 @@ export function Box(props: Props) {
 			)}
 			role='box'
 		>
-			{isFetching ? <PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} /> : children}
+			{isFetching ? (
+				<PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} className={skeletonClassName} />
+			) : (
+				children
+			)}
 		</div>
 	);
 }

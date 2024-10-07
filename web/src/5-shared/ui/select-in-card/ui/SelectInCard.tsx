@@ -19,7 +19,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				onClick={() => openDialog()}
 			>
 				{options.find((option) => option.value === value)?.name}
-				<div className='ml-1 size-4'>{Icon.chevronDown}</div>
+				<div className='ml-2 size-3'>{Icon.chevronDown}</div>
 			</div>
 
 			<Dialog ref={dialogRef} title={APP_TEXT.savings}>

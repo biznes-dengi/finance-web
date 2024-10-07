@@ -10,10 +10,10 @@ import {
 	SelectInCard,
 } from '@shared/ui';
 import {textHelpers, useFilter} from '@shared/lib';
-
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {savingModel} from '@entities/saving';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {useState} from 'react';
 
 const defaultFilter = {
 	pageNumber: 0,
@@ -24,8 +24,14 @@ export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 	const {
 		data: {savings},
-		isFetching,
+		// isFetching,
 	} = savingModel.useItems(filter);
+
+	const [isFetching, setIsFetching] = useState(true);
+
+	setTimeout(() => {
+		setIsFetching(false);
+	}, 1000);
 
 	return (
 		<Box isCard>
@@ -37,6 +43,7 @@ export function SavingManagement() {
 							isFetching={isFetching}
 							preloadWidth={PRELOAD_SIZE.width.xl}
 							preloadHeight={PRELOAD_SIZE.height.xl}
+							skeletonClassName='mt-2 mb-3.5'
 						>
 							{textHelpers.getAmountWithCurrency(35000, '$')}
 						</Box>
@@ -45,6 +52,7 @@ export function SavingManagement() {
 							isFetching={isFetching}
 							preloadWidth={PRELOAD_SIZE.width.l}
 							preloadHeight={PRELOAD_SIZE.height.xs}
+							skeletonClassName='mb-1'
 						>
 							{APP_TEXT.totalBalance}
 						</Box>

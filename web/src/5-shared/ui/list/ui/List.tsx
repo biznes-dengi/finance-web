@@ -23,7 +23,7 @@ export function List<R>(props: Props<R>) {
 				</Box>
 			)}
 
-			{isFetching && Array.from({length: 3}).map(() => <ItemSkeleton key={Math.random()} />)}
+			{isFetching && <ItemSkeleton />}
 		</>
 	);
 }
