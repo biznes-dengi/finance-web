@@ -1,12 +1,12 @@
 import {APP_PATH} from '@shared/constants';
-
+import {withRouteGuard} from '@shared/lib';
 import {AppScreenLayout, AppLayout} from '@pages/ui';
 import {SavingCreatePage} from '../ui/SavingCreatePage.tsx';
 import {SavingDetailsPage} from '../ui/SavingDetailsPage.tsx';
 import {SavingListPage} from '../ui/SavingListPage.tsx';
 import {SavingTransferPage} from '../ui/SavingTransferPage.tsx';
-
-import {withRouteGuard} from '@shared/lib';
+import {GoalFundPage} from '../ui/GoalFundPage.tsx';
+import {GoalWithdrawPage} from '../ui/GoalWithdrawPage.tsx';
 
 const savingListRoute = {
 	path: APP_PATH.root,
@@ -28,7 +28,20 @@ const savingTransferRoute = {
 	element: withRouteGuard({page: <SavingTransferPage />}),
 };
 
+const goalFundRoute = {
+	path: APP_PATH.goalFund,
+	element: withRouteGuard({page: <GoalFundPage />}),
+};
+
+const goalWithdrawRoute = {
+	path: APP_PATH.goalWithdraw,
+	element: withRouteGuard({page: <GoalWithdrawPage />}),
+};
+
 export const savingRoutes = [
 	{element: <AppLayout />, children: [savingListRoute]},
-	{element: <AppScreenLayout />, children: [savingDetailsRoute, savingCreateRoute, savingTransferRoute]},
+	{
+		element: <AppScreenLayout />,
+		children: [savingDetailsRoute, savingCreateRoute, savingTransferRoute, goalFundRoute, goalWithdrawRoute],
+	},
 ];

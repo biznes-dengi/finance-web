@@ -10,12 +10,12 @@ export const buttonConfigs = [
 	{
 		name: APP_TEXT.fund,
 		icon: Icon.fund,
-		onClick: () => {},
+		onClick: ({navigate}) => navigate(APP_PATH.goalFund),
 	},
 	{
 		name: APP_TEXT.withdraw,
 		icon: Icon.withdraw,
-		onClick: () => {},
+		onClick: ({navigate}) => navigate(APP_PATH.goalWithdraw),
 	},
 	{
 		name: APP_TEXT.transfer,

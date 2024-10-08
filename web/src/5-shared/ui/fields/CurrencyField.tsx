@@ -43,12 +43,14 @@ export function CurrencyField(props: Props) {
 
 	const [isError, setIsError] = useState(false);
 
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	const {dialogRef, openDialog} = useDialogState();
 
 	function handleChange(value: string) {
 		setIsError(false);
 		onChange(value ? Number(value) : undefined);
 	}
+
+	if (!option && !options) return null;
 
 	const activeOption = option || options[0];
 
@@ -89,11 +91,7 @@ export function CurrencyField(props: Props) {
 			</label>
 
 			{options && (
-				<Dialog ref={dialogRef} isCloseDisabled>
-					<div className='mb-4' onClick={closeDialog}>
-						Close
-					</div>
-
+				<Dialog ref={dialogRef}>
 					{options.map((option) => (
 						<Button key={option.name} onClick={() => alert('change active option')}>
 							<Item name={option.name} />

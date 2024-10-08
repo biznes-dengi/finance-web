@@ -44,7 +44,7 @@ export function Button(props: Props) {
 				{...buttonProps}
 				className={gcn(
 					'block w-full rounded-2xl py-2 text-center text-white',
-					!disabled ? 'bg-primary-violet shadow-md shadow-primary-blue' : 'bg-secondary-grey',
+					!disabled ? 'bg-primary-violet' : 'bg-secondary-grey',
 				)}
 			>
 				{children}

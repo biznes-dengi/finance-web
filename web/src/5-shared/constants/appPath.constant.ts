@@ -4,4 +4,6 @@ export enum APP_PATH {
 	createGoal = '/create-goal',
 	goalDetails = '/goal-details',
 	goalTransfer = '/goal-transfer',
+	goalFund = '/goal-fund',
+	goalWithdraw = '/goal-withdraw',
 }
