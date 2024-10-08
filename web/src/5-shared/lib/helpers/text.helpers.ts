@@ -1,13 +1,11 @@
 import {CURRENCY, CURRENCY_MAP} from '@shared/constants';
 
-type Amount = number | string;
-
 export class textHelpers {
 	static getDontHaveAny(item: string) {
 		return `You do not have any ${item.toLowerCase()} yet`;
 	}
 
-	static getRatio(currentAmount: Amount, targetAmount: Amount, currency?: CURRENCY) {
+	static getRatio(currentAmount: number, targetAmount: number, currency?: CURRENCY) {
 		const current = this.getAmount(currentAmount);
 		const target = this.getAmount(targetAmount);
 
@@ -19,11 +17,13 @@ export class textHelpers {
 		return `${current} / ${target}`;
 	}
 
-	static getAmountWithCurrency(amount: Amount, currencySymbol: string) {
+	static getAmountWithCurrency(amount?: number, currencySymbol?: string) {
+		if (!amount || !currencySymbol) return null;
+
 		return `${this.getAmount(amount)} ${currencySymbol}`;
 	}
 
-	static getAmount(amount: Amount) {
+	static getAmount(amount: number) {
 		const [int] = amount.toString().split('.');
 
 		return int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');

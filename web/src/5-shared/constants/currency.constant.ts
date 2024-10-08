@@ -2,6 +2,7 @@ export enum CURRENCY {
 	USD = 'USD',
 	PLN = 'PLN',
 	BYN = 'BYN',
+	RUB = 'RUB',
 	EUR = 'EUR',
 	GBP = 'GBP',
 }
@@ -18,6 +19,10 @@ export const CURRENCY_MAP = {
 	[CURRENCY.BYN]: {
 		code: 'USD',
 		symbol: '$',
+	},
+	[CURRENCY.RUB]: {
+		code: 'RUB',
+		symbol: '₽',
 	},
 	[CURRENCY.EUR]: {
 		code: 'USD',

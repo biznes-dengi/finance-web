@@ -13,19 +13,21 @@ import {
 import {textHelpers, useFilter} from '@shared/lib';
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {savingModel} from '@entities/saving';
-import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 
 const defaultFilter = {
 	pageNumber: 0,
-	state: undefined as TSavingStateValue,
+	status: undefined as TSavingStateValue,
 };
 
 export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 	const {
-		data: {savings},
+		data: {data},
 		isFetching,
 	} = savingModel.useItems(filter);
+
+	const balance = savingModel.useBoardSavingsBalance();
 
 	return (
 		<div className='rounded-2xl bg-white'>
@@ -39,7 +41,7 @@ export function SavingManagement() {
 							preloadHeight={PRELOAD_SIZE.height.xl}
 							preloadClassName='mt-2 mb-3.5'
 						>
-							{textHelpers.getAmountWithCurrency(35000, '$')}
+							{textHelpers.getAmountWithCurrency(balance.amount, CURRENCY_MAP[balance.currency].symbol)}
 						</Box>
 						<Box
 							className='text-sm font-light text-primary-grey'
@@ -76,8 +78,8 @@ export function SavingManagement() {
 			<Card
 				titleInCard={
 					<SelectInCard<TSavingStateValue>
-						value={filter.state}
-						onChange={(value) => setFilter({...filter, state: value})}
+						value={filter.status}
+						onChange={(value) => setFilter({...filter, status: value})}
 						options={savingStateOptions}
 						isFetching={isFetching}
 					/>
@@ -85,18 +87,22 @@ export function SavingManagement() {
 			>
 				<List
 					isFetching={isFetching}
-					rows={savings}
+					rows={data}
 					renderRow={(row) => (
 						<Item
 							image={
-								<ItemImageWithProgress
-									image={<div className='size-10 rounded-full bg-green-200' />}
-									current={row.balance}
-									target={row.targetAmount}
-								/>
+								row.targetAmount ? (
+									<ItemImageWithProgress
+										image={<div className='size-10 rounded-full bg-green-200' />}
+										current={row.balance}
+										target={row.targetAmount}
+									/>
+								) : (
+									<div className='size-10 rounded-full bg-green-200' />
+								)
 							}
 							name={row.name}
-							description={textHelpers.getRatio(row.balance, row.targetAmount, row.currency as CURRENCY)}
+							description={row.targetAmount && textHelpers.getRatio(row.balance, row.targetAmount, row.currency)}
 							onClick={(navigate) => navigate(APP_PATH.goalDetails)}
 						/>
 					)}

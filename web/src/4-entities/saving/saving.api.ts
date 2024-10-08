@@ -4,10 +4,20 @@ import {TApiMethodProps, getApiPath, HttpClient} from '@shared/api';
 import {boardSavingValidator, savingPagedValidator, TSavingPaged} from './saving.types.ts';
 
 class SavingApi {
-	async fetchBoardSavingId(accountId: number) {
+	async fetchBoardSavingsId(accountId: number) {
 		try {
-			const response = await HttpClient.get({url: getApiPath('board-saving'), filter: {accountId}});
+			const response = await HttpClient.get({url: getApiPath('board-savings'), filter: {accountId}});
 			return boardSavingValidator.parse(response).boardSavingId;
+		} catch (error) {
+			isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
+			return undefined;
+		}
+	}
+
+	async fetchBoardSavingsBalance(accountId: number) {
+		try {
+			const response = await HttpClient.get({url: getApiPath('board-savings'), filter: {accountId}});
+			return boardSavingValidator.parse(response).boardBalance;
 		} catch (error) {
 			isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
 			return undefined;
@@ -21,7 +31,7 @@ class SavingApi {
 
 		try {
 			const response = await HttpClient.get({
-				url: getApiPath(`board-saving/${boardSavingId}/saving`),
+				url: getApiPath(`board-savings/${boardSavingId}/savings`),
 				filter,
 			});
 			return savingPagedValidator.parse(response);
