@@ -24,7 +24,7 @@ export function PageHeader(props: Props) {
 	return (
 		<div role='page-header' className='w-full'>
 			<Button type={ButtonType.icon} onClick={onBackButtonClick} className='p-4 text-black'>
-				{cloneElement(Icon.backButton, {className: 'h-6 w-6'})}
+				{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black'})}
 			</Button>
 			{title && (
 				<Box basePaddingX className='text-4xl font-bold'>

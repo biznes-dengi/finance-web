@@ -3,30 +3,22 @@ import {Button, ButtonType, CurrencyField} from '@shared/ui';
 import {CURRENCY_MAP} from '@shared/constants';
 import {savingModel} from '@entities/saving';
 
-type Value = number | undefined;
-
 export function GoalFundPage() {
 	const filter = {pageNumber: 0};
 	const {
 		data: {data},
 	} = savingModel.useItems(filter);
 
-	const [firstItemValue, setFirstItemValue] = useState<Value>();
-
-	const firstItemBalance = 1100;
-
-	// const exchangeRate = 3.9071;
-
-	function handleValueChange(value: Value) {
-		if (!value) return;
-
-		setFirstItemValue(value);
-	}
+	const [value, setValue] = useState<number | undefined>();
 
 	function handleFundClick() {
-		alert('funded');
-		alert('success UX');
+		console.log(`funded ${value}`);
+		console.log('success UX');
+		console.log('redirect');
 	}
+
+	const firstItemBalance = 1100;
+	// const exchangeRate = 3.9071;
 
 	return (
 		<>
@@ -39,8 +31,8 @@ export function GoalFundPage() {
 						currencySymbol: CURRENCY_MAP[saving.currency].symbol,
 						mask: undefined,
 					}))}
-					value={firstItemValue}
-					onChange={handleValueChange}
+					value={value}
+					onChange={setValue}
 					leftLabel={{balance: firstItemBalance}}
 				/>
 			</div>

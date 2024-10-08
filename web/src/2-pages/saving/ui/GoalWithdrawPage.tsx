@@ -3,30 +3,22 @@ import {Box, Button, ButtonType, CurrencyField} from '@shared/ui';
 import {savingModel} from '@entities/saving';
 import {useState} from 'react';
 
-type Value = number | undefined;
-
 export function GoalWithdrawPage() {
 	const filter = {pageNumber: 0};
 	const {
 		data: {data},
 	} = savingModel.useItems(filter);
 
-	const [firstItemValue, setFirstItemValue] = useState<Value>();
+	const [value, setValue] = useState<number | undefined>();
+
+	function handleFundClick() {
+		console.log(`Withdrew ${value}`);
+		console.log('success UX');
+		console.log('redirect');
+	}
 
 	const firstItemBalance = 1100;
-
 	// const exchangeRate = 3.9071;
-
-	function handleValueChange(value: Value) {
-		if (!value) return;
-
-		setFirstItemValue(value);
-	}
-
-	function handleWithdrawClick() {
-		alert('funded');
-		alert('success UX');
-	}
 
 	return (
 		<Box basePadding>
@@ -37,11 +29,11 @@ export function GoalWithdrawPage() {
 					currencySymbol: CURRENCY_MAP[saving.currency].symbol,
 					mask: undefined,
 				}))}
-				value={firstItemValue}
-				onChange={handleValueChange}
+				value={value}
+				onChange={setValue}
 				leftLabel={{balance: firstItemBalance}}
 			/>
-			<Button type={ButtonType.main} onClick={handleWithdrawClick}>
+			<Button type={ButtonType.main} onClick={handleFundClick}>
 				Withdraw
 			</Button>
 		</Box>
