@@ -32,7 +32,7 @@ import {
 	PencilIcon,
 	XMarkIcon,
 } from '@heroicons/react/24/solid';
-import {BriefcaseIcon, EllipsisVerticalIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
+import {BriefcaseIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
 
 import {cn} from '@shared/lib';
 
@@ -55,7 +55,7 @@ export const Icon = {
 	createGoal: <FolderPlusIcon />,
 	fund: <PlusIcon />,
 	transfer: <ArrowUpRightIcon />,
-	more: <EllipsisVerticalIcon />,
+	withdraw: <ArrowDownIcon />,
 	rightChevron: <ChevronRightIcon />,
 	check: <CheckIcon />,
 	uploadImage: <CloudArrowUpIcon />,

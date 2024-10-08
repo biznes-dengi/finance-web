@@ -10,16 +10,17 @@ export const buttonConfigs = [
 	{
 		name: APP_TEXT.fund,
 		icon: Icon.fund,
+		onClick: () => {},
+	},
+	{
+		name: APP_TEXT.withdraw,
+		icon: Icon.withdraw,
+		onClick: () => {},
 	},
 	{
 		name: APP_TEXT.transfer,
 		icon: Icon.transfer,
 		onClick: ({navigate}) => navigate(APP_PATH.goalTransfer),
-	},
-	{
-		name: APP_TEXT.more,
-		icon: Icon.more,
-		onClick: () => {},
 	},
 ] as ButtonConfig[];
 

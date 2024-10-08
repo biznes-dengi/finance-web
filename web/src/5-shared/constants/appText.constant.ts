@@ -12,7 +12,7 @@ export const APP_TEXT = {
 	create: 'Create',
 	fund: 'Fund',
 	transfer: 'Transfer',
-	more: 'More',
+	withdraw: 'Withdraw',
 	continue: 'Continue',
 	search: 'Search',
 	amount: 'Amount',
