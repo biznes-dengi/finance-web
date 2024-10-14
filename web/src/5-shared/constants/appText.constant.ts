@@ -5,6 +5,7 @@ export const APP_TEXT = {
 	pageNotFound: 'Page not found',
 	goBackHome: 'Go back home',
 	dontHaveAccess: 'Sorry, but you do not have access to this page',
+	balance: 'Balance',
 	totalBalance: 'Total balance',
 	goal: 'Goal',
 	goalName: 'Goal name',
@@ -20,7 +21,6 @@ export const APP_TEXT = {
 	transactions: 'Transactions',
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',
-	getBalance: (balance: number, currencySymbol: string) => `Balance: ${balance} ${currencySymbol}`,
 	noItems: 'No items',
 	savings: 'Savings',
 } as const;

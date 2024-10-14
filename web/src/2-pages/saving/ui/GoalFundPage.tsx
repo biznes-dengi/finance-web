@@ -1,15 +1,15 @@
 import {useState} from 'react';
-import {Button, ButtonType, CurrencyField} from '@shared/ui';
-import {CURRENCY_MAP} from '@shared/constants';
+import {Box, Button, ButtonType, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {savingModel} from '@entities/saving';
+import {textHelpers} from '@shared/lib';
 
 export function GoalFundPage() {
-	const filter = {pageNumber: 0};
-	const {
-		data: {data},
-	} = savingModel.useItems(filter);
-
 	const [value, setValue] = useState<number | undefined>();
+
+	const filter = {pageNumber: 0};
+	// TODO: items: ItemsData | undefined
+	const {items} = savingModel.useItems(filter);
 
 	function handleFundClick() {
 		console.log(`funded ${value}`);
@@ -17,29 +17,43 @@ export function GoalFundPage() {
 		console.log('redirect');
 	}
 
-	const firstItemBalance = 1100;
-	// const exchangeRate = 3.9071;
+	// TODO:
+	if (!items) return null;
+
+	const currentDate = '1 May 2024, 16:34';
 
 	return (
 		<>
-			<div className='mb-6'>Fund</div>
+			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.root} />
 
-			<div className='flex-1'>
-				<CurrencyField
-					options={data?.map((saving) => ({
-						name: saving.name,
-						currencySymbol: CURRENCY_MAP[saving.currency].symbol,
-						mask: undefined,
-					}))}
+			<Box className='flex-1' basePaddingX>
+				<NumericInputWithOptions
 					value={value}
 					onChange={setValue}
-					leftLabel={{balance: firstItemBalance}}
+					options={items}
+					getLabel={(option) =>
+						textHelpers.getBalance(option.balance.amount, CURRENCY_MAP[option.balance.currency].symbol)
+					}
 				/>
-			</div>
+				<Box baseMarginY className='flex flex-col gap-2 text-sm'>
+					{/*TODO text-button*/}
+					<div className='flex items-center justify-between'>
+						<div
+							className='flex items-center gap-2 font-medium text-primary-violet'
+							onClick={() => alert('calendar fields appear with animation')}
+						>
+							<div className='h-4 w-4'>{Icon.calendar}</div>
+							<div>{currentDate}</div>
+						</div>
+					</div>
+				</Box>
+			</Box>
 
-			<Button type={ButtonType.main} onClick={handleFundClick}>
-				Fund
-			</Button>
+			<Box basePadding>
+				<Button type={ButtonType.main} onClick={handleFundClick}>
+					{APP_TEXT.fund}
+				</Button>
+			</Box>
 		</>
 	);
 }

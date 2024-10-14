@@ -1,67 +1,42 @@
-import {ReactNode, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
+import {Dialog, Icon, Item, List} from '@shared/ui';
+import {cn, isNumber, styleElement, useDialogState} from '@shared/lib';
+import {TNumericInputWithOptionsProps, TBaseOption} from '../types/NumericInputWithOptions.types.ts';
+import {CURRENCY_MAP} from '@shared/constants';
 
-import {Icon, Button, Item, Dialog} from '@shared/ui';
+export function NumericInputWithOptions<Option extends TBaseOption>(props: TNumericInputWithOptionsProps<Option>) {
+	const {value, onChange, placeholder, disabled, className, options: notMappedOptions, getLabel} = props;
 
-import {cn, isNumber, isString, useDialogState} from '@shared/lib';
-import {APP_TEXT} from '@shared/constants';
+	const options = notMappedOptions.map((option) => ({
+		...option,
+		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
+	}));
 
-type Option = {
-	name: string;
-	currencySymbol: string;
-	mask?: ReactNode;
-};
-
-type LeftLabel =
-	| {
-			balance?: number;
-	  }
-	| string;
-
-type Props = {
-	value: number | undefined;
-	onChange: (value: number | undefined) => void;
-	placeholder?: string;
-	disabled?: boolean;
-
-	className?: string;
-	leftLabel: LeftLabel;
-} & (
-	| {
-			option: Option;
-			options?: never;
-	  }
-	| {
-			option?: never;
-			options: Option[];
-	  }
-);
-
-export function CurrencyField(props: Props) {
-	const {value, onChange, placeholder, disabled, className, option, options, leftLabel} = props;
+	const [activeOption, setActiveOption] = useState(options[0]);
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [isError, setIsError] = useState(false);
 
-	const {dialogRef, openDialog} = useDialogState();
+	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
 	function handleChange(value: string) {
 		setIsError(false);
 		onChange(value ? Number(value) : undefined);
 	}
 
-	if (!option && !options) return null;
-
-	const activeOption = option || options[0];
+	if (!options) return null;
 
 	return (
 		<>
 			<label className={cn('block rounded-2xl bg-input-grey p-4', className, isError && 'bg-[#FDE3E5]')}>
 				<div className='flex items-center justify-between'>
-					<div role='left-option' className='mr-4 flex items-center' onClick={openDialog}>
-						{activeOption.mask && <div className='mr-2 h-5 w-5 rounded-full'>{activeOption.mask}</div>}
-						<div className='text-xl'>{activeOption.name}</div>
-						{options?.length && <div className='ml-1 h-4 w-4 text-black'>{Icon.chevronDown}</div>}
+					<div className='mr-4 flex min-w-40 items-center' onClick={openDialog}>
+						{activeOption.image && (
+							<div className='mr-2'>{styleElement(activeOption.image, 'h-5 w-5 rounded-full bg-primary-grey')}</div>
+						)}
+						<div className='truncate text-xl'>{activeOption.name}</div>
+						{options?.length && <div className='ml-2 h-4 w-4 flex-shrink-0 text-black'>{Icon.chevronDown}</div>}
 					</div>
 
 					<input
@@ -78,13 +53,13 @@ export function CurrencyField(props: Props) {
 					/>
 
 					<div className={cn('ml-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>
-						{activeOption.currencySymbol}
+						{CURRENCY_MAP[activeOption.balance.currency].symbol}
 					</div>
 				</div>
 
 				<div className='mt-1 flex justify-between'>
 					<div className={cn('text-sm font-light text-primary-grey', isError && 'text-[#B51F2D]')}>
-						{getLeftLabel(leftLabel, activeOption)}
+						{getLabel(activeOption)}
 					</div>
 					{isError && <div className='text-sm font-light text-[#B51F2D]'>exceeds balance (with small letter)</div>}
 				</div>
@@ -92,25 +67,29 @@ export function CurrencyField(props: Props) {
 
 			{options && (
 				<Dialog ref={dialogRef}>
-					{options.map((option) => (
-						<Button key={option.name} onClick={() => alert('change active option')}>
-							<Item name={option.name} />
-						</Button>
-					))}
+					<List
+						rows={options}
+						renderRow={(option) => {
+							const selected = option.id === activeOption.id;
+							return (
+								<Item
+									statusIcon={selected && Icon.check}
+									className={cn(selected && 'bg-light-grey')}
+									image={option.image}
+									name={option.name}
+									description={getLabel(option)}
+									onClick={() => {
+										setActiveOption(option);
+										closeDialog();
+									}}
+								/>
+							);
+						}}
+					/>
 				</Dialog>
 			)}
 		</>
 	);
-}
-
-function getLeftLabel(leftLabel: LeftLabel, option: Option) {
-	if (isString(leftLabel)) {
-		return leftLabel;
-	}
-
-	if (leftLabel.balance) {
-		return APP_TEXT.getBalance(leftLabel.balance, option?.currencySymbol ?? '');
-	}
 }
 
 /**

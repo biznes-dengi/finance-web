@@ -9,6 +9,8 @@ type Props = {
 	handleBackButtonClick?: () => void;
 };
 
+/** если есть возможность прокинуть backPath - лучше так и сделать */
+
 export function PageHeader(props: Props) {
 	const {title, handleBackButtonClick, backPath} = props;
 
@@ -22,7 +24,7 @@ export function PageHeader(props: Props) {
 	}
 
 	return (
-		<div role='page-header' className='w-full'>
+		<div role='page-header' className='mb-6 w-full'>
 			<Button type={ButtonType.icon} onClick={onBackButtonClick} className='p-4 text-black'>
 				{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black'})}
 			</Button>

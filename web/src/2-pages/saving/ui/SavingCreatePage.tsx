@@ -5,9 +5,9 @@ import {
 	Box,
 	Button,
 	ButtonType,
-	CurrencyField,
 	Dialog,
 	Icon,
+	NumericInputWithOptions,
 	PageHeader,
 	SelectWithSearch,
 	Spinner,
@@ -122,15 +122,16 @@ export function SavingCreatePage() {
 							<SelectWithSearch options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
 						</Box>,
 						<Box key={activeStepIndex} basePaddingX>
-							<CurrencyField
+							<NumericInputWithOptions
 								value={targetAmount}
 								onChange={setTargetAmount}
-								option={{
-									name: selectedCurrencyOption?.description ?? '',
-									currencySymbol: selectedCurrencyOption?.symbol ?? '',
-									mask: <div className='h-full rounded-full bg-primary-grey' />,
-								}}
-								leftLabel={APP_TEXT.amount}
+								options={[
+									{
+										name: selectedCurrencyOption?.description ?? '',
+										balance: {currency: CURRENCY.USD, amount: 1},
+									},
+								]}
+								getLabel={() => APP_TEXT.amount}
 							/>
 						</Box>,
 					]}

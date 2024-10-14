@@ -34,11 +34,17 @@ async function fetchItems({filter, boardSavingId}: TApiMethodProps & {boardSavin
 	}
 
 	try {
-		const response = await HttpClient.get({
+		const response = (await HttpClient.get({
 			url: getApiPath(`board-savings/${boardSavingId}/savings`),
 			filter,
-		});
-		return savingPagedValidator.parse(response);
+		})) as any;
+
+		const mappedResponse = {
+			...response,
+			data: response.data.map((item: any) => ({...item, balance: item.balanceResponse})),
+		};
+
+		return savingPagedValidator.parse(mappedResponse);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
 		return {} as TSavingPaged;

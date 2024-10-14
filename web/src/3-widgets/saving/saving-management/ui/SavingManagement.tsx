@@ -24,9 +24,9 @@ export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
 	const {items, isItemsFetching} = savingModel.useItems(filter);
-	const {balance, isBalanceFetching} = savingModel.useTotalBalance();
+	const {totalBalance, isTotalBalanceFetching} = savingModel.useTotalBalance();
 
-	const isFetching = isBalanceFetching || isItemsFetching;
+	const isFetching = isItemsFetching || isTotalBalanceFetching;
 
 	return (
 		<div className='rounded-2xl bg-white'>
@@ -40,7 +40,8 @@ export function SavingManagement() {
 							preloadHeight={PRELOAD_SIZE.height.xl}
 							preloadClassName='mt-2 mb-3.5'
 						>
-							{balance && textHelpers.getAmountWithCurrency(balance.amount, CURRENCY_MAP[balance.currency].symbol)}
+							{totalBalance &&
+								textHelpers.getAmountWithCurrency(totalBalance.amount, CURRENCY_MAP[totalBalance.currency].symbol)}
 						</Box>
 						<Box
 							className='text-sm font-light text-primary-grey'
@@ -93,7 +94,7 @@ export function SavingManagement() {
 								row.targetAmount ? (
 									<ItemImageWithProgress
 										image={<div className='size-10 rounded-full bg-green-200' />}
-										current={row.balanceResponse.amount}
+										current={row.balance.amount}
 										target={row.targetAmount}
 									/>
 								) : (
@@ -102,8 +103,7 @@ export function SavingManagement() {
 							}
 							name={row.name}
 							description={
-								row.targetAmount &&
-								textHelpers.getRatio(row.balanceResponse.amount, row.targetAmount, row.balanceResponse.currency)
+								row.targetAmount && textHelpers.getRatio(row.balance.amount, row.targetAmount, row.balance.currency)
 							}
 							onClick={(navigate) => navigate(APP_PATH.goalDetails)}
 						/>

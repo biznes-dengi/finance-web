@@ -1,8 +1,6 @@
 export * from './fields/TextField.tsx';
-export * from './fields/CurrencyField.tsx';
+export * from './numeric-input-with-options/ui/NumericInputWithOptions.tsx';
 export * from './fields/upload-field/useUploadField.tsx';
-
-export * from './slider/useSlider.tsx';
 
 export * from './Tabs.tsx';
 export * from './Icon.tsx';
@@ -12,7 +10,7 @@ export * from './PageHeader.tsx';
 export * from './Stepper.tsx';
 export * from './Spinner.tsx';
 
-// new pattern
+// new pattern -> get rid of index.ts
 export * from './button';
 export * from './dialog';
 export * from './item';

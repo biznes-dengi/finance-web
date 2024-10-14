@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Box, Icon, Item, TextField} from '@shared/ui';
+import {Box, Card, Icon, Item, TextField} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, isNumber} from '@shared/lib';
 import {CURRENCY} from '@shared/constants';
@@ -38,7 +38,7 @@ export function SelectWithSearch(props: Props) {
 				<TextField value={search} onChange={setSearch} placeholder={APP_TEXT.search} isSearch />
 			</Box>
 
-			<Box isCard>
+			<Card>
 				{selectOptions
 					.filter((option) =>
 						search.length ? (option.name + option.description).toLowerCase().includes(search.toLowerCase()) : true,
@@ -49,12 +49,12 @@ export function SelectWithSearch(props: Props) {
 							name={option.name}
 							description={option.description}
 							image={<div className={'bg-primary-grey'} />}
-							statusIcon={option.checked && Icon.check}
 							onClick={() => handleOptionClick(option.value)}
+							statusIcon={option.checked && Icon.check}
 							className={cn(option.checked && 'bg-secondary-violet')}
 						/>
 					))}
-			</Box>
+			</Card>
 		</>
 	);
 }

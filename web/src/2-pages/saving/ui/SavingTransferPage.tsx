@@ -1,16 +1,18 @@
 import {useState} from 'react';
 
-import {Icon, CurrencyField, Box, ButtonType, Button, PageHeader} from '@shared/ui';
-import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
+import {Icon, NumericInputWithOptions, Box, ButtonType, Button, PageHeader} from '@shared/ui';
+import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {savingModel} from '@entities/saving';
 
 type Value = number | undefined;
 
+// TODO:
+// 	change div to text button
+// 	сделать чтобы лейаут не прыгал (когда заходишь на страницу написано select, без инициализации)
+
 export function SavingTransferPage() {
 	const filter = {pageNumber: 0};
-	const {
-		data: {data},
-	} = savingModel.useItems(filter);
+	const {items} = savingModel.useItems(filter);
 
 	const [firstItemValue, setFirstItemValue] = useState<Value>();
 	const [secondItemValue, setSecondItemValue] = useState<Value>();
@@ -35,9 +37,7 @@ export function SavingTransferPage() {
 
 	return (
 		<>
-			<div className='mb-2'>
-				<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.root} />
-			</div>
+			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.root} />
 
 			<Box basePadding>
 				{/*<div className='bg-amber-200'>*/}
@@ -50,10 +50,10 @@ export function SavingTransferPage() {
 				{/*<div className='pb-6 text-2xl font-semibold'>{APP_TEXT.transfer}</div>*/}
 
 				<div className='relative'>
-					<CurrencyField
-						options={data?.map((saving) => ({
-							name: saving.name,
-							currencySymbol: CURRENCY_MAP[saving.currency].symbol,
+					<NumericInputWithOptions
+						options={items?.map((item) => ({
+							name: item.name,
+							currencySymbol: CURRENCY_MAP[item.balance.currency].symbol,
 							mask: undefined,
 						}))}
 						value={firstItemValue}
@@ -65,40 +65,32 @@ export function SavingTransferPage() {
 						<div className='h-4 w-4 text-primary-violet'>{Icon.transferTo}</div>
 					</div>
 
-					<CurrencyField
+					<NumericInputWithOptions
 						className='mt-2'
 						value={secondItemValue}
 						onChange={handleValueChange}
-						option={{name: 'House', currencySymbol: 'zł'}}
+						options={[{id: 1, image: '', name: 'House', balance: {amount: 1000, currency: CURRENCY.USD}}]}
 						leftLabel={{balance: secondItemBalance}}
 					/>
 				</div>
 
-				<Box mediumMarginY className='flex flex-col gap-2 text-sm'>
+				<Box basePadding className='flex flex-col gap-2 text-sm'>
 					<div className='flex items-center justify-between'>
-						<div className='flex items-center gap-1 text-primary-violet'>
-							<div className='h-4 w-4'>{Icon.calendar}</div>
-							<div>{currentDate}</div>
-						</div>
 						<div
-							className='flex items-center gap-1.5 text-primary-violet'
-							onClick={() => alert('calendar fields appear with animation')}
+							className='flex items-center gap-2 text-primary-violet'
+							onClick={() => alert('exchangeRate appear with animation')}
 						>
-							<div className='h-3 w-3'>{Icon.edit}</div>
-							<div>Edit</div>
-						</div>
-					</div>
-					<div className='flex items-center justify-between'>
-						<div className='flex items-center gap-1 text-primary-violet'>
 							<div className='h-4 w-4'>{Icon.trendUp}</div>
 							<div>1 $ = {exchangeRate} zł</div>
 						</div>
+					</div>
+					<div className='flex items-center justify-between'>
 						<div
-							className='flex items-center gap-1.5 text-primary-violet'
-							onClick={() => alert('exchangeRate appear with animation')}
+							className='flex items-center gap-2 text-primary-violet'
+							onClick={() => alert('calendar fields appear with animation')}
 						>
-							<div className='h-3 w-3'>{Icon.edit}</div>
-							<div>Edit</div>
+							<div className='h-4 w-4'>{Icon.calendar}</div>
+							<div>{currentDate}</div>
 						</div>
 					</div>
 				</Box>

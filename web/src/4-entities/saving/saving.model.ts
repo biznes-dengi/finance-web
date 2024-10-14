@@ -1,8 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
-
+import {TAppFilter} from '@shared/types';
 import {savingApi} from './saving.api.ts';
 import {TSavingPaged} from './saving.types.ts';
-import {TAppFilter} from '@shared/types';
 
 function useBoardSavingsId() {
 	const {data} = useQuery({
@@ -19,7 +18,7 @@ function useTotalBalance() {
 		queryFn: () => savingApi.fetchBoardSavingsBalance(1),
 	});
 
-	return {balance: data, isBalanceFetching: isFetching};
+	return {totalBalance: data, isTotalBalanceFetching: isFetching};
 }
 
 function useItems(filter?: TAppFilter) {
@@ -32,7 +31,15 @@ function useItems(filter?: TAppFilter) {
 		initialData: {} as TSavingPaged,
 	});
 
-	return {items: data.data, hasNext: data.hasNext, isItemsFetching: isFetching};
+	return {
+		//TODO
+		// items: data.data as typeof data.data | undefined,
+		// hasNext: data.hasNext as typeof data.hasNext | undefined,
+
+		items: data.data,
+		hasNext: data.hasNext,
+		isItemsFetching: isFetching,
+	};
 }
 
 export const savingModel = {

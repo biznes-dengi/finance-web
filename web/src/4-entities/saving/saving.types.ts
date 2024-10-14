@@ -14,7 +14,7 @@ export const savingPagedValidator = zod.object({
 		.object({
 			id: zod.number(),
 			name: zod.string(),
-			balanceResponse: zod.object({
+			balance: zod.object({
 				amount: zod.number(),
 				currency: zod.nativeEnum(CURRENCY),
 			}),

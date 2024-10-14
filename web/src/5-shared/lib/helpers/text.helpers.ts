@@ -1,4 +1,4 @@
-import {CURRENCY, CURRENCY_MAP} from '@shared/constants';
+import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 
 export class textHelpers {
 	static getDontHaveAny(item: string) {
@@ -17,7 +17,7 @@ export class textHelpers {
 		return `${current} / ${target}`;
 	}
 
-	static getAmountWithCurrency(amount?: number, currencySymbol?: string) {
+	static getAmountWithCurrency(amount: number, currencySymbol: string) {
 		if (!amount || !currencySymbol) return null;
 
 		return `${this.getAmount(amount)} ${currencySymbol}`;
@@ -27,5 +27,9 @@ export class textHelpers {
 		const [int] = amount.toString().split('.');
 
 		return int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+	}
+
+	static getBalance(balance: number, currencySymbol: string) {
+		return `${APP_TEXT.balance}: ${this.getAmountWithCurrency(balance, currencySymbol)}`;
 	}
 }
