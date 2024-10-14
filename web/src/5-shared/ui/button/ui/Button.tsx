@@ -53,10 +53,12 @@ export function Button(props: Props) {
 	}
 
 	if (type === ButtonType.text) {
-		// svg-path size = 12x12
 		return (
-			<button {...buttonProps} className={gcn('text-sm font-medium text-primary-violet', icon && 'flex items-center')}>
-				{icon && styleElement(icon, 'mr-2 size-4')}
+			<button
+				{...buttonProps}
+				className={gcn('text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
+			>
+				{icon && styleElement(icon, 'size-4')}
 				<span className='font-medium'>{children}</span>
 			</button>
 		);

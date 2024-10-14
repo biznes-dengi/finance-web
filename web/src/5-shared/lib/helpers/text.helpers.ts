@@ -24,9 +24,9 @@ export class textHelpers {
 	}
 
 	static getAmount(amount: number) {
-		const [int] = amount.toString().split('.');
+		const [int, float] = amount.toString().split('.');
 
-		return int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+		return int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + `,${float}`;
 	}
 
 	static getBalance(balance: number, currencySymbol: string) {

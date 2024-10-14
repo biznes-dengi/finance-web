@@ -12,11 +12,9 @@ export type TBaseOption = {
 };
 
 export type TNumericInputWithOptionsProps<Option> = {
-	getLabel: (option: Option) => ReactNode;
 	value: number | undefined;
 	onChange: (value: number | undefined) => void;
-	placeholder?: string;
-	disabled?: boolean;
-	className?: string;
 	options: Option[];
+	getLabel?: (option: Option) => ReactNode;
+	disabled?: boolean;
 };
