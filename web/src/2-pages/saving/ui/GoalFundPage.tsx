@@ -11,21 +11,20 @@ export function GoalFundPage() {
 
 	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = savingModel.useFundGoal();
 
-	// TODO: тип items должен быть ItemsData | undefined, а сейчас только item[]
 	const {items} = savingModel.useItems({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
-	const [activeOption, setActiveOption] = useState<(typeof options)[0]>();
+	const [activeOption, setActiveOption] = useState(options?.[0]);
 
 	const [amount, setAmount] = useState<number | undefined>();
 	const [date, setDate] = useState<Date>(new Date());
 
 	useEffect(() => {
-		if (!items) return;
+		if (!options) return;
 		setActiveOption(options[0]);
-	}, [items]);
+	}, [options]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;
@@ -46,9 +45,6 @@ export function GoalFundPage() {
 			navigate(APP_PATH.goalList);
 		}, 2000);
 	}
-
-	// TODO: тип items должен быть ItemsData | undefined
-	if (!items) return null;
 
 	return (
 		<>

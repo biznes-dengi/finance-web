@@ -7,7 +7,6 @@ import {
 	boardSavingBalanceValidator,
 	boardSavingIdValidator,
 	savingPagedValidator,
-	TSavingPaged,
 } from './saving.types.ts';
 
 async function fetchBoardSavingsId(accountId: number) {
@@ -32,7 +31,7 @@ async function fetchBoardSavingsBalance(boardSavingId: number) {
 
 async function fetchItems({filter, boardSavingId}: ApiFetchItemsParams) {
 	if (!boardSavingId) {
-		return {} as TSavingPaged;
+		return undefined;
 	}
 
 	try {
@@ -51,7 +50,7 @@ async function fetchItems({filter, boardSavingId}: ApiFetchItemsParams) {
 		return savingPagedValidator.parse(mappedResponse);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-		return {} as TSavingPaged;
+		return undefined;
 	}
 }
 

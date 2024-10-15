@@ -1,4 +1,4 @@
-import {Dialog, Icon, Item, List, useDialogState} from '@shared/ui';
+import {Dialog, Icon, Item, List, PRELOAD_SIZE, PreloadSkeleton, useDialogState} from '@shared/ui';
 import {cn, isNumber, styleElement, textHelpers} from '@shared/lib';
 import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputWithOptions.types.ts';
 import {CURRENCY_MAP} from '@shared/constants';
@@ -17,9 +17,18 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 		return textHelpers.getBalance(option.balance.amount, CURRENCY_MAP[option.balance.currency].symbol);
 	}
 
-	if (!activeOption) return;
-
 	const isMultipleOptions = options?.length && options.length > 1;
+
+	if (!activeOption) {
+		return (
+			<div className='rounded-2xl bg-input-grey p-4'>
+				<PreloadSkeleton width={PRELOAD_SIZE.width.xl} height={PRELOAD_SIZE.height.xl} />
+				<div className='mt-[10.8px]'>
+					<PreloadSkeleton width={PRELOAD_SIZE.width.l} />
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<>

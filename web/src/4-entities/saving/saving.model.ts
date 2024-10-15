@@ -33,12 +33,8 @@ function useItems(filter?: TAppFilter) {
 	});
 
 	return {
-		//TODO
-		// items: data.data as typeof data.data | undefined,
-		// hasNext: data.hasNext as typeof data.hasNext | undefined,
-
-		items: data.data,
-		hasNext: data.hasNext,
+		items: data?.data,
+		hasNext: data?.hasNext,
 		isItemsFetching: isFetching,
 	};
 }
