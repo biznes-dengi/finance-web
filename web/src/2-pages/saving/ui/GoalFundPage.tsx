@@ -70,7 +70,7 @@ export function GoalFundPage() {
 				{isFundGoalError && <Box baseMarginY>Error drawer - Some error occur / goal not funded, try again later</Box>}
 			</Dialog>
 
-			<Box baseMarginY>
+			<Box basePadding>
 				<Button type={ButtonType.main} onClick={handleFundClick}>
 					{isFundGoalPending ? 'Loading...' : APP_TEXT.fund}
 				</Button>
