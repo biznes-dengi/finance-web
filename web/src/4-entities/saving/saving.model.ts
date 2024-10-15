@@ -1,7 +1,8 @@
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {TAppFilter} from '@shared/types';
 import {savingApi} from './saving.api.ts';
-import {TSavingPaged} from './saving.types.ts';
+import {MutationFundGoalPayload, TSavingPaged} from './saving.types.ts';
+import {TRANSACTION_TYPE} from '@shared/constants';
 
 function useBoardSavingsId() {
 	const {data} = useQuery({
@@ -42,7 +43,31 @@ function useItems(filter?: TAppFilter) {
 	};
 }
 
+function useFundGoal() {
+	const boardSavingId = useBoardSavingsId();
+
+	const {mutate, isPending, isError, isSuccess} = useMutation({
+		mutationKey: ['fund-goal'],
+		mutationFn: (payload: MutationFundGoalPayload) => {
+			const {id, ...restPayload} = payload;
+			return savingApi.fundGoal({
+				id,
+				boardSavingId,
+				payload: {...restPayload, type: TRANSACTION_TYPE.deposit},
+			});
+		},
+	});
+
+	return {
+		fundGoal: mutate,
+		isFundGoalPending: isPending,
+		isFundGoalSuccess: isSuccess,
+		isFundGoalError: isError,
+	};
+}
+
 export const savingModel = {
 	useItems,
 	useTotalBalance,
+	useFundGoal,
 };

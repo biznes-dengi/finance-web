@@ -6,7 +6,7 @@ export function Card(props: Props) {
 	const {titleInCard, title, titleButton, children} = props;
 
 	return (
-		<div role='card' className='rounded-2xl bg-white'>
+		<div role='card' className='w-full rounded-2xl bg-white'>
 			{(title || titleButton) && (
 				<div className={cn('flex py-6 pb-3', title && titleButton && 'justify-between')}>
 					{title && <div className='font-semibold'>{title}</div>}

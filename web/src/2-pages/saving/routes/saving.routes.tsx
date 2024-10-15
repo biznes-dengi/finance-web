@@ -8,22 +8,22 @@ import {SavingTransferPage} from '../ui/SavingTransferPage.tsx';
 import {GoalFundPage} from '../ui/GoalFundPage.tsx';
 import {GoalWithdrawPage} from '../ui/GoalWithdrawPage.tsx';
 
-const savingListRoute = {
-	path: APP_PATH.root,
+const goalListRoute = {
+	path: APP_PATH.goalList,
 	element: withRouteGuard({page: <SavingListPage />}),
 };
 
-const savingDetailsRoute = {
+const goalDetailsRoute = {
 	path: APP_PATH.goalDetails,
 	element: withRouteGuard({page: <SavingDetailsPage />}),
 };
 
-const savingCreateRoute = {
+const goalCreateRoute = {
 	path: APP_PATH.createGoal,
 	element: withRouteGuard({page: <SavingCreatePage />}),
 };
 
-const savingTransferRoute = {
+const goalTransferRoute = {
 	path: APP_PATH.goalTransfer,
 	element: withRouteGuard({page: <SavingTransferPage />}),
 };
@@ -39,9 +39,9 @@ const goalWithdrawRoute = {
 };
 
 export const savingRoutes = [
-	{element: <AppLayout />, children: [savingListRoute]},
+	{element: <AppLayout />, children: [goalListRoute]},
 	{
 		element: <AppScreenLayout />,
-		children: [savingDetailsRoute, savingCreateRoute, savingTransferRoute, goalFundRoute, goalWithdrawRoute],
+		children: [goalDetailsRoute, goalCreateRoute, goalTransferRoute, goalFundRoute, goalWithdrawRoute],
 	},
 ];

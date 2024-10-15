@@ -1,5 +1,5 @@
-import {Item, Icon, List, Dialog, PreloadSkeleton} from '@shared/ui';
-import {styleElement, useDialogState} from '@shared/lib';
+import {Item, Icon, List, Dialog, PreloadSkeleton, useDialogState} from '@shared/ui';
+import {styleElement} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 import {Props} from '../types/SelectInCard.types.ts';
 

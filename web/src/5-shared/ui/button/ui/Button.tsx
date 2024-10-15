@@ -3,6 +3,7 @@ import {NavigateFunction, useNavigate} from 'react-router-dom';
 
 import {cn, styleElement} from '@shared/lib';
 import {PRELOAD_SIZE, PreloadSkeleton} from '@shared/ui';
+import {ClassValue} from 'clsx';
 
 export enum ButtonType {
 	main,
@@ -34,7 +35,7 @@ export function Button(props: Props) {
 		disabled,
 	};
 
-	function gcn(...buttonClassName: Array<unknown>) {
+	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn('block', disabled ? 'cursor-not-allowed' : 'cursor-pointer', ...buttonClassName, className);
 	}
 
@@ -43,7 +44,7 @@ export function Button(props: Props) {
 			<button
 				{...buttonProps}
 				className={gcn(
-					'block w-full rounded-2xl py-2 text-center text-white',
+					'block w-full rounded-3xl py-3 text-center text-white',
 					!disabled ? 'bg-primary-violet' : 'bg-secondary-grey',
 				)}
 			>

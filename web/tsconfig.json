@@ -13,8 +13,10 @@
       "@pages/*": ["./2-pages/*"],
       "@widgets/*": ["./3-widgets/*"],
       "@entities/*": ["./4-entities/*"],
-      "@shared/*": ["./5-shared/*"]
+      "@shared/*": ["./5-shared/*"],
+      "@/*": ["./shadcn/*"]
     },
+
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -27,7 +29,7 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+//    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
   "include": [

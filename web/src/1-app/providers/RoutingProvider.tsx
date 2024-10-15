@@ -7,7 +7,7 @@ import {savingRoutes} from '@pages/saving';
 const router = createBrowserRouter([
 	{children: [...savingRoutes, pageNotFoundRoute]},
 
-	{path: '/', element: <Navigate to={APP_PATH.root} replace />},
+	{path: '/', element: <Navigate to={APP_PATH.goalList} replace />},
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},
 ]);
 

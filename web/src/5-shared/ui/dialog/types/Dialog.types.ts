@@ -8,6 +8,5 @@ export type DrawerRef = {
 export type DrawerProps = {
 	title?: ReactNode;
 	children: ReactNode;
-	isCloseDisabled?: boolean;
-	withAutoClose?: boolean;
+	showUX?: boolean;
 };

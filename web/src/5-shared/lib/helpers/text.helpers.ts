@@ -26,7 +26,10 @@ export class textHelpers {
 	static getAmount(amount: number) {
 		const [int, float] = amount.toString().split('.');
 
-		return int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + `,${float}`;
+		const beforeComma = int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+		const afterComma = float ? `,${float}` : '';
+
+		return beforeComma + afterComma;
 	}
 
 	static getBalance(balance: number, currencySymbol: string) {

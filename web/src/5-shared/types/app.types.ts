@@ -1,1 +1,3 @@
-export type TAppFilter = Record<string, string | number | boolean | undefined>;
+import {TApiData} from '@shared/api';
+
+export type TAppFilter = TApiData;

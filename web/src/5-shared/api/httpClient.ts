@@ -1,14 +1,23 @@
 import {axiosInstance} from './api.config.ts';
 import {HttpClientMethodProps} from '@shared/api/api.types.ts';
-import {handleHttpClientResponse} from '@shared/api/api.helpers.ts';
 import {getQueryString} from '@shared/lib';
 
 export class HttpClient {
-	static get({url, filter, abortSignal}: HttpClientMethodProps): Promise<unknown> {
-		if (filter) {
-			url += getQueryString(filter);
+	static get({url, data, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+		if (data) {
+			url += getQueryString(data);
 		}
 
-		return handleHttpClientResponse(axiosInstance.get(url, {signal: abortSignal}));
+		return axiosInstance
+			.get(url, {signal: abortSignal})
+			.then((response) => response.data)
+			.catch((error) => Promise.reject(error));
+	}
+
+	static post({url, data, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+		return axiosInstance
+			.post(url, data, {signal: abortSignal})
+			.then((response) => response.data)
+			.catch((error) => Promise.reject(error));
 	}
 }

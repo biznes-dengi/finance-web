@@ -1,8 +1,8 @@
-import {TAppFilter} from '@shared/types';
+export type TApiData = Record<string, string | number | boolean | undefined>;
 
 export type HttpClientMethodProps = {
 	url: string;
-	filter?: TAppFilter;
+	data?: TApiData;
 	abortSignal?: AbortSignal;
 };
 

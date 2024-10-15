@@ -1,26 +1,25 @@
 import {cn} from '@shared/lib';
-import {APP_PATH} from '@shared/constants';
 import {Icon} from '@shared/ui';
 
 const sidebarConfigs = [
 	{
 		label: 'Home',
-		path: APP_PATH.root,
+		path: '/',
 		icon: Icon.HOME,
 	},
 	{
 		label: 'Tracker',
-		path: APP_PATH.root,
+		path: '/',
 		icon: Icon.TRACKER,
 	},
 	{
 		label: 'Invest',
-		path: APP_PATH.root,
+		path: '/',
 		icon: Icon.INVEST,
 	},
 	{
 		label: 'Calculator',
-		path: APP_PATH.root,
+		path: '/',
 		icon: Icon.CALCULATOR,
 	},
 ];

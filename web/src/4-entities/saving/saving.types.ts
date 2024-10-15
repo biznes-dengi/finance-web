@@ -1,5 +1,6 @@
 import zod from 'zod';
-import {CURRENCY} from '@shared/constants';
+import {CURRENCY, TRANSACTION_TYPE} from '@shared/constants';
+import {TApiData} from '@shared/api';
 
 export const boardSavingIdValidator = zod.number();
 
@@ -25,3 +26,20 @@ export const savingPagedValidator = zod.object({
 });
 
 export type TSavingPaged = zod.infer<typeof savingPagedValidator>;
+
+export type ApiFetchItemsParams = {
+	filter?: TApiData;
+	boardSavingId?: number;
+};
+
+export type ApiFundGoalParams = {
+	id: number;
+	boardSavingId?: number;
+	payload: {type: TRANSACTION_TYPE; amount: number; date: string};
+};
+
+export type MutationFundGoalPayload = {
+	id: number;
+	amount: number;
+	date: string;
+};

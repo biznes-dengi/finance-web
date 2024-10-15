@@ -14,10 +14,11 @@ import {
 	Stepper,
 	TextField,
 	useUploadField,
+	useDialogState,
 } from '@shared/ui';
 
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {cn, useDialogState} from '@shared/lib';
+import {cn} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 
