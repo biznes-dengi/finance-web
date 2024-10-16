@@ -67,14 +67,17 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 				<div className='mt-1.5 flex justify-between'>
 					<div
-						className={cn('text-sm font-light text-primary-grey', !!errorText && 'text-[#B51F2D]')}
+						className={cn(
+							'mr-4 flex-shrink-0 basis-40 text-sm font-light text-primary-grey',
+							!!errorText && 'text-[#B51F2D]',
+						)}
 						onClick={() => {
 							!getLabel && handleChange(String(activeOption.balance.amount));
 						}}
 					>
 						{getOptionLabel(activeOption)}
 					</div>
-					{!!errorText && <div className='text-sm font-light text-[#B51F2D]'>exceeds balance (with small letter)</div>}
+					{!!errorText && <div className='text-sm font-light text-[#B51F2D]'>{errorText}</div>}
 				</div>
 			</label>
 

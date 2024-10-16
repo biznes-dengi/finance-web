@@ -62,8 +62,32 @@ function useFundGoal() {
 	};
 }
 
+function useWithdrawGoal() {
+	const boardSavingId = useBoardSavingsId();
+
+	const {mutate, isPending, isError, isSuccess} = useMutation({
+		mutationKey: ['withdraw-goal'],
+		mutationFn: (payload: MutationFundGoalPayload) => {
+			const {id, ...restPayload} = payload;
+			return savingApi.withdrawGoal({
+				id,
+				boardSavingId,
+				payload: {...restPayload, type: TRANSACTION_TYPE.withdraw},
+			});
+		},
+	});
+
+	return {
+		withdrawGoal: mutate,
+		isWithdrawGoalPending: isPending,
+		isWithdrawGoalSuccess: isSuccess,
+		isWithdrawGoalError: isError,
+	};
+}
+
 export const savingModel = {
 	useItems,
 	useTotalBalance,
 	useFundGoal,
+	useWithdrawGoal,
 };

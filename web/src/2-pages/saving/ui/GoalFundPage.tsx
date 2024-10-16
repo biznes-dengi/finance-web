@@ -60,25 +60,28 @@ export function GoalFundPage() {
 			</Box>
 
 			<Dialog showUX={isFundGoalSuccess || isFundGoalError}>
-				{isFundGoalSuccess && (
+				{isFundGoalSuccess && activeOption && (
 					<Box baseMarginY>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.success}</div>
 						</div>
 						<div>
-							Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>
-							has been funded <span className='font-medium text-primary-violet'>successfully</span>
+							Goal <span className='font-medium text-primary-violet'>{activeOption.name} </span>
+							has been funded by{' '}
+							<span className='font-medium text-primary-violet'>
+								{amount} {activeOption.balance.currency}
+							</span>
 						</div>
 					</Box>
 				)}
-				{isFundGoalError && (
+				{isFundGoalError && activeOption && (
 					<Box baseMarginY>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.error}</div>
 						</div>
 						<div>
 							Some error occur during funding{' '}
-							<span className='font-medium text-primary-violet'>{activeOption?.name}</span>
+							<span className='font-medium text-primary-violet'>{activeOption.name}</span>
 						</div>
 					</Box>
 				)}

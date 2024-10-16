@@ -1,21 +1,51 @@
-import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {Box, Button, ButtonType, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {Box, Button, ButtonType, DatePicker, Dialog, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
 import {savingModel} from '@entities/saving';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {DateService, isNumber} from '@shared/lib';
 
 export function GoalWithdrawPage() {
-	const filter = {pageNumber: 0};
-	const {items} = savingModel.useItems(filter);
+	const navigate = useNavigate();
 
-	const [value, setValue] = useState<number | undefined>();
+	const {withdrawGoal, isWithdrawGoalPending, isWithdrawGoalSuccess, isWithdrawGoalError} =
+		savingModel.useWithdrawGoal();
+
+	const {items} = savingModel.useItems({pageNumber: 0});
+	const options = items?.map((option) => ({
+		...option,
+		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
+	}));
+	// think about how to type activeOption
+	const [activeOption, setActiveOption] = useState(options?.[0]);
+
+	const [amount, setAmount] = useState<number | undefined>();
+	const [date, setDate] = useState<Date>(new DateService().value);
+
+	useEffect(() => {
+		if (!options) return;
+		setActiveOption(options[0]);
+	}, [items]);
 
 	function handleFundClick() {
-		console.log(`Withdrew ${value}`);
-		console.log('success UX');
-		console.log('redirect');
+		if (!activeOption?.id) return;
+
+		const payload = {
+			id: activeOption.id,
+			amount: amount ?? 0,
+			date: new DateService(date).getPayloadDateFormat(),
+		};
+
+		withdrawGoal(payload);
 	}
 
-	const firstItemBalance = 1100;
+	if (isWithdrawGoalSuccess || isWithdrawGoalError) {
+		setTimeout(() => {
+			navigate(APP_PATH.goalList);
+		}, 2000);
+	}
+
+	const isAmountError = activeOption && isNumber(amount) && amount > activeOption.balance.amount;
 
 	return (
 		<>
@@ -23,20 +53,47 @@ export function GoalWithdrawPage() {
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions
-					options={items?.map((item) => ({
-						name: item.name,
-						currencySymbol: CURRENCY_MAP[item.balance.currency].symbol,
-						mask: undefined,
-					}))}
-					value={value}
-					onChange={setValue}
-					leftLabel={{balance: firstItemBalance}}
+					value={amount}
+					onChange={setAmount}
+					options={options}
+					activeOption={activeOption}
+					setActiveOption={setActiveOption}
+					errorText={isAmountError && 'exceeds balance'}
 				/>
+				<DatePicker value={date} onChange={setDate} />
 			</Box>
 
+			<Dialog showUX={isWithdrawGoalSuccess || isWithdrawGoalError}>
+				{isWithdrawGoalSuccess && activeOption && (
+					<Box baseMarginY>
+						<div className='mb-4 flex justify-center'>
+							<div className='size-16 text-primary-violet'>{Icon.success}</div>
+						</div>
+						<div>
+							Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>
+							has been withdrawn by{' '}
+							<span className='font-medium text-primary-violet'>
+								{amount} {activeOption.balance.currency}
+							</span>
+						</div>
+					</Box>
+				)}
+				{isWithdrawGoalError && (
+					<Box baseMarginY>
+						<div className='mb-4 flex justify-center'>
+							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+						</div>
+						<div>
+							Some error occur during withdraw from{' '}
+							<span className='font-medium text-primary-violet'>{activeOption?.name}</span>
+						</div>
+					</Box>
+				)}
+			</Dialog>
+
 			<Box basePadding>
-				<Button type={ButtonType.main} onClick={handleFundClick}>
-					{APP_TEXT.withdraw}
+				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount) || isAmountError}>
+					{isWithdrawGoalPending ? 'Loading...' : APP_TEXT.withdraw}
 				</Button>
 			</Box>
 		</>

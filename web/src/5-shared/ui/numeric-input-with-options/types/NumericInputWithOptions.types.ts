@@ -18,5 +18,5 @@ export type TNumericInputWithOptionsProps<Option> = {
 	setActiveOption: (option: Option) => void;
 	options?: Option[];
 	getLabel?: (option: Option) => ReactNode;
-	errorText?: string;
+	errorText?: string | boolean;
 };

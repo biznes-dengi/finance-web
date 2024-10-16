@@ -72,9 +72,28 @@ async function fundGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
 	});
 }
 
+async function withdrawGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
+	if (!boardSavingId) {
+		return {};
+	}
+
+	// TODO: mock
+	const mappedPayload = {
+		amount: payload.amount,
+		type: payload.type,
+		dealDate: payload.date,
+	};
+
+	await HttpClient.post({
+		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
+		data: mappedPayload,
+	});
+}
+
 export const savingApi = {
 	fetchBoardSavingsId,
 	fetchBoardSavingsBalance,
 	fetchItems,
 	fundGoal,
+	withdrawGoal,
 };
