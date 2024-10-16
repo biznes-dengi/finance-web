@@ -1,10 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Box, Button, ButtonType, Dialog, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {Box, Button, ButtonType, Dialog, Icon, NumericInputWithOptions, PageHeader, DatePicker} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {savingModel} from '@entities/saving';
-import {DatePicker} from '@shared/ui/date-picker/ui/DatePicker.tsx';
-import {DateService} from '@shared/lib';
+import {DateService, isNumber} from '@shared/lib';
 
 export function GoalFundPage() {
 	const navigate = useNavigate();
@@ -16,15 +15,16 @@ export function GoalFundPage() {
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
+	// think about how to type activeOption
 	const [activeOption, setActiveOption] = useState(options?.[0]);
 
 	const [amount, setAmount] = useState<number | undefined>();
-	const [date, setDate] = useState<Date>(new Date());
+	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
 		if (!options) return;
 		setActiveOption(options[0]);
-	}, [options]);
+	}, [items]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;
@@ -35,9 +35,7 @@ export function GoalFundPage() {
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
-		console.log(payload);
-
-		// fundGoal(payload);
+		fundGoal(payload);
 	}
 
 	if (isFundGoalSuccess || isFundGoalError) {
@@ -62,12 +60,32 @@ export function GoalFundPage() {
 			</Box>
 
 			<Dialog showUX={isFundGoalSuccess || isFundGoalError}>
-				{isFundGoalSuccess && <Box baseMarginY>Success drawer - goal was funded successfully</Box>}
-				{isFundGoalError && <Box baseMarginY>Error drawer - Some error occur / goal not funded, try again later</Box>}
+				{isFundGoalSuccess && (
+					<Box baseMarginY>
+						<div className='mb-4 flex justify-center'>
+							<div className='size-16 text-primary-violet'>{Icon.success}</div>
+						</div>
+						<div>
+							Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>
+							has been funded <span className='font-medium text-primary-violet'>successfully</span>
+						</div>
+					</Box>
+				)}
+				{isFundGoalError && (
+					<Box baseMarginY>
+						<div className='mb-4 flex justify-center'>
+							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+						</div>
+						<div>
+							Some error occur during funding{' '}
+							<span className='font-medium text-primary-violet'>{activeOption?.name}</span>
+						</div>
+					</Box>
+				)}
 			</Dialog>
 
 			<Box basePadding>
-				<Button type={ButtonType.main} onClick={handleFundClick}>
+				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount)}>
 					{isFundGoalPending ? 'Loading...' : APP_TEXT.fund}
 				</Button>
 			</Box>

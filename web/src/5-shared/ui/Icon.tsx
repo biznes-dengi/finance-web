@@ -25,12 +25,14 @@ import {
 	CalendarIcon,
 	CameraIcon,
 	CheckIcon,
+	CheckCircleIcon,
 	ChevronDownIcon,
 	ChevronRightIcon,
 	CloudArrowUpIcon,
 	MagnifyingGlassIcon,
 	PencilIcon,
 	XMarkIcon,
+	XCircleIcon,
 } from '@heroicons/react/24/solid';
 import {BriefcaseIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
 
@@ -64,4 +66,6 @@ export const Icon = {
 	edit: <PencilIcon />,
 	calendar: <CalendarIcon />,
 	chevronDown: <ChevronDownIcon />,
+	success: <CheckCircleIcon />,
+	error: <XCircleIcon />,
 };

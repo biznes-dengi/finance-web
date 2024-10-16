@@ -19,3 +19,5 @@ export * from './list';
 export * from './select-in-card';
 export * from './select-with-search';
 export * from './card';
+
+export * from './date-picker/ui/DatePicker.tsx';

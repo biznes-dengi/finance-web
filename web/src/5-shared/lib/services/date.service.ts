@@ -1,8 +1,8 @@
 export class DateService {
 	public value: Date;
 
-	constructor(date: Date) {
-		this.value = date;
+	constructor(date?: Date) {
+		this.value = date ? date : new Date();
 	}
 
 	mutate() {
