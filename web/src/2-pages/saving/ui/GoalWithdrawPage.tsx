@@ -1,4 +1,4 @@
-import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {Box, Button, ButtonType, DatePicker, Dialog, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
 import {savingModel} from '@entities/saving';
 import {useEffect, useState} from 'react';
@@ -60,12 +60,14 @@ export function GoalWithdrawPage() {
 					setActiveOption={setActiveOption}
 					errorText={isAmountError && 'exceeds balance'}
 				/>
-				<DatePicker value={date} onChange={setDate} />
+				<Box baseMarginY>
+					<DatePicker value={date} onChange={setDate} />
+				</Box>
 			</Box>
 
 			<Dialog showUX={isWithdrawGoalSuccess || isWithdrawGoalError}>
 				{isWithdrawGoalSuccess && activeOption && (
-					<Box baseMarginY>
+					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.success}</div>
 						</div>
@@ -73,13 +75,13 @@ export function GoalWithdrawPage() {
 							Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>
 							has been withdrawn by{' '}
 							<span className='font-medium text-primary-violet'>
-								{amount} {activeOption.balance.currency}
+								{amount} {CURRENCY_MAP[activeOption.balance.currency].symbol}
 							</span>
 						</div>
 					</Box>
 				)}
 				{isWithdrawGoalError && (
-					<Box baseMarginY>
+					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.error}</div>
 						</div>

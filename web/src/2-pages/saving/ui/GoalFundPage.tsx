@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Box, Button, ButtonType, Dialog, Icon, NumericInputWithOptions, PageHeader, DatePicker} from '@shared/ui';
-import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {savingModel} from '@entities/saving';
 import {DateService, isNumber} from '@shared/lib';
 
@@ -56,12 +56,14 @@ export function GoalFundPage() {
 					activeOption={activeOption}
 					setActiveOption={setActiveOption}
 				/>
-				<DatePicker value={date} onChange={setDate} />
+				<Box baseMarginY>
+					<DatePicker value={date} onChange={setDate} />
+				</Box>
 			</Box>
 
 			<Dialog showUX={isFundGoalSuccess || isFundGoalError}>
 				{isFundGoalSuccess && activeOption && (
-					<Box baseMarginY>
+					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.success}</div>
 						</div>
@@ -69,13 +71,13 @@ export function GoalFundPage() {
 							Goal <span className='font-medium text-primary-violet'>{activeOption.name} </span>
 							has been funded by{' '}
 							<span className='font-medium text-primary-violet'>
-								{amount} {activeOption.balance.currency}
+								{amount} {CURRENCY_MAP[activeOption.balance.currency].symbol}
 							</span>
 						</div>
 					</Box>
 				)}
 				{isFundGoalError && activeOption && (
-					<Box baseMarginY>
+					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.error}</div>
 						</div>
