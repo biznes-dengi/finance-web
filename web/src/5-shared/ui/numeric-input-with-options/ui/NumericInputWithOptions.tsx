@@ -31,6 +31,27 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 		);
 	}
 
+	const getValue = () => {
+		if (isFromOption && isNumber(value)) {
+			return `- ${value}`;
+		}
+
+		if (isToOption && isNumber(value)) {
+			return `+ ${value}`;
+		}
+
+		return value ?? '';
+	};
+	const getPlaceholder = () => {
+		if (isFromOption) {
+			return '- 0';
+		}
+		if (isToOption) {
+			return '+ 0';
+		}
+		return '0';
+	};
+
 	return (
 		<>
 			<label className={cn('block rounded-2xl bg-input-grey p-4', !!errorText && 'bg-[#FDE3E5]')}>
@@ -45,30 +66,29 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 						{isMultipleOptions && <div className='size-4 flex-shrink-0 text-black'>{Icon.chevronDown}</div>}
 					</div>
 
-					{isFromOption || isToOption}
-					<div className={cn('mr-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>
-						{isFromOption && '-'}
-						{isToOption && '+'}
-					</div>
+					<div className='flex'>
+						<input
+							type='text'
+							className={cn(
+								'min-w-[1ch] max-w-full bg-inherit text-right text-xl font-semibold caret-primary-violet outline-0',
+								!!errorText && 'caret-[#B51F2D]',
+							)}
+							value={getValue()}
+							onChange={(event) => {
+								// handleChange(event.target.value.replace(/[-+]\s*/, '').trim());
+								handleChange(event.target.value.replace(/\D/g, '').trim());
+							}}
+							onKeyDown={(event) => {
+								if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+									event.preventDefault();
+								}
+							}}
+							placeholder={getPlaceholder()}
+						/>
 
-					<input
-						type='number'
-						className={cn(
-							'w-full bg-inherit text-right text-xl font-semibold caret-primary-violet outline-0',
-							!!errorText && 'caret-[#B51F2D]',
-						)}
-						value={value ?? ''}
-						onChange={(event) => handleChange(event.target.value)}
-						onKeyDown={(event) => {
-							if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-								event.preventDefault();
-							}
-						}}
-						placeholder={String(0)}
-					/>
-
-					<div className={cn('ml-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>
-						{CURRENCY_MAP[activeOption.balance.currency].symbol}
+						<div className={cn('ml-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>
+							{CURRENCY_MAP[activeOption.balance.currency].symbol}
+						</div>
 					</div>
 				</div>
 
