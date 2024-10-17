@@ -32,14 +32,28 @@ export type ApiFetchItemsParams = {
 	boardSavingId?: number;
 };
 
-export type ApiFundGoalParams = {
-	id: number;
-	boardSavingId?: number;
-	payload: {type: TRANSACTION_TYPE; amount: number; date: string};
-};
-
 export type MutationFundGoalPayload = {
 	id: number;
 	amount: number;
 	date: string;
+};
+export type ApiFundGoalParams = {
+	id: number;
+	boardSavingId?: number;
+	payload: {
+		type: TRANSACTION_TYPE;
+		amount: number;
+		date: string;
+	};
+};
+
+export type TransferPayload = {
+	fromGoalId: number;
+	toGoalId: number;
+	amount: number;
+	date: string;
+};
+export type TransferApiParams = {
+	boardSavingId?: number;
+	payload: TransferPayload;
 };

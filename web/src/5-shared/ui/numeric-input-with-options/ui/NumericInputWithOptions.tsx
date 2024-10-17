@@ -68,7 +68,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 				<div className='mt-1.5 flex justify-between'>
 					<div
 						className={cn(
-							'mr-4 flex-shrink-0 basis-40 text-sm font-light text-primary-grey',
+							'mr-4 flex-shrink-0 basis-40 cursor-pointer text-sm font-light text-primary-grey',
 							!!errorText && 'text-[#B51F2D]',
 						)}
 						onClick={() => {

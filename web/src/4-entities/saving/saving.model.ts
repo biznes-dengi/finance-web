@@ -1,7 +1,7 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {TAppFilter} from '@shared/types';
 import {savingApi} from './saving.api.ts';
-import {MutationFundGoalPayload, TSavingPaged} from './saving.types.ts';
+import {MutationFundGoalPayload, TransferPayload, TSavingPaged} from './saving.types.ts';
 import {TRANSACTION_TYPE} from '@shared/constants';
 
 function useBoardSavingsId() {
@@ -85,9 +85,29 @@ function useWithdrawGoal() {
 	};
 }
 
+function useTransfer() {
+	const boardSavingId = useBoardSavingsId();
+
+	const {mutate, isPending, isError, isSuccess} = useMutation({
+		mutationKey: ['transfer-goal'],
+		mutationFn: (payload: TransferPayload) => {
+			return savingApi.transferGoal({boardSavingId, payload});
+		},
+	});
+
+	return {
+		transfer: mutate,
+		isTransferPending: isPending,
+		isTransferSuccess: isSuccess,
+		isTransferError: isError,
+	};
+}
+
+// rename to useFund, useWithdraw
 export const savingModel = {
 	useItems,
 	useTotalBalance,
 	useFundGoal,
 	useWithdrawGoal,
+	useTransfer,
 };

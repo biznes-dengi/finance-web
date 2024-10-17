@@ -4,6 +4,7 @@ import {getApiPath, HttpClient} from '@shared/api';
 import {
 	ApiFetchItemsParams,
 	ApiFundGoalParams,
+	TransferApiParams,
 	boardSavingBalanceValidator,
 	boardSavingIdValidator,
 	savingPagedValidator,
@@ -90,10 +91,22 @@ async function withdrawGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
 	});
 }
 
+async function transferGoal({boardSavingId, payload}: TransferApiParams) {
+	if (!boardSavingId) {
+		return {};
+	}
+
+	await HttpClient.post({
+		url: getApiPath(`board-savings/${boardSavingId}/transfer`),
+		data: payload,
+	});
+}
+
 export const savingApi = {
 	fetchBoardSavingsId,
 	fetchBoardSavingsBalance,
 	fetchItems,
 	fundGoal,
 	withdrawGoal,
+	transferGoal,
 };
