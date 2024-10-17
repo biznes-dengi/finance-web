@@ -54,7 +54,7 @@ export function SavingManagement() {
 						</Box>
 					</Box>
 					{!isFetching ? (
-						<div role='saving-icon' className='size-10 rounded-xl bg-secondary-grey' />
+						<div role='saving-icon' className='ml-2 size-10 shrink-0 rounded-xl bg-secondary-grey' />
 					) : (
 						<PreloadSkeleton width={40} height={40} className='rounded-xl' />
 					)}
