@@ -1,12 +1,24 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Box, Button, ButtonType, DatePicker, Dialog, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {
+	Box,
+	Button,
+	ButtonType,
+	CurrencyPicker,
+	DatePicker,
+	Dialog,
+	Icon,
+	NumericInputWithOptions,
+	PageHeader,
+} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {savingModel} from '@entities/saving';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
 
+const initialExchangeRate = 3.9071;
+
 export function GoalTransferPage() {
-	const exchangeRate = '1 $ = 3.9071 zł';
+	const [exchangeRate, setExchangeRate] = useState<number>(initialExchangeRate);
 
 	const navigate = useNavigate();
 
@@ -20,14 +32,13 @@ export function GoalTransferPage() {
 	// think about how to type activeOption
 	const [fromActiveOption, setFromActiveOption] = useState(options?.[0]);
 	const [fromAmount, setFromAmount] = useState<number | undefined>();
+
 	const [toActiveOption, setToActiveOption] = useState(options?.[1]);
 	const [toAmount, setToAmount] = useState<number | undefined>();
 
-	const [isOrderChanged, setIsOrderChanged] = useState(false);
+	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
 	const {transfer, isTransferPending, isTransferSuccess, isTransferError} = savingModel.useTransfer();
-
-	console.log(options);
 
 	useEffect(() => {
 		if (!options) return;
@@ -35,13 +46,25 @@ export function GoalTransferPage() {
 		setToActiveOption(options[1]);
 	}, [items]);
 
-	function handleFromAmountChange(value: number | undefined) {
-		setFromAmount(value);
-		// setToAmount(value ? Number((value * exchangeRate).toFixed(2)) : undefined);
+	function handleCurrencyRateChange(value: number | undefined) {
+		setExchangeRate(value ? Number(value.toFixed(4)) : initialExchangeRate);
 	}
-	function handleToAmountChange(value: number | undefined) {
-		setToAmount(value);
-		// setFromAmount(value ? Number((value * exchangeRate).toFixed(2)) : undefined);
+
+	function handleFromAmountChange(fromValue: number | undefined) {
+		setFromAmount(fromValue);
+
+		setToAmount(fromValue ? Number((fromValue * exchangeRate).toFixed(2)) : undefined);
+	}
+	function handleToAmountChange(toValue: number | undefined) {
+		setToAmount(toValue);
+
+		if (isNumber(fromAmount)) {
+			handleCurrencyRateChange(toValue ? toValue / fromAmount : initialExchangeRate);
+		}
+
+		if (!isNumber(fromAmount)) {
+			setFromAmount(toValue ? Number((toValue * exchangeRate).toFixed(2)) : undefined);
+		}
 	}
 	function handleTransferClick() {
 		if (!fromActiveOption || !toActiveOption || !fromAmount) return;
@@ -49,7 +72,8 @@ export function GoalTransferPage() {
 		const payload = {
 			fromGoalId: fromActiveOption.id,
 			toGoalId: toActiveOption.id,
-			amount: fromAmount,
+			fromAmount,
+			toAmount,
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
@@ -63,6 +87,8 @@ export function GoalTransferPage() {
 			navigate(APP_PATH.goalList);
 		}, 2000);
 	}
+
+	const isFromAmountError = isNumber(fromAmount) && fromActiveOption && fromAmount > fromActiveOption.balance.amount;
 
 	return (
 		<>
@@ -81,14 +107,16 @@ export function GoalTransferPage() {
 							}
 						}}
 						options={options}
+						errorText={isFromAmountError && 'exceeds balance'}
+						isFromOption
 					/>
 
 					<div
 						className={cn(
-							isOrderChanged && 'rotate-180 transition-transform',
+							// isOrderChanged && 'rotate-180 transition-transform',
 							'absolute left-[170px] top-[74px] flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white transition-all duration-200',
 						)}
-						onClick={() => setIsOrderChanged(!isOrderChanged)}
+						// onClick={() => setIsOrderChanged(!isOrderChanged)}
 					>
 						<div className='h-4 w-4 text-primary-violet'>{Icon.transferTo}</div>
 					</div>
@@ -104,19 +132,22 @@ export function GoalTransferPage() {
 							setToActiveOption(activeOption);
 						}}
 						options={options}
+						isToOption
 					/>
 				</Box>
 
 				<Box baseMarginY className='flex flex-col gap-3'>
-					<div className='flex items-center justify-between'>
-						<div
-							className='flex items-center gap-2 text-sm font-medium text-primary-violet'
-							onClick={() => alert('exchangeRate appear with animation')}
-						>
-							<div className='h-4 w-4'>{Icon.trendUp}</div>
-							<div>{exchangeRate}</div>
-						</div>
-					</div>
+					<CurrencyPicker
+						buttonText={`1 $ = ${exchangeRate ?? ''} zł`}
+						value={exchangeRate}
+						onChange={(value) => {
+							handleCurrencyRateChange(value);
+
+							if (isNumber(toAmount) && isNumber(fromAmount) && value) {
+								setToAmount(Number((fromAmount * value).toFixed(2)));
+							}
+						}}
+					/>
 
 					<DatePicker value={date} onChange={setDate} />
 				</Box>
@@ -126,7 +157,7 @@ export function GoalTransferPage() {
 				<Button
 					type={ButtonType.main}
 					onClick={handleTransferClick}
-					disabled={!isNumber(fromAmount) || !isNumber(toAmount)}
+					disabled={!isNumber(fromAmount) || !isNumber(toAmount) || isFromAmountError}
 					className='w-[375px]'
 				>
 					{isTransferPending ? 'Loading...' : APP_TEXT.transfer}

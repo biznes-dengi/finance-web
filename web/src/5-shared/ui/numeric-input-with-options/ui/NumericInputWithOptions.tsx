@@ -4,7 +4,8 @@ import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputW
 import {CURRENCY_MAP} from '@shared/constants';
 
 export function NumericInputWithOptions<Option extends TBaseOption>(props: TNumericInputWithOptionsProps<Option>) {
-	const {value, onChange, options, getLabel, activeOption, setActiveOption, errorText} = props;
+	const {value, onChange, options, getLabel, activeOption, setActiveOption, errorText, isFromOption, isToOption} =
+		props;
 
 	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
@@ -42,6 +43,12 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 							styleElement(activeOption.image, 'h-5 w-5 flex-shrink-0 rounded-full bg-primary-grey')}
 						<div className='truncate text-xl'>{activeOption.name}</div>
 						{isMultipleOptions && <div className='size-4 flex-shrink-0 text-black'>{Icon.chevronDown}</div>}
+					</div>
+
+					{isFromOption || isToOption}
+					<div className={cn('mr-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>
+						{isFromOption && '-'}
+						{isToOption && '+'}
 					</div>
 
 					<input

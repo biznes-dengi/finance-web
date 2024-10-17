@@ -50,7 +50,8 @@ export type ApiFundGoalParams = {
 export type TransferPayload = {
 	fromGoalId: number;
 	toGoalId: number;
-	amount: number;
+	fromAmount: number;
+	toAmount: number;
 	date: string;
 };
 export type TransferApiParams = {
