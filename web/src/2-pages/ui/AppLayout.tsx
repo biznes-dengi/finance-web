@@ -12,7 +12,7 @@ export function AppLayout() {
 	return (
 		<div
 			role='app-layout'
-			className={cn('mx-auto min-h-screen max-w-xl', isDesktop ? 'flex justify-between px-6 py-8' : 'p-4')}
+			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop ? 'flex justify-between px-6 py-8' : 'p-4')}
 		>
 			{isDesktop && <AppNavbar />}
 
