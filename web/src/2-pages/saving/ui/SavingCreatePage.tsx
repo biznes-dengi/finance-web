@@ -7,7 +7,6 @@ import {
 	ButtonType,
 	Dialog,
 	Icon,
-	NumericInputWithOptions,
 	PageHeader,
 	SelectWithSearch,
 	Spinner,
@@ -43,7 +42,7 @@ export function SavingCreatePage() {
 	/** Form state */
 	const [name, setName] = useState(initialName);
 	const [currencyValue, setCurrencyValue] = useState<CURRENCY | null>(initialCurrencyValue);
-	const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
+	// const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
 	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 
 	function handleCurrencyValueChange(value: CURRENCY) {
@@ -123,17 +122,17 @@ export function SavingCreatePage() {
 							<SelectWithSearch options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
 						</Box>,
 						<Box key={activeStepIndex} basePaddingX>
-							<NumericInputWithOptions
-								value={targetAmount}
-								onChange={setTargetAmount}
-								options={[
-									{
-										name: selectedCurrencyOption?.description ?? '',
-										balance: {currency: CURRENCY.USD, amount: 1},
-									},
-								]}
-								getLabel={() => APP_TEXT.amount}
-							/>
+							{/*<NumericInputWithOptions*/}
+							{/*	value={targetAmount}*/}
+							{/*	onChange={setTargetAmount}*/}
+							{/*	options={[*/}
+							{/*		{*/}
+							{/*			name: selectedCurrencyOption?.description ?? '',*/}
+							{/*			balance: {currency: CURRENCY.USD, amount: 1},*/}
+							{/*		},*/}
+							{/*	]}*/}
+							{/*	getLabel={() => APP_TEXT.amount}*/}
+							{/*/>*/}
 						</Box>,
 					]}
 				/>
@@ -161,7 +160,7 @@ export function SavingCreatePage() {
 				</Button>
 			</Box>
 
-			<Dialog ref={dialogRef} isCloseDisabled withAutoClose>
+			<Dialog ref={dialogRef}>
 				<div className='flex flex-col items-center pb-4'>
 					<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{Icon.check}</div>
 					<div className='text-center font-semibold'>
