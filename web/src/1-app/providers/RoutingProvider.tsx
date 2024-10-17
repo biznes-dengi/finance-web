@@ -2,10 +2,10 @@ import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
 
 import {APP_PATH} from '@shared/constants';
 import {pageNotFoundRoute} from '@pages/not-found';
-import {savingRoutes} from '@pages/saving';
+import {goalRoutes} from '@pages/saving';
 
 const router = createBrowserRouter([
-	{children: [...savingRoutes, pageNotFoundRoute]},
+	{children: [...goalRoutes, pageNotFoundRoute]},
 
 	{path: '/', element: <Navigate to={APP_PATH.goalList} replace />},
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},

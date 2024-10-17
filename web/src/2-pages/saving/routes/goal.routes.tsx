@@ -4,7 +4,7 @@ import {AppScreenLayout, AppLayout} from '@pages/ui';
 import {SavingCreatePage} from '../ui/SavingCreatePage.tsx';
 import {SavingDetailsPage} from '../ui/SavingDetailsPage.tsx';
 import {SavingListPage} from '../ui/SavingListPage.tsx';
-import {SavingTransferPage} from '../ui/SavingTransferPage.tsx';
+import {GoalTransferPage} from '../ui/GoalTransferPage.tsx';
 import {GoalFundPage} from '../ui/GoalFundPage.tsx';
 import {GoalWithdrawPage} from '../ui/GoalWithdrawPage.tsx';
 
@@ -25,7 +25,7 @@ const goalCreateRoute = {
 
 const goalTransferRoute = {
 	path: APP_PATH.goalTransfer,
-	element: withRouteGuard({page: <SavingTransferPage />}),
+	element: withRouteGuard({page: <GoalTransferPage />}),
 };
 
 const goalFundRoute = {
@@ -38,7 +38,7 @@ const goalWithdrawRoute = {
 	element: withRouteGuard({page: <GoalWithdrawPage />}),
 };
 
-export const savingRoutes = [
+export const goalRoutes = [
 	{element: <AppLayout />, children: [goalListRoute]},
 	{
 		element: <AppScreenLayout />,
