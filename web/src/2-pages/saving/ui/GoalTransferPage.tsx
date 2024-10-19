@@ -67,7 +67,7 @@ export function GoalTransferPage() {
 		}
 	}
 	function handleTransferClick() {
-		if (!fromActiveOption || !toActiveOption || !fromAmount) return;
+		if (!fromActiveOption || !toActiveOption || !fromAmount || !toAmount) return;
 
 		const payload = {
 			fromGoalId: fromActiveOption.id,
@@ -77,9 +77,7 @@ export function GoalTransferPage() {
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
-		console.log(payload);
-
-		// transfer(payload);
+		transfer(payload);
 	}
 
 	if (isTransferSuccess || isTransferError) {
@@ -108,7 +106,7 @@ export function GoalTransferPage() {
 						}}
 						options={options}
 						errorText={isFromAmountError && 'exceeds balance'}
-						isFromOption
+						withMinus
 					/>
 
 					<div
@@ -132,7 +130,7 @@ export function GoalTransferPage() {
 							setToActiveOption(activeOption);
 						}}
 						options={options}
-						isToOption
+						withPlus
 					/>
 				</Box>
 

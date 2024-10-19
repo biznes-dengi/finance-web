@@ -59,6 +59,7 @@ export function GoalWithdrawPage() {
 					activeOption={activeOption}
 					setActiveOption={setActiveOption}
 					errorText={isAmountError && 'exceeds balance'}
+					withMinus
 				/>
 				<Box baseMarginY>
 					<DatePicker value={date} onChange={setDate} />

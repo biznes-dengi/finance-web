@@ -19,6 +19,6 @@ export type TNumericInputWithOptionsProps<Option> = {
 	options?: Option[];
 	getLabel?: (option: Option) => ReactNode;
 	errorText?: string | boolean;
-	isFromOption?: boolean;
-	isToOption?: boolean;
+	withPlus?: boolean;
+	withMinus?: boolean;
 };

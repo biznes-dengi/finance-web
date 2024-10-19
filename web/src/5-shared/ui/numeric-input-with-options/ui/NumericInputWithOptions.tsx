@@ -4,12 +4,12 @@ import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputW
 import {CURRENCY_MAP} from '@shared/constants';
 
 export function NumericInputWithOptions<Option extends TBaseOption>(props: TNumericInputWithOptionsProps<Option>) {
-	const {value, onChange, options, getLabel, activeOption, setActiveOption, errorText, isFromOption, isToOption} =
-		props;
+	const {value, onChange, options, getLabel, activeOption, setActiveOption, errorText, withMinus, withPlus} = props;
 
 	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
 	function handleChange(value: string) {
+		/** 123. превращает в 123 */
 		onChange(value ? Number(value) : undefined);
 	}
 
@@ -32,21 +32,21 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 	}
 
 	const getValue = () => {
-		if (isFromOption && isNumber(value)) {
+		if (withMinus && isNumber(value)) {
 			return `- ${value}`;
 		}
 
-		if (isToOption && isNumber(value)) {
+		if (withPlus && isNumber(value)) {
 			return `+ ${value}`;
 		}
 
 		return value ?? '';
 	};
 	const getPlaceholder = () => {
-		if (isFromOption) {
+		if (withMinus) {
 			return '- 0';
 		}
-		if (isToOption) {
+		if (withPlus) {
 			return '+ 0';
 		}
 		return '0';
@@ -70,13 +70,12 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 						<input
 							type='text'
 							className={cn(
-								'min-w-[1ch] max-w-full bg-inherit text-right text-xl font-semibold caret-primary-violet outline-0',
+								'min-w-[1ch] bg-inherit text-right text-xl font-semibold caret-primary-violet outline-0',
 								!!errorText && 'caret-[#B51F2D]',
 							)}
 							value={getValue()}
 							onChange={(event) => {
-								// handleChange(event.target.value.replace(/[-+]\s*/, '').trim());
-								handleChange(event.target.value.replace(/\D/g, '').trim());
+								handleChange(event.target.value.replace(/[^0-9.]/g, '').trim());
 							}}
 							onKeyDown={(event) => {
 								if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {

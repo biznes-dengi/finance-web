@@ -55,6 +55,7 @@ export function GoalFundPage() {
 					options={options}
 					activeOption={activeOption}
 					setActiveOption={setActiveOption}
+					withPlus
 				/>
 				<Box baseMarginY>
 					<DatePicker value={date} onChange={setDate} />
