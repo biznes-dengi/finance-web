@@ -1,5 +1,5 @@
 import {SavingManagement} from '@widgets/saving';
 
-export function SavingListPage() {
+export function GoalListPage() {
 	return <SavingManagement />;
 }

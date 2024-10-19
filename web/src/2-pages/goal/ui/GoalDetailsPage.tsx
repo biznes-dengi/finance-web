@@ -9,7 +9,7 @@ const transactions = [
 	{name: 'Ferrari', description: '01.02.2023, 11:18', amount: '+397 $'},
 ];
 
-export function SavingDetailsPage() {
+export function GoalDetailsPage() {
 	return (
 		<>
 			<Box className='flex h-[290px] flex-col justify-between bg-secondary-grey'>

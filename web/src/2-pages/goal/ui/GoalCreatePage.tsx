@@ -34,7 +34,7 @@ const initialName = '';
 const initialCurrencyValue = null;
 const initialTargetAmount = undefined;
 
-export function SavingCreatePage() {
+export function GoalCreatePage() {
 	const navigate = useNavigate();
 
 	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);

@@ -26,7 +26,7 @@ function useItems(filter?: TAppFilter) {
 	const boardSavingId = useBoardSavingsId();
 
 	const {data, isFetching} = useQuery({
-		queryKey: ['saving-items', filter],
+		queryKey: ['goal-items', filter],
 		queryFn: () => savingApi.fetchItems({filter, boardSavingId}),
 		enabled: !!boardSavingId,
 		initialData: {} as TSavingPaged,
