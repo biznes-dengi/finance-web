@@ -1,8 +1,16 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {TAppFilter} from '@shared/types';
 import {goalApi} from './goal.api.ts';
-import {CreatePayload, MutationFundGoalPayload, TransferPayload, TSavingPaged} from './goal.types.ts';
-import {TRANSACTION_TYPE} from '@shared/constants';
+import {
+	CreatePayload,
+	createResponseScheme,
+	MutationFundGoalPayload,
+	TransferPayload,
+	TSavingPaged,
+} from './goal.types.ts';
+import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
+import {useNavigate} from 'react-router-dom';
+import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 function useBoardSavingsId() {
 	const {data} = useQuery({
@@ -106,10 +114,18 @@ function useTransfer() {
 function useCreate() {
 	const boardSavingId = useBoardSavingsId();
 
+	const navigate = useNavigate();
+
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['transfer-goal'],
 		mutationFn: (payload: CreatePayload) => {
 			return goalApi.createGoal({boardSavingId, payload});
+		},
+		onSuccess: (data) => {
+			setTimeout(() => navigate(getGoalDetailsPath(createResponseScheme.parse(data).id)), 2500);
+		},
+		onError: () => {
+			setTimeout(() => navigate(APP_PATH.goalList), 2500);
 		},
 	});
 

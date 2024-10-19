@@ -69,3 +69,7 @@ export type CreateApiParams = {
 	boardSavingId?: number;
 	payload: CreatePayload;
 };
+export const createResponseScheme = zod.object({
+	id: zod.number(),
+	name: zod.string(),
+});

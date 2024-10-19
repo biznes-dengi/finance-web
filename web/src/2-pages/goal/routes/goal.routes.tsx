@@ -14,7 +14,7 @@ const goalListRoute = {
 };
 
 const goalDetailsRoute = {
-	path: APP_PATH.goalDetails,
+	path: `${APP_PATH.goalDetails}/:goalId`,
 	element: withRouteGuard({page: <GoalDetailsPage />}),
 };
 

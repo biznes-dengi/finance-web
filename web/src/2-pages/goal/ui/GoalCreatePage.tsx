@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {
 	Box,
 	Button,
@@ -28,8 +27,6 @@ const initialTargetAmount = undefined;
 const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
 
 export function GoalCreatePage() {
-	const navigate = useNavigate();
-
 	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
 
 	/** Form state */
@@ -37,8 +34,6 @@ export function GoalCreatePage() {
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 	const [deadline, setDeadline] = useState<Date>(new DateService().value);
-
-	// const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
 
 	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
 		useUploadField();
@@ -56,8 +51,6 @@ export function GoalCreatePage() {
 		};
 
 		create(payload);
-
-		setTimeout(() => navigate(APP_PATH.goalDetails), 2500);
 	}
 
 	const activeOptionNotMapped = currencyOptions.find((option) => option.value === currency);
