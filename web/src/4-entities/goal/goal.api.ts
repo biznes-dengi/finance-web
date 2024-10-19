@@ -8,7 +8,8 @@ import {
 	boardSavingBalanceValidator,
 	boardSavingIdValidator,
 	savingPagedValidator,
-} from './saving.types.ts';
+	CreateApiParams,
+} from './goal.types.ts';
 
 async function fetchBoardSavingsId(accountId: number) {
 	try {
@@ -102,11 +103,23 @@ async function transferGoal({boardSavingId, payload}: TransferApiParams) {
 	});
 }
 
-export const savingApi = {
+async function createGoal({boardSavingId, payload}: CreateApiParams) {
+	if (!boardSavingId) {
+		return {};
+	}
+
+	await HttpClient.post({
+		url: getApiPath(`board-savings/${boardSavingId}/savings`),
+		data: payload,
+	});
+}
+
+export const goalApi = {
 	fetchBoardSavingsId,
 	fetchBoardSavingsBalance,
 	fetchItems,
 	fundGoal,
 	withdrawGoal,
 	transferGoal,
+	createGoal,
 };

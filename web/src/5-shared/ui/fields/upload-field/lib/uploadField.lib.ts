@@ -1,7 +1,7 @@
 // type UploadPromise<T> = Promise<T> & {abort: () => void};
 //
 // /**
-//  * соединить с функцией, которая знает URL куда отправлять (savingModel.uploadImage())
+//  * соединить с функцией, которая знает URL куда отправлять (goalModel.uploadImage())
 //  * */
 //
 // function upload<T>(file: File, url: string, options?: {onProgress?: (progress: number) => void}): UploadPromise<T> {

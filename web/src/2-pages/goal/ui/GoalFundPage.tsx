@@ -2,15 +2,15 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Box, Button, ButtonType, Dialog, Icon, NumericInputWithOptions, PageHeader, DatePicker} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {savingModel} from '@entities/saving';
+import {goalModel} from '@entities/goal';
 import {DateService, isNumber} from '@shared/lib';
 
 export function GoalFundPage() {
 	const navigate = useNavigate();
 
-	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = savingModel.useFundGoal();
+	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = goalModel.useFundGoal();
 
-	const {items} = savingModel.useItems({pageNumber: 0});
+	const {items} = goalModel.useItems({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,

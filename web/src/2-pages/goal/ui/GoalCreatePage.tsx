@@ -1,38 +1,31 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-
 import {
 	Box,
 	Button,
 	ButtonType,
+	DatePicker,
 	Dialog,
 	Icon,
+	NumericInputWithOptions,
 	PageHeader,
 	SelectWithSearch,
 	Spinner,
 	Stepper,
 	TextField,
 	useUploadField,
-	useDialogState,
 } from '@shared/ui';
-
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {cn} from '@shared/lib';
+import {cn, DateService} from '@shared/lib';
+import {goalModel} from '@entities/goal';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 
-const currencyOptions = [
-	{description: 'PLN', symbol: 'zł', name: 'Polish Zloty', value: CURRENCY.PLN},
-	{description: 'USD', symbol: '$', name: 'US Dollar', value: CURRENCY.USD},
-	{description: 'BYN', symbol: 'byn', name: 'BLR rubel', value: CURRENCY.BYN},
-	{description: 'EUR', symbol: 'eur', name: 'Euro', value: CURRENCY.EUR},
-	{description: 'GBP', symbol: 'gbp', name: 'British pound', value: CURRENCY.GBP},
-];
-
 const initialStepIndex = 0;
 const initialName = '';
-const initialCurrencyValue = null;
 const initialTargetAmount = undefined;
+
+const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
 
 export function GoalCreatePage() {
 	const navigate = useNavigate();
@@ -41,19 +34,40 @@ export function GoalCreatePage() {
 
 	/** Form state */
 	const [name, setName] = useState(initialName);
-	const [currencyValue, setCurrencyValue] = useState<CURRENCY | null>(initialCurrencyValue);
-	// const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
+	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
+	const [deadline, setDeadline] = useState<Date>(new DateService().value);
 
-	function handleCurrencyValueChange(value: CURRENCY) {
-		setCurrencyValue(value);
-		setTargetAmount(initialTargetAmount);
-	}
-
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	// const selectedCurrencyOption = currencyOptions.find((option) => option.value === currencyValue);
 
 	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
 		useUploadField();
+
+	const {create, isCreatePending, isCreateSuccess, isCreateError} = goalModel.useCreate();
+
+	function handleCreateClick() {
+		if (!targetAmount) return;
+
+		const payload = {
+			name,
+			currency,
+			targetAmount,
+			deadline: new DateService(deadline).getPayloadDateFormat(),
+		};
+
+		create(payload);
+
+		setTimeout(() => navigate(APP_PATH.goalDetails), 2500);
+	}
+
+	const activeOptionNotMapped = currencyOptions.find((option) => option.value === currency);
+	const activeOption = {
+		name: activeOptionNotMapped?.description ?? '',
+		balance: {
+			amount: 0,
+			currency: currency as CURRENCY,
+		},
+	};
 
 	const Header = (
 		<PageHeader
@@ -119,20 +133,25 @@ export function GoalCreatePage() {
 							)}
 						</>,
 						<Box key={activeStepIndex} basePaddingX>
-							<SelectWithSearch options={currencyOptions} onChange={handleCurrencyValueChange} value={currencyValue} />
+							<SelectWithSearch
+								options={currencyOptions}
+								onChange={(value) => {
+									setCurrency(value);
+									setTargetAmount(initialTargetAmount);
+								}}
+								value={currency}
+							/>
 						</Box>,
 						<Box key={activeStepIndex} basePaddingX>
-							{/*<NumericInputWithOptions*/}
-							{/*	value={targetAmount}*/}
-							{/*	onChange={setTargetAmount}*/}
-							{/*	options={[*/}
-							{/*		{*/}
-							{/*			name: selectedCurrencyOption?.description ?? '',*/}
-							{/*			balance: {currency: CURRENCY.USD, amount: 1},*/}
-							{/*		},*/}
-							{/*	]}*/}
-							{/*	getLabel={() => APP_TEXT.amount}*/}
-							{/*/>*/}
+							<NumericInputWithOptions
+								value={targetAmount}
+								onChange={setTargetAmount}
+								activeOption={activeOption}
+								getLabel={() => APP_TEXT.targetAmount}
+							/>
+							<Box baseMarginY>
+								<DatePicker value={deadline} onChange={setDeadline} />
+							</Box>
 						</Box>,
 					]}
 				/>
@@ -140,36 +159,42 @@ export function GoalCreatePage() {
 
 			<Box basePaddingX mediumMarginY>
 				<Button
-					onClick={
-						activeStepIndex === 2
-							? () => {
-									openDialog();
-									setTimeout(closeDialog, 2000);
-									setTimeout(() => navigate(APP_PATH.goalDetails), 2500);
-							  }
-							: () => setActiveStepIndex(activeStepIndex + 1)
-					}
+					onClick={activeStepIndex === 2 ? handleCreateClick : () => setActiveStepIndex(activeStepIndex + 1)}
 					type={ButtonType.main}
 					disabled={(() => {
 						if (activeStepIndex === 0) return name === initialName;
-						if (activeStepIndex === 1) return currencyValue === initialCurrencyValue;
 						if (activeStepIndex === 2) return targetAmount === initialTargetAmount;
 					})()}
 				>
-					{activeStepIndex === 2 ? APP_TEXT.create : APP_TEXT.continue}
+					{activeStepIndex === 2 ? (isCreatePending ? 'Loading...' : APP_TEXT.create) : APP_TEXT.continue}
 				</Button>
 			</Box>
 
-			<Dialog ref={dialogRef}>
-				<div className='flex flex-col items-center pb-4'>
-					<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{Icon.check}</div>
-					<div className='text-center font-semibold'>
-						{APP_TEXT.goal}
-						<span className='text-primary-violet'>{name}</span>
-						{APP_TEXT.createdSuccess}
-						{APP_TEXT.createdSuccess}
-					</div>
-				</div>
+			<Dialog showUX={isCreateSuccess || isCreateError}>
+				{isCreateSuccess && activeOption && (
+					<Box baseMarginY className='text-center'>
+						<div className='mb-4 flex justify-center'>
+							<div className='size-16 text-primary-violet'>{Icon.success}</div>
+						</div>
+						<div className='flex flex-col items-center pb-4'>
+							<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{Icon.check}</div>
+							<div className='text-center font-semibold'>
+								{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
+								{APP_TEXT.createdSuccess}
+							</div>
+						</div>
+					</Box>
+				)}
+				{isCreateError && activeOption && (
+					<Box baseMarginY className='text-center'>
+						<div className='mb-4 flex justify-center'>
+							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+						</div>
+						<div>
+							Some error occur during creating <span className='font-medium text-primary-violet'>{name}</span>
+						</div>
+					</Box>
+				)}
 			</Dialog>
 		</>
 	);

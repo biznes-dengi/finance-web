@@ -58,3 +58,14 @@ export type TransferApiParams = {
 	boardSavingId?: number;
 	payload: TransferPayload;
 };
+
+export type CreatePayload = {
+	name: string;
+	targetAmount: number;
+	currency: CURRENCY;
+	deadline: string;
+};
+export type CreateApiParams = {
+	boardSavingId?: number;
+	payload: CreatePayload;
+};

@@ -1,13 +1,13 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {TAppFilter} from '@shared/types';
-import {savingApi} from './saving.api.ts';
-import {MutationFundGoalPayload, TransferPayload, TSavingPaged} from './saving.types.ts';
+import {goalApi} from './goal.api.ts';
+import {CreatePayload, MutationFundGoalPayload, TransferPayload, TSavingPaged} from './goal.types.ts';
 import {TRANSACTION_TYPE} from '@shared/constants';
 
 function useBoardSavingsId() {
 	const {data} = useQuery({
 		queryKey: ['board-savings-id'],
-		queryFn: () => savingApi.fetchBoardSavingsId(1),
+		queryFn: () => goalApi.fetchBoardSavingsId(1),
 	});
 
 	return data;
@@ -16,7 +16,7 @@ function useBoardSavingsId() {
 function useTotalBalance() {
 	const {data, isFetching} = useQuery({
 		queryKey: ['board-savings-balance'],
-		queryFn: () => savingApi.fetchBoardSavingsBalance(1),
+		queryFn: () => goalApi.fetchBoardSavingsBalance(1),
 	});
 
 	return {totalBalance: data, isTotalBalanceFetching: isFetching};
@@ -27,7 +27,7 @@ function useItems(filter?: TAppFilter) {
 
 	const {data, isFetching} = useQuery({
 		queryKey: ['goal-items', filter],
-		queryFn: () => savingApi.fetchItems({filter, boardSavingId}),
+		queryFn: () => goalApi.fetchItems({filter, boardSavingId}),
 		enabled: !!boardSavingId,
 		initialData: {} as TSavingPaged,
 	});
@@ -46,7 +46,7 @@ function useFundGoal() {
 		mutationKey: ['fund-goal'],
 		mutationFn: (payload: MutationFundGoalPayload) => {
 			const {id, ...restPayload} = payload;
-			return savingApi.fundGoal({
+			return goalApi.fundGoal({
 				id,
 				boardSavingId,
 				payload: {...restPayload, type: TRANSACTION_TYPE.deposit},
@@ -69,7 +69,7 @@ function useWithdrawGoal() {
 		mutationKey: ['withdraw-goal'],
 		mutationFn: (payload: MutationFundGoalPayload) => {
 			const {id, ...restPayload} = payload;
-			return savingApi.withdrawGoal({
+			return goalApi.withdrawGoal({
 				id,
 				boardSavingId,
 				payload: {...restPayload, type: TRANSACTION_TYPE.withdraw},
@@ -91,7 +91,7 @@ function useTransfer() {
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['transfer-goal'],
 		mutationFn: (payload: TransferPayload) => {
-			return savingApi.transferGoal({boardSavingId, payload});
+			return goalApi.transferGoal({boardSavingId, payload});
 		},
 	});
 
@@ -103,11 +103,30 @@ function useTransfer() {
 	};
 }
 
+function useCreate() {
+	const boardSavingId = useBoardSavingsId();
+
+	const {mutate, isPending, isError, isSuccess} = useMutation({
+		mutationKey: ['transfer-goal'],
+		mutationFn: (payload: CreatePayload) => {
+			return goalApi.createGoal({boardSavingId, payload});
+		},
+	});
+
+	return {
+		create: mutate,
+		isCreatePending: isPending,
+		isCreateSuccess: isSuccess,
+		isCreateError: isError,
+	};
+}
+
 // rename to useFund, useWithdraw
-export const savingModel = {
+export const goalModel = {
 	useItems,
 	useTotalBalance,
 	useFundGoal,
 	useWithdrawGoal,
 	useTransfer,
+	useCreate,
 };

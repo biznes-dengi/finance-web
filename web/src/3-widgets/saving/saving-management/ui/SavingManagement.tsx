@@ -12,7 +12,7 @@ import {
 } from '@shared/ui';
 import {textHelpers, useFilter} from '@shared/lib';
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
-import {savingModel} from '@entities/saving';
+import {goalModel} from '@entities/goal';
 import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 
 const defaultFilter = {
@@ -23,8 +23,8 @@ const defaultFilter = {
 export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
-	const {items, isItemsFetching} = savingModel.useItems(filter);
-	const {totalBalance, isTotalBalanceFetching} = savingModel.useTotalBalance();
+	const {items, isItemsFetching} = goalModel.useItems(filter);
+	const {totalBalance, isTotalBalanceFetching} = goalModel.useTotalBalance();
 
 	const isFetching = isItemsFetching || isTotalBalanceFetching;
 

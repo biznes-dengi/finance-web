@@ -18,7 +18,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 		return textHelpers.getBalance(option.balance.amount, CURRENCY_MAP[option.balance.currency].symbol);
 	}
 
-	const isMultipleOptions = options?.length && options.length > 1;
+	const isMultipleOptions = options?.length && options.length > 1 && setActiveOption;
 
 	if (!activeOption) {
 		return (
@@ -107,28 +107,30 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 				</div>
 			</label>
 
-			<Dialog ref={dialogRef}>
-				<List
-					rows={options}
-					renderRow={(option) => {
-						const selected = option.id === activeOption.id;
-						return (
-							<Item
-								statusIcon={selected && Icon.check}
-								className={cn(selected && 'bg-light-grey')}
-								image={option.image}
-								name={option.name}
-								description={getOptionLabel(option)}
-								onClick={() => {
-									setActiveOption(option);
-									handleChange('');
-									closeDialog();
-								}}
-							/>
-						);
-					}}
-				/>
-			</Dialog>
+			{isMultipleOptions && (
+				<Dialog ref={dialogRef}>
+					<List
+						rows={options}
+						renderRow={(option) => {
+							const selected = option.id === activeOption.id;
+							return (
+								<Item
+									statusIcon={selected && Icon.check}
+									className={cn(selected && 'bg-light-grey')}
+									image={option.image}
+									name={option.name}
+									description={getOptionLabel(option)}
+									onClick={() => {
+										setActiveOption(option);
+										handleChange('');
+										closeDialog();
+									}}
+								/>
+							);
+						}}
+					/>
+				</Dialog>
+			)}
 		</>
 	);
 }

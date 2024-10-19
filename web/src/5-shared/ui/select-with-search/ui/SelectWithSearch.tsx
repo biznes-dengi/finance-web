@@ -48,10 +48,10 @@ export function SelectWithSearch(props: Props) {
 							key={option.name}
 							name={option.name}
 							description={option.description}
-							image={<div className={'bg-primary-grey'} />}
+							image={<div className={'size-10 rounded-full bg-primary-grey'} />}
 							onClick={() => handleOptionClick(option.value)}
 							statusIcon={option.checked && Icon.check}
-							className={cn(option.checked && 'bg-secondary-violet')}
+							className={cn(option.checked && 'bg-light-grey')}
 						/>
 					))}
 			</Card>
