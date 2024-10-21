@@ -137,6 +137,35 @@ function useCreate() {
 	};
 }
 
+function useDetails(id: any) {
+	// undefined когда обновляешь страницу
+	// const boardSavingId = useBoardSavingsId();
+
+	const {data} = useQuery({
+		queryKey: ['goal-details'],
+		queryFn: () => goalApi.fetchDetails({boardSavingId: 1, id}),
+	});
+
+	return data;
+}
+
+function useGoalTransactions(id: any) {
+	// const boardSavingId = useBoardSavingsId();
+
+	const filter = {pageNumber: 0};
+
+	const {data, isFetching} = useQuery({
+		queryKey: ['goal-transactions'],
+		queryFn: () => goalApi.fetchGoalTransactions({filter, boardSavingId: 1, id}),
+	});
+
+	return {
+		items: data?.items,
+		hasNext: data?.hasNext,
+		isItemsLoading: isFetching,
+	};
+}
+
 // rename to useFund, useWithdraw
 export const goalModel = {
 	useItems,
@@ -145,4 +174,6 @@ export const goalModel = {
 	useWithdrawGoal,
 	useTransfer,
 	useCreate,
+	useDetails,
+	useGoalTransactions,
 };

@@ -12,3 +12,15 @@ export enum APP_PATH {
 export function getGoalDetailsPath(id: any) {
 	return `${APP_PATH.goalDetails}/${id}`;
 }
+
+export function getGoalDetailsFundPath(id: any) {
+	return `${APP_PATH.goalDetails}/${id}/fund`;
+}
+
+export function getGoalDetailsWithdrawPath(id: any) {
+	return `${APP_PATH.goalDetails}/${id}/withdraw`;
+}
+
+export function getGoalDetailsEditPath(id: any) {
+	return `${APP_PATH.goalDetails}/${id}/edit`;
+}

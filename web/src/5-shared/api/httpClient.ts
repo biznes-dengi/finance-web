@@ -20,4 +20,11 @@ export class HttpClient {
 			.then((response) => response.data)
 			.catch((error) => Promise.reject(error));
 	}
+
+	static put({url, data, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+		return axiosInstance
+			.post(url, data, {signal: abortSignal})
+			.then((response) => response.data)
+			.catch((error) => Promise.reject(error));
+	}
 }

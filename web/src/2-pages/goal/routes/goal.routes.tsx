@@ -7,6 +7,7 @@ import {GoalListPage} from '../ui/GoalListPage.tsx';
 import {GoalTransferPage} from '../ui/GoalTransferPage.tsx';
 import {GoalFundPage} from '../ui/GoalFundPage.tsx';
 import {GoalWithdrawPage} from '../ui/GoalWithdrawPage.tsx';
+import {GoalEditPage} from '@pages/goal/ui/GoalEditPage.tsx';
 
 const goalListRoute = {
 	path: APP_PATH.goalList,
@@ -38,10 +39,15 @@ const goalWithdrawRoute = {
 	element: withRouteGuard({page: <GoalWithdrawPage />}),
 };
 
+const goalEditRoute = {
+	path: `${APP_PATH.goalDetails}/:goalId/edit`,
+	element: withRouteGuard({page: <GoalEditPage />}),
+};
+
 export const goalRoutes = [
 	{element: <AppLayout />, children: [goalListRoute]},
 	{
 		element: <AppScreenLayout />,
-		children: [goalDetailsRoute, goalCreateRoute, goalTransferRoute, goalFundRoute, goalWithdrawRoute],
+		children: [goalDetailsRoute, goalCreateRoute, goalTransferRoute, goalFundRoute, goalWithdrawRoute, goalEditRoute],
 	},
 ];

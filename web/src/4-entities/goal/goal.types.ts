@@ -9,16 +9,18 @@ export const boardSavingBalanceValidator = zod.object({
 	currency: zod.nativeEnum(CURRENCY),
 });
 
+const balanceScheme = zod.object({
+	amount: zod.number(),
+	currency: zod.nativeEnum(CURRENCY),
+});
+
 export const savingPagedValidator = zod.object({
 	hasNext: zod.boolean(),
 	data: zod
 		.object({
 			id: zod.number(),
 			name: zod.string(),
-			balance: zod.object({
-				amount: zod.number(),
-				currency: zod.nativeEnum(CURRENCY),
-			}),
+			balance: balanceScheme,
 			targetAmount: zod.number().nullish(),
 			image: zod.string().nullable(),
 		})
@@ -72,4 +74,31 @@ export type CreateApiParams = {
 export const createResponseScheme = zod.object({
 	id: zod.number(),
 	name: zod.string(),
+});
+
+export const detailsScheme = zod.object({
+	id: zod.number(),
+	name: zod.string(),
+	state: zod.string(),
+	balance: balanceScheme,
+	targetAmount: zod.number(),
+	deadline: zod.array(zod.number()).nullish(),
+});
+
+export enum TRANSACTION_ENUM {
+	DEPOSIT = 'DEPOSIT',
+	WITHDRAW = 'WITHDRAW',
+	TRANSFER = 'TRANSFER',
+}
+
+export const goalTransactionScheme = zod.object({
+	hasNext: zod.boolean(),
+	items: zod
+		.object({
+			id: zod.number(),
+			type: zod.nativeEnum(TRANSACTION_ENUM),
+			amount: zod.number(),
+			date: zod.string(),
+		})
+		.array(),
 });

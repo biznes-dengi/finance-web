@@ -4,11 +4,13 @@ import {getApiPath, HttpClient} from '@shared/api';
 import {
 	ApiFetchItemsParams,
 	ApiFundGoalParams,
-	TransferApiParams,
 	boardSavingBalanceValidator,
 	boardSavingIdValidator,
-	savingPagedValidator,
 	CreateApiParams,
+	detailsScheme,
+	goalTransactionScheme,
+	savingPagedValidator,
+	TransferApiParams,
 } from './goal.types.ts';
 
 async function fetchBoardSavingsId(accountId: number) {
@@ -114,6 +116,66 @@ async function createGoal({boardSavingId, payload}: CreateApiParams) {
 	});
 }
 
+async function fetchDetails({boardSavingId, id}: {boardSavingId?: number; id: number}) {
+	try {
+		const response = (await HttpClient.get({
+			url: getApiPath(`board-savings/${boardSavingId}/savings/${id}`),
+		})) as any;
+
+		const mapped = {
+			id: response.id,
+			name: response.name,
+			state: response.state,
+			balance: response.balanceResponse,
+			targetAmount: response.targetAmount,
+			deadline: response.mapped,
+		};
+
+		return detailsScheme.parse(mapped);
+	} catch (error) {
+		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
+		return undefined;
+	}
+}
+
+async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsParams & {id: number}) {
+	if (!boardSavingId) {
+		return undefined;
+	}
+
+	try {
+		const response = (await HttpClient.get({
+			url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
+			data: filter,
+		})) as any;
+
+		const map = {
+			hasNext: response.hasNext,
+			// @ts-ignore
+			items: response.transactionViewResponseList.map(({dealDate, ...rest}) => ({
+				...rest,
+				date: '10 march',
+			})),
+		};
+
+		return goalTransactionScheme.parse(map);
+	} catch (error) {
+		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
+		return undefined;
+	}
+}
+
+async function updateGoal({boardSavingId, payload}: {boardSavingId: number}) {
+	if (!boardSavingId) {
+		return {};
+	}
+
+	await HttpClient.put({
+		url: getApiPath(`board-savings/${boardSavingId}/savings`),
+		data: payload,
+	});
+}
+
 export const goalApi = {
 	fetchBoardSavingsId,
 	fetchBoardSavingsBalance,
@@ -122,4 +184,7 @@ export const goalApi = {
 	withdrawGoal,
 	transferGoal,
 	createGoal,
+	fetchDetails,
+	fetchGoalTransactions,
+	updateGoal,
 };

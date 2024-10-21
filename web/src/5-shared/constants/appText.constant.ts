@@ -24,4 +24,5 @@ export const APP_TEXT = {
 	createdSuccess: 'has been successfully created',
 	noItems: 'No items',
 	savings: 'Savings',
+	edit: 'Edit',
 } as const;

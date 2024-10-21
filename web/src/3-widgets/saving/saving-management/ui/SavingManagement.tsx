@@ -2,18 +2,19 @@ import {
 	Box,
 	Button,
 	ButtonType,
+	Card,
 	Item,
+	ItemImageWithProgress,
 	List,
 	PRELOAD_SIZE,
 	PreloadSkeleton,
-	ItemImageWithProgress,
 	SelectInCard,
-	Card,
 } from '@shared/ui';
 import {textHelpers, useFilter} from '@shared/lib';
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {goalModel} from '@entities/goal';
-import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
+import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
+import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 const defaultFilter = {
 	pageNumber: 0,
@@ -105,7 +106,7 @@ export function SavingManagement() {
 							description={
 								row.targetAmount && textHelpers.getRatio(row.balance.amount, row.targetAmount, row.balance.currency)
 							}
-							onClick={(navigate) => navigate(APP_PATH.goalDetails)}
+							onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 						/>
 					)}
 				/>
