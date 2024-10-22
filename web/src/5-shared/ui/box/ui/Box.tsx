@@ -12,6 +12,7 @@ export function Box(props: Props) {
 		baseMarginBottom,
 		basePaddingX,
 		basePadding,
+		baseSpaceWithoutTop,
 		isFetching,
 		preloadClassName,
 		preloadWidth,
@@ -28,6 +29,7 @@ export function Box(props: Props) {
 
 				basePadding && 'p-4',
 				basePaddingX && 'px-4',
+				baseSpaceWithoutTop && 'p-4 pt-0',
 				className,
 			)}
 			role='box'

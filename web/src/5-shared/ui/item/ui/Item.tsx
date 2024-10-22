@@ -23,10 +23,16 @@ export function Item(props: Props) {
 
 	return (
 		<div
-			className={cn('group rounded-2xl bg-white p-1 [&:not(:last-child)]:pb-0', onClick && 'cursor-pointer')}
+			className={cn('group rounded-2xl bg-white p-1 [&:not(:last-child)]:pb-0', onClick && 'cursor-pointer', className)}
 			onClick={() => onClick?.(navigate)}
 		>
-			<div className={cn('flex w-full rounded-2xl p-3 text-left duration-300 group-hover:bg-light-grey', className)}>
+			<div
+				className={cn(
+					'flex w-full rounded-2xl p-3 text-left',
+					onClick && 'duration-300 group-hover:bg-light-grey',
+					className,
+				)}
+			>
 				{leftNode && <div className='mr-4 flex flex-shrink-0 items-center'>{leftNode}</div>}
 
 				{image && (
@@ -47,7 +53,7 @@ export function Item(props: Props) {
 				</div>
 
 				{(rightName || rightDescription) && (
-					<div className={cn('ml-2 flex flex-shrink-0 flex-col items-end self-center')}>
+					<div className={cn('ml-2 flex flex-shrink-0 flex-col items-end self-stretch')}>
 						{rightName && <div>{rightName}</div>}
 						{rightDescription && <div className='text-sm font-light text-primary-grey'>{rightDescription}</div>}
 					</div>

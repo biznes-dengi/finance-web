@@ -3,14 +3,14 @@ import {cn} from '@shared/lib';
 import {Box} from '@shared/ui';
 
 export function Card(props: Props) {
-	const {titleInCard, title, titleButton, children} = props;
+	const {titleInCard, title, rightTitle, children, withTitleSpace} = props;
 
 	return (
 		<>
-			{(title || titleButton) && (
-				<div className={cn('flex py-6 pb-3', title && titleButton && 'justify-between')}>
+			{(title || rightTitle) && (
+				<div className={cn('flex pb-3', title && rightTitle && 'justify-between', withTitleSpace && 'pt-6')}>
 					{title && <div className='font-semibold'>{title}</div>}
-					{titleButton}
+					{rightTitle}
 				</div>
 			)}
 

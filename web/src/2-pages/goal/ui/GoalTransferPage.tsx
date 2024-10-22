@@ -31,10 +31,10 @@ export function GoalTransferPage() {
 	}));
 	// think about how to type activeOption
 	const [fromActiveOption, setFromActiveOption] = useState(options?.[0]);
-	const [fromAmount, setFromAmount] = useState<number | undefined>();
+	const [fromGoalAmount, setFromGoalAmount] = useState<number | undefined>();
 
 	const [toActiveOption, setToActiveOption] = useState(options?.[1]);
-	const [toAmount, setToAmount] = useState<number | undefined>();
+	const [toGoalAmount, setToGoalAmount] = useState<number | undefined>();
 
 	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
@@ -51,29 +51,29 @@ export function GoalTransferPage() {
 	}
 
 	function handleFromAmountChange(fromValue: number | undefined) {
-		setFromAmount(fromValue);
+		setFromGoalAmount(fromValue);
 
-		setToAmount(fromValue ? Number((fromValue * exchangeRate).toFixed(2)) : undefined);
+		setToGoalAmount(fromValue ? Number((fromValue * exchangeRate).toFixed(2)) : undefined);
 	}
 	function handleToAmountChange(toValue: number | undefined) {
-		setToAmount(toValue);
+		setToGoalAmount(toValue);
 
-		if (isNumber(fromAmount)) {
-			handleCurrencyRateChange(toValue ? toValue / fromAmount : initialExchangeRate);
+		if (isNumber(fromGoalAmount)) {
+			handleCurrencyRateChange(toValue ? toValue / fromGoalAmount : initialExchangeRate);
 		}
 
-		if (!isNumber(fromAmount)) {
-			setFromAmount(toValue ? Number((toValue * exchangeRate).toFixed(2)) : undefined);
+		if (!isNumber(fromGoalAmount)) {
+			setFromGoalAmount(toValue ? Number((toValue * exchangeRate).toFixed(2)) : undefined);
 		}
 	}
 	function handleTransferClick() {
-		if (!fromActiveOption || !toActiveOption || !fromAmount || !toAmount) return;
+		if (!fromActiveOption || !toActiveOption || !fromGoalAmount || !toGoalAmount) return;
 
 		const payload = {
 			fromGoalId: fromActiveOption.id,
 			toGoalId: toActiveOption.id,
-			fromAmount,
-			toAmount,
+			fromGoalAmount,
+			toGoalAmount,
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
@@ -86,7 +86,8 @@ export function GoalTransferPage() {
 		}, 2000);
 	}
 
-	const isFromAmountError = isNumber(fromAmount) && fromActiveOption && fromAmount > fromActiveOption.balance.amount;
+	const isFromAmountError =
+		isNumber(fromGoalAmount) && fromActiveOption && fromGoalAmount > fromActiveOption.balance.amount;
 
 	return (
 		<>
@@ -95,7 +96,7 @@ export function GoalTransferPage() {
 			<Box basePaddingX className='relative flex-1'>
 				<Box className='flex flex-col gap-2'>
 					<NumericInputWithOptions
-						value={fromAmount}
+						value={fromGoalAmount}
 						onChange={handleFromAmountChange}
 						activeOption={fromActiveOption}
 						setActiveOption={(activeOption) => {
@@ -120,7 +121,7 @@ export function GoalTransferPage() {
 					</div>
 
 					<NumericInputWithOptions
-						value={toAmount}
+						value={toGoalAmount}
 						onChange={handleToAmountChange}
 						activeOption={toActiveOption}
 						setActiveOption={(activeOption) => {
@@ -141,8 +142,8 @@ export function GoalTransferPage() {
 						onChange={(value) => {
 							handleCurrencyRateChange(value);
 
-							if (isNumber(toAmount) && isNumber(fromAmount) && value) {
-								setToAmount(Number((fromAmount * value).toFixed(2)));
+							if (isNumber(toGoalAmount) && isNumber(fromGoalAmount) && value) {
+								setToGoalAmount(Number((fromGoalAmount * value).toFixed(2)));
 							}
 						}}
 					/>
@@ -155,7 +156,7 @@ export function GoalTransferPage() {
 				<Button
 					type={ButtonType.main}
 					onClick={handleTransferClick}
-					disabled={!isNumber(fromAmount) || !isNumber(toAmount) || isFromAmountError}
+					disabled={!isNumber(fromGoalAmount) || !isNumber(toGoalAmount) || isFromAmountError}
 					className='w-[375px]'
 				>
 					{isTransferPending ? 'Loading...' : APP_TEXT.transfer}
@@ -163,14 +164,14 @@ export function GoalTransferPage() {
 			</Box>
 
 			<Dialog showUX={isTransferSuccess || isTransferError}>
-				{isTransferSuccess && fromAmount && fromActiveOption && toActiveOption && (
+				{isTransferSuccess && fromGoalAmount && fromActiveOption && toActiveOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.success}</div>
 						</div>
 						<div>
 							<span className='font-medium text-primary-violet'>
-								{fromAmount} {CURRENCY_MAP[fromActiveOption.balance.currency].symbol}{' '}
+								{fromGoalAmount} {CURRENCY_MAP[fromActiveOption.balance.currency].symbol}{' '}
 							</span>
 							has been transferred from <span className='font-medium text-primary-violet'>{fromActiveOption.name}</span>{' '}
 							to <span className='font-medium text-primary-violet'>{toActiveOption.name}</span>

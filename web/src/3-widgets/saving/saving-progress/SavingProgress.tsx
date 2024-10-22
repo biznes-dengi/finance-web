@@ -1,5 +1,6 @@
 import {Box, Card} from '@shared/ui';
-import {CURRENCY, CURRENCY_MAP} from '@shared/constants';
+import {CURRENCY} from '@shared/constants';
+import {textHelpers} from '@shared/lib';
 
 export function SavingProgress({
 	balance,
@@ -10,17 +11,15 @@ export function SavingProgress({
 	balance: {amount: number; currency: CURRENCY};
 	deadline: any;
 }) {
-	const percentage = Math.round((balance.amount / targetAmount) * 100);
+	const percentage = Math.min(100, Math.round((balance.amount / targetAmount) * 100));
 
 	return (
-		<Card title={'Achievement'}>
+		<Card title={'Achievement'} withTitleSpace>
 			<Box basePadding>
 				<Box>
 					<div className='flex justify-between'>
 						<div className='text-sm font-medium'>Saved {percentage}%</div>
-						<div className='text-sm'>
-							{balance.amount} / ${targetAmount} {CURRENCY_MAP[balance.currency].symbol}
-						</div>
+						<div className='text-sm'>{textHelpers.getRatio(balance.amount, targetAmount, balance.currency)}</div>
 					</div>
 				</Box>
 				<Box baseMarginTop>

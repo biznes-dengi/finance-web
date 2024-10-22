@@ -3,6 +3,7 @@ import {Box, Button, Card, Dialog, Icon, PageHeader, TextField, useDialogState} 
 import {APP_PATH} from '@shared/constants';
 import {useParams} from 'react-router-dom';
 import {goalModel} from '@entities/goal';
+import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 export function GoalEditPage() {
 	const {goalId} = useParams();
@@ -30,7 +31,7 @@ export function GoalEditPage() {
 	return (
 		<>
 			<Box className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
-				<PageHeader title={data?.name} backPath={APP_PATH.root} />
+				<PageHeader title={data?.name} backPath={getGoalDetailsPath(goalId)} />
 			</Box>
 
 			{/** shit styles margin top see in inspect in browser */}

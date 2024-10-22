@@ -1,16 +1,20 @@
 import {ReactNode} from 'react';
+import {ClassValue} from 'clsx';
 
 export type Props = {
 	children: ReactNode;
 	className?: string;
-	mediumMarginY?: unknown;
-	baseMarginY?: unknown;
-	baseMarginTop?: unknown;
-	baseMarginBottom?: unknown;
-	basePaddingX?: unknown;
-	basePadding?: unknown;
-	smallPaddingY?: unknown;
-	isFetching?: unknown;
+	mediumMarginY?: ClassValue;
+	baseMarginY?: ClassValue;
+	baseMarginTop?: ClassValue;
+	baseMarginBottom?: ClassValue;
+	basePaddingX?: ClassValue;
+	basePadding?: ClassValue;
+	smallPaddingY?: ClassValue;
+
+	baseSpaceWithoutTop?: ClassValue;
+
+	isFetching?: boolean;
 	preloadClassName?: string;
 	preloadWidth?: number;
 	preloadHeight?: number;

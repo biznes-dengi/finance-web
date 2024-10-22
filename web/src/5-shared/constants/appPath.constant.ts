@@ -13,6 +13,10 @@ export function getGoalDetailsPath(id: any) {
 	return `${APP_PATH.goalDetails}/${id}`;
 }
 
+export function getGoalTransactionsPath(id: any) {
+	return `${APP_PATH.goalDetails}/${id}/transactions`;
+}
+
 export function getGoalDetailsFundPath(id: any) {
 	return `${APP_PATH.goalDetails}/${id}/fund`;
 }

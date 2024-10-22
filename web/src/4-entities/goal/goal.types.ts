@@ -51,9 +51,9 @@ export type ApiFundGoalParams = {
 
 export type TransferPayload = {
 	fromGoalId: number;
+	fromGoalAmount: number;
 	toGoalId: number;
-	fromAmount: number;
-	toAmount: number;
+	toGoalAmount: number;
 	date: string;
 };
 export type TransferApiParams = {
@@ -76,10 +76,9 @@ export const createResponseScheme = zod.object({
 	name: zod.string(),
 });
 
-export const detailsScheme = zod.object({
+export const detailsValidator = zod.object({
 	id: zod.number(),
 	name: zod.string(),
-	state: zod.string(),
 	balance: balanceScheme,
 	targetAmount: zod.number(),
 	deadline: zod.array(zod.number()).nullish(),
@@ -91,7 +90,7 @@ export enum TRANSACTION_ENUM {
 	TRANSFER = 'TRANSFER',
 }
 
-export const goalTransactionScheme = zod.object({
+export const goalTransactionValidator = zod.object({
 	hasNext: zod.boolean(),
 	items: zod
 		.object({
@@ -99,6 +98,8 @@ export const goalTransactionScheme = zod.object({
 			type: zod.nativeEnum(TRANSACTION_ENUM),
 			amount: zod.number(),
 			date: zod.string(),
+			fromGoalName: zod.string().nullish(),
+			toGoalName: zod.string().nullish(),
 		})
 		.array(),
 });

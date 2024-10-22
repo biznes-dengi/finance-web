@@ -7,8 +7,8 @@ import {
 	boardSavingBalanceValidator,
 	boardSavingIdValidator,
 	CreateApiParams,
-	detailsScheme,
-	goalTransactionScheme,
+	detailsValidator,
+	goalTransactionValidator,
 	savingPagedValidator,
 	TransferApiParams,
 } from './goal.types.ts';
@@ -39,19 +39,11 @@ async function fetchItems({filter, boardSavingId}: ApiFetchItemsParams) {
 	}
 
 	try {
-		// TODO mock
-		const response = (await HttpClient.get({
+		const response = await HttpClient.get({
 			url: getApiPath(`board-savings/${boardSavingId}/savings`),
 			data: filter,
-		})) as any;
-
-		// TODO mock
-		const mappedResponse = {
-			...response,
-			data: response.data.map((item: any) => ({...item, balance: item.balanceResponse})),
-		};
-
-		return savingPagedValidator.parse(mappedResponse);
+		});
+		return savingPagedValidator.parse(response);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
 		return undefined;
@@ -63,16 +55,9 @@ async function fundGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
 		return {};
 	}
 
-	// TODO: mock
-	const mappedPayload = {
-		amount: payload.amount,
-		type: payload.type,
-		dealDate: payload.date,
-	};
-
 	await HttpClient.post({
 		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
-		data: mappedPayload,
+		data: payload,
 	});
 }
 
@@ -81,16 +66,9 @@ async function withdrawGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
 		return {};
 	}
 
-	// TODO: mock
-	const mappedPayload = {
-		amount: payload.amount,
-		type: payload.type,
-		dealDate: payload.date,
-	};
-
 	await HttpClient.post({
 		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
-		data: mappedPayload,
+		data: payload,
 	});
 }
 
@@ -118,20 +96,10 @@ async function createGoal({boardSavingId, payload}: CreateApiParams) {
 
 async function fetchDetails({boardSavingId, id}: {boardSavingId?: number; id: number}) {
 	try {
-		const response = (await HttpClient.get({
+		const response = await HttpClient.get({
 			url: getApiPath(`board-savings/${boardSavingId}/savings/${id}`),
-		})) as any;
-
-		const mapped = {
-			id: response.id,
-			name: response.name,
-			state: response.state,
-			balance: response.balanceResponse,
-			targetAmount: response.targetAmount,
-			deadline: response.mapped,
-		};
-
-		return detailsScheme.parse(mapped);
+		});
+		return detailsValidator.parse(response);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
 		return undefined;
@@ -151,21 +119,20 @@ async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsP
 
 		const map = {
 			hasNext: response.hasNext,
-			// @ts-ignore
-			items: response.transactionViewResponseList.map(({dealDate, ...rest}) => ({
-				...rest,
+			items: response.transactions.map((item: any) => ({
+				...item,
 				date: '10 march',
 			})),
 		};
 
-		return goalTransactionScheme.parse(map);
+		return goalTransactionValidator.parse(map);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
 		return undefined;
 	}
 }
 
-async function updateGoal({boardSavingId, payload}: {boardSavingId: number}) {
+async function updateGoal({boardSavingId, payload}: {boardSavingId: number} & {payload: any}) {
 	if (!boardSavingId) {
 		return {};
 	}
