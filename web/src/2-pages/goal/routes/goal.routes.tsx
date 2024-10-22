@@ -9,15 +9,13 @@ import {GoalFundPage} from '../ui/GoalFundPage.tsx';
 import {GoalWithdrawPage} from '../ui/GoalWithdrawPage.tsx';
 import {GoalEditPage} from '@pages/goal/ui/GoalEditPage.tsx';
 import {GoalTransactionsPage} from '@pages/goal/ui/GoalTransactionsPage.tsx';
+import {GoalDetailsFundPage} from '@pages/goal/ui/GoalDetailsFundPage.tsx';
+import {GoalDetailsWithdrawPage} from '@pages/goal/ui/GoalDetailsWithdrawPage.tsx';
+import {GoalDetailsTransferPage} from '@pages/goal/ui/GoalDetailsTransferPage.tsx';
 
 const goalListRoute = {
 	path: APP_PATH.goalList,
 	element: withRouteGuard({page: <GoalListPage />}),
-};
-
-const goalDetailsRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId`,
-	element: withRouteGuard({page: <GoalDetailsPage />}),
 };
 
 const goalCreateRoute = {
@@ -40,6 +38,21 @@ const goalWithdrawRoute = {
 	element: withRouteGuard({page: <GoalWithdrawPage />}),
 };
 
+const goalDetailsRoute = {
+	path: `${APP_PATH.goalDetails}/:goalId`,
+	element: withRouteGuard({page: <GoalDetailsPage />}),
+};
+
+const goalDetailsFundRoute = {
+	path: `${APP_PATH.goalDetails}/:goalId/fund`,
+	element: withRouteGuard({page: <GoalDetailsFundPage />}),
+};
+
+const goalDetailsWithdrawRoute = {
+	path: `${APP_PATH.goalDetails}/:goalId/withdraw`,
+	element: withRouteGuard({page: <GoalDetailsWithdrawPage />}),
+};
+
 const goalEditRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/edit`,
 	element: withRouteGuard({page: <GoalEditPage />}),
@@ -48,6 +61,11 @@ const goalEditRoute = {
 const goalTransactionsRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/transactions`,
 	element: withRouteGuard({page: <GoalTransactionsPage />}),
+};
+
+const goalDetailsTransferRoute = {
+	path: `${APP_PATH.goalDetails}/:goalId/transfer`,
+	element: withRouteGuard({page: <GoalDetailsTransferPage />}),
 };
 
 export const goalRoutes = [
@@ -62,6 +80,9 @@ export const goalRoutes = [
 			goalWithdrawRoute,
 			goalEditRoute,
 			goalTransactionsRoute,
+			goalDetailsFundRoute,
+			goalDetailsWithdrawRoute,
+			goalDetailsTransferRoute,
 		],
 	},
 ];

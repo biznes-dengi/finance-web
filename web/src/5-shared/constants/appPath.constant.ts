@@ -1,3 +1,5 @@
+//TODO: convert to functions, to be able to paste params into URL
+
 export enum APP_PATH {
 	root = '/',
 	pageNotFound = '/page-not-found',
@@ -23,6 +25,10 @@ export function getGoalDetailsFundPath(id: any) {
 
 export function getGoalDetailsWithdrawPath(id: any) {
 	return `${APP_PATH.goalDetails}/${id}/withdraw`;
+}
+
+export function getGoalDetailsTransferPath(id: any) {
+	return `${APP_PATH.goalDetails}/${id}/transfer`;
 }
 
 export function getGoalDetailsEditPath(id: any) {

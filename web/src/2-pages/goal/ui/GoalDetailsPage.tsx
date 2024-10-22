@@ -7,6 +7,7 @@ import {goalModel} from '@entities/goal';
 import {
 	getGoalDetailsEditPath,
 	getGoalDetailsFundPath,
+	getGoalDetailsTransferPath,
 	getGoalDetailsWithdrawPath,
 	getGoalTransactionsPath,
 } from '@shared/constants/appPath.constant.ts';
@@ -15,7 +16,7 @@ import {getTransactionName, getTransactionRightName} from '@pages/goal/lib/goal.
 export function GoalDetailsPage() {
 	const navigate = useNavigate();
 	const {goalId} = useParams();
-	const details = goalModel.useDetails(goalId);
+	const {goalDetails: details} = goalModel.useDetails(goalId);
 	const {items, isItemsLoading} = goalModel.useGoalTransactions(goalId);
 
 	const buttonConfigs = [
@@ -37,7 +38,7 @@ export function GoalDetailsPage() {
 		{
 			name: APP_TEXT.transfer,
 			icon: Icon.transfer,
-			onClick: ({navigate}) => navigate(getGoalDetailsWithdrawPath(goalId)),
+			onClick: ({navigate}) => navigate(getGoalDetailsTransferPath(goalId)),
 		},
 	] as ButtonConfig[];
 

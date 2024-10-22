@@ -148,7 +148,7 @@ function useDetails(id: any) {
 		queryFn: () => goalApi.fetchDetails({boardSavingId: 1, id}),
 	});
 
-	return data;
+	return {goalDetails: data};
 }
 
 function useGoalTransactions(id: any) {
@@ -206,7 +206,7 @@ function useDelete() {
 			void queryClient.invalidateQueries({queryKey: ['goal-items']});
 		},
 		onSettled: () => {
-			// goal has been deleted successfully drawer
+			// TODO goal has been deleted successfully drawer
 			navigate(APP_PATH.goalList);
 		},
 	});
