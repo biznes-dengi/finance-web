@@ -8,5 +8,5 @@ export type Props = {
 	}[];
 	fetchOptions?: () => void;
 	onChange: (value: CURRENCY) => void;
-	value: CURRENCY | null;
+	value: CURRENCY | null | undefined;
 };

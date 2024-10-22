@@ -1,9 +1,11 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {TAppFilter} from '@shared/types';
 import {goalApi} from './goal.api.ts';
 import {
 	CreatePayload,
 	createResponseScheme,
+	DeletePayload,
+	EditPayload,
 	MutationFundGoalPayload,
 	TransferPayload,
 	TSavingPaged,
@@ -166,6 +168,57 @@ function useGoalTransactions(id: any) {
 	};
 }
 
+function useEdit() {
+	const boardSavingId = useBoardSavingsId();
+
+	const queryClient = useQueryClient();
+
+	const {mutate, isPending, isError, isSuccess} = useMutation({
+		mutationKey: ['edit-goal'],
+		mutationFn: (payload: EditPayload) => {
+			return goalApi.editGoal({boardSavingId, payload});
+		},
+		onSuccess: () => {
+			void queryClient.invalidateQueries({queryKey: ['goal-details']});
+		},
+	});
+
+	return {
+		editGoal: mutate,
+		isEditPending: isPending,
+		isEditSuccess: isSuccess,
+		isEditError: isError,
+	};
+}
+
+function useDelete() {
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
+
+	const boardSavingId = useBoardSavingsId();
+
+	const {mutate, isPending, isError, isSuccess} = useMutation({
+		mutationKey: ['delete-goal'],
+		mutationFn: (payload: DeletePayload) => {
+			return goalApi.deleteGoal({boardSavingId, id: payload.id});
+		},
+		onSuccess: () => {
+			void queryClient.invalidateQueries({queryKey: ['goal-items']});
+		},
+		onSettled: () => {
+			// goal has been deleted successfully drawer
+			navigate(APP_PATH.goalList);
+		},
+	});
+
+	return {
+		deleteGoal: mutate,
+		isDeletePending: isPending,
+		isDeleteSuccess: isSuccess,
+		isDeleteError: isError,
+	};
+}
+
 // rename to useFund, useWithdraw
 export const goalModel = {
 	useItems,
@@ -176,4 +229,6 @@ export const goalModel = {
 	useCreate,
 	useDetails,
 	useGoalTransactions,
+	useEdit,
+	useDelete,
 };

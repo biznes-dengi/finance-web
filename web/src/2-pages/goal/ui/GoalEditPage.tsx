@@ -1,32 +1,88 @@
 import {useEffect, useState} from 'react';
-import {Box, Button, Card, Dialog, Icon, PageHeader, TextField, useDialogState} from '@shared/ui';
-import {APP_PATH} from '@shared/constants';
+import {
+	Box,
+	Button,
+	ButtonType,
+	Card,
+	Dialog,
+	Icon,
+	Item,
+	NumericInput,
+	PageHeader,
+	SelectWithSearch,
+	TextField,
+	useDialogState,
+} from '@shared/ui';
+import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {useParams} from 'react-router-dom';
 import {goalModel} from '@entities/goal';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
+import {cn, DateService} from '@shared/lib';
+import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
 
 export function GoalEditPage() {
 	const {goalId} = useParams();
 	const data = goalModel.useDetails(goalId);
 
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	console.log(data);
 
-	const [isNameEditing, setIsNameEditing] = useState(false);
-	const [isTargetAmountEditiong, setIsTargetAmountEditiong] = useState(false);
-	const [isDeadlineEditing, setIsDeadlineEditing] = useState(false);
-	const [isCurrencyEditing, setIsCurrencyEditing] = useState(false);
+	const {isEditPending, editGoal} = goalModel.useEdit();
+	const {deleteGoal, isDeletePending} = goalModel.useDelete();
+
+	const {dialogRef: nameDialogRef, openDialog: openNameDialog, closeDialog: closeNameDialog} = useDialogState();
+	const {
+		dialogRef: targetAmountDialogRef,
+		openDialog: openTargetAmountDialog,
+		closeDialog: closeTargetAmountDialog,
+	} = useDialogState();
+	const {
+		dialogRef: deadlineDialogRef,
+		openDialog: openDeadlineDialog,
+		closeDialog: closeDialogDialog,
+	} = useDialogState();
+	const {
+		dialogRef: currencyDialogRef,
+		openDialog: openCurrencyDialog,
+		closeDialog: closeCurrencyDialog,
+	} = useDialogState();
 
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<number | undefined>();
-	const [deadline, setDeadline] = useState();
-	const [currency, setCurrency] = useState();
+	const [deadline, setDeadline] = useState<Date>();
+	const [currency, setCurrency] = useState<CURRENCY | undefined>();
 
 	useEffect(() => {
 		if (!data) return;
 
 		setName(data.name);
 		setTargetAmount(data.targetAmount);
+		setDeadline(new DateService().value);
+		setCurrency(data.balance.currency);
 	}, [data]);
+
+	function handleEdit() {
+		const payload = {
+			name,
+			targetAmount,
+			deadline: new DateService(deadline).getPayloadDateFormat(),
+			currency,
+		};
+
+		editGoal(payload);
+
+		closeNameDialog();
+		closeTargetAmountDialog();
+		closeDialogDialog();
+		closeCurrencyDialog();
+	}
+
+	// выполняется всегда после первого edit
+	// if (isEditSuccess || isEditError) {
+	// 	closeNameDialog();
+	// 	closeTargetAmountDialog();
+	// 	closeDialogDialog();
+	// 	closeCurrencyDialog();
+	// }
 
 	return (
 		<>
@@ -35,34 +91,90 @@ export function GoalEditPage() {
 			</Box>
 
 			{/** shit styles margin top see in inspect in browser */}
-			<Box basePaddingX className='mb-6'>
-				<Card title={'Your goal'}>
-					<div className='flex justify-between p-4'>
+			<Box basePaddingX>
+				<Card title={'Your goal'} withTitleSpace>
+					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Name</div>
-						<Button onClick={openDialog} icon={Icon.edit}>
+						<Button onClick={openNameDialog} icon={Icon.edit}>
 							{data?.name}
 						</Button>
+						<Dialog ref={nameDialogRef}>
+							<Box className='mb-4 text-xl font-medium'>Edit name</Box>
+							<TextField value={name} onChange={setName} placeholder='Name' />
+							<Box baseMarginY>
+								<Button onClick={handleEdit} type={ButtonType.main}>
+									{isEditPending ? 'Loading...' : 'Save'}
+								</Button>
+							</Box>
+						</Dialog>
 					</div>
-					<div className='flex justify-between p-4'>
+					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Target amount</div>
-						<Button onClick={openDialog} icon={Icon.edit}>
+						<Button onClick={openTargetAmountDialog} icon={Icon.edit}>
 							{data?.targetAmount}
 						</Button>
+						<Dialog ref={targetAmountDialogRef}>
+							<Box className='mb-4 text-xl font-medium'>Edit target amount</Box>
+							<NumericInput value={targetAmount} onChange={setTargetAmount} placeholder='Target amount' />
+							<Box baseMarginY>
+								<Button onClick={handleEdit} type={ButtonType.main}>
+									{isEditPending ? 'Loading...' : 'Save'}
+								</Button>
+							</Box>
+						</Dialog>
 					</div>
-					<div className='flex justify-between p-4'>
+					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Deadline</div>
-						{/*<Button onClick={openDialog} icon={Icon.edit}>*/}
-						{/*	{data?.deadline}*/}
-						{/*</Button>*/}
+						<Button onClick={openDeadlineDialog} icon={Icon.calendar}>
+							{new DateService(deadline).getLocalDateString()}
+						</Button>
+						<Dialog ref={deadlineDialogRef}>
+							<Box className='mb-4 text-xl font-medium'>Edit deadline</Box>
+							<div className='flex w-full justify-center'>
+								<Calendar
+									mode='single'
+									selected={deadline}
+									onSelect={(date) => {
+										if (!date) return;
+										setDeadline(date);
+									}}
+								/>
+							</div>
+							<Box baseMarginY>
+								<Button onClick={handleEdit} type={ButtonType.main}>
+									{isEditPending ? 'Loading...' : 'Save'}
+								</Button>
+							</Box>
+						</Dialog>
 					</div>
-					<div className='flex justify-between p-4'>
+					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Currency</div>
-						{/*<div>Currency edit button</div>*/}
+						<Button onClick={openCurrencyDialog} icon={Icon.edit}>
+							{data && CURRENCY_MAP[data.balance.currency].code}
+						</Button>
+						<Dialog ref={currencyDialogRef}>
+							<Box className='mb-4 text-xl font-medium'>Edit currency</Box>
+							<SelectWithSearch
+								options={[{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}]}
+								onChange={setCurrency}
+								value={currency}
+							/>
+							<Box baseMarginY>
+								<Button onClick={handleEdit} type={ButtonType.main}>
+									{isEditPending ? 'Loading...' : 'Save'}
+								</Button>
+							</Box>
+						</Dialog>
 					</div>
 				</Card>
 			</Box>
-
-			<Dialog ref={dialogRef}>{isNameEditing && <TextField value={name} onChange={setName} />}</Dialog>
+			<Box basePadding>
+				<Item
+					name={isDeletePending ? 'Loading...' : APP_TEXT.deleteGoal}
+					className={cn('text-sm text-red-600', isDeletePending && 'text-primary-grey')}
+					onClick={() => deleteGoal({id: Number(goalId)})}
+				/>
+			</Box>
 		</>
 	);
 }

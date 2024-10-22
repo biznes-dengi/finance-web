@@ -7,7 +7,9 @@ import {
 	boardSavingBalanceValidator,
 	boardSavingIdValidator,
 	CreateApiParams,
+	DeleteApiParams,
 	detailsValidator,
+	EditApiParams,
 	goalTransactionValidator,
 	savingPagedValidator,
 	TransferApiParams,
@@ -132,7 +134,7 @@ async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsP
 	}
 }
 
-async function updateGoal({boardSavingId, payload}: {boardSavingId: number} & {payload: any}) {
+async function editGoal({boardSavingId, payload}: EditApiParams) {
 	if (!boardSavingId) {
 		return {};
 	}
@@ -140,6 +142,16 @@ async function updateGoal({boardSavingId, payload}: {boardSavingId: number} & {p
 	await HttpClient.put({
 		url: getApiPath(`board-savings/${boardSavingId}/savings`),
 		data: payload,
+	});
+}
+
+async function deleteGoal({boardSavingId, id}: DeleteApiParams) {
+	if (!boardSavingId) {
+		return {};
+	}
+
+	await HttpClient.delete({
+		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}`),
 	});
 }
 
@@ -153,5 +165,6 @@ export const goalApi = {
 	createGoal,
 	fetchDetails,
 	fetchGoalTransactions,
-	updateGoal,
+	editGoal,
+	deleteGoal,
 };

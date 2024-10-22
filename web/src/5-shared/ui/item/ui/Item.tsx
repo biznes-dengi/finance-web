@@ -23,7 +23,7 @@ export function Item(props: Props) {
 
 	return (
 		<div
-			className={cn('group rounded-2xl bg-white p-1 [&:not(:last-child)]:pb-0', onClick && 'cursor-pointer', className)}
+			className={cn('group rounded-2xl bg-white p-1 [&:not(:last-child)]:pb-0', onClick && 'cursor-pointer')}
 			onClick={() => onClick?.(navigate)}
 		>
 			<div

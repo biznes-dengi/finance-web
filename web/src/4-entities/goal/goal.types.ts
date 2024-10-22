@@ -103,3 +103,22 @@ export const goalTransactionValidator = zod.object({
 		})
 		.array(),
 });
+
+export type EditPayload = {
+	name?: string;
+	targetAmount?: number;
+	deadline?: string;
+	currency?: CURRENCY;
+};
+export type EditApiParams = {
+	boardSavingId?: number;
+	payload: EditPayload;
+};
+
+export type DeletePayload = {
+	id: number;
+};
+export type DeleteApiParams = {
+	id: number;
+	boardSavingId?: number;
+};

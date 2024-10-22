@@ -8,6 +8,8 @@ type Props = {
 	onChange: (value: number | undefined) => void;
 };
 
+// CurrencyRatePicker, CurrencyPicker когда выбираю какая валюта (USD, RUB)
+
 export function CurrencyPicker(props: Props) {
 	const {value, onChange, buttonText} = props;
 

@@ -3,7 +3,7 @@ import {Box, Button, Dialog, Icon, useDialogState} from '@shared/ui';
 import {Calendar} from './Calendar.tsx';
 
 type Props = {
-	value: Date;
+	value: Date | undefined;
 	onChange: (value: Date) => void;
 };
 
@@ -21,15 +21,17 @@ export function DatePicker(props: Props) {
 			</Box>
 
 			<Dialog ref={dialogRef}>
-				<Calendar
-					mode='single'
-					selected={value}
-					onSelect={(date) => {
-						if (!date) return;
-						onChange(date);
-						closeDialog();
-					}}
-				/>
+				<div className='flex justify-center'>
+					<Calendar
+						mode='single'
+						selected={value}
+						onSelect={(date) => {
+							if (!date) return;
+							onChange(date);
+							closeDialog();
+						}}
+					/>
+				</div>
 			</Dialog>
 		</>
 	);

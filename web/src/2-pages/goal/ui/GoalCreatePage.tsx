@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {
 	Box,
 	Button,
@@ -17,8 +18,6 @@ import {
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
 import {cn, DateService} from '@shared/lib';
 import {goalModel} from '@entities/goal';
-import {useNavigate} from 'react-router-dom';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 

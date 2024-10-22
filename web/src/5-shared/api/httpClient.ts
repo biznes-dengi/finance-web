@@ -27,4 +27,11 @@ export class HttpClient {
 			.then((response) => response.data)
 			.catch((error) => Promise.reject(error));
 	}
+
+	static delete({url, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+		return axiosInstance
+			.delete(url, {signal: abortSignal})
+			.then((response) => response.data)
+			.catch((error) => Promise.reject(error));
+	}
 }

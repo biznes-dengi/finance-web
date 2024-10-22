@@ -3,6 +3,7 @@ import {Drawer as VaulDrawer} from 'vaul';
 
 import {Box} from '@shared/ui';
 import {DrawerProps, DrawerRef} from '../types/Dialog.types.ts';
+import {cn} from '@shared/lib';
 
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
@@ -33,7 +34,12 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>((props, ref) => {
 				<Overlay className='fixed inset-0 bg-black/40' />
 
 				<Content className='fixed bottom-0 left-0 right-0 rounded-t-2xl bg-light-grey outline-none transition-all duration-200'>
-					<div className='mx-auto flex w-full max-w-md flex-col items-center overflow-auto rounded-t-2xl p-4 pt-2'>
+					<div
+						className={cn(
+							'mx-auto flex w-full max-w-md flex-col  overflow-auto rounded-t-2xl p-4 pt-2',
+							showUX && 'items-center',
+						)}
+					>
 						{showUX ? (
 							<div className='text-center'>animated progress...</div>
 						) : (

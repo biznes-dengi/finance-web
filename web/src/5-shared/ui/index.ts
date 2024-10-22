@@ -22,3 +22,4 @@ export * from './card';
 
 export * from './date-picker/ui/DatePicker.tsx';
 export * from './currency-picker/ui/CurrencyPicker.tsx';
+export * from './fields/NumericInput.tsx';

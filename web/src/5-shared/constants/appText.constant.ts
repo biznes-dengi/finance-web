@@ -25,4 +25,5 @@ export const APP_TEXT = {
 	noItems: 'No items',
 	savings: 'Savings',
 	edit: 'Edit',
+	deleteGoal: 'Delete Goal',
 } as const;
