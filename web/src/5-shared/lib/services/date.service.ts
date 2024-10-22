@@ -21,6 +21,6 @@ export class DateService {
 	}
 
 	getPayloadDateFormat() {
-		return this.value.toISOString();
+		return this.value.toISOString().split('.')[0]; // Убираем миллисекунды и таймзону;
 	}
 }

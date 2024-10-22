@@ -8,7 +8,7 @@ import {textHelpers} from '@shared/lib';
 
 export function GoalTransactionsPage() {
 	const {goalId} = useParams();
-	const details = goalModel.useDetails(goalId);
+	const {goalDetails: details} = goalModel.useDetails(goalId);
 	const {items, isItemsLoading} = goalModel.useGoalTransactions(goalId);
 
 	const total =

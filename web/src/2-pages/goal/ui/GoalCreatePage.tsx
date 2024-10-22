@@ -156,6 +156,7 @@ export function GoalCreatePage() {
 								getLabel={() => APP_TEXT.targetAmount}
 							/>
 							<Box baseMarginY>
+								<Box className='mb-2 font-medium'>Deadline</Box>
 								<DatePicker value={deadline} onChange={setDeadline} />
 							</Box>
 						</Box>,

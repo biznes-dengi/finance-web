@@ -12,6 +12,8 @@ export function DatePicker(props: Props) {
 
 	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
+	// TODO: когда меняем на новую дату ставится дефолтное время. Продумать логику.
+
 	return (
 		<>
 			<Box>

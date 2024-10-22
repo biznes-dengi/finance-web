@@ -22,9 +22,7 @@ import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
 
 export function GoalEditPage() {
 	const {goalId} = useParams();
-	const data = goalModel.useDetails(goalId);
-
-	console.log(data);
+	const {goalDetails: data} = goalModel.useDetails(goalId);
 
 	const {isEditPending, editGoal} = goalModel.useEdit();
 	const {deleteGoal, isDeletePending} = goalModel.useDelete();
