@@ -34,7 +34,7 @@ import {
 	XMarkIcon,
 	XCircleIcon,
 } from '@heroicons/react/24/solid';
-import {BriefcaseIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
+import {BriefcaseIcon, FolderPlusIcon, PlusIcon, FolderIcon} from '@heroicons/react/24/outline';
 
 import {cn} from '@shared/lib';
 
@@ -68,4 +68,5 @@ export const Icon = {
 	chevronDown: <ChevronDownIcon />,
 	success: <CheckCircleIcon />,
 	error: <XCircleIcon />,
+	goal: <FolderIcon />,
 };

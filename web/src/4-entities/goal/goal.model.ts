@@ -43,7 +43,7 @@ function useItems(filter?: TAppFilter) {
 	});
 
 	return {
-		items: data?.data,
+		items: data?.items,
 		hasNext: data?.hasNext,
 		isItemsFetching: isFetching,
 	};

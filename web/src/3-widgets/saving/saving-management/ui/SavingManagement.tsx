@@ -3,6 +3,7 @@ import {
 	Button,
 	ButtonType,
 	Card,
+	Icon,
 	Item,
 	ItemImageWithProgress,
 	List,
@@ -55,7 +56,9 @@ export function SavingManagement() {
 						</Box>
 					</Box>
 					{!isFetching ? (
-						<div role='saving-icon' className='ml-2 size-10 shrink-0 rounded-xl bg-secondary-grey' />
+						<div className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-secondary-grey'>
+							<div className='size-5'>{Icon.goal}</div>
+						</div>
 					) : (
 						<PreloadSkeleton width={40} height={40} className='rounded-xl' />
 					)}

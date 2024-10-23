@@ -17,7 +17,7 @@ import {
 
 async function fetchBoardSavingsId(accountId: number) {
 	try {
-		const response = await HttpClient.get({url: getApiPath('board-savings/id'), data: {accountId}});
+		const response = await HttpClient.get({url: getApiPath('board-goals/id'), data: {accountId}});
 		return boardSavingIdValidator.parse(response);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
@@ -27,7 +27,7 @@ async function fetchBoardSavingsId(accountId: number) {
 
 async function fetchBoardSavingsBalance(boardSavingId: number) {
 	try {
-		const response = await HttpClient.get({url: getApiPath('board-savings/balance'), data: {boardSavingId}});
+		const response = await HttpClient.get({url: getApiPath('board-goals/balance'), data: {boardGoalId: boardSavingId}});
 		return boardSavingBalanceValidator.parse(response);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
@@ -42,7 +42,7 @@ async function fetchItems({filter, boardSavingId}: ApiFetchItemsParams) {
 
 	try {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-savings/${boardSavingId}/savings`),
+			url: getApiPath(`board-goals/${boardSavingId}/goals`),
 			data: filter,
 		});
 		return savingPagedValidator.parse(response);
@@ -58,7 +58,7 @@ async function fundGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
+		url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
 		data: payload,
 	});
 }
@@ -69,7 +69,7 @@ async function withdrawGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
+		url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
 		data: payload,
 	});
 }
@@ -80,7 +80,7 @@ async function transferGoal({boardSavingId, payload}: TransferApiParams) {
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-savings/${boardSavingId}/transfer`),
+		url: getApiPath(`board-goals/${boardSavingId}/transfer`),
 		data: payload,
 	});
 }
@@ -91,7 +91,7 @@ async function createGoal({boardSavingId, payload}: CreateApiParams) {
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-savings/${boardSavingId}/savings`),
+		url: getApiPath(`board-goals/${boardSavingId}/goals`),
 		data: payload,
 	});
 }
@@ -99,7 +99,7 @@ async function createGoal({boardSavingId, payload}: CreateApiParams) {
 async function fetchDetails({boardSavingId, id}: {boardSavingId?: number; id: number}) {
 	try {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-savings/${boardSavingId}/savings/${id}`),
+			url: getApiPath(`board-goals/${boardSavingId}/goals/${id}`),
 		});
 		return detailsValidator.parse(response);
 	} catch (error) {
@@ -115,7 +115,7 @@ async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsP
 
 	try {
 		const response = (await HttpClient.get({
-			url: getApiPath(`board-savings/${boardSavingId}/savings/${id}/transactions`),
+			url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
 			data: filter,
 		})) as any;
 
@@ -140,7 +140,7 @@ async function editGoal({boardSavingId, payload}: EditApiParams) {
 	}
 
 	await HttpClient.put({
-		url: getApiPath(`board-savings/${boardSavingId}/savings`),
+		url: getApiPath(`board-goals/${boardSavingId}/goals`),
 		data: payload,
 	});
 }
@@ -151,7 +151,7 @@ async function deleteGoal({boardSavingId, id}: DeleteApiParams) {
 	}
 
 	await HttpClient.delete({
-		url: getApiPath(`board-savings/${boardSavingId}/savings/${id}`),
+		url: getApiPath(`board-goals/${boardSavingId}/goals/${id}`),
 	});
 }
 

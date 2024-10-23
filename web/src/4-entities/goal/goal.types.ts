@@ -16,7 +16,7 @@ const balanceScheme = zod.object({
 
 export const savingPagedValidator = zod.object({
 	hasNext: zod.boolean(),
-	data: zod
+	items: zod
 		.object({
 			id: zod.number(),
 			name: zod.string(),
