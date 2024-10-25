@@ -109,7 +109,7 @@ export function GoalEditPage() {
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Target amount</div>
 						<Button onClick={openTargetAmountDialog} icon={Icon.edit}>
-							{data?.targetAmount}
+							{data?.targetAmount} {data && CURRENCY_MAP[data.balance.currency].symbol}
 						</Button>
 						<Dialog ref={targetAmountDialogRef}>
 							<Box className='mb-4 text-xl font-medium'>Edit target amount</Box>
