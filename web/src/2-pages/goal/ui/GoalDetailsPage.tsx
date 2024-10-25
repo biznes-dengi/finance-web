@@ -12,6 +12,7 @@ import {
 	getGoalTransactionsPath,
 } from '@shared/constants/appPath.constant.ts';
 import {getTransactionName, getTransactionRightName} from '@pages/goal/lib/goal.lib.ts';
+import {DateService} from '@shared/lib';
 
 export function GoalDetailsPage() {
 	const navigate = useNavigate();
@@ -62,7 +63,7 @@ export function GoalDetailsPage() {
 			</Box>
 
 			<Box basePaddingX className='mb-6'>
-				{details && (
+				{details && details?.targetAmount && (
 					<SavingProgress targetAmount={details.targetAmount} balance={details.balance} deadline={details.deadline} />
 				)}
 
@@ -71,19 +72,28 @@ export function GoalDetailsPage() {
 					rightTitle={<Button onClick={() => navigate(getGoalTransactionsPath(goalId))}>{APP_TEXT.seeAll}</Button>}
 					withTitleSpace
 				>
-					<List
-						isFetching={isItemsLoading}
-						rows={items}
-						renderRow={(row) => (
-							<Item
-								image={<div className='size-10 rounded-full bg-secondary-violet' />}
-								name={getTransactionName(row.type)}
-								description={row.date}
-								rightName={details && getTransactionRightName(row.type, row.amount, details.balance.currency)}
-								onClick={() => alert('go to transaction details')}
-							/>
-						)}
-					/>
+					{items && (
+						<List
+							isFetching={isItemsLoading}
+							rows={[items[0], items[1], items[2]]}
+							renderRow={(row) => (
+								<Item
+									image={<div className='size-10 rounded-full bg-secondary-violet' />}
+									name={getTransactionName(row.type)}
+									description={new DateService(new Date(row.date as string)).getLocalDateString()}
+									rightName={
+										details &&
+										getTransactionRightName(
+											row.type,
+											(row.amount ?? row.toGoalAmount) as number,
+											details.balance.currency,
+										)
+									}
+									// onClick={() => alert('go to transaction details')}
+								/>
+							)}
+						/>
+					)}
 				</Card>
 			</Box>
 		</>

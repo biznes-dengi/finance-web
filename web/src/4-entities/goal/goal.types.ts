@@ -80,8 +80,8 @@ export const detailsValidator = zod.object({
 	id: zod.number(),
 	name: zod.string(),
 	balance: balanceScheme,
-	targetAmount: zod.number(),
-	deadline: zod.array(zod.number()).nullish(),
+	targetAmount: zod.number().nullish(),
+	deadline: zod.string().nullish(),
 });
 
 export enum TRANSACTION_ENUM {
@@ -90,15 +90,21 @@ export enum TRANSACTION_ENUM {
 	TRANSFER = 'TRANSFER',
 }
 
+// TODO: goalTranferValidator and goalFundWithdrawValidator
+// TODO: items[i] может быть type=transfer и там будет один validator, а может быть другой и будет другой валидатор
+
 export const goalTransactionValidator = zod.object({
 	hasNext: zod.boolean(),
 	items: zod
 		.object({
 			id: zod.number(),
 			type: zod.nativeEnum(TRANSACTION_ENUM),
-			amount: zod.number(),
-			date: zod.string(),
+			amount: zod.number().nullish(),
+			date: zod.string().nullish(),
+
+			fromGoalAmount: zod.number().nullish(),
 			fromGoalName: zod.string().nullish(),
+			toGoalAmount: zod.number().nullish(),
 			toGoalName: zod.string().nullish(),
 		})
 		.array(),
@@ -112,6 +118,7 @@ export type EditPayload = {
 };
 export type EditApiParams = {
 	boardSavingId?: number;
+	goalId?: string;
 	payload: EditPayload;
 };
 

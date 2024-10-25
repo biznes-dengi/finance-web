@@ -13,7 +13,7 @@ export function List<R>(props: Props<R>) {
 
 			{!isFetching && (
 				<Card>
-					{rows?.length && rows.map((row, index) => <Fragment key={index}>{renderRow(row)}</Fragment>)}
+					{rows?.length && rows.map((row, index) => <Fragment key={index}>{renderRow(row, index)}</Fragment>)}
 					{!rows?.length && <Item name={textHelpers.getDontHaveAny(APP_TEXT.goal)} isNameText />}
 				</Card>
 			)}

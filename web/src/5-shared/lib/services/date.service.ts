@@ -2,6 +2,11 @@ export class DateService {
 	public value: Date;
 
 	constructor(date?: Date) {
+		// BE isoDateFormat
+		// if (isString(date)) {
+		// 	this.value = new Date(date);
+		// }
+
 		this.value = date ? date : new Date();
 	}
 

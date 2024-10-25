@@ -114,33 +114,24 @@ async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsP
 	}
 
 	try {
-		const response = (await HttpClient.get({
+		const response = await HttpClient.get({
 			url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
 			data: filter,
-		})) as any;
-
-		const map = {
-			hasNext: response.hasNext,
-			items: response.transactions.map((item: any) => ({
-				...item,
-				date: '10 march',
-			})),
-		};
-
-		return goalTransactionValidator.parse(map);
+		});
+		return goalTransactionValidator.parse(response);
 	} catch (error) {
 		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
 		return undefined;
 	}
 }
 
-async function editGoal({boardSavingId, payload}: EditApiParams) {
+async function editGoal({boardSavingId, goalId, payload}: EditApiParams) {
 	if (!boardSavingId) {
 		return {};
 	}
 
 	await HttpClient.put({
-		url: getApiPath(`board-goals/${boardSavingId}/goals`),
+		url: getApiPath(`board-goals/${boardSavingId}/goals/${goalId}`),
 		data: payload,
 	});
 }

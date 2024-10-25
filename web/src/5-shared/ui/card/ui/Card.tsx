@@ -6,7 +6,7 @@ export function Card(props: Props) {
 	const {titleInCard, title, rightTitle, children, withTitleSpace} = props;
 
 	return (
-		<>
+		<div>
 			{(title || rightTitle) && (
 				<div className={cn('flex pb-3', title && rightTitle && 'justify-between', withTitleSpace && 'pt-6')}>
 					{title && <div className='font-semibold'>{title}</div>}
@@ -23,6 +23,6 @@ export function Card(props: Props) {
 
 				{children}
 			</div>
-		</>
+		</div>
 	);
 }

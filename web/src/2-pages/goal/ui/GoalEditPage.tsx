@@ -45,7 +45,7 @@ export function GoalEditPage() {
 	} = useDialogState();
 
 	const [name, setName] = useState('');
-	const [targetAmount, setTargetAmount] = useState<number | undefined>();
+	const [targetAmount, setTargetAmount] = useState<number | null | undefined>();
 	const [deadline, setDeadline] = useState<Date>();
 	const [currency, setCurrency] = useState<CURRENCY | undefined>();
 
@@ -66,7 +66,7 @@ export function GoalEditPage() {
 			currency,
 		};
 
-		editGoal(payload);
+		editGoal(goalId, payload);
 
 		closeNameDialog();
 		closeTargetAmountDialog();

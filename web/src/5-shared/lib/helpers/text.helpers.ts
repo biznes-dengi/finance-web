@@ -26,8 +26,26 @@ export class textHelpers {
 	static getAmount(amount: number) {
 		const [int, float] = amount.toString().split('.');
 
+		let roundedFloat;
+
+		if (float) {
+			const strNumbers = float.split(''); // ['1', '2']
+			const mappedFloat = strNumbers.reduce((acc, item, index) => {
+				if (index === 0 || index === 1) {
+					return acc + item;
+				}
+
+				if (index === 2) {
+					return acc + `.${item}`;
+				}
+
+				return acc + item;
+			}, '');
+			roundedFloat = Math.round(Number(mappedFloat));
+		}
+
 		const beforeComma = int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-		const afterComma = float ? `,${float}` : '';
+		const afterComma = roundedFloat ? `,${roundedFloat}` : '';
 
 		return beforeComma + afterComma;
 	}

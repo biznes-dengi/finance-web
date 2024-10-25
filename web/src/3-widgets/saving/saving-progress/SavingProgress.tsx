@@ -1,6 +1,6 @@
 import {Box, Card} from '@shared/ui';
 import {CURRENCY} from '@shared/constants';
-import {textHelpers} from '@shared/lib';
+import {DateService, textHelpers} from '@shared/lib';
 
 export function SavingProgress({
 	balance,
@@ -30,7 +30,9 @@ export function SavingProgress({
 
 				{deadline && (
 					<div className='flex justify-between pt-4'>
-						<div className='text-sm text-primary-grey'>Deadline: 15 june 2024</div>
+						<div className='text-sm text-primary-grey'>
+							Deadline: {new DateService(new Date(deadline)).getLocalDateString()}
+						</div>
 						<div className='text-sm text-primary-grey'>127d left</div>
 					</div>
 				)}

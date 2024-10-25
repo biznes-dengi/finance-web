@@ -175,8 +175,8 @@ function useEdit() {
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['edit-goal'],
-		mutationFn: (payload: EditPayload) => {
-			return goalApi.editGoal({boardSavingId, payload});
+		mutationFn: (goalId: any, payload: EditPayload) => {
+			return goalApi.editGoal({boardSavingId, goalId, payload});
 		},
 		onSuccess: () => {
 			void queryClient.invalidateQueries({queryKey: ['goal-details']});
