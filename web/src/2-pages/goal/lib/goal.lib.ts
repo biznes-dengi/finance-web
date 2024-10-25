@@ -3,6 +3,8 @@ import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {textHelpers} from '@shared/lib';
 
 export function getTransactionName(row: any) {
+	if (!row) return;
+
 	const type = row.type as TRANSACTION_ENUM;
 
 	if (type === TRANSACTION_ENUM.DEPOSIT) {

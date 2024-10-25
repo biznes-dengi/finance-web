@@ -1,7 +1,7 @@
-import {ReactElement} from 'react';
+import {ReactNode} from 'react';
 
 export type Props<R> = {
 	rows?: readonly R[];
-	renderRow: (row: R, index: number) => ReactElement;
+	renderRow: (row: R, index: number) => ReactNode;
 	isFetching?: boolean;
 };

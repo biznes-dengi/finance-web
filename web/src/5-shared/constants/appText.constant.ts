@@ -19,6 +19,7 @@ export const APP_TEXT = {
 	amount: 'Amount',
 	targetAmount: 'Target amount',
 	progress: 'Progress',
+	transaction: 'Transaction',
 	transactions: 'Transactions',
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',

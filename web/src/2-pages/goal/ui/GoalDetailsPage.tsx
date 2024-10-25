@@ -76,22 +76,25 @@ export function GoalDetailsPage() {
 						<List
 							isFetching={isItemsLoading}
 							rows={[items[0], items[1], items[2]]}
-							renderRow={(row) => (
-								<Item
-									image={<div className='size-10 rounded-full bg-secondary-violet' />}
-									name={getTransactionName(row.type)}
-									description={new DateService(new Date(row.date as string)).getLocalDateString()}
-									rightName={
-										details &&
-										getTransactionRightName(
-											row.type,
-											(row.amount ?? row.toGoalAmount) as number,
-											details.balance.currency,
-										)
-									}
-									// onClick={() => alert('go to transaction details')}
-								/>
-							)}
+							renderRow={(row) => {
+								if (!row) return null;
+								return (
+									<Item
+										image={<div className='size-10 rounded-full bg-secondary-violet' />}
+										name={getTransactionName(row)}
+										description={new DateService(new Date(row.date as string)).getLocalDateString()}
+										rightName={
+											details &&
+											getTransactionRightName(
+												row.type,
+												(row.amount ?? row.toGoalAmount) as number,
+												details.balance.currency,
+											)
+										}
+										// onClick={() => alert('go to transaction details')}
+									/>
+								);
+							}}
 						/>
 					)}
 				</Card>

@@ -15,7 +15,8 @@ import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {goalModel} from '@entities/goal';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
 
-const initialExchangeRate = 3.9071;
+// const initialExchangeRate = 3.9071; for zł
+const initialExchangeRate = 1;
 
 export function GoalTransferPage() {
 	const [exchangeRate, setExchangeRate] = useState<number>(initialExchangeRate);
@@ -137,7 +138,7 @@ export function GoalTransferPage() {
 
 				<Box baseMarginY className='flex flex-col gap-3'>
 					<CurrencyPicker
-						buttonText={`1 $ = ${exchangeRate ?? ''} zł`}
+						buttonText={`1 $ = ${exchangeRate ?? ''} $`}
 						value={exchangeRate}
 						onChange={(value) => {
 							handleCurrencyRateChange(value);
