@@ -77,7 +77,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 						{isMultipleOptions && <div className='size-4 flex-shrink-0 text-black'>{Icon.chevronDown}</div>}
 					</div>
 
-					<div className='flex'>
+					<div className='flex min-w-[1ch] flex-shrink'>
 						<input
 							type='text'
 							className={cn(
