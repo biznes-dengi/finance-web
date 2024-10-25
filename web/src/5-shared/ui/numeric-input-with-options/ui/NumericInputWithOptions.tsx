@@ -15,7 +15,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 	function getOptionLabel(option: Option) {
 		if (getLabel) return getLabel(option);
-		return textHelpers.getBalance(option.balance.amount, CURRENCY_MAP[option.balance.currency].symbol);
+		return textHelpers.getBalance(option.balance.amount ?? 0, CURRENCY_MAP[option.balance.currency].symbol);
 	}
 
 	const isMultipleOptions = options?.length && options.length > 1 && setActiveOption;

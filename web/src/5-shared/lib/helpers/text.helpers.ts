@@ -1,4 +1,5 @@
 import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
+import {isNumber} from '@shared/lib';
 
 export class textHelpers {
 	static getDontHaveAny(item: string) {
@@ -18,7 +19,7 @@ export class textHelpers {
 	}
 
 	static getAmountWithCurrency(amount: number, currencySymbol: string) {
-		if (!amount || !currencySymbol) return null;
+		if (!isNumber(amount) || !currencySymbol) return null;
 
 		return `${this.getAmount(amount)} ${currencySymbol}`;
 	}
