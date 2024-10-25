@@ -122,7 +122,7 @@ export function GoalCreatePage() {
 					steps={[
 						<>
 							<Box basePaddingX>
-								<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
+								<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} isAutoFocus />
 							</Box>
 							{!name && (
 								<Box basePaddingX className={cn('flex flex-wrap gap-2 pt-4')}>

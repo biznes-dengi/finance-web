@@ -4,7 +4,18 @@ import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputW
 import {CURRENCY_MAP} from '@shared/constants';
 
 export function NumericInputWithOptions<Option extends TBaseOption>(props: TNumericInputWithOptionsProps<Option>) {
-	const {value, onChange, options, getLabel, activeOption, setActiveOption, errorText, withMinus, withPlus} = props;
+	const {
+		value,
+		onChange,
+		options,
+		getLabel,
+		activeOption,
+		setActiveOption,
+		errorText,
+		withMinus,
+		withPlus,
+		isAutoFocusDisabled,
+	} = props;
 
 	const {dialogRef, openDialog, closeDialog} = useDialogState();
 
@@ -83,6 +94,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 								}
 							}}
 							placeholder={getPlaceholder()}
+							autoFocus={!isAutoFocusDisabled}
 						/>
 
 						<div className={cn('ml-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>

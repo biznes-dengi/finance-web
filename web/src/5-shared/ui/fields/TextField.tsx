@@ -8,6 +8,7 @@ type Props = {
 	placeholder?: string;
 	maxLength?: number;
 	isSearch?: boolean;
+	isAutoFocus?: boolean;
 };
 
 /**
@@ -15,7 +16,7 @@ type Props = {
  */
 
 export function TextField(props: Props) {
-	const {value, onChange, placeholder, maxLength, isSearch} = props;
+	const {value, onChange, placeholder, maxLength, isSearch, isAutoFocus} = props;
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,6 +38,7 @@ export function TextField(props: Props) {
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={placeholder}
 					type='text'
+					autoFocus={isAutoFocus}
 				/>
 
 				{value && (

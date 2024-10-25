@@ -21,4 +21,5 @@ export type TNumericInputWithOptionsProps<Option> = {
 	errorText?: string | boolean;
 	withPlus?: boolean;
 	withMinus?: boolean;
+	isAutoFocusDisabled?: boolean;
 };

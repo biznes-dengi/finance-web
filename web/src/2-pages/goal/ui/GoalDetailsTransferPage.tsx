@@ -145,6 +145,7 @@ export function GoalDetailsTransferPage() {
 						}}
 						options={options}
 						withPlus
+						isAutoFocusDisabled
 					/>
 				</Box>
 
