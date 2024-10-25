@@ -95,6 +95,7 @@ function groupItemsByMonth(items: any) {
 			result[monthKey] = [];
 		}
 
+		// @ts-ignore
 		result[monthKey].push(item);
 	});
 
