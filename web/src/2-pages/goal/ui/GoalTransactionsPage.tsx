@@ -38,7 +38,7 @@ export function GoalTransactionsPage() {
 		<>
 			<PageHeader title={APP_TEXT.transactions} backPath={getGoalDetailsPath(goalId)} />
 
-			<Box basePaddingX className='flex flex-col gap-6 pb-4'>
+			<Box basePaddingX className='flex flex-col gap-6 pb-6'>
 				{Object.entries(groupedItems).map(([month, items]) => {
 					const total = getTotal(items);
 					return (
