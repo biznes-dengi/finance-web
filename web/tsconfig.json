@@ -9,13 +9,14 @@
     /* Aliases */
     "baseUrl": "./src",
     "paths": {
-      "@app/*": ["./app/*"],
-      "@pages/*": ["./pages/*"],
-      "@widgets/*": ["./widgets/*"],
-      "@features/*": ["./features/*"],
-      "@entities/*": ["./entities/*"],
-      "@shared/*": ["./shared/*"]
+      "@app/*": ["./1-app/*"],
+      "@pages/*": ["./2-pages/*"],
+      "@widgets/*": ["./3-widgets/*"],
+      "@entities/*": ["./4-entities/*"],
+      "@shared/*": ["./5-shared/*"],
+      "@/*": ["./shadcn/*"]
     },
+
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -28,7 +29,7 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+//    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
   "include": [

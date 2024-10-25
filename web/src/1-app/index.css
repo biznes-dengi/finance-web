@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+    @apply bg-light-grey;
+}
+
+/* shadcn UI */
+@layer base {
+  :root {
+        --radius: 0.5rem
+    }
+}
+
+/* Для Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Для Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
