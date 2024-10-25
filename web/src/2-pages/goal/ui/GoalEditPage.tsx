@@ -17,7 +17,7 @@ import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {useParams} from 'react-router-dom';
 import {goalModel} from '@entities/goal';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
-import {cn, DateService} from '@shared/lib';
+import {cn, DateService, isNull} from '@shared/lib';
 import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
 
 export function GoalEditPage() {
@@ -47,14 +47,14 @@ export function GoalEditPage() {
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<number | null | undefined>();
 	const [deadline, setDeadline] = useState<Date>();
-	const [currency, setCurrency] = useState<CURRENCY | undefined>();
+	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 
 	useEffect(() => {
 		if (!data) return;
 
 		setName(data.name);
 		setTargetAmount(data.targetAmount);
-		setDeadline(new DateService().value);
+		setDeadline(new Date(data.deadline as string));
 		setCurrency(data.balance.currency);
 	}, [data]);
 
@@ -66,7 +66,7 @@ export function GoalEditPage() {
 			currency,
 		};
 
-		editGoal(goalId, payload);
+		editGoal({goalId, payload});
 
 		closeNameDialog();
 		closeTargetAmountDialog();
@@ -113,7 +113,11 @@ export function GoalEditPage() {
 						</Button>
 						<Dialog ref={targetAmountDialogRef}>
 							<Box className='mb-4 text-xl font-medium'>Edit target amount</Box>
-							<NumericInput value={targetAmount} onChange={setTargetAmount} placeholder='Target amount' />
+							<NumericInput
+								value={isNull(targetAmount) ? undefined : targetAmount}
+								onChange={setTargetAmount}
+								placeholder='Target amount'
+							/>
 							<Box baseMarginY>
 								<Button onClick={handleEdit} type={ButtonType.main}>
 									{isEditPending ? 'Loading...' : 'Save'}

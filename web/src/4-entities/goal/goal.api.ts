@@ -126,7 +126,7 @@ async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsP
 }
 
 async function editGoal({boardSavingId, goalId, payload}: EditApiParams) {
-	if (!boardSavingId) {
+	if (!boardSavingId || !goalId) {
 		return {};
 	}
 

@@ -175,7 +175,7 @@ function useEdit() {
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['edit-goal'],
-		mutationFn: (goalId: any, payload: EditPayload) => {
+		mutationFn: ({goalId, payload}: {goalId?: string; payload: EditPayload}) => {
 			return goalApi.editGoal({boardSavingId, goalId, payload});
 		},
 		onSuccess: () => {

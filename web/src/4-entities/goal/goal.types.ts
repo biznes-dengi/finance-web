@@ -111,10 +111,10 @@ export const goalTransactionValidator = zod.object({
 });
 
 export type EditPayload = {
-	name?: string;
-	targetAmount?: number;
-	deadline?: string;
-	currency?: CURRENCY;
+	name: string;
+	targetAmount: number | undefined | null;
+	deadline: string;
+	currency: CURRENCY;
 };
 export type EditApiParams = {
 	boardSavingId?: number;
