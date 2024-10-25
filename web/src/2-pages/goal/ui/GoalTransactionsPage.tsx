@@ -61,7 +61,7 @@ export function GoalTransactionsPage() {
 								renderRow={(row: any) => (
 									<Item
 										image={<div className='size-10 rounded-full bg-secondary-violet' />}
-										name={getTransactionName(row.type)}
+										name={getTransactionName(row)}
 										description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
 										rightName={
 											details &&

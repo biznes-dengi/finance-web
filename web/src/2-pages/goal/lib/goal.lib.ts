@@ -1,16 +1,18 @@
 import {TRANSACTION_ENUM} from '@entities/goal';
-import {CURRENCY, CURRENCY_MAP} from '@shared/constants';
+import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {textHelpers} from '@shared/lib';
 
-export function getTransactionName(type: TRANSACTION_ENUM) {
+export function getTransactionName(row: any) {
+	const type = row.type as TRANSACTION_ENUM;
+
 	if (type === TRANSACTION_ENUM.DEPOSIT) {
-		return 'Deposit';
+		return APP_TEXT.fund;
 	}
 	if (type === TRANSACTION_ENUM.WITHDRAW) {
-		return 'Withdraw';
+		return APP_TEXT.withdraw;
 	}
 	if (type === TRANSACTION_ENUM.TRANSFER) {
-		return 'Transfer';
+		return `${row.fromGoalName} → ${row.toGoalName}`;
 	}
 }
 
