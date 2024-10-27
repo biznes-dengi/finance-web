@@ -5,6 +5,8 @@ export const axiosInstance = axios.create({
 	headers: {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Request-Private-Network': true,
+		withCredentials: true,
 	},
 });
 
