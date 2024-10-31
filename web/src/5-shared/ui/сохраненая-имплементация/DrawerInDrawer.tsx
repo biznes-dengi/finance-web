@@ -19,21 +19,11 @@ export function DrawerInDrawer() {
 							<p className='mb-2 text-gray-600'>It comes unstyled and has gesture-driven animations.</p>
 							<p className='mb-6 text-gray-600'>
 								It uses{' '}
-								<a
-									href='https://www.radix-ui.com/docs/primitives/components/dialog'
-									className='underline'
-									target='_blank'
-									rel='noreferrer'
-								>
+								<a href='' className='underline' target='_blank' rel='noreferrer'>
 									Radix&rsquo;s Dialog primitive
 								</a>{' '}
 								under the hood and is inspired by{' '}
-								<a
-									href='https://twitter.com/devongovett/status/1674470185783402496'
-									className='underline'
-									target='_blank'
-									rel='noreferrer'
-								>
+								<a href='' className='underline' target='_blank' rel='noreferrer'>
 									this tweet.
 								</a>
 							</p>
@@ -54,12 +44,7 @@ export function DrawerInDrawer() {
 												</p>
 												<p className='mb-2 text-gray-600'>
 													You can view more examples{' '}
-													<a
-														href='https://github.com/emilkowalski/vaul#examples'
-														className='underline'
-														target='_blank'
-														rel='noreferrer'
-													>
+													<a href='' className='underline' target='_blank' rel='noreferrer'>
 														here
 													</a>
 													.
@@ -70,7 +55,7 @@ export function DrawerInDrawer() {
 											<div className='mx-auto flex max-w-md justify-end gap-6'>
 												<a
 													className='gap-0.25 flex items-center text-xs text-gray-600'
-													href='https://github.com/emilkowalski/vaul'
+													href=''
 													target='_blank'
 													rel='noreferrer'
 												>
@@ -94,7 +79,7 @@ export function DrawerInDrawer() {
 												</a>
 												<a
 													className='gap-0.25 flex items-center text-xs text-gray-600'
-													href='https://twitter.com/emilkowalski_'
+													href=''
 													target='_blank'
 													rel='noreferrer'
 												>
@@ -125,12 +110,7 @@ export function DrawerInDrawer() {
 					</div>
 					<div className='mt-auto border-t border-gray-200 bg-gray-100 p-4'>
 						<div className='mx-auto flex max-w-md justify-end gap-6'>
-							<a
-								className='gap-0.25 flex items-center text-xs text-gray-600'
-								href='https://github.com/emilkowalski/vaul'
-								target='_blank'
-								rel='noreferrer'
-							>
+							<a className='gap-0.25 flex items-center text-xs text-gray-600' href='' target='_blank' rel='noreferrer'>
 								GitHub
 								<svg
 									fill='none'
@@ -149,12 +129,7 @@ export function DrawerInDrawer() {
 									<path d='M10 14L21 3'></path>
 								</svg>
 							</a>
-							<a
-								className='gap-0.25 flex items-center text-xs text-gray-600'
-								href='https://twitter.com/emilkowalski_'
-								target='_blank'
-								rel='noreferrer'
-							>
+							<a className='gap-0.25 flex items-center text-xs text-gray-600' href='' target='_blank' rel='noreferrer'>
 								Twitter
 								<svg
 									fill='none'

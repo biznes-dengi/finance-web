@@ -5,22 +5,22 @@ const sidebarConfigs = [
 	{
 		label: 'Home',
 		path: '/',
-		icon: Icon.HOME,
+		icon: Icon.user,
 	},
 	{
 		label: 'Tracker',
 		path: '/',
-		icon: Icon.TRACKER,
+		icon: Icon.user,
 	},
 	{
 		label: 'Invest',
 		path: '/',
-		icon: Icon.INVEST,
+		icon: Icon.user,
 	},
 	{
 		label: 'Calculator',
 		path: '/',
-		icon: Icon.CALCULATOR,
+		icon: Icon.user,
 	},
 ];
 
@@ -32,7 +32,7 @@ const sidebarConfigs = [
 export function AppNavbar() {
 	return (
 		<div role='app-navbar' className='w-52'>
-			<div className='mb-12 flex pl-4 text-2xl font-bold'>{Icon.APP_LOGO}</div>
+			<div className='mb-12 flex pl-4 text-2xl font-bold'>{Icon.user}</div> {/* APP LOGO */}
 			<nav>
 				{sidebarConfigs.map(({label, path, icon}, index) => (
 					<div
