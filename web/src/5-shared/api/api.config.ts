@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+export const devMode = process.env.NODE_ENV?.toString() === 'development';
+
 export const axiosInstance = axios.create({
-	baseURL: 'http://localhost:8080',
+	baseURL: devMode ? 'http://localhost:8080' : 'http://finansy.io:8080',
 	headers: {
 		'Content-Type': 'application/json',
 		// 'Access-Control-Allow-Origin': '*',
