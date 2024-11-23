@@ -7,8 +7,6 @@ import {Props} from '../types/List.types.ts';
 export function List<R>(props: Props<R>) {
 	const {rows, renderRow, isFetching} = props;
 
-	console.log(rows?.length);
-
 	return (
 		<>
 			{isFetching && <ItemSkeleton />}

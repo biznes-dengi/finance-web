@@ -27,4 +27,9 @@ export const APP_TEXT = {
 	savings: 'Savings',
 	edit: 'Edit',
 	deleteGoal: 'Delete Goal',
+	email: 'Email',
+	password: 'Password',
+	login: 'Login',
+	logIn: 'Log in',
+	register: 'Register',
 } as const;

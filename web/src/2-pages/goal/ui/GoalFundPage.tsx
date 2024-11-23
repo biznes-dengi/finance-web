@@ -46,7 +46,7 @@ export function GoalFundPage() {
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.root} />
+			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.goalList} />
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions

@@ -9,6 +9,7 @@ type Props = {
 	maxLength?: number;
 	isSearch?: boolean;
 	isAutoFocus?: boolean;
+	type?: 'email' | 'text' | 'password';
 };
 
 /**
@@ -16,7 +17,7 @@ type Props = {
  */
 
 export function TextField(props: Props) {
-	const {value, onChange, placeholder, maxLength, isSearch, isAutoFocus} = props;
+	const {value, onChange, placeholder, maxLength, isSearch, isAutoFocus, type = 'text'} = props;
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,13 +33,13 @@ export function TextField(props: Props) {
 				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{Icon.search}</div>}
 
 				<input
-					ref={inputRef}
-					className={cn('w-full bg-inherit caret-primary-violet outline-0')}
+					type={type}
 					value={value}
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={placeholder}
-					type='text'
 					autoFocus={isAutoFocus}
+					ref={inputRef}
+					className={cn('w-full bg-inherit caret-primary-violet outline-0')}
 				/>
 
 				{value && (

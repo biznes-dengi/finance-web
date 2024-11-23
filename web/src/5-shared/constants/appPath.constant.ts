@@ -9,6 +9,8 @@ export enum APP_PATH {
 	goalTransfer = '/goal-transfer',
 	createGoal = '/goal-create',
 	goalDetails = '/goal-details',
+	login = '/login',
+	register = '/register',
 }
 
 export function getGoalDetailsPath(id: any) {

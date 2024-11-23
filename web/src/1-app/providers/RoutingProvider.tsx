@@ -3,11 +3,14 @@ import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
 import {APP_PATH} from '@shared/constants';
 import {pageNotFoundRoute} from '@pages/not-found';
 import {goalRoutes} from '@pages/goal';
+import {authRoutes} from '@pages/auth/route/auth.route.tsx';
 
 const router = createBrowserRouter([
-	{children: [...goalRoutes, pageNotFoundRoute]},
+	{
+		children: [...goalRoutes, ...authRoutes, pageNotFoundRoute],
+	},
 
-	{path: '/', element: <Navigate to={APP_PATH.goalList} replace />},
+	{path: APP_PATH.root, element: <Navigate to={APP_PATH.login} replace />},
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},
 ]);
 

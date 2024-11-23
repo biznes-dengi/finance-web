@@ -92,7 +92,7 @@ export function GoalTransferPage() {
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.root} />
+			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.goalList} />
 
 			<Box basePaddingX className='relative flex-1'>
 				<Box className='flex flex-col gap-2'>

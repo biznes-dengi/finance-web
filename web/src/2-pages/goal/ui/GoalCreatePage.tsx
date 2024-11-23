@@ -66,7 +66,7 @@ export function GoalCreatePage() {
 	const Header = (
 		<PageHeader
 			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
-			backPath={APP_PATH.root}
+			backPath={APP_PATH.goalList}
 		/>
 	);
 

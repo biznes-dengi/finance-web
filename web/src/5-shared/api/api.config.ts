@@ -9,15 +9,3 @@ export const axiosInstance = axios.create({
 		withCredentials: true,
 	},
 });
-
-// FUCHS -- httpClient.interceptors.response.use()
-
-// const setTokenToInstance = (token: string) => {
-// 	localStorage.setItem('token', token);
-//
-// 	axiosInstance.interceptors.request.use((lib) => {
-// 		lib.headers.authorization = localStorage.getItem('token');
-//
-// 		return lib;
-// 	});
-// };

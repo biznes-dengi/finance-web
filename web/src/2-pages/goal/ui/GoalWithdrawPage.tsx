@@ -48,7 +48,7 @@ export function GoalWithdrawPage() {
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.withdraw} backPath={APP_PATH.root} />
+			<PageHeader title={APP_TEXT.withdraw} backPath={APP_PATH.goalList} />
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions
