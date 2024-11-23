@@ -36,7 +36,12 @@ export function Button(props: Props) {
 	};
 
 	function gcn(...buttonClassName: Array<ClassValue>) {
-		return cn('block', disabled ? 'cursor-not-allowed' : 'cursor-pointer', ...buttonClassName, className);
+		return cn(
+			'block transform transition duration-200 ease-in-out active:scale-95 active:brightness-95',
+			disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+			...buttonClassName,
+			className,
+		);
 	}
 
 	if (type === ButtonType.main) {
@@ -76,12 +81,7 @@ export function Button(props: Props) {
 		}
 
 		return (
-			<button
-				{...buttonProps}
-				className={gcn(
-					'flex transform flex-col items-center transition duration-200 ease-in-out active:scale-95 active:brightness-95',
-				)}
-			>
+			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
 				{icon && (
 					<div className='m-1 flex size-11 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-[22px]')}

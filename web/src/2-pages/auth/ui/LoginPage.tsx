@@ -40,7 +40,7 @@ export function LoginPage() {
 			<div>
 				<div className='mb-6 text-3xl font-bold'>{APP_TEXT.login}</div>
 
-				<div className='flex w-80 flex-col gap-4'>
+				<div className='flex w-[350px] flex-col gap-4'>
 					<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} isAutoFocus />
 					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 				</div>

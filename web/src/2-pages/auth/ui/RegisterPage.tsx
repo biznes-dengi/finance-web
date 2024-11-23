@@ -51,7 +51,7 @@ export function RegisterPage() {
 				</Button>
 				<div className='mb-6 text-3xl font-bold'>{APP_TEXT.register}</div>
 
-				<div className='flex w-80 flex-col gap-4'>
+				<div className='flex w-[350px] flex-col gap-4'>
 					<TextField type='email' value={login} onChange={setLogin} placeholder={APP_TEXT.email} isAutoFocus />
 					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 				</div>
