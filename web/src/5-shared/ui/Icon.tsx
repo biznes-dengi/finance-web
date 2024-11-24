@@ -30,13 +30,24 @@ export const Icon = {
 	// INVEST: <img src={investIconPath} alt='invest icon' />,
 	// TRACKER: <img src={trackerIconPath} alt='tracker icon' />,
 	// user: <img src={userIconPath} alt='user icon' />,
+	backButton: (
+		<span
+			style={{
+				display: 'inline-block',
+				width: '24px',
+				height: '24px',
+				backgroundImage: `url(${revolutBackButtonPath})`,
+				backgroundSize: 'contain',
+				backgroundRepeat: 'no-repeat',
+			}}
+		/>
+	),
 
 	search: <MagnifyingGlassIcon className='h-4 w-4' />,
 	camera: <CameraIcon className='h-5 w-5' />,
 	user: <UserIcon className='h-5 w-5' />,
 
 	x: <XMarkIcon />,
-	backButton: <img src={revolutBackButtonPath} alt='user icon' />,
 	createGoal: <FolderPlusIcon />,
 	fund: <PlusIcon />,
 	transfer: <ArrowUpRightIcon />,
