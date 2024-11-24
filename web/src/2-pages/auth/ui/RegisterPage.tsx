@@ -53,7 +53,7 @@ export function RegisterPage() {
 						onClick={() => navigate(APP_PATH.login)}
 						className='absolute top-[-40px] text-black'
 					>
-						{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black ml-[-3px]'})}
+						{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black'})}
 					</Button>
 
 					<div className='mb-6 text-3xl font-bold'>{APP_TEXT.register}</div>

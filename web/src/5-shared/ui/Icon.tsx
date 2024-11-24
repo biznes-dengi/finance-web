@@ -15,10 +15,10 @@ import {
 	XCircleIcon,
 	UserIcon,
 } from '@heroicons/react/24/solid';
-import {ArrowLeftIcon} from 'lucide-react';
 import {BriefcaseIcon, FolderPlusIcon, PlusIcon, FolderIcon} from '@heroicons/react/24/outline';
-
 import {cn} from '@shared/lib';
+// @ts-ignore
+import revolutBackButtonPath from '../../../assets/revolutBackButton.svg';
 
 /** Icons should be medium-bold, to corellate with text */
 
@@ -36,7 +36,7 @@ export const Icon = {
 	user: <UserIcon className='h-5 w-5' />,
 
 	x: <XMarkIcon />,
-	backButton: <ArrowLeftIcon className='text-black' />,
+	backButton: <img src={revolutBackButtonPath} alt='user icon' />,
 	createGoal: <FolderPlusIcon />,
 	fund: <PlusIcon />,
 	transfer: <ArrowUpRightIcon />,
