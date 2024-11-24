@@ -47,7 +47,7 @@ export function LoginPage() {
 						<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 					</div>
 
-					<div className='relative mt-8 flex flex-col gap-4'>
+					<div className='relative my-6 flex flex-col gap-4'>
 						<Button type={ButtonType.main} onClick={handleLogin}>
 							{APP_TEXT.logIn}
 						</Button>

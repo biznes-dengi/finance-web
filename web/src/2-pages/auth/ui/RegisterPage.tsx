@@ -63,7 +63,7 @@ export function RegisterPage() {
 						<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 					</div>
 
-					<div className='mt-8 flex flex-col gap-4'>
+					<div className='my-6 flex flex-col gap-4'>
 						<Button type={ButtonType.main} onClick={handleRegister} isFetching={isRegisterPending}>
 							{APP_TEXT.register}
 						</Button>
