@@ -1,5 +1,5 @@
 import {getApiPath, HttpClient} from '@shared/api';
-import {axiosInstance} from '@shared/api/api.config.ts';
+import {authService} from '@entities/auth/auth.service.ts';
 
 class AuthApi {
 	async register(payload: any) {
@@ -16,27 +16,16 @@ class AuthApi {
 				data: payload,
 			});
 
-			const token = `Bearer ${response}`;
+			authService.startSession(`Bearer ${response}`);
 
-			this.setupInterceptor(token);
-
-			localStorage.setItem('token', token);
-
-			return token;
+			return response;
 		} catch (error) {
-			throw new Error('Ошибка при авторизации');
+			throw new Error('Login error');
 		}
 	}
 
-	setupInterceptor(token: string) {
-		axiosInstance.interceptors.request.use((config: any) => {
-			config.headers.authorization = token;
-			return config;
-		});
-	}
-
 	logout() {
-		localStorage.removeItem('token');
+		authService.endSession();
 		return Promise.resolve();
 	}
 }

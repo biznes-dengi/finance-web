@@ -1,5 +1,5 @@
 import {APP_PATH} from '@shared/constants';
-import {withRouteGuard} from '@shared/lib';
+import {PrivateRoute} from '@shared/lib';
 import {AppScreenLayout, AppLayout} from '@pages/ui';
 import {GoalCreatePage} from '../ui/GoalCreatePage.tsx';
 import {GoalDetailsPage} from '../ui/GoalDetailsPage.tsx';
@@ -15,57 +15,57 @@ import {GoalDetailsTransferPage} from '@pages/goal/ui/GoalDetailsTransferPage.ts
 
 const goalListRoute = {
 	path: APP_PATH.goalList,
-	element: withRouteGuard({page: <GoalListPage />}),
+	element: <PrivateRoute page={<GoalListPage />} />,
 };
 
 const goalCreateRoute = {
 	path: APP_PATH.createGoal,
-	element: withRouteGuard({page: <GoalCreatePage />}),
+	element: <PrivateRoute page={<GoalCreatePage />} />,
 };
 
 const goalTransferRoute = {
 	path: APP_PATH.goalTransfer,
-	element: withRouteGuard({page: <GoalTransferPage />}),
+	element: <PrivateRoute page={<GoalTransferPage />} />,
 };
 
 const goalFundRoute = {
 	path: APP_PATH.goalFund,
-	element: withRouteGuard({page: <GoalFundPage />}),
+	element: <PrivateRoute page={<GoalFundPage />} />,
 };
 
 const goalWithdrawRoute = {
 	path: APP_PATH.goalWithdraw,
-	element: withRouteGuard({page: <GoalWithdrawPage />}),
+	element: <PrivateRoute page={<GoalWithdrawPage />} />,
 };
 
 const goalDetailsRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId`,
-	element: withRouteGuard({page: <GoalDetailsPage />}),
+	element: <PrivateRoute page={<GoalDetailsPage />} />,
 };
 
 const goalDetailsFundRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/fund`,
-	element: withRouteGuard({page: <GoalDetailsFundPage />}),
+	element: <PrivateRoute page={<GoalDetailsFundPage />} />,
 };
 
 const goalDetailsWithdrawRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/withdraw`,
-	element: withRouteGuard({page: <GoalDetailsWithdrawPage />}),
+	element: <PrivateRoute page={<GoalDetailsWithdrawPage />} />,
 };
 
 const goalEditRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/edit`,
-	element: withRouteGuard({page: <GoalEditPage />}),
+	element: <PrivateRoute page={<GoalEditPage />} />,
 };
 
 const goalTransactionsRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/transactions`,
-	element: withRouteGuard({page: <GoalTransactionsPage />}),
+	element: <PrivateRoute page={<GoalTransactionsPage />} />,
 };
 
 const goalDetailsTransferRoute = {
 	path: `${APP_PATH.goalDetails}/:goalId/transfer`,
-	element: withRouteGuard({page: <GoalDetailsTransferPage />}),
+	element: <PrivateRoute page={<GoalDetailsTransferPage />} />,
 };
 
 export const goalRoutes = [

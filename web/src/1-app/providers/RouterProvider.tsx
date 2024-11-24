@@ -1,4 +1,4 @@
-import {createBrowserRouter, Navigate, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, Navigate, RouterProvider as ReactRouterProvider} from 'react-router-dom';
 
 import {APP_PATH} from '@shared/constants';
 import {pageNotFoundRoute} from '@pages/not-found';
@@ -14,6 +14,6 @@ const router = createBrowserRouter([
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},
 ]);
 
-export function RoutingProvider() {
-	return <RouterProvider router={router} />;
+export function RouterProvider() {
+	return <ReactRouterProvider router={router} />;
 }

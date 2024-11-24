@@ -3,7 +3,7 @@ export * from './helpers/text.helpers.ts';
 export * from './helpers/style.helpers.ts';
 export * from './helpers/url.helpers.ts';
 
-export * from './hocs/withRouteGuard.tsx';
+export * from './components/PrivateRoute.tsx';
 
 export * from './hooks/useFilter.ts';
 

@@ -24,9 +24,11 @@ function useBoardSavingsId() {
 }
 
 function useTotalBalance() {
+	const boardSavingId = useBoardSavingsId();
+
 	const {data, isFetching} = useQuery({
 		queryKey: ['board-savings-balance'],
-		queryFn: () => goalApi.fetchBoardSavingsBalance(1),
+		queryFn: () => goalApi.fetchBoardSavingsBalance(boardSavingId),
 	});
 
 	return {totalBalance: data, isTotalBalanceFetching: isFetching};
