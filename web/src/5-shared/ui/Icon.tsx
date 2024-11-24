@@ -1,6 +1,5 @@
 import {
 	ArrowDownIcon,
-	ArrowLeftIcon,
 	ArrowTrendingUpIcon,
 	ArrowUpRightIcon,
 	CalendarIcon,
@@ -16,6 +15,7 @@ import {
 	XCircleIcon,
 	UserIcon,
 } from '@heroicons/react/24/solid';
+import {ArrowLeftIcon} from 'lucide-react';
 import {BriefcaseIcon, FolderPlusIcon, PlusIcon, FolderIcon} from '@heroicons/react/24/outline';
 
 import {cn} from '@shared/lib';
@@ -36,7 +36,7 @@ export const Icon = {
 	user: <UserIcon className='h-5 w-5' />,
 
 	x: <XMarkIcon />,
-	backButton: <ArrowLeftIcon />,
+	backButton: <ArrowLeftIcon className='text-black' />,
 	createGoal: <FolderPlusIcon />,
 	fund: <PlusIcon />,
 	transfer: <ArrowUpRightIcon />,
