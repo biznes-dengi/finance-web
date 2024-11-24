@@ -22,7 +22,7 @@ jobs:
         port: ${{ secrets.SERVER_PORT}}
         rm: true
         source: "./*"
-        target: "home/admin/finance-app-master/finance-web"
+        target: "home/admin/test"
         cache: 'npm'
         
     - run: npm update
