@@ -12,7 +12,7 @@ import {authService} from '@entities/auth';
 
 export function PrivateRoute({page}: {page: ReactNode}) {
 	if (!authService.token) {
-		return <Navigate to={APP_PATH.login} replace />;
+		return <Navigate to={APP_PATH.logIn} replace />;
 	} else {
 		authService.startSession(authService.token);
 	}

@@ -30,6 +30,6 @@ export const APP_TEXT = {
 	password: 'Password',
 	enterCredentials: 'Enter credentials',
 	logIn: 'Log in',
-	register: 'Register',
+	signUp: 'Sign up',
 	finansy: 'Finansy',
 } as const;

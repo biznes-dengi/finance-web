@@ -13,7 +13,7 @@ class AuthModel {
 				return authApi.register(payload);
 			},
 			onSuccess: () => {
-				navigate(APP_PATH.login);
+				navigate(APP_PATH.logIn);
 			},
 		});
 
@@ -58,7 +58,7 @@ class AuthModel {
 				return authApi.logout();
 			},
 			onSuccess: () => {
-				navigate(APP_PATH.login);
+				navigate(APP_PATH.logIn);
 			},
 		});
 

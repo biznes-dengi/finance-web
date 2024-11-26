@@ -6,7 +6,7 @@ import {authModel} from '@entities/auth';
 
 // TODO: переиспользовать PageHeader
 
-export function RegisterPage() {
+export function SignupPage() {
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -15,7 +15,7 @@ export function RegisterPage() {
 	const {register, isRegisterPending, isRegisterError} = authModel.useRegister();
 
 	useEffect(() => {
-		document.title = 'Register | Finansy';
+		document.title = 'Sign up | Finansy';
 
 		return () => {
 			document.title = 'Finansy';
@@ -58,13 +58,13 @@ export function RegisterPage() {
 				<div className='relative'>
 					<Button
 						type={ButtonType.icon}
-						onClick={() => navigate(APP_PATH.login)}
+						onClick={() => navigate(APP_PATH.logIn)}
 						className='absolute top-[-40px] text-black'
 					>
 						{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black'})}
 					</Button>
 
-					<div className='mb-6 text-3xl font-bold'>{APP_TEXT.register}</div>
+					<div className='mb-6 text-3xl font-bold'>{APP_TEXT.signUp}</div>
 
 					<div className='flex w-[350px] flex-col gap-4'>
 						<TextField type='email' value={login} onChange={setLogin} placeholder={APP_TEXT.email} isAutoFocus />
@@ -73,7 +73,7 @@ export function RegisterPage() {
 
 					<div className='my-6 flex flex-col gap-4'>
 						<Button type={ButtonType.main} onClick={handleRegister} isFetching={isRegisterPending}>
-							{APP_TEXT.register}
+							{APP_TEXT.signUp}
 						</Button>
 						{isRegisterError && <div className='text-red-600'>Some error occur</div>}
 					</div>

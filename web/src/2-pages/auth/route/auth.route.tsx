@@ -1,15 +1,15 @@
 import {LoginPage} from '../ui/LoginPage.tsx';
-import {RegisterPage} from '../ui/RegisterPage.tsx';
+import {SignupPage} from '../ui/SignupPage.tsx';
 import {APP_PATH} from '@shared/constants';
 
 const loginRoute = {
-	path: APP_PATH.login,
+	path: APP_PATH.logIn,
 	element: <LoginPage />,
 };
 
-const registerRoute = {
-	path: APP_PATH.register,
-	element: <RegisterPage />,
+const signupRoute = {
+	path: APP_PATH.signUp,
+	element: <SignupPage />,
 };
 
-export const authRoutes = [loginRoute, registerRoute];
+export const authRoutes = [loginRoute, signupRoute];
