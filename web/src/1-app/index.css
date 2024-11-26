@@ -4,6 +4,7 @@
 
 #root {
     @apply bg-light-grey;
+    font-family: "Inter", sans-serif;
 }
 
 /* shadcn UI */

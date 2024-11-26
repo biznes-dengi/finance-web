@@ -15,6 +15,14 @@ export function RegisterPage() {
 	const {register, isRegisterPending, isRegisterError} = authModel.useRegister();
 
 	useEffect(() => {
+		document.title = 'Register | Finansy';
+
+		return () => {
+			document.title = 'Finansy';
+		};
+	}, []);
+
+	useEffect(() => {
 		function handleKeyDown(event: KeyboardEvent) {
 			if (event.key === 'Enter') {
 				handleRegister();

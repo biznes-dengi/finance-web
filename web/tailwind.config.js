@@ -11,7 +11,10 @@ export default {
 				'primary-violet': '#805CF5',
 				'secondary-violet': '#F2EEFE',
 				'primary-blue': '#4F55F1',
-				'input-grey': '#EDEFF2',
+
+				field: '#EDEFF2',
+				'field-state': '#DFE3E7',
+
 				black: '#191C1F',
 			},
 			borderRadius: {
