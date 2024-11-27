@@ -13,11 +13,23 @@ import {
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
 import {useNavigate} from 'react-router-dom';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
+import {getApiPath, HttpClient} from '@shared/api';
+
+async function getUserData() {
+	const response = await HttpClient.get({url: getApiPath('users/me')});
+	return response;
+}
 
 function useBoardSavingsId() {
+	const {data: userData} = useQuery({
+		queryKey: ['user-data'],
+		queryFn: () => getUserData(),
+	}) as any;
+
 	const {data} = useQuery({
 		queryKey: ['board-savings-id'],
-		queryFn: () => goalApi.fetchBoardSavingsId(1),
+		queryFn: () => goalApi.fetchBoardSavingsId(userData.id),
+		enabled: !!userData,
 	});
 
 	return data;
@@ -29,6 +41,7 @@ function useTotalBalance() {
 	const {data, isFetching} = useQuery({
 		queryKey: ['board-savings-balance'],
 		queryFn: () => goalApi.fetchBoardSavingsBalance(boardSavingId),
+		enabled: !!boardSavingId,
 	});
 
 	return {totalBalance: data, isTotalBalanceFetching: isFetching};

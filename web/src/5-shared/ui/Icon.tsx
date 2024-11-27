@@ -5,7 +5,6 @@ import {
 	CalendarIcon,
 	CameraIcon,
 	CheckCircleIcon,
-	CheckIcon,
 	ChevronDownIcon,
 	ChevronRightIcon,
 	CloudArrowUpIcon,
@@ -15,7 +14,7 @@ import {
 } from '@heroicons/react/24/solid';
 import {BriefcaseIcon, FolderIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
 import {cn} from '@shared/lib';
-import {EyeIcon, EyeOffIcon, X} from 'lucide-react';
+import {EyeIcon, EyeOffIcon, X, CheckIcon} from 'lucide-react';
 
 // @ts-ignore
 import revolutBackButtonPath from '../../../assets/revolutBackButton.svg';
@@ -54,7 +53,6 @@ export const ICON_MAP = {
 	transfer: <ArrowUpRightIcon />,
 	withdraw: <ArrowDownIcon />,
 	rightChevron: <ChevronRightIcon />,
-	check: <CheckIcon />,
 	uploadImage: <CloudArrowUpIcon />,
 	transferTo: <ArrowDownIcon />,
 	trendUp: <ArrowTrendingUpIcon />,
@@ -68,11 +66,19 @@ export const ICON_MAP = {
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,
 	x: X,
+	check: CheckIcon,
 };
 
 export const Icon = ICON_MAP;
 
-export function AppIcon({type, className, ...rest}: {type: 'showPassword' | 'hidePassword' | 'x'; className?: string}) {
+export function AppIcon({
+	type,
+	className,
+	...rest
+}: {
+	type: 'showPassword' | 'hidePassword' | 'x' | 'check';
+	className?: string;
+}) {
 	const Icon = ICON_MAP[type];
 
 	return <Icon className={cn('shrink-0', className)} {...rest} />;

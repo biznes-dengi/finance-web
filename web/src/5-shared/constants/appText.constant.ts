@@ -26,7 +26,7 @@ export const APP_TEXT = {
 	savings: 'Savings',
 	edit: 'Edit',
 	deleteGoal: 'Delete Goal',
-	email: 'Email',
+	username: 'Username',
 	password: 'Password',
 	welcome: 'Welcome',
 	logIn: 'Log in',

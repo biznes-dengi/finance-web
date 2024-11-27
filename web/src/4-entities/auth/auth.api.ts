@@ -2,8 +2,8 @@ import {getApiPath, HttpClient} from '@shared/api';
 import {authService} from '@entities/auth/auth.service.ts';
 
 class AuthApi {
-	async register(payload: any) {
-		await HttpClient.post({
+	async signup(payload: any) {
+		return await HttpClient.post({
 			url: getApiPath('auth/register'),
 			data: payload,
 		});

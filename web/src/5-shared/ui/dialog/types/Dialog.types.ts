@@ -9,4 +9,5 @@ export type DrawerProps = {
 	title?: ReactNode;
 	children: ReactNode;
 	showUX?: boolean;
+	progress?: number;
 };
