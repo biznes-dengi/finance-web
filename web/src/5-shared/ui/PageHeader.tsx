@@ -7,12 +7,13 @@ type Props = {
 	title?: string;
 	backPath?: string;
 	handleBackButtonClick?: () => void;
+	withBackButton?: boolean;
 };
 
 /** если есть возможность прокинуть backPath - лучше так и сделать */
 
 export function PageHeader(props: Props) {
-	const {title, handleBackButtonClick, backPath} = props;
+	const {title, handleBackButtonClick, backPath, withBackButton = true} = props;
 
 	const navigate = useNavigate();
 
@@ -25,14 +26,19 @@ export function PageHeader(props: Props) {
 
 	return (
 		<div role='page-header' className='mb-6 w-full'>
-			<Button type={ButtonType.icon} onClick={onBackButtonClick} className='p-4 text-black'>
-				{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black'})}
-			</Button>
-			{title && (
-				<Box basePaddingX className='text-4xl font-bold'>
-					{title}
-				</Box>
+			{withBackButton && (
+				<Button
+					type={ButtonType.icon}
+					icon={
+						<div className='flex items-center justify-center p-2 pl-0'>
+							{cloneElement(Icon.backButton, {className: 'size-6 text-black'})}
+						</div>
+					}
+					onClick={onBackButtonClick}
+					isOnlyIcon
+				/>
 			)}
+			{title && <Box className='text-3xl font-bold'>{title}</Box>}
 		</div>
 	);
 }

@@ -22,12 +22,23 @@ interface Props extends CommonButtonSettings {
 	disabled?: boolean;
 	isFetching?: boolean;
 	isLoading?: boolean;
+	isOnlyIcon?: boolean;
 }
 
 // TODO: Typescript: when type = icon -> icon prop required
 
 export function Button(props: Props) {
-	const {children, className, onClick, type = ButtonType.text, icon, disabled, isFetching, isLoading} = props;
+	const {
+		children,
+		className,
+		onClick,
+		type = ButtonType.text,
+		icon,
+		disabled,
+		isFetching,
+		isLoading,
+		isOnlyIcon,
+	} = props;
 
 	const navigate = useNavigate();
 
@@ -93,10 +104,18 @@ export function Button(props: Props) {
 			);
 		}
 
+		if (isOnlyIcon) {
+			return (
+				<button {...buttonProps} className={gcn('flex flex-col items-center')}>
+					{icon}
+				</button>
+			);
+		}
+
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
 				{icon && (
-					<div className='m-1 flex size-11 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
+					<div className='m-1 flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet'>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-[22px]')}
 					</div>
 				)}

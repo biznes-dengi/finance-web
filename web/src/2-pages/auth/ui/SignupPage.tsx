@@ -1,16 +1,15 @@
-import {cloneElement, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Button, ButtonType, Icon, TextField} from '@shared/ui';
+import {useEffect, useState} from 'react';
+import {AuthLayout} from './AuthLayout.tsx';
+import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
-
-// TODO: переиспользовать PageHeader
+import {cn} from '@shared/lib';
 
 export function SignupPage() {
-	const [login, setLogin] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const navigate = useNavigate();
+	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
 
 	const {register, isRegisterPending, isRegisterError} = authModel.useRegister();
 
@@ -23,23 +22,31 @@ export function SignupPage() {
 	}, []);
 
 	useEffect(() => {
-		function handleKeyDown(event: KeyboardEvent) {
+		function handleKeyUp(event: KeyboardEvent) {
 			if (event.key === 'Enter') {
 				handleRegister();
 			}
 		}
 
+		function handleKeyDown(event: KeyboardEvent) {
+			if (event.key === 'Enter') {
+				setDisabledBoxShadow(true);
+			}
+		}
+
 		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('keyup', handleKeyUp);
 
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('keyup', handleKeyUp);
 		};
-	}, [login, password]);
+	}, [email, password]);
 
 	function handleRegister() {
 		const payload = {
 			role: 'ADMIN',
-			email: login,
+			email,
 			pass: password,
 			nickname: 'string',
 			gender: 'MALE',
@@ -52,33 +59,28 @@ export function SignupPage() {
 	}
 
 	return (
-		<div className='relative'>
-			<div className='absolute top-0 pl-8 pt-6 text-xl font-bold'>Finansy</div>
-			<div className='flex h-screen flex-col items-center justify-center'>
-				<div className='relative'>
+		<AuthLayout>
+			<div className='h-[436px]'>
+				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.logIn} />
+
+				<div className='flex w-[350px] flex-col gap-4'>
+					<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} isAutoFocus />
+					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
+					{isRegisterError && <div className='text-red-700'>Some error occur</div>}
+				</div>
+
+				<div className='my-6 flex flex-col items-center gap-4'>
 					<Button
-						type={ButtonType.icon}
-						onClick={() => navigate(APP_PATH.logIn)}
-						className='absolute top-[-40px] text-black'
+						type={ButtonType.main}
+						onClick={handleRegister}
+						disabled={!email || !password}
+						className={cn(disabledBoxShadow && 'shadow-none')}
+						isLoading={isRegisterPending}
 					>
-						{cloneElement(Icon.backButton, {className: 'h-6 w-6 text-black'})}
+						{APP_TEXT.signUp}
 					</Button>
-
-					<div className='mb-6 text-3xl font-bold'>{APP_TEXT.signUp}</div>
-
-					<div className='flex w-[350px] flex-col gap-4'>
-						<TextField type='email' value={login} onChange={setLogin} placeholder={APP_TEXT.email} isAutoFocus />
-						<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
-					</div>
-
-					<div className='my-6 flex flex-col gap-4'>
-						<Button type={ButtonType.main} onClick={handleRegister} isFetching={isRegisterPending}>
-							{APP_TEXT.signUp}
-						</Button>
-						{isRegisterError && <div className='text-red-600'>Some error occur</div>}
-					</div>
 				</div>
 			</div>
-		</div>
+		</AuthLayout>
 	);
 }

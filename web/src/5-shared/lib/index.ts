@@ -6,5 +6,6 @@ export * from './helpers/url.helpers.ts';
 export * from './components/PrivateRoute.tsx';
 
 export * from './hooks/useFilter.ts';
+export * from './hooks/useResponsive.ts';
 
 export * from './services/date.service.ts';

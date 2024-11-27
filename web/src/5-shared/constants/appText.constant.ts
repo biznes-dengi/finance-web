@@ -28,8 +28,9 @@ export const APP_TEXT = {
 	deleteGoal: 'Delete Goal',
 	email: 'Email',
 	password: 'Password',
-	enterCredentials: 'Enter credentials',
+	welcome: 'Welcome',
 	logIn: 'Log in',
 	signUp: 'Sign up',
 	finansy: 'Finansy',
+	createAccount: 'Create account',
 } as const;

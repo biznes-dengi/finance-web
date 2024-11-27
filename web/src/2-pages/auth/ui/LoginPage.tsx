@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Button, ButtonType, TextField} from '@shared/ui';
+import {AuthLayout} from './AuthLayout.tsx';
+import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
 import {cn} from '@shared/lib';
@@ -55,39 +56,37 @@ export function LoginPage() {
 	}
 
 	return (
-		<div className='relative'>
-			<div className='absolute top-0 ml-8 mt-6 cursor-default text-xl font-bold'>{APP_TEXT.finansy}</div>
-			<div className='flex h-screen flex-col items-center justify-center'>
-				<div>
-					<div className='mb-6 text-3xl font-bold'>{APP_TEXT.enterCredentials}</div>
+		<AuthLayout>
+			<div className='px-4'>
+				<PageHeader title={APP_TEXT.welcome} withBackButton={false} />
 
-					<div className='flex w-[350px] flex-col gap-4'>
-						<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} isAutoFocus />
-						<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
-						<Button
-							className='w-fit text-left font-light'
-							onClick={() => alert('Пока не можем помочь. Вспоминай, а то не войдешь :)')}
-						>
-							{APP_TEXT.forgotPassword}
-						</Button>
-					</div>
+				<div className='flex w-[350px] flex-col gap-4'>
+					<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} isAutoFocus />
+					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 
-					<div className='my-6 flex flex-col items-center gap-4'>
-						<Button
-							type={ButtonType.main}
-							onClick={handleLogin}
-							disabled={!email || !password}
-							className={cn(disabledBoxShadow && 'shadow-none')}
-							isLoading={isLoginPending}
-						>
-							{APP_TEXT.logIn}
-						</Button>
-						<Button onClick={() => navigate(APP_PATH.signUp)} isFetching={isLoginPending}>
-							{APP_TEXT.signUp}
-						</Button>
-					</div>
+					<Button
+						className='w-fit text-left font-light'
+						onClick={() => alert('Пока не можем помочь. Вспоминай, а то не войдешь 😁')}
+					>
+						{APP_TEXT.forgotPassword}
+					</Button>
+				</div>
+
+				<div className='my-6 flex flex-col items-center gap-4'>
+					<Button
+						type={ButtonType.main}
+						onClick={handleLogin}
+						disabled={!email || !password}
+						className={cn(disabledBoxShadow && 'shadow-none')}
+						isLoading={isLoginPending}
+					>
+						{APP_TEXT.logIn}
+					</Button>
+					<Button onClick={() => navigate(APP_PATH.signUp)} isFetching={isLoginPending}>
+						{APP_TEXT.signUp}
+					</Button>
 				</div>
 			</div>
-		</div>
+		</AuthLayout>
 	);
 }
