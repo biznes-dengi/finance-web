@@ -5,6 +5,8 @@ export default {
 	theme: {
 		extend: {
 			colors: {
+				black: '#191C1F',
+
 				'primary-grey': '#75808A',
 				'secondary-grey': '#DFE3E7',
 				'light-grey': '#F7F7F7',
@@ -14,8 +16,7 @@ export default {
 
 				field: '#EDEFF2',
 				'field-state': '#DFE3E7',
-
-				black: '#191C1F',
+				'field-helper': '#75808A',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -3,21 +3,25 @@ import {AppIcon, Icon} from '@shared/ui/Icon.tsx';
 import {useRef, useState} from 'react';
 
 type Props = {
+	type?: 'email' | 'text' | 'password';
 	value: string;
 	onChange: (value: string) => void;
 	placeholder?: string;
+	label?: string;
 	maxLength?: number;
-	isSearch?: boolean;
 	isAutoFocus?: boolean;
-	type?: 'email' | 'text' | 'password';
+
+	isSearch?: boolean;
 };
+
+// TODO: SearchField -- более высокоуровневый компонент, вынести отдельно
 
 /**
  * when isSearch and focused, pin search-input to the top with animation + cancel text at right
  */
 
 export function TextField(props: Props) {
-	const {value, onChange, placeholder, maxLength, isSearch, isAutoFocus, type = 'text'} = props;
+	const {value, onChange, placeholder, maxLength, isSearch, isAutoFocus, type = 'text', label} = props;
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -29,7 +33,7 @@ export function TextField(props: Props) {
 	}
 
 	return (
-		<>
+		<div role='text-field'>
 			<label
 				className={cn(
 					'group flex items-center rounded-2xl bg-field p-4 transition-colors duration-300 ease-in-out focus-within:bg-field-state hover:bg-field-state',
@@ -49,7 +53,7 @@ export function TextField(props: Props) {
 				/>
 
 				{value && type !== 'password' && (
-					<div className='ml-2 flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary-grey'>
+					<div className='bg-field-helper ml-2 flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full'>
 						<AppIcon
 							type='x'
 							className={cn(
@@ -63,17 +67,19 @@ export function TextField(props: Props) {
 				{value && type === 'password' && (
 					<AppIcon
 						type={isPasswordVisible ? 'hidePassword' : 'showPassword'}
-						className='ml-2 size-5 cursor-pointer text-primary-grey'
+						className='text-field-helper ml-2 size-5 cursor-pointer'
 						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 					/>
 				)}
 			</label>
 
+			{label && <div className='text-field-helper px-4 py-0.5 text-xs font-light'>{label}</div>}
+
 			{maxLength && (
-				<div className={cn('flex cursor-default justify-end pr-4 pt-1 text-sm text-primary-grey')}>
+				<div className='text-field-helper flex cursor-default justify-end pr-4 pt-1 text-sm'>
 					{value.length} / {maxLength}
 				</div>
 			)}
-		</>
+		</div>
 	);
 }

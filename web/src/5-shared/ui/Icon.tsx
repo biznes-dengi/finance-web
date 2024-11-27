@@ -72,16 +72,8 @@ export const ICON_MAP = {
 
 export const Icon = ICON_MAP;
 
-export function AppIcon({
-	type,
-	className,
-	onClick,
-}: {
-	type: 'showPassword' | 'hidePassword' | 'x';
-	className?: string;
-	onClick?: () => void;
-}) {
+export function AppIcon({type, className, ...rest}: {type: 'showPassword' | 'hidePassword' | 'x'; className?: string}) {
 	const Icon = ICON_MAP[type];
 
-	return <Icon {...{className: cn('shrink-0', className), onClick}} />;
+	return <Icon className={cn('shrink-0', className)} {...rest} />;
 }
