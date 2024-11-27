@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Box, Card, Icon, Item, TextField} from '@shared/ui';
+import {AppIcon, Box, Card, Item, TextField} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, isNumber} from '@shared/lib';
 import {CURRENCY} from '@shared/constants';
@@ -50,7 +50,8 @@ export function SelectWithSearch(props: Props) {
 							description={option.description}
 							image={<div className={'size-10 rounded-full bg-primary-grey'} />}
 							onClick={() => handleOptionClick(option.value)}
-							statusIcon={option.checked && Icon.check}
+							//TODO: heroicon
+							statusIcon={option.checked && <AppIcon type='check' />}
 							className={cn(option.checked && 'bg-light-grey')}
 						/>
 					))}

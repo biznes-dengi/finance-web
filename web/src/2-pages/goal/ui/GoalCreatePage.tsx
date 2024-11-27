@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {
+	AppIcon,
 	Box,
 	Button,
 	ButtonType,
@@ -180,15 +181,13 @@ export function GoalCreatePage() {
 			<Dialog showUX={isCreateSuccess || isCreateError}>
 				{isCreateSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.success}</div>
-						</div>
 						<div className='flex flex-col items-center pb-4'>
-							<div className='mb-4 h-10 w-10 pb-4 text-primary-violet'>{Icon.check}</div>
+							<AppIcon type='check' className='mb-5 size-10 text-primary-violet' />
 							<div className='text-center font-semibold'>
 								{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
 								{APP_TEXT.createdSuccess}
 							</div>
+							<div className='mt-2'>Welcome to Finansy family 🤗</div>
 						</div>
 					</Box>
 				)}

@@ -8,7 +8,6 @@ export * from './EmptyState.tsx';
 export * from './box/ui/Box.tsx';
 export * from './PageHeader.tsx';
 export * from './Stepper.tsx';
-export * from './Spinner.tsx';
 
 // new pattern -> get rid of index.ts
 export * from './button';
@@ -23,3 +22,6 @@ export * from './card';
 export * from './date-picker/ui/DatePicker.tsx';
 export * from './currency-picker/ui/CurrencyPicker.tsx';
 export * from './fields/NumericInput.tsx';
+
+export * from './spinner/ui/Spinner.tsx';
+export * from './progress/ui/Progress.tsx';

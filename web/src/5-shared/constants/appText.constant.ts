@@ -1,5 +1,4 @@
 export const APP_TEXT = {
-	signIn: 'Sign in',
 	forgotPassword: 'Forgot your password?',
 	dontHaveAccount: 'Don’t have an account yet?',
 	pageNotFound: 'Page not found',
@@ -27,9 +26,11 @@ export const APP_TEXT = {
 	savings: 'Savings',
 	edit: 'Edit',
 	deleteGoal: 'Delete Goal',
-	email: 'Email',
+	username: 'Username',
 	password: 'Password',
-	login: 'Login',
+	welcome: 'Welcome',
 	logIn: 'Log in',
-	register: 'Register',
+	signUp: 'Sign up',
+	finansy: 'Finansy',
+	createAccount: 'Create account',
 } as const;

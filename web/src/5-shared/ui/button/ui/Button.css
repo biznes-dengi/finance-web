@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .primaryButtonShadow {
+        box-shadow: #805CF5 0 0.1875rem 0.5rem 0;
+    }
+}

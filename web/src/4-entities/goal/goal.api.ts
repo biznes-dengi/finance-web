@@ -25,7 +25,9 @@ async function fetchBoardSavingsId(accountId: number) {
 	}
 }
 
-async function fetchBoardSavingsBalance(boardSavingId: number) {
+async function fetchBoardSavingsBalance(boardSavingId?: number) {
+	if (!boardSavingId) return undefined;
+
 	try {
 		const response = await HttpClient.get({url: getApiPath('board-goals/balance'), data: {boardGoalId: boardSavingId}});
 		return boardSavingBalanceValidator.parse(response);

@@ -1,9 +1,9 @@
 import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
-
-import {cn, styleElement} from '@shared/lib';
-import {PRELOAD_SIZE, PreloadSkeleton} from '@shared/ui';
 import {ClassValue} from 'clsx';
+import {cn, styleElement} from '@shared/lib';
+import {PRELOAD_SIZE, PreloadSkeleton, Spinner} from '@shared/ui';
+import './Button.css';
 
 export enum ButtonType {
 	main,
@@ -21,12 +21,24 @@ interface Props extends CommonButtonSettings {
 	className?: string;
 	disabled?: boolean;
 	isFetching?: boolean;
+	isLoading?: boolean;
+	isOnlyIcon?: boolean;
 }
 
 // TODO: Typescript: when type = icon -> icon prop required
 
 export function Button(props: Props) {
-	const {children, className, onClick, type = ButtonType.text, icon, disabled, isFetching} = props;
+	const {
+		children,
+		className,
+		onClick,
+		type = ButtonType.text,
+		icon,
+		disabled,
+		isFetching,
+		isLoading,
+		isOnlyIcon,
+	} = props;
 
 	const navigate = useNavigate();
 
@@ -49,11 +61,23 @@ export function Button(props: Props) {
 			<button
 				{...buttonProps}
 				className={gcn(
-					'block w-full rounded-3xl py-3 text-center text-white',
-					!disabled ? 'bg-primary-violet' : 'bg-secondary-grey',
+					'block w-full rounded-3xl py-3 text-center text-white active:scale-100',
+					!disabled
+						? 'primaryButtonShadow bg-primary-violet active:shadow-none'
+						: 'cursor-not-allowed bg-primary-violet/20',
+					isLoading && 'cursor-not-allowed bg-primary-violet shadow-none',
 				)}
 			>
-				{children}
+				{isLoading ? (
+					<div className='flex items-center justify-center gap-2'>
+						<div className='relative'>
+							<Spinner className='absolute -left-7 top-1 text-white' />
+							{children}
+						</div>
+					</div>
+				) : (
+					children
+				)}
 			</button>
 		);
 	}
@@ -62,10 +86,10 @@ export function Button(props: Props) {
 		return (
 			<button
 				{...buttonProps}
-				className={gcn('text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
+				className={gcn('w-fit text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
 			>
 				{icon && styleElement(icon, 'size-4')}
-				<span className='font-medium'>{children}</span>
+				<span>{children}</span>
 			</button>
 		);
 	}
@@ -80,10 +104,18 @@ export function Button(props: Props) {
 			);
 		}
 
+		if (isOnlyIcon) {
+			return (
+				<button {...buttonProps} className={gcn('flex flex-col items-center')}>
+					{icon}
+				</button>
+			);
+		}
+
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
 				{icon && (
-					<div className='m-1 flex size-11 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
+					<div className='m-1 flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet'>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-[22px]')}
 					</div>
 				)}

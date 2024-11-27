@@ -2,26 +2,30 @@ import {useMutation} from '@tanstack/react-query';
 import {authApi} from '@entities/auth/auth.api.ts';
 import {useNavigate} from 'react-router-dom';
 import {APP_PATH} from '@shared/constants';
+import {authService} from '@entities/auth/auth.service.ts';
 
 class AuthModel {
-	useRegister() {
+	useSignup() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['register'],
+			mutationKey: ['signup'],
 			mutationFn: (payload: any) => {
-				return authApi.register(payload);
+				return authApi.signup(payload);
 			},
-			onSuccess: () => {
-				navigate(APP_PATH.login);
+			onSuccess: (response) => {
+				setTimeout(() => {
+					authService.startSession(`Bearer ${response}`);
+					navigate(APP_PATH.goalList);
+				}, 2500);
 			},
 		});
 
 		return {
-			register: mutate,
-			isRegisterPending: isPending,
-			isRegisterSuccess: isSuccess,
-			isRegisterError: isError,
+			signup: mutate,
+			isSignupPending: isPending,
+			isSignupSuccess: isSuccess,
+			isSignupError: isError,
 		};
 	}
 
@@ -58,7 +62,7 @@ class AuthModel {
 				return authApi.logout();
 			},
 			onSuccess: () => {
-				navigate(APP_PATH.login);
+				navigate(APP_PATH.logIn);
 			},
 		});
 

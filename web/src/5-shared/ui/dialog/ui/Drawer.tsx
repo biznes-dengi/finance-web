@@ -1,6 +1,5 @@
 import {forwardRef, useImperativeHandle, useRef} from 'react';
 import {Drawer as VaulDrawer} from 'vaul';
-
 import {Box} from '@shared/ui';
 import {DrawerProps, DrawerRef} from '../types/Dialog.types.ts';
 import {cn} from '@shared/lib';
@@ -8,7 +7,7 @@ import {cn} from '@shared/lib';
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
 export const Drawer = forwardRef<DrawerRef, DrawerProps>((props, ref) => {
-	const {title, children, showUX} = props;
+	const {title, children, showUX, progress} = props;
 
 	const openButtonRef = useRef<HTMLButtonElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -26,14 +25,15 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>((props, ref) => {
 	}));
 
 	return (
-		<Root open={showUX} dismissible={!showUX}>
+		// <Root open={showUX} dismissible={!showUX}>
+		<Root dismissible={!showUX}>
 			<Trigger ref={openButtonRef} className='hidden' />
 			<Close ref={closeButtonRef} className='hidden' />
 
 			<Portal>
 				<Overlay className='fixed inset-0 bg-black/40' />
 
-				<Content className='fixed bottom-0 left-0 right-0 rounded-t-2xl bg-light-grey outline-none transition-all duration-200'>
+				<Content className='fixed bottom-0 left-0 right-0 rounded-t-3xl bg-light-grey outline-none transition-all duration-200'>
 					<div
 						className={cn(
 							'mx-auto flex w-full max-w-md flex-col  overflow-auto rounded-t-2xl p-4 pt-2',
@@ -41,10 +41,14 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>((props, ref) => {
 						)}
 					>
 						{showUX ? (
-							<div className='text-center'>animated progress...</div>
+							<div className='text-center'>{/*animated progress...*/}</div>
 						) : (
 							<div className='mx-auto mb-4 h-1.5 w-12 rounded-full bg-zinc-300' />
 						)}
+
+						<div className='mb-4 h-1.5 w-12 rounded-full bg-zinc-300'>
+							<div className='h-full rounded-full bg-zinc-400' style={{width: `${progress}%`}} />
+						</div>
 
 						{title && <Box className='mb-4 flex w-full justify-center text-xl font-medium'>{title}</Box>}
 
