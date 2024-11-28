@@ -4,14 +4,14 @@ import {
 	Button,
 	ButtonType,
 	Card,
-	Dialog,
+	Popup,
 	Icon,
 	Item,
 	NumericInput,
 	PageHeader,
 	SelectWithSearch,
 	TextField,
-	useDialogState,
+	usePopupState,
 } from '@shared/ui';
 import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {useParams} from 'react-router-dom';
@@ -27,22 +27,22 @@ export function GoalEditPage() {
 	const {isEditPending, editGoal} = goalModel.useEdit();
 	const {deleteGoal, isDeletePending} = goalModel.useDelete();
 
-	const {dialogRef: nameDialogRef, openDialog: openNameDialog, closeDialog: closeNameDialog} = useDialogState();
+	const {dialogRef: nameDialogRef, openDialog: openNameDialog, closeDialog: closeNameDialog} = usePopupState();
 	const {
 		dialogRef: targetAmountDialogRef,
 		openDialog: openTargetAmountDialog,
 		closeDialog: closeTargetAmountDialog,
-	} = useDialogState();
+	} = usePopupState();
 	const {
 		dialogRef: deadlineDialogRef,
 		openDialog: openDeadlineDialog,
 		closeDialog: closeDialogDialog,
-	} = useDialogState();
+	} = usePopupState();
 	const {
 		dialogRef: currencyDialogRef,
 		openDialog: openCurrencyDialog,
 		closeDialog: closeCurrencyDialog,
-	} = useDialogState();
+	} = usePopupState();
 
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<number | null | undefined>();
@@ -96,7 +96,7 @@ export function GoalEditPage() {
 						<Button onClick={openNameDialog} icon={Icon.edit}>
 							{data?.name}
 						</Button>
-						<Dialog ref={nameDialogRef}>
+						<Popup ref={nameDialogRef}>
 							<Box className='mb-4 text-xl font-medium'>Edit name</Box>
 							<TextField value={name} onChange={setName} placeholder='Name' />
 							<Box baseMarginY>
@@ -104,14 +104,14 @@ export function GoalEditPage() {
 									{isEditPending ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
-						</Dialog>
+						</Popup>
 					</div>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Target amount</div>
 						<Button onClick={openTargetAmountDialog} icon={Icon.edit}>
 							{data?.targetAmount} {data && CURRENCY_MAP[data.balance.currency].symbol}
 						</Button>
-						<Dialog ref={targetAmountDialogRef}>
+						<Popup ref={targetAmountDialogRef}>
 							<Box className='mb-4 text-xl font-medium'>Edit target amount</Box>
 							<NumericInput
 								value={isNull(targetAmount) ? undefined : targetAmount}
@@ -123,14 +123,14 @@ export function GoalEditPage() {
 									{isEditPending ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
-						</Dialog>
+						</Popup>
 					</div>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Deadline</div>
 						<Button onClick={openDeadlineDialog} icon={Icon.calendar}>
 							{new DateService(deadline).getLocalDateString()}
 						</Button>
-						<Dialog ref={deadlineDialogRef}>
+						<Popup ref={deadlineDialogRef}>
 							<Box className='mb-4 text-xl font-medium'>Edit deadline</Box>
 							<div className='flex w-full justify-center'>
 								<Calendar
@@ -147,14 +147,14 @@ export function GoalEditPage() {
 									{isEditPending ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
-						</Dialog>
+						</Popup>
 					</div>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Currency</div>
 						<Button onClick={openCurrencyDialog} icon={Icon.edit}>
 							{data && CURRENCY_MAP[data.balance.currency].code}
 						</Button>
-						<Dialog ref={currencyDialogRef}>
+						<Popup ref={currencyDialogRef}>
 							<Box className='mb-4 text-xl font-medium'>Edit currency</Box>
 							<SelectWithSearch
 								options={[{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}]}
@@ -166,7 +166,7 @@ export function GoalEditPage() {
 									{isEditPending ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
-						</Dialog>
+						</Popup>
 					</div>
 				</Card>
 			</Box>

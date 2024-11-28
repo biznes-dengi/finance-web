@@ -1,12 +1,11 @@
-import {Item, Icon, List, Dialog, PreloadSkeleton, useDialogState} from '@shared/ui';
-import {styleElement} from '@shared/lib';
+import {Item, Icon, List, Popup, PreloadSkeleton, usePopupState, AppIcon} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {Props} from '../types/SelectInCard.types.ts';
 
 export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options, isFetching} = props;
 
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	const {dialogRef, openDialog, closeDialog} = usePopupState();
 
 	if (isFetching) {
 		return <PreloadSkeleton width={40} height={16} />;
@@ -19,7 +18,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				<div className='ml-2 size-3'>{Icon.chevronDown}</div>
 			</div>
 
-			<Dialog ref={dialogRef} title={APP_TEXT.savings}>
+			<Popup ref={dialogRef} title={APP_TEXT.savings}>
 				<List
 					rows={options}
 					renderRow={(option) => {
@@ -31,14 +30,14 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 									closeDialog();
 									setTimeout(() => onChange(option.value), 200);
 								}}
-								rightNode={checked && styleElement(Icon.check, 'size-5 text-primary-violet flex self-center')}
+								rightNode={checked && <AppIcon type='check' className='flex size-5 self-center text-primary-violet' />}
 								className={checked && 'bg-light-grey'}
 								isNameText
 							/>
 						);
 					}}
 				/>
-			</Dialog>
+			</Popup>
 		</>
 	);
 }

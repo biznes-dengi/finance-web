@@ -1,7 +1,7 @@
 import {useRef} from 'react';
 import {DrawerRef} from '@shared/ui';
 
-export function useDialogState() {
+export function usePopupState() {
 	const dialogRef = useRef<DrawerRef>(null);
 
 	return {

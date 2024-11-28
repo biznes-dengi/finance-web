@@ -4,17 +4,15 @@ import {
 	ArrowUpRightIcon,
 	CalendarIcon,
 	CameraIcon,
-	CheckCircleIcon,
 	ChevronDownIcon,
 	ChevronRightIcon,
 	CloudArrowUpIcon,
 	MagnifyingGlassIcon,
 	PencilIcon,
-	XCircleIcon,
 } from '@heroicons/react/24/solid';
 import {BriefcaseIcon, FolderIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
 import {cn} from '@shared/lib';
-import {EyeIcon, EyeOffIcon, X, CheckIcon} from 'lucide-react';
+import {CheckIcon, EyeIcon, EyeOffIcon, X} from 'lucide-react';
 
 // @ts-ignore
 import revolutBackButtonPath from '../../../assets/revolutBackButton.svg';
@@ -59,14 +57,16 @@ export const ICON_MAP = {
 	edit: <PencilIcon />,
 	calendar: <CalendarIcon />,
 	chevronDown: <ChevronDownIcon />,
-	success: <CheckCircleIcon />,
-	error: <XCircleIcon />,
 	goal: <FolderIcon />,
 
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,
+
 	x: X,
 	check: CheckIcon,
+
+	success: CheckIcon,
+	error: X,
 };
 
 export const Icon = ICON_MAP;
@@ -76,7 +76,7 @@ export function AppIcon({
 	className,
 	...rest
 }: {
-	type: 'showPassword' | 'hidePassword' | 'x' | 'check';
+	type: 'showPassword' | 'hidePassword' | 'x' | 'check' | 'success' | 'error';
 	className?: string;
 }) {
 	const Icon = ICON_MAP[type];

@@ -8,6 +8,5 @@ export type DrawerRef = {
 export type DrawerProps = {
 	title?: ReactNode;
 	children: ReactNode;
-	showUX?: boolean;
-	progress?: number;
+	isStatusDialogOpen?: boolean;
 };

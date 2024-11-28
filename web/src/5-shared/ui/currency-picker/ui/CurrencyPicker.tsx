@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {cn} from '@shared/lib';
-import {Box, Button, ButtonType, Dialog, Icon, useDialogState} from '@shared/ui';
+import {Box, Button, ButtonType, Popup, Icon, usePopupState} from '@shared/ui';
 
 type Props = {
 	buttonText: ReactNode;
@@ -13,7 +13,7 @@ type Props = {
 export function CurrencyPicker(props: Props) {
 	const {value, onChange, buttonText} = props;
 
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	const {dialogRef, openDialog, closeDialog} = usePopupState();
 
 	const [currencyRate, setCurrencyRate] = useState<number | undefined>();
 
@@ -29,7 +29,7 @@ export function CurrencyPicker(props: Props) {
 				</Button>
 			</Box>
 
-			<Dialog ref={dialogRef}>
+			<Popup ref={dialogRef}>
 				<div className='flex w-full flex-col gap-4'>
 					<div className='flex items-center'>
 						<div className='mr-2 shrink-0 font-medium'>1 $ =</div>
@@ -53,7 +53,7 @@ export function CurrencyPicker(props: Props) {
 						Change currency rate
 					</Button>
 				</div>
-			</Dialog>
+			</Popup>
 		</>
 	);
 }

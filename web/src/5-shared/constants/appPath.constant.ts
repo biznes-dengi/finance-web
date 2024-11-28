@@ -1,4 +1,4 @@
-//TODO: convert to functions, to be able to paste params into URL
+//TODO: convert APP_PATH keys from strings to functions, to be able to paste params into URL
 
 export enum APP_PATH {
 	root = '/',

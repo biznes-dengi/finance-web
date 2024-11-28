@@ -2,19 +2,20 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
+import {useKeyClick} from '../hooks/useKeyClick.ts';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
 import {cn} from '@shared/lib';
 
 export function LoginPage() {
+	const navigate = useNavigate();
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const navigate = useNavigate();
+	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
 
 	const {login, isLoginPending} = authModel.useLogin();
-
-	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
 
 	useEffect(() => {
 		document.title = 'Log in | Finansy';
@@ -24,27 +25,12 @@ export function LoginPage() {
 		};
 	}, []);
 
-	useEffect(() => {
-		function handleKeyUp(event: KeyboardEvent) {
-			if (event.key === 'Enter') {
-				handleLogin();
-			}
-		}
-
-		function handleKeyDown(event: KeyboardEvent) {
-			if (event.key === 'Enter') {
-				setDisabledBoxShadow(true);
-			}
-		}
-
-		document.addEventListener('keydown', handleKeyDown);
-		document.addEventListener('keyup', handleKeyUp);
-
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
-			document.removeEventListener('keyup', handleKeyUp);
-		};
-	}, [email, password]);
+	useKeyClick({
+		key: 'Enter',
+		onKeyDown: () => setDisabledBoxShadow(true),
+		onKeyUp: handleLogin,
+		deps: [email, password],
+	});
 
 	function handleLogin() {
 		const payload = {
