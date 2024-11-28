@@ -6,7 +6,7 @@ import {
 	Button,
 	ButtonType,
 	DatePicker,
-	Dialog,
+	Popup,
 	Icon,
 	NumericInputWithOptions,
 	PageHeader,
@@ -178,7 +178,7 @@ export function GoalCreatePage() {
 				</Button>
 			</Box>
 
-			<Dialog showUX={isCreateSuccess || isCreateError}>
+			<Popup isStatusDialogOpen={isCreateSuccess || isCreateError}>
 				{isCreateSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='flex flex-col items-center pb-4'>
@@ -201,7 +201,7 @@ export function GoalCreatePage() {
 						</div>
 					</Box>
 				)}
-			</Dialog>
+			</Popup>
 		</>
 	);
 }

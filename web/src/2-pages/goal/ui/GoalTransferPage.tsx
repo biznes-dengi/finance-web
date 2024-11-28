@@ -6,7 +6,7 @@ import {
 	ButtonType,
 	CurrencyPicker,
 	DatePicker,
-	Dialog,
+	Popup,
 	Icon,
 	NumericInputWithOptions,
 	PageHeader,
@@ -165,11 +165,11 @@ export function GoalTransferPage() {
 				</Button>
 			</Box>
 
-			<Dialog showUX={isTransferSuccess || isTransferError}>
+			<Popup isStatusDialogOpen={isTransferSuccess || isTransferError}>
 				{isTransferSuccess && fromGoalAmount && fromActiveOption && toActiveOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.success}</div>
+							<div className='size-16 text-primary-violet'>SuccessIcon</div>
 						</div>
 						<div>
 							<span className='font-medium text-primary-violet'>
@@ -183,12 +183,12 @@ export function GoalTransferPage() {
 				{isTransferError && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+							<div className='size-16 text-primary-violet'>ErrorIcon</div>
 						</div>
 						<div>Some error occur during transferring</div>
 					</Box>
 				)}
-			</Dialog>
+			</Popup>
 		</>
 	);
 }

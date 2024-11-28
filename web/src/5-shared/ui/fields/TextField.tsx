@@ -53,7 +53,7 @@ export function TextField(props: Props) {
 				/>
 
 				{value && type !== 'password' && (
-					<div className='bg-field-helper ml-2 flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full'>
+					<div className='ml-2 flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-field-helper'>
 						<AppIcon
 							type='x'
 							className={cn(
@@ -67,16 +67,16 @@ export function TextField(props: Props) {
 				{value && type === 'password' && (
 					<AppIcon
 						type={isPasswordVisible ? 'hidePassword' : 'showPassword'}
-						className='text-field-helper ml-2 size-5 cursor-pointer'
+						className='ml-2 size-5 cursor-pointer text-field-helper'
 						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 					/>
 				)}
 			</label>
 
-			{label && <div className='text-field-helper px-4 py-0.5 text-xs font-light'>{label}</div>}
+			{label && <div className='px-4 py-0.5 text-xs font-light text-field-helper'>{label}</div>}
 
 			{maxLength && (
-				<div className='text-field-helper flex cursor-default justify-end pr-4 pt-1 text-sm'>
+				<div className='flex cursor-default justify-end pr-4 pt-1 text-sm text-field-helper'>
 					{value.length} / {maxLength}
 				</div>
 			)}

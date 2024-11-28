@@ -1,4 +1,4 @@
-import {Dialog, Icon, Item, List, PRELOAD_SIZE, PreloadSkeleton, useDialogState} from '@shared/ui';
+import {AppIcon, Popup, Icon, Item, List, PRELOAD_SIZE, PreloadSkeleton, usePopupState} from '@shared/ui';
 import {cn, isNumber, styleElement, textHelpers} from '@shared/lib';
 import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputWithOptions.types.ts';
 import {CURRENCY_MAP} from '@shared/constants';
@@ -17,7 +17,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 		isAutoFocusDisabled,
 	} = props;
 
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	const {dialogRef, openDialog, closeDialog} = usePopupState();
 
 	function handleChange(value: string) {
 		/** 123. превращает в 123 */
@@ -33,7 +33,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 	if (!activeOption) {
 		return (
-			<div className='rounded-2xl bg-input-grey p-4'>
+			<div className='bg-input-grey rounded-2xl p-4'>
 				<PreloadSkeleton width={PRELOAD_SIZE.width.xl} height={PRELOAD_SIZE.height.xl} />
 				<div className='mt-[10.8px]'>
 					<PreloadSkeleton width={PRELOAD_SIZE.width.l} />
@@ -65,7 +65,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 	return (
 		<>
-			<label className={cn('block rounded-2xl bg-input-grey p-4', !!errorText && 'bg-[#FDE3E5]')}>
+			<label className={cn('bg-input-grey block rounded-2xl p-4', !!errorText && 'bg-[#FDE3E5]')}>
 				<div className='flex items-center justify-between'>
 					<div
 						className={cn('mr-4 flex min-w-40 items-center gap-2', isMultipleOptions && 'cursor-pointer')}
@@ -120,14 +120,14 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 			</label>
 
 			{isMultipleOptions && (
-				<Dialog ref={dialogRef}>
+				<Popup ref={dialogRef}>
 					<List
 						rows={options}
 						renderRow={(option) => {
 							const selected = option.id === activeOption.id;
 							return (
 								<Item
-									statusIcon={selected && Icon.check}
+									statusIcon={selected && <AppIcon type='check' />}
 									className={cn(selected && 'bg-light-grey')}
 									image={option.image}
 									name={option.name}
@@ -141,7 +141,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 							);
 						}}
 					/>
-				</Dialog>
+				</Popup>
 			)}
 		</>
 	);

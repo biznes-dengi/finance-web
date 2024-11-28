@@ -1,5 +1,5 @@
 import {DateService} from '@shared/lib';
-import {Box, Button, Dialog, Icon, useDialogState} from '@shared/ui';
+import {Box, Button, Popup, Icon, usePopupState} from '@shared/ui';
 import {Calendar} from './Calendar.tsx';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 export function DatePicker(props: Props) {
 	const {value, onChange} = props;
 
-	const {dialogRef, openDialog, closeDialog} = useDialogState();
+	const {dialogRef, openDialog, closeDialog} = usePopupState();
 
 	// TODO: когда меняем на новую дату ставится дефолтное время. Продумать логику.
 
@@ -22,7 +22,7 @@ export function DatePicker(props: Props) {
 				</Button>
 			</Box>
 
-			<Dialog ref={dialogRef}>
+			<Popup ref={dialogRef}>
 				<div className='flex justify-center'>
 					<Calendar
 						mode='single'
@@ -34,7 +34,7 @@ export function DatePicker(props: Props) {
 						}}
 					/>
 				</div>
-			</Dialog>
+			</Popup>
 		</>
 	);
 }

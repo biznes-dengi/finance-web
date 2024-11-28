@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Box, Button, ButtonType, Dialog, Icon, NumericInputWithOptions, PageHeader, DatePicker} from '@shared/ui';
+import {Box, Button, ButtonType, Popup, Icon, NumericInputWithOptions, PageHeader, DatePicker} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {goalModel} from '@entities/goal';
 import {DateService, isNumber} from '@shared/lib';
@@ -62,7 +62,7 @@ export function GoalFundPage() {
 				</Box>
 			</Box>
 
-			<Dialog showUX={isFundGoalSuccess || isFundGoalError}>
+			<Popup isStatusDialogOpen={isFundGoalSuccess || isFundGoalError}>
 				{isFundGoalSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
@@ -88,7 +88,7 @@ export function GoalFundPage() {
 						</div>
 					</Box>
 				)}
-			</Dialog>
+			</Popup>
 
 			<Box basePadding>
 				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount)}>

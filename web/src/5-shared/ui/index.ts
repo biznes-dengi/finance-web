@@ -11,7 +11,7 @@ export * from './Stepper.tsx';
 
 // new pattern -> get rid of index.ts
 export * from './button';
-export * from './dialog';
+export * from './popup';
 export * from './item';
 export * from './preload-skeleton';
 export * from './list';
@@ -24,4 +24,8 @@ export * from './currency-picker/ui/CurrencyPicker.tsx';
 export * from './fields/NumericInput.tsx';
 
 export * from './spinner/ui/Spinner.tsx';
+
 export * from './progress/ui/Progress.tsx';
+
+export * from '@shared/ui/status-popup/ui/StatusPopup.tsx';
+export * from '@shared/ui/status-popup/constants/StatusPopup.constants.tsx';

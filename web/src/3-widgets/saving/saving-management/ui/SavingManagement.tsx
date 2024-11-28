@@ -14,8 +14,7 @@ import {
 import {textHelpers, useFilter} from '@shared/lib';
 import {buttonConfigs, savingStateOptions, type TSavingStateValue} from '../config/savingManagement.config.ts';
 import {goalModel} from '@entities/goal';
-import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
+import {APP_TEXT, CURRENCY_MAP, getGoalDetailsPath} from '@shared/constants';
 
 const defaultFilter = {
 	pageNumber: 0,
@@ -25,8 +24,8 @@ const defaultFilter = {
 export function SavingManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
-	const {items, isItemsFetching} = goalModel.useItems(filter);
 	const {totalBalance, isTotalBalanceFetching} = goalModel.useTotalBalance();
+	const {items, isItemsFetching} = goalModel.useItems(filter);
 
 	const isFetching = isItemsFetching || isTotalBalanceFetching;
 
