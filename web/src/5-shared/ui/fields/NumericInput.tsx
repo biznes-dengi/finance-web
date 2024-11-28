@@ -1,5 +1,5 @@
 import {cn} from '@shared/lib';
-import {Icon} from '@shared/ui/Icon.tsx';
+import {AppIcon} from '@shared/ui/Icon.tsx';
 import {useRef} from 'react';
 
 type Props = {
@@ -34,7 +34,7 @@ export function NumericInput(props: Props) {
 						onClick={() => handleChange('')}
 						className={cn('ml-2 h-5 w-5 cursor-pointer rounded-full bg-primary-grey p-1 text-secondary-grey')}
 					>
-						<div className='h-3 w-3'>{Icon.x}</div>
+						<AppIcon type='x' className='size-3' />
 					</div>
 				)}
 			</label>

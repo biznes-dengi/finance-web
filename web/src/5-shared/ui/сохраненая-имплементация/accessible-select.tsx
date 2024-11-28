@@ -36,7 +36,9 @@ export function AccessibleSelectInCard({
 									key={index}
 									name={option.name}
 									isNameText
-									rightNode={value.value === option.value && styleElement(Icon.check, 'size-5 text-primary-violet')}
+									rightNode={
+										value.value === option.value && styleElement(<>SuccessIcon</>, 'size-5 text-primary-violet')
+									}
 								/>
 							))}
 
@@ -60,7 +62,7 @@ export function AccessibleSelectInCard({
 													? 'bg-secondary-violet'
 													: '',
 											)}
-											rightNode={selected && styleElement(Icon.check, 'size-5 text-primary-violet')}
+											rightNode={selected && styleElement(<>SuccessIcon</>, 'size-5 text-primary-violet')}
 											isNameText
 										/>
 									)}
@@ -93,7 +95,7 @@ export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: 
 						className='flex h-7 w-7 items-center justify-center duration-300 hover:cursor-pointer hover:rounded-full hover:bg-secondary-grey'
 						onClick={onClose}
 					>
-						<div className='h-6 w-6'>{Icon.x}</div>
+						<div className='h-6 w-6'>X</div>
 					</div>
 				</Box>
 

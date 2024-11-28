@@ -78,6 +78,7 @@ export function AppIcon({
 }: {
 	type: 'showPassword' | 'hidePassword' | 'x' | 'check' | 'success' | 'error';
 	className?: string;
+	onClick?: () => void;
 }) {
 	const Icon = ICON_MAP[type];
 
