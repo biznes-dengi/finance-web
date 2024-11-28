@@ -69,7 +69,7 @@ export const ICON_MAP = {
 	error: X,
 };
 
-export const Icon = ICON_MAP;
+export const Icon = {...ICON_MAP, x: 'XIcon', check: 'CheckIcon', success: 'SuccessIcon', error: 'ErrorIcon'};
 
 export function AppIcon({
 	type,
