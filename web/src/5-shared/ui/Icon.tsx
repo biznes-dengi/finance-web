@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/24/solid';
 import {BriefcaseIcon, FolderIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
 import {cn} from '@shared/lib';
-import {CheckIcon, EyeIcon, EyeOffIcon, X} from 'lucide-react';
+import {ArrowLeft, CheckIcon, EyeIcon, EyeOffIcon, X} from 'lucide-react';
 
 // @ts-ignore
 import revolutBackButtonPath from '../../../assets/revolutBackButton.svg';
@@ -29,18 +29,20 @@ export const ICON_MAP = {
 	// INVEST: <img src={investIconPath} alt='invest icon' />,
 	// TRACKER: <img src={trackerIconPath} alt='tracker icon' />,
 	user: <img src={userIconPath} alt='user icon' />,
-	backButton: (
-		<span
-			style={{
-				display: 'inline-block',
-				width: '24px',
-				height: '24px',
-				backgroundImage: `url(${revolutBackButtonPath})`,
-				backgroundSize: 'contain',
-				backgroundRepeat: 'no-repeat',
-			}}
-		/>
-	),
+	// backButton: (
+	// 	<span
+	// 		style={{
+	// 			display: 'inline-block',
+	// 			width: '24px',
+	// 			height: '24px',
+	// 			backgroundImage: `url(${revolutBackButtonPath})`,
+	// 			backgroundSize: 'contain',
+	// 			backgroundRepeat: 'no-repeat',
+	// 		}}
+	// 	/>
+	// ),
+
+	backButton: <ArrowLeft />,
 
 	search: <MagnifyingGlassIcon className='h-4 w-4' />,
 	camera: <CameraIcon className='h-5 w-5' />,
