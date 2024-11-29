@@ -43,35 +43,33 @@ export function LoginPage() {
 
 	return (
 		<AuthLayout>
-			<div className='px-4'>
-				<PageHeader title={APP_TEXT.welcome} withBackButton={false} />
+			<PageHeader title={APP_TEXT.welcome} withBackButton={false} />
 
-				<div className='flex w-[350px] flex-col gap-4'>
-					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
-					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
+			<div className='flex w-full flex-col gap-4'>
+				<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
+				<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 
-					<Button
-						className='w-fit text-left'
-						onClick={() => alert('Пока не можем помочь. Вспоминай, а то не войдешь 😁')}
-					>
-						{APP_TEXT.forgotPassword}
-					</Button>
-				</div>
+				<Button
+					className='w-fit text-left'
+					onClick={() => alert('Пока не можем помочь. Вспоминай, а то не войдешь 😁')}
+				>
+					{APP_TEXT.forgotPassword}
+				</Button>
+			</div>
 
-				<div className='my-6 flex flex-col items-center gap-4'>
-					<Button
-						type={ButtonType.main}
-						onClick={handleLogin}
-						disabled={!email || !password}
-						className={cn(disabledBoxShadow && 'shadow-none')}
-						isLoading={isLoginPending}
-					>
-						{APP_TEXT.logIn}
-					</Button>
-					<Button onClick={() => navigate(APP_PATH.signUp)} isFetching={isLoginPending}>
-						{APP_TEXT.signUp}
-					</Button>
-				</div>
+			<div className='my-6 flex flex-col items-center gap-4'>
+				<Button
+					type={ButtonType.main}
+					onClick={handleLogin}
+					disabled={!email || !password}
+					className={cn(disabledBoxShadow && 'shadow-none')}
+					isLoading={isLoginPending}
+				>
+					{APP_TEXT.logIn}
+				</Button>
+				<Button onClick={() => navigate(APP_PATH.signUp)} isFetching={isLoginPending}>
+					{APP_TEXT.signUp}
+				</Button>
 			</div>
 		</AuthLayout>
 	);
