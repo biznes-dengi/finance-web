@@ -47,26 +47,24 @@ export function SignupPage() {
 	return (
 		<>
 			<AuthLayout>
-				<div className='h-[436px]'>
-					<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.logIn} />
+				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.logIn} />
 
-					<div className='flex w-[350px] flex-col gap-4'>
-						<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
-						<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
-						{isSignupError && <div className='text-red-700'>Some error occur</div>}
-					</div>
+				<div className='flex w-[350px] flex-col gap-4'>
+					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
+					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
+					{isSignupError && <div className='text-red-700'>Some error occur</div>}
+				</div>
 
-					<div className='my-6 flex flex-col items-center gap-4'>
-						<Button
-							type={ButtonType.main}
-							onClick={handleSignup}
-							disabled={!email || !password}
-							className={cn(disabledBoxShadow && 'shadow-none')}
-							isLoading={isSignupPending}
-						>
-							{APP_TEXT.signUp}
-						</Button>
-					</div>
+				<div className='my-6 flex flex-col items-center gap-4'>
+					<Button
+						type={ButtonType.main}
+						onClick={handleSignup}
+						disabled={!email || !password}
+						className={cn(disabledBoxShadow && 'shadow-none')}
+						isLoading={isSignupPending}
+					>
+						{APP_TEXT.signUp}
+					</Button>
 				</div>
 			</AuthLayout>
 
