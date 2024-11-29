@@ -47,11 +47,11 @@ export function LoginPage() {
 				<PageHeader title={APP_TEXT.welcome} withBackButton={false} />
 
 				<div className='flex w-[350px] flex-col gap-4'>
-					<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.username} isAutoFocus />
+					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
 					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 
 					<Button
-						className='w-fit text-left font-light'
+						className='w-fit text-left'
 						onClick={() => alert('Пока не можем помочь. Вспоминай, а то не войдешь 😁')}
 					>
 						{APP_TEXT.forgotPassword}
