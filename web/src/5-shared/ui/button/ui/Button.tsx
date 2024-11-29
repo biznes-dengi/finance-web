@@ -27,6 +27,8 @@ interface Props extends CommonButtonSettings {
 
 // TODO: Typescript: when type = icon -> icon prop required
 
+export const buttonClickStyles = 'transition duration-200 ease-in-out active:scale-95 active:brightness-95';
+
 export function Button(props: Props) {
 	const {
 		children,
@@ -49,7 +51,8 @@ export function Button(props: Props) {
 
 	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn(
-			'block transform transition duration-200 ease-in-out active:scale-95 active:brightness-95',
+			'block',
+			buttonClickStyles,
 			disabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			...buttonClassName,
 			className,

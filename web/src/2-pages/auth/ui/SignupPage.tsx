@@ -51,7 +51,7 @@ export function SignupPage() {
 					<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.logIn} />
 
 					<div className='flex w-[350px] flex-col gap-4'>
-						<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.username} isAutoFocus />
+						<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
 						<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
 						{isSignupError && <div className='text-red-700'>Some error occur</div>}
 					</div>
