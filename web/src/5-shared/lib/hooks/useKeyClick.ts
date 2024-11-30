@@ -2,22 +2,25 @@ import {DependencyList, useEffect} from 'react';
 
 type UseKeyClickProps = {
 	key: 'Enter';
-	onKeyDown: () => void;
-	onKeyUp: () => void;
-	deps: DependencyList;
+	onKeyDown?: () => void;
+	onKeyUp?: () => void;
+	deps?: DependencyList;
+	disabled?: boolean;
 };
 
-export function useKeyClick({key, onKeyDown, onKeyUp, deps}: UseKeyClickProps) {
+export function useKeyClick({key, onKeyDown, onKeyUp, deps = [], disabled}: UseKeyClickProps) {
 	useEffect(() => {
+		if (disabled) return;
+
 		function handleKeyDown(event: KeyboardEvent) {
 			if (event.key === key) {
-				onKeyDown();
+				onKeyDown?.();
 			}
 		}
 
 		function handleKeyUp(event: KeyboardEvent) {
 			if (event.key === key) {
-				onKeyUp();
+				onKeyUp?.();
 			}
 		}
 

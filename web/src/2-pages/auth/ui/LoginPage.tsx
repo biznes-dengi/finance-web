@@ -2,10 +2,9 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
-import {useKeyClick} from '../hooks/useKeyClick.ts';
+import {cn, useKeyClick, useResponsive} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
-import {cn} from '@shared/lib';
 
 export function LoginPage() {
 	const navigate = useNavigate();
@@ -16,6 +15,8 @@ export function LoginPage() {
 	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
 
 	const {login, isLoginPending} = authModel.useLogin();
+
+	const {isMobile, isTablet} = useResponsive();
 
 	useEffect(() => {
 		document.title = 'Log in | Finansy';
@@ -30,6 +31,7 @@ export function LoginPage() {
 		onKeyDown: () => setDisabledBoxShadow(true),
 		onKeyUp: handleLogin,
 		deps: [email, password],
+		disabled: isMobile || isTablet || !email || !password,
 	});
 
 	function handleLogin() {
@@ -46,13 +48,16 @@ export function LoginPage() {
 			<PageHeader title={APP_TEXT.welcome} withBackButton={false} />
 
 			<div className='flex w-full flex-col gap-4'>
-				<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
-				<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
+				<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} enterKeyHint='next' />
+				<TextField
+					type='password'
+					value={password}
+					onChange={setPassword}
+					placeholder={APP_TEXT.password}
+					enterKeyHint='done'
+				/>
 
-				<Button
-					className='w-fit text-left'
-					onClick={() => alert('Пока не можем помочь. Вспоминай, а то не войдешь 😁')}
-				>
+				<Button className='text-left font-light' onClick={() => alert('Вспоминай, а то не войдешь 😁')}>
 					{APP_TEXT.forgotPassword}
 				</Button>
 			</div>
