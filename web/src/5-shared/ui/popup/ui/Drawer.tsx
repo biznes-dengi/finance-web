@@ -39,7 +39,7 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>((props, ref) => {
 							isStatusDialogOpen && 'items-center',
 						)}
 					>
-						<div className='mx-auto mb-4 h-1.5 w-12 rounded-full bg-zinc-300' />
+						<div className='mx-auto mb-4 h-1.5 w-12 rounded-full bg-[#BAC3CA]' />
 
 						{title && <Box className='mb-4 flex w-full justify-center text-xl font-medium'>{title}</Box>}
 
