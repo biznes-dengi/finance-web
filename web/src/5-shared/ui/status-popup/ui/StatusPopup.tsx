@@ -53,7 +53,7 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 				<Content className='fixed bottom-0 left-0 right-0 rounded-t-3xl bg-light-grey outline-none transition-all duration-200'>
 					<div
 						className={cn(
-							'mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-2xl p-4 pt-2',
+							'mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-2xl p-4 pt-2 text-center',
 							isOpen && 'items-center',
 						)}
 					>
@@ -63,10 +63,10 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 
 						<AppIcon
 							type={status}
-							className={cn('mb-4 size-10', status === 'success' ? 'text-primary-violet' : 'text-error-red')}
+							className={cn('mb-4 mt-2 size-10', status === 'success' ? 'text-primary-violet' : 'text-error-red')}
 						/>
-						<div className='font-semibold'>{STATUS_DIALOG_TEXT[statusTextKey].title}</div>
-						<div className='mt-2'>{STATUS_DIALOG_TEXT[statusTextKey].description}</div>
+						<div className='text-lg font-semibold'>{STATUS_DIALOG_TEXT[statusTextKey].title}</div>
+						{/*<div className='mt-2'>{STATUS_DIALOG_TEXT[statusTextKey].description}</div>*/}
 					</div>
 				</Content>
 			</Portal>
