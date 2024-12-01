@@ -40,7 +40,7 @@ export function GoalWithdrawPage() {
 
 	if (isWithdrawGoalSuccess || isWithdrawGoalError) {
 		setTimeout(() => {
-			navigate(APP_PATH.goalList);
+			navigate(APP_PATH.home);
 		}, 2000);
 	}
 
@@ -48,7 +48,7 @@ export function GoalWithdrawPage() {
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.withdraw} backPath={APP_PATH.goalList} />
+			<PageHeader title={APP_TEXT.withdraw} backPath={APP_PATH.home} />
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions

@@ -1,17 +1,18 @@
 //TODO: convert APP_PATH keys from strings to functions, to be able to paste params into URL
 
-export enum APP_PATH {
-	root = '/',
-	pageNotFound = '/page-not-found',
-	goalList = '/goal-list',
-	goalFund = '/goal-fund',
-	goalWithdraw = '/goal-withdraw',
-	goalTransfer = '/goal-transfer',
-	createGoal = '/goal-create',
-	goalDetails = '/goal-details',
-	logIn = '/log-in',
-	signUp = '/sign-up',
-}
+export const APP_PATH = {
+	root: '/',
+	home: '/goal-list',
+	pageNotFound: '/page-not-found',
+	goalList: '/goal-list',
+	goalFund: '/goal-fund',
+	goalWithdraw: '/goal-withdraw',
+	goalTransfer: '/goal-transfer',
+	createGoal: '/goal-create',
+	goalDetails: '/goal-details',
+	login: '/log-in',
+	signup: '/sign-up',
+};
 
 export function getGoalDetailsPath(id: any) {
 	return `${APP_PATH.goalDetails}/${id}`;

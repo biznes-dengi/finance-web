@@ -67,7 +67,7 @@ export function GoalCreatePage() {
 	const Header = (
 		<PageHeader
 			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
-			backPath={APP_PATH.goalList}
+			backPath={APP_PATH.home}
 		/>
 	);
 
@@ -79,7 +79,7 @@ export function GoalCreatePage() {
 
 	if (isCreateSuccess || isCreateError) {
 		setTimeout(() => {
-			navigate(APP_PATH.goalList);
+			navigate(APP_PATH.home);
 		}, 2000);
 	}
 

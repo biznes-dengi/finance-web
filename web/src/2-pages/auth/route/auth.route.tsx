@@ -3,12 +3,12 @@ import {SignupPage} from '../ui/SignupPage.tsx';
 import {APP_PATH} from '@shared/constants';
 
 const loginRoute = {
-	path: APP_PATH.logIn,
+	path: APP_PATH.login,
 	element: <LoginPage />,
 };
 
 const signupRoute = {
-	path: APP_PATH.signUp,
+	path: APP_PATH.signup,
 	element: <SignupPage />,
 };
 

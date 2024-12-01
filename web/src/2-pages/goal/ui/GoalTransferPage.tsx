@@ -83,7 +83,7 @@ export function GoalTransferPage() {
 
 	if (isTransferSuccess || isTransferError) {
 		setTimeout(() => {
-			navigate(APP_PATH.goalList);
+			navigate(APP_PATH.home);
 		}, 2000);
 	}
 
@@ -92,7 +92,7 @@ export function GoalTransferPage() {
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.goalList} />
+			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.home} />
 
 			<Box basePaddingX className='relative flex-1'>
 				<Box className='flex flex-col gap-2'>

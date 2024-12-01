@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
 import {Navigate} from 'react-router-dom';
 import {APP_PATH} from '@shared/constants';
-import {authService} from '@entities/auth';
+import {authApi} from '@entities/auth';
 
 /**
  * Abstraction for DRY logic across routes
@@ -11,10 +11,10 @@ import {authService} from '@entities/auth';
  * */
 
 export function PrivateRoute({page}: {page: ReactNode}) {
-	if (!authService.token) {
-		return <Navigate to={APP_PATH.logIn} replace />;
+	if (!authApi.token) {
+		return <Navigate to={APP_PATH.login} replace />;
 	} else {
-		authService.startSession(authService.token);
+		authApi.setupInterceptor(authApi.token);
 	}
 
 	return page;

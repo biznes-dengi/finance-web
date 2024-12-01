@@ -11,7 +11,7 @@ export function SignupPage() {
 
 	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
 
-	const {signup, isSignupPending, isSignupSuccess, isSignupError} = authModel.useSignup();
+	const {signup, isSignupPending, isSignupSuccess} = authModel.useSignup();
 
 	const {isMobile, isTablet} = useResponsive();
 
@@ -49,7 +49,7 @@ export function SignupPage() {
 	return (
 		<>
 			<AuthLayout>
-				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.logIn} />
+				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} />
 
 				<div className='flex w-full flex-col gap-4'>
 					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} enterKeyHint='next' />
@@ -60,7 +60,6 @@ export function SignupPage() {
 						placeholder={APP_TEXT.password}
 						enterKeyHint='done'
 					/>
-					{isSignupError && <div className='text-red-700'>Some error occur</div>}
 				</div>
 
 				<div className='my-6 flex flex-col items-center gap-4'>

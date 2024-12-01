@@ -14,7 +14,7 @@ export function AuthLayout({children}: {children: ReactNode}) {
 				{APP_TEXT.finansy}
 			</div>
 			<div className='flex h-[calc(100vh-76px)] flex-col items-center justify-center'>
-				<div className={cn('w-full max-w-[350px]', location.pathname === APP_PATH.signUp && 'h-[436px]')}>
+				<div className={cn('w-full max-w-[350px]', location.pathname === APP_PATH.signup && 'h-[436px]')}>
 					{children}
 				</div>
 			</div>

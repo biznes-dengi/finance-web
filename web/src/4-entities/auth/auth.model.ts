@@ -1,10 +1,18 @@
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {authApi} from '@entities/auth/auth.api.ts';
 import {useNavigate} from 'react-router-dom';
 import {APP_PATH} from '@shared/constants';
-import {authService} from '@entities/auth/auth.service.ts';
 
 class AuthModel {
+	useAuthUser() {
+		const {data} = useQuery({
+			queryKey: ['auth-user'],
+			queryFn: () => authApi.fetchAuthUser(),
+		});
+
+		return data;
+	}
+
 	useSignup() {
 		const navigate = useNavigate();
 
@@ -13,11 +21,13 @@ class AuthModel {
 			mutationFn: (payload: any) => {
 				return authApi.signup(payload);
 			},
-			onSuccess: (response) => {
+			onSuccess: () => {
 				setTimeout(() => {
-					authService.startSession(`Bearer ${response}`);
-					navigate(APP_PATH.goalList);
+					navigate(APP_PATH.home);
 				}, 2500);
+			},
+			onError: () => {
+				alert('Signup failed');
 			},
 		});
 
@@ -38,7 +48,7 @@ class AuthModel {
 				return authApi.login(payload);
 			},
 			onSuccess: () => {
-				navigate(APP_PATH.goalList);
+				navigate(APP_PATH.home);
 			},
 			onError: () => {
 				alert('Login failed');
@@ -62,7 +72,7 @@ class AuthModel {
 				return authApi.logout();
 			},
 			onSuccess: () => {
-				navigate(APP_PATH.logIn);
+				navigate(APP_PATH.login);
 			},
 		});
 
