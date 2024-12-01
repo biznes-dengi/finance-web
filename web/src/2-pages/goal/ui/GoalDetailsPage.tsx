@@ -46,7 +46,7 @@ export function GoalDetailsPage() {
 	return (
 		<>
 			<Box className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
-				<PageHeader title={details?.name} backPath={APP_PATH.root} />
+				<PageHeader title={details?.name} backPath={APP_PATH.goalList} />
 
 				<Box basePadding className='flex justify-between'>
 					{buttonConfigs.map((buttonConfig) => (

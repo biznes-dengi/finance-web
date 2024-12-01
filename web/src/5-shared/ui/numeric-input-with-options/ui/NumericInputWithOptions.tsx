@@ -20,6 +20,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 	const {dialogRef, openDialog, closeDialog} = usePopupState();
 
 	function handleChange(value: string) {
+		//TODO: на клаве decimal сюда залетает запятая
 		/** 123. превращает в 123 */
 		onChange(value ? Number(value) : undefined);
 	}
@@ -65,7 +66,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 	return (
 		<>
-			<label className={cn('bg-input-grey block rounded-2xl p-4', !!errorText && 'bg-[#FDE3E5]')}>
+			<label className={cn('block rounded-2xl p-4', !!errorText && 'bg-[#FDE3E5]')}>
 				<div className='flex items-center justify-between'>
 					<div
 						className={cn('mr-4 flex min-w-40 items-center gap-2', isMultipleOptions && 'cursor-pointer')}
@@ -80,8 +81,9 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 					<div className='flex min-w-[1ch] flex-shrink'>
 						<input
 							type='text'
+							inputMode='decimal'
 							className={cn(
-								'min-w-[1ch] bg-inherit text-right text-xl font-semibold caret-primary-violet outline-0',
+								'min-w-[1ch] bg-inherit text-right text-xl font-semibold caret-primary-violet outline-none',
 								!!errorText && 'caret-[#B51F2D]',
 							)}
 							value={getValue()}

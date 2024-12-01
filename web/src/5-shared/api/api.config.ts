@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-export const devMode = process.env.NODE_ENV?.toString() === 'development';
+const isLocalTunnelMode = false;
+const isDevMode = process.env.NODE_ENV?.toString() === 'development';
 
 export const axiosInstance = axios.create({
-	baseURL: devMode ? 'http://localhost:8080' : 'https://api.finansy.io',
+	baseURL: isDevMode && !isLocalTunnelMode ? 'http://localhost:8080' : 'https://api.finansy.io',
 	headers: {
 		'Content-Type': 'application/json',
 		withCredentials: true,

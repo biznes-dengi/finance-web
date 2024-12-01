@@ -1,6 +1,6 @@
-import {cn} from '@shared/lib';
-import {AppIcon, Icon} from '@shared/ui/Icon.tsx';
 import {MouseEvent, useRef, useState} from 'react';
+import {cn, useResponsive, useKeyClick} from '@shared/lib';
+import {AppIcon, Icon} from '@shared/ui/Icon.tsx';
 import {buttonClickStyles} from '@shared/ui/button/ui/Button.tsx';
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 	placeholder?: string;
 	label?: string;
 	maxLength?: number;
+	enterKeyHint?: 'search' | 'enter' | 'done' | 'go' | 'next' | 'previous' | 'send';
 
 	isSearch?: boolean;
 };
@@ -19,7 +20,9 @@ type Props = {
 //  when isSearch and focused, pin search-input to the top with animation + cancel text at right
 
 export function TextField(props: Props) {
-	const {value, onChange, placeholder, maxLength, isSearch, type = 'text', label} = props;
+	const {value, onChange, placeholder, maxLength, isSearch, type = 'text', label, enterKeyHint} = props;
+
+	const {isDesktop} = useResponsive();
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -34,22 +37,25 @@ export function TextField(props: Props) {
 
 		inputRef.current.focus();
 	}
-
 	function blurInput() {
 		if (!inputRef.current) return;
 		inputRef.current.blur();
 	}
 
+	useKeyClick({
+		key: 'Enter',
+		onKeyUp: blurInput,
+		disabled: isDesktop,
+	});
+
 	function handleChange(value: string) {
 		if (maxLength && value.length > maxLength) return;
 		onChange(value);
 	}
-
 	function handlePasswordToggle() {
 		blurInput();
 		setIsPasswordVisible(!isPasswordVisible);
 	}
-
 	function handleClear() {
 		focusInput();
 		onChange('');
@@ -59,7 +65,8 @@ export function TextField(props: Props) {
 		<div role='text-field'>
 			<div
 				className={cn(
-					'group flex cursor-text items-center rounded-2xl bg-field p-4 transition-colors duration-300 ease-in-out focus-within:bg-field-state hover:bg-field-state',
+					'group flex cursor-text items-center rounded-2xl bg-field p-4 transition-colors duration-300 ease-in-out focus-within:bg-field-state',
+					isDesktop && 'hover:bg-field-state',
 					isSearch && 'rounded-3xl p-1',
 				)}
 				onClick={focusInput}
@@ -72,7 +79,8 @@ export function TextField(props: Props) {
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={placeholder}
 					ref={inputRef}
-					className={cn('w-full bg-inherit font-light caret-primary-violet outline-none')}
+					className='w-full bg-inherit font-light caret-primary-violet outline-none'
+					enterKeyHint={enterKeyHint}
 				/>
 
 				{value && type !== 'password' && (

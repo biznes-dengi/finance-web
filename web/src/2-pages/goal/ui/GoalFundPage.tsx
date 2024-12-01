@@ -40,13 +40,13 @@ export function GoalFundPage() {
 
 	if (isFundGoalSuccess || isFundGoalError) {
 		setTimeout(() => {
-			navigate(APP_PATH.goalList);
+			navigate(APP_PATH.home);
 		}, 2000);
 	}
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.goalList} />
+			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.home} />
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions

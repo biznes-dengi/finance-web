@@ -13,23 +13,15 @@ import {
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
 import {useNavigate} from 'react-router-dom';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
-import {getApiPath, HttpClient} from '@shared/api';
-
-async function getUserData() {
-	const response = await HttpClient.get({url: getApiPath('users/me')});
-	return response;
-}
+import {authModel} from '@entities/auth';
 
 function useBoardSavingsId() {
-	const {data: userData} = useQuery({
-		queryKey: ['user-data'],
-		queryFn: () => getUserData(),
-	}) as any;
+	const authUser = authModel.useAuthUser();
 
 	const {data} = useQuery({
 		queryKey: ['board-savings-id'],
-		queryFn: () => goalApi.fetchBoardSavingsId(userData.id),
-		enabled: !!userData,
+		queryFn: () => goalApi.fetchBoardSavingsId(authUser!.id),
+		enabled: !!authUser,
 	});
 
 	return data;
@@ -142,7 +134,7 @@ function useCreate() {
 			setTimeout(() => navigate(getGoalDetailsPath(createResponseScheme.parse(data).id)), 2500);
 		},
 		onError: () => {
-			setTimeout(() => navigate(APP_PATH.goalList), 2500);
+			setTimeout(() => navigate(APP_PATH.home), 2500);
 		},
 	});
 
@@ -222,7 +214,7 @@ function useDelete() {
 		},
 		onSettled: () => {
 			// TODO goal has been deleted successfully drawer
-			navigate(APP_PATH.goalList);
+			navigate(APP_PATH.home);
 		},
 	});
 

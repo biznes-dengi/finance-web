@@ -10,7 +10,7 @@ const router = createBrowserRouter([
 		children: [...goalRoutes, ...authRoutes, pageNotFoundRoute],
 	},
 
-	{path: APP_PATH.root, element: <Navigate to={APP_PATH.logIn} replace />},
+	{path: APP_PATH.root, element: <Navigate to={APP_PATH.login} replace />},
 	{path: '*', element: <Navigate to={APP_PATH.pageNotFound} replace />},
 ]);
 

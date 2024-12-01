@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
+    "dev:lt": "ngrok http 3000",
     "build": "tsc && vite build",
     "lint": "eslint project-setup-2023 --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

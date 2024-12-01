@@ -1,10 +1,9 @@
 import {useEffect, useState} from 'react';
 import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, StatusPopup, TextField} from '@shared/ui';
-import {useKeyClick} from '../hooks/useKeyClick.ts';
+import {cn, useResponsive, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
-import {cn} from '@shared/lib';
 
 export function SignupPage() {
 	const [email, setEmail] = useState('');
@@ -12,7 +11,9 @@ export function SignupPage() {
 
 	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
 
-	const {signup, isSignupPending, isSignupSuccess, isSignupError} = authModel.useSignup();
+	const {signup, isSignupPending, isSignupSuccess} = authModel.useSignup();
+
+	const {isMobile, isTablet} = useResponsive();
 
 	useEffect(() => {
 		document.title = 'Sign up | Finansy';
@@ -27,6 +28,7 @@ export function SignupPage() {
 		onKeyDown: () => setDisabledBoxShadow(true),
 		onKeyUp: handleSignup,
 		deps: [email, password],
+		disabled: isMobile || isTablet || !email || !password,
 	});
 
 	function handleSignup() {
@@ -47,12 +49,17 @@ export function SignupPage() {
 	return (
 		<>
 			<AuthLayout>
-				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.logIn} />
+				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} />
 
-				<div className='flex w-[350px] flex-col gap-4'>
-					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} />
-					<TextField type='password' value={password} onChange={setPassword} placeholder={APP_TEXT.password} />
-					{isSignupError && <div className='text-red-700'>Some error occur</div>}
+				<div className='flex w-full flex-col gap-4'>
+					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} enterKeyHint='next' />
+					<TextField
+						type='password'
+						value={password}
+						onChange={setPassword}
+						placeholder={APP_TEXT.password}
+						enterKeyHint='done'
+					/>
 				</div>
 
 				<div className='my-6 flex flex-col items-center gap-4'>
