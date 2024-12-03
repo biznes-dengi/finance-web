@@ -16,7 +16,7 @@ import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 import {authModel} from '@entities/auth';
 
 function useBoardSavingsId() {
-	const authUser = authModel.useAuthUser();
+	const {authUser} = authModel.useAuthUser();
 
 	const {data} = useQuery({
 		queryKey: ['board-savings-id'],

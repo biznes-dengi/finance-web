@@ -58,33 +58,25 @@ class AuthApi {
 	}
 
 	async signup(payload: any) {
-		try {
-			const response = await HttpClient.post({
-				url: getApiPath('auth/register'),
-				data: payload,
-			});
+		const response = await HttpClient.post({
+			url: getApiPath('auth/register'),
+			data: payload,
+		});
 
-			this.startSession(`Bearer ${response}`);
+		this.startSession(`Bearer ${response}`);
 
-			return response;
-		} catch (error) {
-			throw new Error('Signup error');
-		}
+		return response;
 	}
 
 	async login(payload: any) {
-		try {
-			const response = await HttpClient.post({
-				url: getApiPath('auth/login'),
-				data: payload,
-			});
+		const response = await HttpClient.post({
+			url: getApiPath('auth/login'),
+			data: payload,
+		});
 
-			this.startSession(`Bearer ${response}`);
+		this.startSession(`Bearer ${response}`);
 
-			return response;
-		} catch (error) {
-			throw new Error('Login error');
-		}
+		return response;
 	}
 
 	logout() {

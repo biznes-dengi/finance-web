@@ -10,7 +10,9 @@ class AuthModel {
 			queryFn: () => authApi.fetchAuthUser(),
 		});
 
-		return data;
+		return {
+			authUser: data,
+		};
 	}
 
 	useSignup() {
