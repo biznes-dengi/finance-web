@@ -1,5 +1,5 @@
 import {MouseEvent, useRef, useState} from 'react';
-import {cn, useResponsive, useKeyClick} from '@shared/lib';
+import {cn, useResponsive} from '@shared/lib';
 import {AppIcon, Icon} from '@shared/ui/Icon.tsx';
 import {buttonClickStyles} from '@shared/ui/button/ui/Button.tsx';
 
@@ -27,38 +27,17 @@ export function TextField(props: Props) {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
 	const inputRef = useRef<HTMLInputElement>(null);
-	const iconRef = useRef<HTMLDivElement>(null);
+	const showHidePasswordIconRef = useRef<HTMLDivElement>(null);
 
 	function focusInput(event?: MouseEvent<HTMLDivElement>) {
-		if (!inputRef.current) return;
-
 		// Проверяем, был ли клик по иконке show / hide password
-		if (iconRef.current && iconRef.current.contains(event?.target as Node)) return;
-
-		inputRef.current.focus();
+		if (showHidePasswordIconRef.current?.contains(event?.target as Node)) return;
+		inputRef.current?.focus();
 	}
-	function blurInput() {
-		if (!inputRef.current) return;
-		inputRef.current.blur();
-	}
-
-	useKeyClick({
-		key: 'Enter',
-		onKeyUp: blurInput,
-		disabled: isDesktop,
-	});
 
 	function handleChange(value: string) {
 		if (maxLength && value.length > maxLength) return;
 		onChange(value);
-	}
-	function handlePasswordToggle() {
-		blurInput();
-		setIsPasswordVisible(!isPasswordVisible);
-	}
-	function handleClear() {
-		focusInput();
-		onChange('');
 	}
 
 	return (
@@ -74,12 +53,13 @@ export function TextField(props: Props) {
 				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{Icon.search}</div>}
 
 				<input
+					ref={inputRef}
+					className='w-full bg-inherit font-light caret-primary-violet outline-none'
 					type={type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type}
+					inputMode={type === 'email' ? 'email' : 'text'}
 					value={value}
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={placeholder}
-					ref={inputRef}
-					className='w-full bg-inherit font-light caret-primary-violet outline-none'
 					enterKeyHint={enterKeyHint}
 				/>
 
@@ -95,15 +75,15 @@ export function TextField(props: Props) {
 							className={cn(
 								'size-3.5 text-field duration-300 ease-in-out group-focus-within:text-secondary-grey group-hover:text-secondary-grey',
 							)}
-							onClick={handleClear}
+							onClick={() => onChange('')}
 						/>
 					</div>
 				)}
 
 				{value && type === 'password' && (
 					<div
-						ref={iconRef}
-						onClick={handlePasswordToggle}
+						ref={showHidePasswordIconRef}
+						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 						className={cn('ml-2 transform cursor-pointer text-field-helper', buttonClickStyles)}
 					>
 						<AppIcon type={isPasswordVisible ? 'hidePassword' : 'showPassword'} className='size-5' />

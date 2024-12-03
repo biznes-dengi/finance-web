@@ -1,10 +1,12 @@
-import {cloneElement} from 'react';
+import {cloneElement, ReactNode} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {Box, Button, ButtonType, Icon} from '@shared/ui';
 
 type Props = {
 	title?: string;
+	description?: ReactNode;
+	subDescription?: ReactNode;
 	backPath?: string;
 	handleBackButtonClick?: () => void;
 	withBackButton?: boolean;
@@ -13,7 +15,7 @@ type Props = {
 /** если есть возможность прокинуть backPath - лучше так и сделать */
 
 export function PageHeader(props: Props) {
-	const {title, handleBackButtonClick, backPath, withBackButton = true} = props;
+	const {title, description, subDescription, handleBackButtonClick, backPath, withBackButton = true} = props;
 
 	const navigate = useNavigate();
 
@@ -39,6 +41,8 @@ export function PageHeader(props: Props) {
 				/>
 			)}
 			{title && <Box className='text-3xl font-bold'>{title}</Box>}
+			{description && <div className='mt-2 font-medium'>{description}</div>}
+			{subDescription && <div className='mt-2 text-sm font-light text-primary-grey'>{subDescription}</div>}
 		</div>
 	);
 }

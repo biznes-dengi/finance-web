@@ -3,7 +3,6 @@ import {
 	Button,
 	ButtonType,
 	Card,
-	Icon,
 	Item,
 	ItemImageWithProgress,
 	List,
@@ -31,40 +30,38 @@ export function SavingManagement() {
 
 	return (
 		<div className='rounded-2xl bg-white'>
-			<Box basePadding className='pb-1'>
-				<Box className='flex justify-between'>
-					<Box>
-						<Box
-							className='mb-2 text-3xl font-medium'
-							isFetching={isFetching}
-							preloadWidth={PRELOAD_SIZE.width.xl}
-							preloadHeight={PRELOAD_SIZE.height.xl}
-							preloadClassName='mt-2 mb-3.5'
-						>
-							{totalBalance &&
-								textHelpers.getAmountWithCurrency(totalBalance.amount, CURRENCY_MAP[totalBalance.currency].symbol)}
-						</Box>
-						<Box
-							className='text-sm font-light text-primary-grey'
-							isFetching={isFetching}
-							preloadWidth={PRELOAD_SIZE.width.l}
-							preloadHeight={PRELOAD_SIZE.height.xs}
-							preloadClassName='mb-1'
-						>
-							{APP_TEXT.totalBalance}
-						</Box>
+			<Box basePadding className='flex justify-between'>
+				<Box>
+					<Box
+						className='mb-2 text-3xl font-medium'
+						isFetching={isFetching}
+						preloadWidth={PRELOAD_SIZE.width.xl}
+						preloadHeight={PRELOAD_SIZE.height.xl}
+						preloadClassName='mt-2 mb-3.5'
+					>
+						{totalBalance &&
+							textHelpers.getAmountWithCurrency(totalBalance.amount, CURRENCY_MAP[totalBalance.currency].symbol)}
 					</Box>
-					{!isFetching ? (
-						<div className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-secondary-grey'>
-							<div className='size-5'>{Icon.goal}</div>
-						</div>
-					) : (
-						<PreloadSkeleton width={40} height={40} className='rounded-xl' />
-					)}
+					<Box
+						className='text-sm font-light text-primary-grey'
+						isFetching={isFetching}
+						preloadWidth={PRELOAD_SIZE.width.l}
+						preloadHeight={PRELOAD_SIZE.height.xs}
+						preloadClassName='mb-1'
+					>
+						{APP_TEXT.totalBalance}
+					</Box>
 				</Box>
+				{!isFetching ? (
+					<div className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-green-200'>
+						{/*<div className='size-5 text-primary-grey'>{Icon.goal}</div>*/}
+					</div>
+				) : (
+					<PreloadSkeleton width={40} height={40} className='rounded-xl' />
+				)}
 			</Box>
 
-			<Box basePadding className='flex justify-between'>
+			<Box basePaddingX className='flex justify-between py-2'>
 				{buttonConfigs.map((buttonConfig) => (
 					<Button
 						type={ButtonType.icon}
@@ -111,6 +108,7 @@ export function SavingManagement() {
 							onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 						/>
 					)}
+					emptyStateText='Your goals will appear here'
 				/>
 			</Card>
 		</div>

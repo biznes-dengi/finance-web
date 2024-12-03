@@ -52,7 +52,7 @@ export function SignupPage() {
 				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} />
 
 				<div className='flex w-full flex-col gap-4'>
-					<TextField value={email} onChange={setEmail} placeholder={APP_TEXT.username} enterKeyHint='next' />
+					<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} enterKeyHint='next' />
 					<TextField
 						type='password'
 						value={password}

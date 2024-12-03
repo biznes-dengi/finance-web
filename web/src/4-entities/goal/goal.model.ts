@@ -147,25 +147,26 @@ function useCreate() {
 }
 
 function useDetails(id: any) {
-	// undefined когда обновляешь страницу
-	// const boardSavingId = useBoardSavingsId();
+	const boardSavingId = useBoardSavingsId();
 
 	const {data} = useQuery({
 		queryKey: ['goal-details'],
-		queryFn: () => goalApi.fetchDetails({boardSavingId: 1, id}),
+		queryFn: () => goalApi.fetchDetails({boardSavingId, id}),
+		enabled: !!boardSavingId,
 	});
 
 	return {goalDetails: data};
 }
 
 function useGoalTransactions(id: any) {
-	// const boardSavingId = useBoardSavingsId();
+	const boardSavingId = useBoardSavingsId();
 
 	const filter = {pageNumber: 0};
 
 	const {data, isFetching} = useQuery({
 		queryKey: ['goal-transactions'],
-		queryFn: () => goalApi.fetchGoalTransactions({filter, boardSavingId: 1, id}),
+		queryFn: () => goalApi.fetchGoalTransactions({filter, boardSavingId, id}),
+		enabled: !!boardSavingId,
 	});
 
 	return {

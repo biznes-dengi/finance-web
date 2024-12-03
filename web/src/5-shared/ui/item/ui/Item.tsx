@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {Props} from '../types/Item.types.ts';
-import {cn} from '@shared/lib';
+import {cn, useResponsive} from '@shared/lib';
 
 //if leftNode or rightNode is an icon => size-5
 
@@ -21,6 +21,8 @@ export function Item(props: Props) {
 
 	const navigate = useNavigate();
 
+	const {isDesktop} = useResponsive();
+
 	return (
 		<div
 			className={cn('group rounded-2xl bg-white p-1 [&:not(:last-child)]:pb-0', onClick && 'cursor-pointer')}
@@ -28,8 +30,8 @@ export function Item(props: Props) {
 		>
 			<div
 				className={cn(
-					'flex w-full rounded-2xl p-3 text-left',
-					onClick && 'duration-300 group-hover:bg-light-grey',
+					'flex w-full rounded-2xl p-3 text-left duration-300',
+					onClick && (isDesktop ? 'duration-300 group-hover:bg-light-grey' : 'duration-300 group-active:bg-light-grey'),
 					className,
 				)}
 			>
