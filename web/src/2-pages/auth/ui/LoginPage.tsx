@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
-import {cn, useKeyClick, useResponsive} from '@shared/lib';
+import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
 
@@ -12,11 +12,12 @@ export function LoginPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
+	const [isEmailFocused, setIsEmailFocused] = useState(false);
+	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-	const {login, isLoginPending} = authModel.useLogin();
+	const [displayBoxShadow, setDisplayBoxShadow] = useState(false);
 
-	const {isMobile, isTablet} = useResponsive();
+	const {login, isLoginPending, isLoginError} = authModel.useLogin();
 
 	useEffect(() => {
 		document.title = 'Log in | Finansy';
@@ -25,13 +26,30 @@ export function LoginPage() {
 			document.title = 'Finansy';
 		};
 	}, []);
+	useEffect(() => {
+		if (email && password) {
+			setDisplayBoxShadow(true);
+		}
+
+		if (isLoginError) {
+			setDisplayBoxShadow(true);
+		}
+	}, [isLoginError, email, password]);
 
 	useKeyClick({
 		key: 'Enter',
-		onKeyDown: () => setDisabledBoxShadow(true),
-		onKeyUp: handleLogin,
+		onKeyUp: () => setIsPasswordFocused(true),
+		disabled: isPasswordFocused,
+	});
+	useKeyClick({
+		key: 'Enter',
+		onKeyDown: () => setDisplayBoxShadow(false),
+		onKeyUp: () => {
+			setIsPasswordFocused(false);
+			handleLogin();
+		},
+		disabled: !email || !password || isEmailFocused,
 		deps: [email, password],
-		disabled: isMobile || isTablet || !email || !password,
 	});
 
 	function handleLogin() {
@@ -48,13 +66,23 @@ export function LoginPage() {
 			<PageHeader title={APP_TEXT.welcome} withBackButton={false} />
 
 			<div className='flex w-full flex-col gap-4'>
-				<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} enterKeyHint='next' />
+				<TextField
+					type='email'
+					value={email}
+					onChange={setEmail}
+					placeholder={APP_TEXT.email}
+					enterKeyHint='next'
+					isFocused={isEmailFocused}
+					setIsFocused={setIsEmailFocused}
+				/>
 				<TextField
 					type='password'
 					value={password}
 					onChange={setPassword}
 					placeholder={APP_TEXT.password}
 					enterKeyHint='done'
+					isFocused={isPasswordFocused}
+					setIsFocused={setIsPasswordFocused}
 				/>
 
 				<Button className='text-left font-light' onClick={() => alert('Вспоминай, а то не войдешь 😁')}>
@@ -67,7 +95,7 @@ export function LoginPage() {
 					type={ButtonType.main}
 					onClick={handleLogin}
 					disabled={!email || !password}
-					className={cn(disabledBoxShadow && 'shadow-none')}
+					className={cn(!displayBoxShadow && 'shadow-none')}
 					isLoading={isLoginPending}
 				>
 					{APP_TEXT.logIn}

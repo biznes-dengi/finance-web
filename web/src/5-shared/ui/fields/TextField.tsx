@@ -1,4 +1,4 @@
-import {MouseEvent, useRef, useState} from 'react';
+import {MouseEvent, useEffect, useRef, useState} from 'react';
 import {cn, useResponsive} from '@shared/lib';
 import {AppIcon, Icon} from '@shared/ui/Icon.tsx';
 import {buttonClickStyles} from '@shared/ui/button/ui/Button.tsx';
@@ -8,9 +8,12 @@ type Props = {
 	value: string;
 	onChange: (value: string) => void;
 	placeholder?: string;
-	label?: string;
-	maxLength?: number;
 	enterKeyHint?: 'search' | 'enter' | 'done' | 'go' | 'next' | 'previous' | 'send';
+
+	description?: string;
+	maxLength?: number;
+	isFocused?: boolean;
+	setIsFocused?: (value: boolean) => void;
 
 	isSearch?: boolean;
 };
@@ -20,7 +23,18 @@ type Props = {
 //  when isSearch and focused, pin search-input to the top with animation + cancel text at right
 
 export function TextField(props: Props) {
-	const {value, onChange, placeholder, maxLength, isSearch, type = 'text', label, enterKeyHint} = props;
+	const {
+		value,
+		onChange,
+		placeholder,
+		maxLength,
+		isSearch,
+		type = 'text',
+		description,
+		enterKeyHint,
+		isFocused,
+		setIsFocused,
+	} = props;
 
 	const {isDesktop} = useResponsive();
 
@@ -29,10 +43,20 @@ export function TextField(props: Props) {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const showHidePasswordIconRef = useRef<HTMLDivElement>(null);
 
+	useEffect(() => {
+		if (isFocused && inputRef.current !== document.activeElement) {
+			inputRef.current?.focus();
+		}
+		if (!isFocused) {
+			inputRef.current?.blur();
+		}
+	}, [isFocused]);
+
 	function focusInput(event?: MouseEvent<HTMLDivElement>) {
 		// Проверяем, был ли клик по иконке show / hide password
 		if (showHidePasswordIconRef.current?.contains(event?.target as Node)) return;
 		inputRef.current?.focus();
+		setIsFocused?.(true);
 	}
 
 	function handleChange(value: string) {
@@ -61,6 +85,8 @@ export function TextField(props: Props) {
 					onChange={(event) => handleChange(event.target.value)}
 					placeholder={placeholder}
 					enterKeyHint={enterKeyHint}
+					onFocus={() => setIsFocused?.(true)}
+					onBlur={() => setIsFocused?.(false)}
 				/>
 
 				{value && type !== 'password' && (
@@ -91,9 +117,9 @@ export function TextField(props: Props) {
 				)}
 			</div>
 
-			{(label || maxLength) && (
+			{(description || maxLength) && (
 				<div className='flex cursor-default px-4 py-1 text-xs font-light text-field-helper'>
-					{label && <div>{label}</div>}
+					{description && <div>{description}</div>}
 					{maxLength && (
 						<div className='ml-auto'>
 							{value.length} / {maxLength}

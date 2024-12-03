@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, StatusPopup, TextField} from '@shared/ui';
-import {cn, useResponsive, useKeyClick} from '@shared/lib';
+import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {authModel} from '@entities/auth';
 
@@ -9,11 +9,12 @@ export function SignupPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const [disabledBoxShadow, setDisabledBoxShadow] = useState(false);
+	const [isEmailFocused, setIsEmailFocused] = useState(false);
+	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-	const {signup, isSignupPending, isSignupSuccess} = authModel.useSignup();
+	const [displayBoxShadow, setDisplayBoxShadow] = useState(false);
 
-	const {isMobile, isTablet} = useResponsive();
+	const {signup, isSignupPending, isSignupSuccess, isSignupError} = authModel.useSignup();
 
 	useEffect(() => {
 		document.title = 'Sign up | Finansy';
@@ -22,13 +23,30 @@ export function SignupPage() {
 			document.title = 'Finansy';
 		};
 	}, []);
+	useEffect(() => {
+		if (email && password) {
+			setDisplayBoxShadow(true);
+		}
+
+		if (isSignupError) {
+			setDisplayBoxShadow(true);
+		}
+	}, [isSignupError, email, password]);
 
 	useKeyClick({
 		key: 'Enter',
-		onKeyDown: () => setDisabledBoxShadow(true),
-		onKeyUp: handleSignup,
+		onKeyUp: () => setIsPasswordFocused(true),
+		disabled: isPasswordFocused,
+	});
+	useKeyClick({
+		key: 'Enter',
+		onKeyDown: () => setDisplayBoxShadow(false),
+		onKeyUp: () => {
+			setIsPasswordFocused(false);
+			handleSignup();
+		},
+		disabled: !email || !password || isEmailFocused,
 		deps: [email, password],
-		disabled: isMobile || isTablet || !email || !password,
 	});
 
 	function handleSignup() {
@@ -52,13 +70,23 @@ export function SignupPage() {
 				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} />
 
 				<div className='flex w-full flex-col gap-4'>
-					<TextField type='email' value={email} onChange={setEmail} placeholder={APP_TEXT.email} enterKeyHint='next' />
+					<TextField
+						type='email'
+						value={email}
+						onChange={setEmail}
+						placeholder={APP_TEXT.email}
+						enterKeyHint='next'
+						isFocused={isEmailFocused}
+						setIsFocused={setIsEmailFocused}
+					/>
 					<TextField
 						type='password'
 						value={password}
 						onChange={setPassword}
 						placeholder={APP_TEXT.password}
 						enterKeyHint='done'
+						isFocused={isPasswordFocused}
+						setIsFocused={setIsPasswordFocused}
 					/>
 				</div>
 
@@ -67,7 +95,7 @@ export function SignupPage() {
 						type={ButtonType.main}
 						onClick={handleSignup}
 						disabled={!email || !password}
-						className={cn(disabledBoxShadow && 'shadow-none')}
+						className={cn(!displayBoxShadow && 'shadow-none')}
 						isLoading={isSignupPending}
 					>
 						{APP_TEXT.signUp}
