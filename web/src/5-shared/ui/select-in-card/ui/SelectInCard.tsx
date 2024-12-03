@@ -1,11 +1,14 @@
 import {Item, Icon, List, Popup, PreloadSkeleton, usePopupState, AppIcon} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {Props} from '../types/SelectInCard.types.ts';
+import {cn, useResponsive} from '@shared/lib';
 
 export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options, isFetching} = props;
 
 	const {dialogRef, openDialog, closeDialog} = usePopupState();
+
+	const {isDesktop} = useResponsive();
 
 	if (isFetching) {
 		return <PreloadSkeleton width={40} height={16} />;
@@ -13,7 +16,10 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 
 	return (
 		<>
-			<div className='flex w-fit cursor-pointer items-center hover:cursor-pointer' onClick={() => openDialog()}>
+			<div
+				className={cn('flex w-fit cursor-pointer items-center', isDesktop && 'hover:cursor-pointer')}
+				onClick={() => openDialog()}
+			>
 				{options.find((option) => option.value === value)?.name}
 				<div className='ml-2 size-3'>{Icon.chevronDown}</div>
 			</div>

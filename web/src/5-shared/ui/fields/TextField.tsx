@@ -99,7 +99,8 @@ export function TextField(props: Props) {
 						<AppIcon
 							type='x'
 							className={cn(
-								'size-3.5 text-field duration-300 ease-in-out group-focus-within:text-secondary-grey group-hover:text-secondary-grey',
+								'size-3.5 text-field duration-300 ease-in-out group-focus-within:text-secondary-grey',
+								isDesktop && 'group-hover:text-secondary-grey',
 							)}
 							onClick={() => onChange('')}
 						/>

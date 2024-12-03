@@ -1,55 +1,10 @@
-import {getApiPath, HttpClient, axiosInstance} from '@shared/api';
+import {getApiPath, HttpClient} from '@shared/api';
 import {authUserValidator} from '@entities/auth/auth.types.ts';
 import {APP_PATH} from '@shared/constants';
 
 class AuthApi {
 	get token() {
 		return localStorage.getItem('token');
-	}
-
-	setupInterceptor(token: string) {
-		axiosInstance.interceptors.request.use(
-			(config: any) => {
-				config.headers.authorization = token;
-				return config;
-			},
-			(error) => {
-				switch (error.response?.status) {
-					case 401: {
-						localStorage.removeItem('token');
-						window.location.reload();
-						break;
-					}
-					case 403: {
-						alert('Access forbidden');
-						break;
-					}
-					case 408: {
-						alert('The timeout period elapsed');
-						break;
-					}
-					case 500:
-					case 501:
-					case 502:
-					case 503:
-					case 504:
-					case 505: {
-						alert('An unexpected error has occurred');
-						window.location.href = APP_PATH.home;
-						break;
-					}
-				}
-			},
-		);
-	}
-
-	startSession(token: string) {
-		localStorage.setItem('token', token);
-	}
-
-	endSession() {
-		localStorage.removeItem('token');
-		window.location.href = APP_PATH.login;
 	}
 
 	async fetchAuthUser() {
@@ -63,7 +18,7 @@ class AuthApi {
 			data: payload,
 		});
 
-		this.startSession(`Bearer ${response}`);
+		localStorage.setItem('token', `Bearer ${response}`);
 
 		return response;
 	}
@@ -74,13 +29,14 @@ class AuthApi {
 			data: payload,
 		});
 
-		this.startSession(`Bearer ${response}`);
+		localStorage.setItem('token', `Bearer ${response}`);
 
 		return response;
 	}
 
 	logout() {
-		this.endSession();
+		localStorage.removeItem('token');
+		window.location.href = APP_PATH.login;
 		return Promise.resolve();
 	}
 }

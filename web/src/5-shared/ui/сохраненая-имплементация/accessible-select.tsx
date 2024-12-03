@@ -2,7 +2,7 @@ import {Listbox, ListboxButton, ListboxOption, ListboxOptions} from '@headlessui
 import {Box, Icon, Item} from '@shared/ui';
 import {Fragment, ReactNode} from 'react';
 import Drawer from '@mui/material/Drawer';
-import {cn, styleElement} from '@shared/lib';
+import {cn, styleElement, useResponsive} from '@shared/lib';
 
 // Работает, когда value = {name: string; value: any}
 
@@ -20,11 +20,18 @@ export function AccessibleSelectInCard({
 	onChange: any;
 	options: {name: string; value: any}[];
 }) {
+	const {isDesktop} = useResponsive();
+
 	return (
 		<Listbox value={value} onChange={onChange}>
 			{({open}) => (
 				<>
-					<ListboxButton className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:cursor-pointer'>
+					<ListboxButton
+						className={cn(
+							'flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey',
+							isDesktop && 'hover:cursor-pointer',
+						)}
+					>
 						{value.name}
 						<div className='ml-1 size-4'>{Icon.chevronDown}</div>
 					</ListboxButton>
@@ -79,6 +86,8 @@ export function AccessibleSelectInCard({
 export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: ReactNode}) {
 	const {children, isOpen, onClose} = props;
 
+	const {isDesktop} = useResponsive();
+
 	return (
 		<Drawer
 			anchor='bottom'
@@ -92,7 +101,10 @@ export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: 
 					<div />
 					<Box className='text-xl font-medium'>Savings</Box>
 					<div
-						className='flex h-7 w-7 items-center justify-center duration-300 hover:cursor-pointer hover:rounded-full hover:bg-secondary-grey'
+						className={cn(
+							'flex size-7 items-center justify-center duration-300',
+							isDesktop && 'hover:cursor-pointer hover:rounded-full hover:bg-secondary-grey',
+						)}
 						onClick={onClose}
 					>
 						<div className='h-6 w-6'>X</div>

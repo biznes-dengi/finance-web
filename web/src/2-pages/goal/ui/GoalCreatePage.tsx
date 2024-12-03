@@ -17,7 +17,7 @@ import {
 	useUploadField,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {cn, DateService} from '@shared/lib';
+import {cn, DateService, useResponsive} from '@shared/lib';
 import {goalModel} from '@entities/goal';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
@@ -39,6 +39,8 @@ export function GoalCreatePage() {
 
 	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
 		useUploadField();
+
+	const {isDesktop} = useResponsive();
 
 	const {create, isCreatePending, isCreateSuccess, isCreateError} = goalModel.useCreate();
 
@@ -99,7 +101,10 @@ export function GoalCreatePage() {
 						{isUploading && (
 							<div className='cursor-default self-center text-center'>
 								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
-								<div className='cursor-pointer text-sm underline hover:text-primary-violet' onClick={abortUploading}>
+								<div
+									className={cn('cursor-pointer text-sm underline', isDesktop && 'hover:text-primary-violet')}
+									onClick={abortUploading}
+								>
 									Cancel uploading
 								</div>
 							</div>

@@ -3,6 +3,13 @@ import {authApi} from '@entities/auth/auth.api.ts';
 import {useNavigate} from 'react-router-dom';
 import {APP_PATH} from '@shared/constants';
 
+// permissions
+// featureAccess
+// preferences
+// 	- ui-main-color
+// 	- language
+// 	- currency
+
 class AuthModel {
 	useAuthUser() {
 		const {data} = useQuery({

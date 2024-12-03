@@ -1,4 +1,4 @@
-import {cn} from '@shared/lib';
+import {cn, useResponsive} from '@shared/lib';
 import {Icon} from '@shared/ui';
 
 const sidebarConfigs = [
@@ -30,6 +30,7 @@ const sidebarConfigs = [
  */
 
 export function AppNavbar() {
+	const {isDesktop} = useResponsive();
 	return (
 		<div role='app-navbar' className='w-52'>
 			<div className='mb-12 flex pl-4 text-2xl font-bold'>{Icon.user}</div> {/* APP LOGO */}
@@ -37,8 +38,9 @@ export function AppNavbar() {
 				{sidebarConfigs.map(({label, path, icon}, index) => (
 					<div
 						className={cn(
-							'flex cursor-pointer rounded-2xl px-4 py-3 hover:bg-secondary-grey',
+							'flex cursor-pointer rounded-2xl px-4 py-3',
 							index === 0 && 'bg-white',
+							isDesktop && 'hover:bg-secondary-grey',
 						)}
 						key={label + path}
 						onClick={() => alert(label + ' module')}
