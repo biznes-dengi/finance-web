@@ -1,12 +1,35 @@
 import {Outlet} from 'react-router-dom';
 
-import {AppHeader} from './AppHeader.tsx';
-import {AppNavbar} from './AppNavbar.tsx';
-
 import {cn} from '@shared/lib';
+import {Button, ButtonType, Icon} from '@shared/ui';
+import {authModel} from '@entities/auth';
+
+const sidebarConfigs = [
+	{
+		label: 'Home',
+		path: '/',
+		icon: Icon.user,
+	},
+	{
+		label: 'Tracker',
+		path: '/',
+		icon: Icon.user,
+	},
+	{
+		label: 'Invest',
+		path: '/',
+		icon: Icon.user,
+	},
+	{
+		label: 'Calculator',
+		path: '/',
+		icon: Icon.user,
+	},
+];
 
 export function AppLayout() {
-	//when isDesktop = true -> navbar is showing
+	const {logout} = authModel.useLogout();
+
 	const isDesktop = false;
 
 	return (
@@ -14,10 +37,34 @@ export function AppLayout() {
 			role='app-layout'
 			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop ? 'flex justify-between px-6 py-8' : 'p-4')}
 		>
-			{isDesktop && <AppNavbar />}
+			{isDesktop && (
+				<div role='app-navbar' className='w-52'>
+					<div className='mb-12 flex pl-4 text-2xl font-bold'>{Icon.user}</div>
+					{/* APP LOGO */}
+					<nav>
+						{sidebarConfigs.map(({label, path, icon}, index) => (
+							<div
+								className={cn(
+									'flex cursor-pointer rounded-2xl px-4 py-3',
+									index === 0 && 'bg-white',
+									isDesktop && 'hover:bg-secondary-grey',
+								)}
+								key={label + path}
+								onClick={() => alert(label + ' module')}
+							>
+								<div className={cn('mr-4')}>{icon}</div>
+								<div className={cn('font-medium text-primary-grey', index === 0 && 'text-primary-violet')}>{label}</div>
+							</div>
+						))}
+					</nav>
+				</div>
+			)}
 
 			<div role='app-content' className='w-full'>
-				<AppHeader />
+				<header role='app-header' className='mb-4'>
+					<Button onClick={() => logout()} type={ButtonType.icon} icon={Icon.user} />
+				</header>
+
 				<Outlet />
 			</div>
 		</div>

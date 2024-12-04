@@ -15,49 +15,55 @@ import {useNavigate} from 'react-router-dom';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 import {authModel} from '@entities/auth';
 
-function useBoardSavingsId() {
-	const {authUser} = authModel.useAuthUser();
+function useBoardGoalId() {
+	const {authUser, isAuthUserFetching} = authModel.useAuthUser();
 
-	const {data} = useQuery({
+	const {data, isFetching} = useQuery({
 		queryKey: ['board-savings-id'],
 		queryFn: () => goalApi.fetchBoardSavingsId(authUser!.id),
 		enabled: !!authUser,
 	});
 
-	return data;
+	return {
+		boardGoalId: data,
+		isBoardGoalIdFetching: isFetching || isAuthUserFetching,
+	};
 }
 
 function useTotalBalance() {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId, isBoardGoalIdFetching} = useBoardGoalId();
 
 	const {data, isFetching} = useQuery({
 		queryKey: ['board-savings-balance'],
-		queryFn: () => goalApi.fetchBoardSavingsBalance(boardSavingId),
-		enabled: !!boardSavingId,
+		queryFn: () => goalApi.fetchBoardSavingsBalance(boardGoalId),
+		enabled: !!boardGoalId,
 	});
 
-	return {totalBalance: data, isTotalBalanceFetching: isFetching};
+	return {
+		totalBalance: data,
+		isTotalBalanceFetching: isFetching || isBoardGoalIdFetching,
+	};
 }
 
 function useItems(filter?: TAppFilter) {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId, isBoardGoalIdFetching} = useBoardGoalId();
 
 	const {data, isFetching} = useQuery({
 		queryKey: ['goal-items', filter],
-		queryFn: () => goalApi.fetchItems({filter, boardSavingId}),
-		enabled: !!boardSavingId,
+		queryFn: () => goalApi.fetchItems({filter, boardGoalId}),
+		enabled: !!boardGoalId,
 		initialData: {} as TSavingPaged,
 	});
 
 	return {
 		items: data?.items,
 		hasNext: data?.hasNext,
-		isItemsFetching: isFetching,
+		isItemsFetching: isFetching || isBoardGoalIdFetching,
 	};
 }
 
 function useFundGoal() {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['fund-goal'],
@@ -65,7 +71,7 @@ function useFundGoal() {
 			const {id, ...restPayload} = payload;
 			return goalApi.fundGoal({
 				id,
-				boardSavingId,
+				boardGoalId,
 				payload: {...restPayload, type: TRANSACTION_TYPE.deposit},
 			});
 		},
@@ -80,7 +86,7 @@ function useFundGoal() {
 }
 
 function useWithdrawGoal() {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['withdraw-goal'],
@@ -88,7 +94,7 @@ function useWithdrawGoal() {
 			const {id, ...restPayload} = payload;
 			return goalApi.withdrawGoal({
 				id,
-				boardSavingId,
+				boardGoalId,
 				payload: {...restPayload, type: TRANSACTION_TYPE.withdraw},
 			});
 		},
@@ -103,12 +109,12 @@ function useWithdrawGoal() {
 }
 
 function useTransfer() {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['transfer-goal'],
 		mutationFn: (payload: TransferPayload) => {
-			return goalApi.transferGoal({boardSavingId, payload});
+			return goalApi.transferGoal({boardGoalId, payload});
 		},
 	});
 
@@ -121,14 +127,14 @@ function useTransfer() {
 }
 
 function useCreate() {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const navigate = useNavigate();
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['transfer-goal'],
 		mutationFn: (payload: CreatePayload) => {
-			return goalApi.createGoal({boardSavingId, payload});
+			return goalApi.createGoal({boardGoalId, payload});
 		},
 		onSuccess: (data) => {
 			setTimeout(() => navigate(getGoalDetailsPath(createResponseScheme.parse(data).id)), 2500);
@@ -147,26 +153,26 @@ function useCreate() {
 }
 
 function useDetails(id: any) {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const {data} = useQuery({
 		queryKey: ['goal-details'],
-		queryFn: () => goalApi.fetchDetails({boardSavingId, id}),
-		enabled: !!boardSavingId,
+		queryFn: () => goalApi.fetchDetails({boardGoalId, id}),
+		enabled: !!boardGoalId,
 	});
 
 	return {goalDetails: data};
 }
 
 function useGoalTransactions(id: any) {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const filter = {pageNumber: 0};
 
 	const {data, isFetching} = useQuery({
 		queryKey: ['goal-transactions'],
-		queryFn: () => goalApi.fetchGoalTransactions({filter, boardSavingId, id}),
-		enabled: !!boardSavingId,
+		queryFn: () => goalApi.fetchGoalTransactions({filter, boardGoalId, id}),
+		enabled: !!boardGoalId,
 	});
 
 	return {
@@ -177,14 +183,14 @@ function useGoalTransactions(id: any) {
 }
 
 function useEdit() {
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const queryClient = useQueryClient();
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['edit-goal'],
 		mutationFn: ({goalId, payload}: {goalId?: string; payload: EditPayload}) => {
-			return goalApi.editGoal({boardSavingId, goalId, payload});
+			return goalApi.editGoal({boardGoalId, goalId, payload});
 		},
 		onSuccess: () => {
 			void queryClient.invalidateQueries({queryKey: ['goal-details']});
@@ -201,14 +207,15 @@ function useEdit() {
 
 function useDelete() {
 	const queryClient = useQueryClient();
+
 	const navigate = useNavigate();
 
-	const boardSavingId = useBoardSavingsId();
+	const {boardGoalId} = useBoardGoalId();
 
 	const {mutate, isPending, isError, isSuccess} = useMutation({
 		mutationKey: ['delete-goal'],
 		mutationFn: (payload: DeletePayload) => {
-			return goalApi.deleteGoal({boardSavingId, id: payload.id});
+			return goalApi.deleteGoal({boardGoalId, id: payload.id});
 		},
 		onSuccess: () => {
 			void queryClient.invalidateQueries({queryKey: ['goal-items']});

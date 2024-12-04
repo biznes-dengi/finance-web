@@ -31,7 +31,7 @@ export type TSavingPaged = zod.infer<typeof savingPagedValidator>;
 
 export type ApiFetchItemsParams = {
 	filter?: TApiData;
-	boardSavingId?: number;
+	boardGoalId?: number;
 };
 
 export type MutationFundGoalPayload = {
@@ -41,7 +41,7 @@ export type MutationFundGoalPayload = {
 };
 export type ApiFundGoalParams = {
 	id: number;
-	boardSavingId?: number;
+	boardGoalId?: number;
 	payload: {
 		type: TRANSACTION_TYPE;
 		amount: number;
@@ -57,7 +57,7 @@ export type TransferPayload = {
 	date: string;
 };
 export type TransferApiParams = {
-	boardSavingId?: number;
+	boardGoalId?: number;
 	payload: TransferPayload;
 };
 
@@ -68,7 +68,7 @@ export type CreatePayload = {
 	deadline: string;
 };
 export type CreateApiParams = {
-	boardSavingId?: number;
+	boardGoalId?: number;
 	payload: CreatePayload;
 };
 export const createResponseScheme = zod.object({
@@ -117,7 +117,7 @@ export type EditPayload = {
 	currency: CURRENCY;
 };
 export type EditApiParams = {
-	boardSavingId?: number;
+	boardGoalId?: number;
 	goalId?: string;
 	payload: EditPayload;
 };
@@ -127,5 +127,5 @@ export type DeletePayload = {
 };
 export type DeleteApiParams = {
 	id: number;
-	boardSavingId?: number;
+	boardGoalId?: number;
 };

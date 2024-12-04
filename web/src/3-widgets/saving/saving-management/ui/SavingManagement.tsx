@@ -81,12 +81,12 @@ export function SavingManagement() {
 						value={filter.status}
 						onChange={(value) => setFilter({...filter, status: value})}
 						options={savingStateOptions}
-						isFetching={isFetching}
+						isLoading={isFetching}
 					/>
 				}
 			>
 				<List
-					isFetching={isFetching}
+					isLoading={isFetching}
 					rows={items}
 					renderRow={(row) => (
 						<Item

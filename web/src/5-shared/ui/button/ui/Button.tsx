@@ -2,7 +2,7 @@ import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
 import {cn, styleElement} from '@shared/lib';
-import {PRELOAD_SIZE, PreloadSkeleton, Spinner} from '@shared/ui';
+import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
 export enum ButtonType {
@@ -98,11 +98,13 @@ export function Button(props: Props) {
 	}
 
 	if (type === ButtonType.icon) {
+		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
+
 		if (isFetching) {
 			return (
-				<div className='flex flex-col items-center gap-y-3 py-1.5'>
-					<PreloadSkeleton isCircular />
-					<PreloadSkeleton width={48} height={PRELOAD_SIZE.height.xs} />
+				<div className='flex flex-col items-center gap-y-3'>
+					<PreloadSkeleton isCircular width={44} height={44} />
+					<PreloadSkeleton width={48} height={15.5} />
 				</div>
 			);
 		}

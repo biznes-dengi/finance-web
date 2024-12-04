@@ -12,13 +12,14 @@ import {APP_PATH} from '@shared/constants';
 
 class AuthModel {
 	useAuthUser() {
-		const {data} = useQuery({
+		const {data, isFetching} = useQuery({
 			queryKey: ['auth-user'],
 			queryFn: () => authApi.fetchAuthUser(),
 		});
 
 		return {
 			authUser: data,
+			isAuthUserFetching: isFetching,
 		};
 	}
 

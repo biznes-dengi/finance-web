@@ -37,14 +37,14 @@ async function fetchBoardSavingsBalance(boardSavingId?: number) {
 	}
 }
 
-async function fetchItems({filter, boardSavingId}: ApiFetchItemsParams) {
-	if (!boardSavingId) {
+async function fetchItems({filter, boardGoalId}: ApiFetchItemsParams) {
+	if (!boardGoalId) {
 		return undefined;
 	}
 
 	try {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-goals/${boardSavingId}/goals`),
+			url: getApiPath(`board-goals/${boardGoalId}/goals`),
 			data: filter,
 		});
 		return savingPagedValidator.parse(response);
@@ -54,54 +54,54 @@ async function fetchItems({filter, boardSavingId}: ApiFetchItemsParams) {
 	}
 }
 
-async function fundGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
-	if (!boardSavingId) {
+async function fundGoal({id, boardGoalId, payload}: ApiFundGoalParams) {
+	if (!boardGoalId) {
 		return {};
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
+		url: getApiPath(`board-goals/${boardGoalId}/goals/${id}/transactions`),
 		data: payload,
 	});
 }
 
-async function withdrawGoal({id, boardSavingId, payload}: ApiFundGoalParams) {
-	if (!boardSavingId) {
+async function withdrawGoal({id, boardGoalId, payload}: ApiFundGoalParams) {
+	if (!boardGoalId) {
 		return {};
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
+		url: getApiPath(`board-goals/${boardGoalId}/goals/${id}/transactions`),
 		data: payload,
 	});
 }
 
-async function transferGoal({boardSavingId, payload}: TransferApiParams) {
-	if (!boardSavingId) {
+async function transferGoal({boardGoalId, payload}: TransferApiParams) {
+	if (!boardGoalId) {
 		return {};
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardSavingId}/transfer`),
+		url: getApiPath(`board-goals/${boardGoalId}/transfer`),
 		data: payload,
 	});
 }
 
-async function createGoal({boardSavingId, payload}: CreateApiParams) {
-	if (!boardSavingId) {
+async function createGoal({boardGoalId, payload}: CreateApiParams) {
+	if (!boardGoalId) {
 		return {};
 	}
 
 	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardSavingId}/goals`),
+		url: getApiPath(`board-goals/${boardGoalId}/goals`),
 		data: payload,
 	});
 }
 
-async function fetchDetails({boardSavingId, id}: {boardSavingId?: number; id: number}) {
+async function fetchDetails({boardGoalId, id}: {boardGoalId?: number; id: number}) {
 	try {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-goals/${boardSavingId}/goals/${id}`),
+			url: getApiPath(`board-goals/${boardGoalId}/goals/${id}`),
 		});
 		return detailsValidator.parse(response);
 	} catch (error) {
@@ -110,14 +110,14 @@ async function fetchDetails({boardSavingId, id}: {boardSavingId?: number; id: nu
 	}
 }
 
-async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsParams & {id: number}) {
-	if (!boardSavingId) {
+async function fetchGoalTransactions({filter, boardGoalId, id}: ApiFetchItemsParams & {id: number}) {
+	if (!boardGoalId) {
 		return undefined;
 	}
 
 	try {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-goals/${boardSavingId}/goals/${id}/transactions`),
+			url: getApiPath(`board-goals/${boardGoalId}/goals/${id}/transactions`),
 			data: filter,
 		});
 		return goalTransactionValidator.parse(response);
@@ -127,24 +127,24 @@ async function fetchGoalTransactions({filter, boardSavingId, id}: ApiFetchItemsP
 	}
 }
 
-async function editGoal({boardSavingId, goalId, payload}: EditApiParams) {
-	if (!boardSavingId || !goalId) {
+async function editGoal({boardGoalId, goalId, payload}: EditApiParams) {
+	if (!boardGoalId || !goalId) {
 		return {};
 	}
 
 	await HttpClient.put({
-		url: getApiPath(`board-goals/${boardSavingId}/goals/${goalId}`),
+		url: getApiPath(`board-goals/${boardGoalId}/goals/${goalId}`),
 		data: payload,
 	});
 }
 
-async function deleteGoal({boardSavingId, id}: DeleteApiParams) {
-	if (!boardSavingId) {
+async function deleteGoal({boardGoalId, id}: DeleteApiParams) {
+	if (!boardGoalId) {
 		return {};
 	}
 
 	await HttpClient.delete({
-		url: getApiPath(`board-goals/${boardSavingId}/goals/${id}`),
+		url: getApiPath(`board-goals/${boardGoalId}/goals/${id}`),
 	});
 }
 

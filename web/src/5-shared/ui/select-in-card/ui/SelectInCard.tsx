@@ -4,14 +4,14 @@ import {Props} from '../types/SelectInCard.types.ts';
 import {cn, useResponsive} from '@shared/lib';
 
 export function SelectInCard<TValue>(props: Props<TValue>) {
-	const {value, onChange, options, isFetching} = props;
+	const {value, onChange, options, isLoading} = props;
 
 	const {dialogRef, openDialog, closeDialog} = usePopupState();
 
 	const {isDesktop} = useResponsive();
 
-	if (isFetching) {
-		return <PreloadSkeleton width={40} height={16} />;
+	if (isLoading) {
+		return <PreloadSkeleton width={40} height={16} className='my-0.5' />;
 	}
 
 	return (
