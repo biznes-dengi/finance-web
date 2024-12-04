@@ -1,7 +1,11 @@
+import {BriefcaseIcon, FolderIcon} from '@heroicons/react/24/outline';
+import {cn} from '@shared/lib';
+// @ts-ignore
+import userIconPath from '../../../../../assets/user.svg';
+import {ArrowDown, ArrowLeft, ArrowUpRight, CheckIcon, CirclePlus, EyeIcon, EyeOffIcon, Plus, X} from 'lucide-react';
 import {
 	ArrowDownIcon,
 	ArrowTrendingUpIcon,
-	ArrowUpRightIcon,
 	CalendarIcon,
 	CameraIcon,
 	ChevronDownIcon,
@@ -10,16 +14,6 @@ import {
 	MagnifyingGlassIcon,
 	PencilIcon,
 } from '@heroicons/react/24/solid';
-import {BriefcaseIcon, FolderIcon, FolderPlusIcon, PlusIcon} from '@heroicons/react/24/outline';
-import {cn} from '@shared/lib';
-import {ArrowLeft, CheckIcon, EyeIcon, EyeOffIcon, X} from 'lucide-react';
-
-// @ts-ignore
-import revolutBackButtonPath from '../../../assets/revolutBackButton.svg';
-// @ts-ignore
-import userIconPath from '../../../assets/user.svg';
-
-/** Icons should be medium-bold, to corellate with text */
 
 export const ICON_MAP = {
 	PORTFOLIO: <BriefcaseIcon className={cn('h-6 w-6 text-primary-grey')} />,
@@ -47,11 +41,8 @@ export const ICON_MAP = {
 	search: <MagnifyingGlassIcon className='h-4 w-4' />,
 	camera: <CameraIcon className='h-5 w-5' />,
 
-	// x: <XMarkIcon />,
-	createGoal: <FolderPlusIcon />,
-	fund: <PlusIcon />,
-	transfer: <ArrowUpRightIcon />,
-	withdraw: <ArrowDownIcon />,
+	// fund: <PlusIcon />,
+
 	rightChevron: <ChevronRightIcon />,
 	uploadImage: <CloudArrowUpIcon />,
 	transferTo: <ArrowDownIcon />,
@@ -64,25 +55,14 @@ export const ICON_MAP = {
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,
 
+	create: CirclePlus,
+	fund: Plus,
+	withdraw: ArrowDown,
+	transfer: ArrowUpRight,
+
 	x: X,
 	check: CheckIcon,
 
 	success: CheckIcon,
 	error: X,
 };
-
-export const Icon = {...ICON_MAP, x: 'XIcon', check: 'CheckIcon', success: 'SuccessIcon', error: 'ErrorIcon'};
-
-export function AppIcon({
-	type,
-	className,
-	...rest
-}: {
-	type: 'showPassword' | 'hidePassword' | 'x' | 'check' | 'success' | 'error';
-	className?: string;
-	onClick?: () => void;
-}) {
-	const Icon = ICON_MAP[type];
-
-	return <Icon className={cn('shrink-0', className)} {...rest} />;
-}

@@ -3,7 +3,7 @@ export * from './numeric-input-with-options/ui/NumericInputWithOptions.tsx';
 export * from './fields/upload-field/useUploadField.tsx';
 
 export * from './Tabs.tsx';
-export * from './Icon.tsx';
+export * from './icon/ui/Icon.tsx';
 export * from './EmptyState.tsx';
 export * from './box/ui/Box.tsx';
 export * from './PageHeader.tsx';

@@ -1,6 +1,6 @@
 import {MouseEvent, useEffect, useRef, useState} from 'react';
 import {cn, useResponsive} from '@shared/lib';
-import {AppIcon, Icon} from '@shared/ui/Icon.tsx';
+import {AppIcon, Icon} from '@shared/ui/icon/ui/Icon.tsx';
 import {buttonClickStyles} from '@shared/ui/button/ui/Button.tsx';
 
 type Props = {

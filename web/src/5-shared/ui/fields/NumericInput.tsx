@@ -1,5 +1,5 @@
 import {cn} from '@shared/lib';
-import {AppIcon} from '@shared/ui/Icon.tsx';
+import {AppIcon} from '@shared/ui';
 import {useRef} from 'react';
 
 type Props = {

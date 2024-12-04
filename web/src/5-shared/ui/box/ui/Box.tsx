@@ -1,8 +1,8 @@
 import {cn} from '@shared/lib';
 import {PreloadSkeleton} from '@shared/ui/preload-skeleton';
-import {Props} from '../types/Box.types.ts';
+import {BoxProps} from '../types/Box.types.ts';
 
-export function Box(props: Props) {
+export function Box(props: BoxProps) {
 	const {
 		children,
 		className,
@@ -13,11 +13,15 @@ export function Box(props: Props) {
 		basePaddingX,
 		basePadding,
 		baseSpaceWithoutTop,
-		isFetching,
+		isLoading,
 		preloadClassName,
 		preloadWidth,
 		preloadHeight,
 	} = props;
+
+	if (isLoading) {
+		return <PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} className={preloadClassName} />;
+	}
 
 	return (
 		<div
@@ -34,11 +38,7 @@ export function Box(props: Props) {
 			)}
 			role='box'
 		>
-			{isFetching ? (
-				<PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} className={preloadClassName} />
-			) : (
-				children
-			)}
+			{children}
 		</div>
 	);
 }

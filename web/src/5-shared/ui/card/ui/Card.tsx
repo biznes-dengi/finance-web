@@ -1,9 +1,8 @@
 import {Props} from '../types/Card.types.ts';
 import {cn} from '@shared/lib';
-import {Box} from '@shared/ui';
 
 export function Card(props: Props) {
-	const {titleInCard, title, rightTitle, children, withTitleSpace} = props;
+	const {title, rightTitle, titleInCard, children, withTitleSpace} = props;
 
 	return (
 		<div>
@@ -15,11 +14,7 @@ export function Card(props: Props) {
 			)}
 
 			<div role='card' className='w-full rounded-2xl bg-white'>
-				{titleInCard && (
-					<Box basePaddingX className='py-3 text-sm font-medium text-primary-grey'>
-						{titleInCard}
-					</Box>
-				)}
+				{titleInCard && <div className='px-4 py-3 text-sm font-medium text-primary-grey'>{titleInCard}</div>}
 
 				{children}
 			</div>

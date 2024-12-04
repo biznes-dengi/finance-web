@@ -1,8 +1,8 @@
 import {ReactNode} from 'react';
 import {ClassValue} from 'clsx';
 
-export type Props = {
-	children: ReactNode;
+export type BoxProps = {
+	children?: ReactNode;
 	className?: string;
 	mediumMarginY?: ClassValue;
 	baseMarginY?: ClassValue;
@@ -14,7 +14,7 @@ export type Props = {
 
 	baseSpaceWithoutTop?: ClassValue;
 
-	isFetching?: boolean;
+	isLoading?: boolean;
 	preloadClassName?: string;
 	preloadWidth?: number;
 	preloadHeight?: number;

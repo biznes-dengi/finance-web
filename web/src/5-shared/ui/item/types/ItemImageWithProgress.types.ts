@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 
-export type TItemImageWithProgress = {
+export type ItemImageWithProgressProps = {
 	image: ReactNode;
 	current: number;
 	target: number;

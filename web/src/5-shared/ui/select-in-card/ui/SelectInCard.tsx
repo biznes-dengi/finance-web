@@ -17,7 +17,10 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 	return (
 		<>
 			<div
-				className={cn('flex w-fit cursor-pointer items-center', isDesktop && 'hover:cursor-pointer')}
+				className={cn(
+					'flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey',
+					isDesktop && 'hover:cursor-pointer',
+				)}
 				onClick={() => openDialog()}
 			>
 				{options.find((option) => option.value === value)?.name}
