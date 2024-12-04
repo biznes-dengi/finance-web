@@ -1,4 +1,4 @@
-import {AppIcon, Popup, Icon, Item, List, PRELOAD_SIZE, PreloadSkeleton, usePopupState} from '@shared/ui';
+import {Icon, Popup, Item, List, PRELOAD_SIZE, PreloadSkeleton, usePopupState} from '@shared/ui';
 import {cn, isNumber, styleElement, textHelpers} from '@shared/lib';
 import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputWithOptions.types.ts';
 import {CURRENCY_MAP} from '@shared/constants';
@@ -66,16 +66,20 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 	return (
 		<>
-			<label className={cn('block rounded-2xl p-4', !!errorText && 'bg-[#FDE3E5]')}>
+			<label className={cn('block rounded-2xl bg-field p-4', !!errorText && 'bg-[#FDE3E5]')}>
 				<div className='flex items-center justify-between'>
 					<div
 						className={cn('mr-4 flex min-w-40 items-center gap-2', isMultipleOptions && 'cursor-pointer')}
 						onClick={openDialog}
 					>
 						{activeOption.image &&
-							styleElement(activeOption.image, 'h-5 w-5 flex-shrink-0 rounded-full bg-primary-grey')}
+							styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
 						<div className='truncate text-xl'>{activeOption.name}</div>
-						{isMultipleOptions && <div className='size-4 flex-shrink-0 text-black'>{Icon.chevronDown}</div>}
+						{isMultipleOptions && (
+							<div className='size-4 flex-shrink-0 text-black'>
+								<Icon type='selectChevron' />
+							</div>
+						)}
 					</div>
 
 					<div className='flex min-w-[1ch] flex-shrink'>
@@ -129,7 +133,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 							const selected = option.id === activeOption.id;
 							return (
 								<Item
-									statusIcon={selected && <AppIcon type='check' />}
+									statusIcon={selected && <Icon type='check' />}
 									className={cn(selected && 'bg-light-grey')}
 									image={option.image}
 									name={option.name}

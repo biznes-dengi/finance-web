@@ -4,5 +4,5 @@ export type ListProps<R> = {
 	rows?: readonly R[];
 	renderRow: (row: R, index: number) => ReactNode;
 	isLoading?: boolean;
-	emptyStateText?: string;
+	emptyStateEntity?: string;
 };

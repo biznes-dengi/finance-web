@@ -1,28 +1,29 @@
-import {BriefcaseIcon, FolderIcon} from '@heroicons/react/24/outline';
-import {cn} from '@shared/lib';
-// @ts-ignore
-import userIconPath from '../../../../../assets/user.svg';
-import {ArrowDown, ArrowLeft, ArrowUpRight, CheckIcon, CirclePlus, EyeIcon, EyeOffIcon, Plus, X} from 'lucide-react';
 import {
-	ArrowDownIcon,
-	ArrowTrendingUpIcon,
-	CalendarIcon,
-	CameraIcon,
-	ChevronDownIcon,
-	ChevronRightIcon,
-	CloudArrowUpIcon,
-	MagnifyingGlassIcon,
-	PencilIcon,
-} from '@heroicons/react/24/solid';
+	ArrowDown,
+	ArrowLeft,
+	ArrowUpRight,
+	Calendar,
+	Camera,
+	CheckIcon,
+	ChevronDown,
+	EyeIcon,
+	EyeOffIcon,
+	FolderPlus,
+	Plus,
+	Search,
+	TrendingUp,
+	X,
+} from 'lucide-react';
+
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 
 export const ICON_MAP = {
-	PORTFOLIO: <BriefcaseIcon className={cn('h-6 w-6 text-primary-grey')} />,
+	// PORTFOLIO: <BriefcaseIcon className={cn('h-6 w-6 text-primary-grey')} />,
 	// APP_LOGO: <img src={pyramidIconPath} alt='pyramid icon' />,
 	// HOME: <img src={homeIconPath} alt='home icon' />,
 	// CALCULATOR: <img src={calculatorIconPath} alt='calculator icon' />,
 	// INVEST: <img src={investIconPath} alt='invest icon' />,
 	// TRACKER: <img src={trackerIconPath} alt='tracker icon' />,
-	user: <img src={userIconPath} alt='user icon' />,
 	// backButton: (
 	// 	<span
 	// 		style={{
@@ -35,34 +36,38 @@ export const ICON_MAP = {
 	// 		}}
 	// 	/>
 	// ),
+	// search: <MagnifyingGlassIcon className='h-4 w-4' />,
 
-	backButton: <ArrowLeft />,
-
-	search: <MagnifyingGlassIcon className='h-4 w-4' />,
-	camera: <CameraIcon className='h-5 w-5' />,
-
-	// fund: <PlusIcon />,
-
-	rightChevron: <ChevronRightIcon />,
-	uploadImage: <CloudArrowUpIcon />,
-	transferTo: <ArrowDownIcon />,
-	trendUp: <ArrowTrendingUpIcon />,
-	edit: <PencilIcon />,
-	calendar: <CalendarIcon />,
-	chevronDown: <ChevronDownIcon />,
-	goal: <FolderIcon />,
+	// user: <img src={userIconPath} alt='user icon' />,
 
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,
 
-	create: CirclePlus,
+	createGoal: FolderPlus,
 	fund: Plus,
 	withdraw: ArrowDown,
 	transfer: ArrowUpRight,
+
+	transferTo: ArrowDown,
 
 	x: X,
 	check: CheckIcon,
 
 	success: CheckIcon,
 	error: X,
-};
+
+	backButton: ArrowLeft,
+
+	selectChevron: ChevronDown,
+
+	uploadImage: Camera,
+
+	trendUp: TrendingUp,
+
+	edit: EditRoundedIcon,
+	calendar: Calendar,
+
+	search: Search,
+} as const;
+
+export type IconType = keyof typeof ICON_MAP;

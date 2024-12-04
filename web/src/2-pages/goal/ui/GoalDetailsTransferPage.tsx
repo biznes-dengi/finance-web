@@ -6,12 +6,11 @@ import {
 	ButtonType,
 	CurrencyPicker,
 	DatePicker,
-	Popup,
 	Icon,
 	NumericInputWithOptions,
 	PageHeader,
 } from '@shared/ui';
-import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {goalModel} from '@entities/goal';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
@@ -130,7 +129,7 @@ export function GoalDetailsTransferPage() {
 						)}
 						// onClick={() => setIsOrderChanged(!isOrderChanged)}
 					>
-						<div className='h-4 w-4 text-primary-violet'>{Icon.transferTo}</div>
+						<Icon type='transferTo' className='size-4 text-primary-violet' />
 					</div>
 
 					<NumericInputWithOptions
@@ -177,30 +176,30 @@ export function GoalDetailsTransferPage() {
 				</Button>
 			</Box>
 
-			<Popup isStatusDialogOpen={isTransferSuccess || isTransferError}>
-				{isTransferSuccess && fromGoalAmount && fromActiveOption && toActiveOption && (
-					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.success}</div>
-						</div>
-						<div>
-							<span className='font-medium text-primary-violet'>
-								{fromGoalAmount} {CURRENCY_MAP[fromActiveOption.balance.currency].symbol}{' '}
-							</span>
-							has been transferred from <span className='font-medium text-primary-violet'>{fromActiveOption.name}</span>{' '}
-							to <span className='font-medium text-primary-violet'>{toActiveOption.name}</span>
-						</div>
-					</Box>
-				)}
-				{isTransferError && (
-					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.error}</div>
-						</div>
-						<div>Some error occur during transferring</div>
-					</Box>
-				)}
-			</Popup>
+			{/*<Popup isStatusDialogOpen={isTransferSuccess || isTransferError}>*/}
+			{/*	{isTransferSuccess && fromGoalAmount && fromActiveOption && toActiveOption && (*/}
+			{/*		<Box baseMarginY className='text-center'>*/}
+			{/*			<div className='mb-4 flex justify-center'>*/}
+			{/*				<div className='size-16 text-primary-violet'>{Icon.success}</div>*/}
+			{/*			</div>*/}
+			{/*			<div>*/}
+			{/*				<span className='font-medium text-primary-violet'>*/}
+			{/*					{fromGoalAmount} {CURRENCY_MAP[fromActiveOption.balance.currency].symbol}{' '}*/}
+			{/*				</span>*/}
+			{/*				has been transferred from <span className='font-medium text-primary-violet'>{fromActiveOption.name}</span>{' '}*/}
+			{/*				to <span className='font-medium text-primary-violet'>{toActiveOption.name}</span>*/}
+			{/*			</div>*/}
+			{/*		</Box>*/}
+			{/*	)}*/}
+			{/*	{isTransferError && (*/}
+			{/*		<Box baseMarginY className='text-center'>*/}
+			{/*			<div className='mb-4 flex justify-center'>*/}
+			{/*				<div className='size-16 text-primary-violet'>{Icon.error}</div>*/}
+			{/*			</div>*/}
+			{/*			<div>Some error occur during transferring</div>*/}
+			{/*		</Box>*/}
+			{/*	)}*/}
+			{/*</Popup>*/}
 		</>
 	);
 }

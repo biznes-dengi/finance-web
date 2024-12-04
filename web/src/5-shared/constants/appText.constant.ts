@@ -22,7 +22,6 @@ export const APP_TEXT = {
 	transactions: 'Transactions',
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',
-	noItems: 'No items',
 	savings: 'Savings',
 	edit: 'Edit',
 	deleteGoal: 'Delete Goal',
@@ -34,3 +33,7 @@ export const APP_TEXT = {
 	finansy: 'Finansy',
 	createAccount: 'Create account',
 } as const;
+
+export function getEmptyText(emptyStateEntity: string) {
+	return `Your ${emptyStateEntity} will appear here`;
+}

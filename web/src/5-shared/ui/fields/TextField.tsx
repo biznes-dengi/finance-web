@@ -1,6 +1,6 @@
 import {MouseEvent, useEffect, useRef, useState} from 'react';
 import {cn, useResponsive} from '@shared/lib';
-import {AppIcon, Icon} from '@shared/ui/icon/ui/Icon.tsx';
+import {Icon} from '@shared/ui/icon/ui/Icon.tsx';
 import {buttonClickStyles} from '@shared/ui/button/ui/Button.tsx';
 
 type Props = {
@@ -74,7 +74,7 @@ export function TextField(props: Props) {
 				)}
 				onClick={focusInput}
 			>
-				{isSearch && <div className='mx-1 h-4 w-4 text-primary-grey'>{Icon.search}</div>}
+				{isSearch && <Icon type='search' className='mx-1 size-4 text-primary-grey' />}
 
 				<input
 					ref={inputRef}
@@ -96,7 +96,7 @@ export function TextField(props: Props) {
 							buttonClickStyles,
 						)}
 					>
-						<AppIcon
+						<Icon
 							type='x'
 							className={cn(
 								'size-3.5 text-field duration-300 ease-in-out group-focus-within:text-secondary-grey',
@@ -113,7 +113,7 @@ export function TextField(props: Props) {
 						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 						className={cn('ml-2 transform cursor-pointer text-field-helper', buttonClickStyles)}
 					>
-						<AppIcon type={isPasswordVisible ? 'hidePassword' : 'showPassword'} className='size-5' />
+						<Icon type={isPasswordVisible ? 'hidePassword' : 'showPassword'} className='size-5' />
 					</div>
 				)}
 			</div>

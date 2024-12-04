@@ -33,7 +33,9 @@ export function AccessibleSelectInCard({
 						)}
 					>
 						{value.name}
-						<div className='ml-1 size-4'>{Icon.chevronDown}</div>
+						<div className='ml-1 size-4'>
+							<Icon type='selectChevron' />
+						</div>
 					</ListboxButton>
 
 					<Dialog isOpen={open}>

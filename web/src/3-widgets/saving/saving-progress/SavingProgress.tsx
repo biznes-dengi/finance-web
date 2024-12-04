@@ -1,4 +1,4 @@
-import {AppIcon, Box, Card} from '@shared/ui';
+import {Icon, Box, Card} from '@shared/ui';
 import {CURRENCY} from '@shared/constants';
 import {cn, DateService, textHelpers} from '@shared/lib';
 
@@ -38,7 +38,7 @@ export function SavingProgress({
 									isCompletedColorGreen && 'bg-green-600',
 								)}
 							>
-								<AppIcon type='check' className='size-3.5' />
+								<Icon type='check' className='size-3.5' />
 							</div>
 						)}
 					</div>

@@ -1,6 +1,6 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useRef, useState} from 'react';
-import {AppIcon, STATUS_DIALOG_TEXT} from '@shared/ui';
+import {Icon, STATUS_DIALOG_TEXT} from '@shared/ui';
 import {StatusDialogProps} from '../types/StatusPopup.types.ts';
 import {cn} from '@shared/lib';
 
@@ -61,7 +61,7 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 							<div className='h-full rounded-full bg-[#BAC3CA]' style={{width: `${progress}%`}} />
 						</div>
 
-						<AppIcon
+						<Icon
 							type={status}
 							className={cn('mb-4 mt-2 size-10', status === 'success' ? 'text-primary-violet' : 'text-error-red')}
 						/>

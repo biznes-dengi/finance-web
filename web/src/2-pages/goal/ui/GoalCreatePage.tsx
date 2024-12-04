@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {
-	AppIcon,
 	Box,
 	Button,
 	ButtonType,
@@ -97,7 +96,11 @@ export function GoalCreatePage() {
 					>
 						{Header}
 
-						{isFileDragging && <div className='h-10 w-10 self-center text-primary-violet'>{Icon.uploadImage}</div>}
+						{isFileDragging && (
+							<div className='h-10 w-10 self-center text-primary-violet'>
+								<Icon type='uploadImage' />
+							</div>
+						)}
 						{isUploading && (
 							<div className='cursor-default self-center text-center'>
 								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
@@ -114,7 +117,7 @@ export function GoalCreatePage() {
 							className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
 							onClick={startUploading}
 						>
-							{!isUploading ? Icon.camera : <Spinner className='z-20 h-5 w-5' />}
+							{!isUploading ? <Icon type='uploadImage' /> : <Spinner className='z-20 h-5 w-5' />}
 						</div>
 					</div>
 				</UploadField>
@@ -187,7 +190,7 @@ export function GoalCreatePage() {
 				{isCreateSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='flex flex-col items-center pb-4'>
-							<AppIcon type='check' className='mb-5 size-10 text-primary-violet' />
+							<Icon type='check' className='mb-5 size-10 text-primary-violet' />
 							<div className='text-center font-semibold'>
 								{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
 								{APP_TEXT.createdSuccess}
@@ -199,7 +202,9 @@ export function GoalCreatePage() {
 				{isCreateError && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+							<div className='size-16 text-primary-violet'>
+								<Icon type='error' />
+							</div>
 						</div>
 						<div>
 							Some error occur during creating <span className='font-medium text-primary-violet'>{name}</span>

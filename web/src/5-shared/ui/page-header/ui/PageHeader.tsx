@@ -1,20 +1,10 @@
-import {cloneElement, ReactNode} from 'react';
 import {useNavigate} from 'react-router-dom';
-
 import {Box, Button, ButtonType, Icon} from '@shared/ui';
-
-type Props = {
-	title?: string;
-	description?: ReactNode;
-	subDescription?: ReactNode;
-	backPath?: string;
-	handleBackButtonClick?: () => void;
-	withBackButton?: boolean;
-};
+import {PageHeaderProps} from '../types/PageHeader.types.ts';
 
 /** если есть возможность прокинуть backPath - лучше так и сделать */
 
-export function PageHeader(props: Props) {
+export function PageHeader(props: PageHeaderProps) {
 	const {title, description, subDescription, handleBackButtonClick, backPath, withBackButton = true} = props;
 
 	const navigate = useNavigate();
@@ -33,7 +23,7 @@ export function PageHeader(props: Props) {
 					type={ButtonType.icon}
 					icon={
 						<div className='flex items-center justify-center p-2 pl-0'>
-							{cloneElement(Icon.backButton, {className: 'size-6 text-black'})}
+							<Icon type='backButton' className='size-6 text-black' />
 						</div>
 					}
 					onClick={onBackButtonClick}

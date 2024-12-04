@@ -23,22 +23,22 @@ export function GoalDetailsPage() {
 	const buttonConfigs = [
 		{
 			name: APP_TEXT.edit,
-			icon: Icon.edit,
+			icon: <Icon type='edit' />,
 			onClick: ({navigate}) => navigate(getGoalDetailsEditPath(goalId)),
 		},
 		{
 			name: APP_TEXT.fund,
-			icon: Icon.fund,
+			icon: <Icon type='fund' />,
 			onClick: ({navigate}) => navigate(getGoalDetailsFundPath(goalId)),
 		},
 		{
 			name: APP_TEXT.withdraw,
-			icon: Icon.withdraw,
+			icon: <Icon type='withdraw' />,
 			onClick: ({navigate}) => navigate(getGoalDetailsWithdrawPath(goalId)),
 		},
 		{
 			name: APP_TEXT.transfer,
-			icon: Icon.transfer,
+			icon: <Icon type='transfer' />,
 			onClick: ({navigate}) => navigate(getGoalDetailsTransferPath(goalId)),
 		},
 	] as ButtonConfig[];
@@ -74,7 +74,7 @@ export function GoalDetailsPage() {
 				>
 					{items && (
 						<List
-							isFetching={isItemsLoading}
+							isLoading={isItemsLoading}
 							rows={[items[0], items[1], items[2]]}
 							renderRow={(row) => {
 								if (!row) return null;

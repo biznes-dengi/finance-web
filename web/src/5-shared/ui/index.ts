@@ -6,7 +6,7 @@ export * from './Tabs.tsx';
 export * from './icon/ui/Icon.tsx';
 export * from './EmptyState.tsx';
 export * from './box/ui/Box.tsx';
-export * from './PageHeader.tsx';
+export * from './page-header/ui/PageHeader.tsx';
 export * from './Stepper.tsx';
 
 // new pattern -> get rid of index.ts

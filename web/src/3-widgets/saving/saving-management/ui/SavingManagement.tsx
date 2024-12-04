@@ -3,8 +3,8 @@ import {textHelpers, useFilter} from '@shared/lib';
 import {
 	buttonConfigs,
 	defaultFilter,
-	type GoalStatusValue,
 	goalStatusOptions,
+	type GoalStatusValue,
 } from '../config/savingManagement.config.tsx';
 import {goalModel} from '@entities/goal';
 import {APP_TEXT, CURRENCY_MAP, getGoalDetailsPath} from '@shared/constants';
@@ -93,7 +93,7 @@ export function SavingManagement() {
 						onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 					/>
 				)}
-				emptyStateText='Your goals will appear here'
+				emptyStateEntity={APP_TEXT.goals}
 			/>
 		</Card>
 	);

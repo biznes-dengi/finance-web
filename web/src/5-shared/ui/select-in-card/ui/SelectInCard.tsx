@@ -1,4 +1,4 @@
-import {Item, Icon, List, Popup, PreloadSkeleton, usePopupState, AppIcon} from '@shared/ui';
+import {Icon, Item, List, Popup, PreloadSkeleton, usePopupState} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {Props} from '../types/SelectInCard.types.ts';
 import {cn, useResponsive} from '@shared/lib';
@@ -24,7 +24,9 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				onClick={() => openDialog()}
 			>
 				{options.find((option) => option.value === value)?.name}
-				<div className='ml-2 size-3'>{Icon.chevronDown}</div>
+				<div className='ml-1.5'>
+					<Icon type='selectChevron' className='size-4' />
+				</div>
 			</div>
 
 			<Popup ref={dialogRef} title={APP_TEXT.savings}>
@@ -39,7 +41,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 									closeDialog();
 									setTimeout(() => onChange(option.value), 200);
 								}}
-								rightNode={checked && <AppIcon type='check' className='flex size-5 self-center text-primary-violet' />}
+								rightNode={checked && <Icon type='check' className='flex size-5 self-center text-primary-violet' />}
 								className={checked && 'bg-light-grey'}
 								isNameText
 							/>

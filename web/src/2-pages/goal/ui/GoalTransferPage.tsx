@@ -118,7 +118,7 @@ export function GoalTransferPage() {
 						)}
 						// onClick={() => setIsOrderChanged(!isOrderChanged)}
 					>
-						<div className='h-4 w-4 text-primary-violet'>{Icon.transferTo}</div>
+						<Icon type='transferTo' className='size-4 text-primary-violet' />
 					</div>
 
 					<NumericInputWithOptions

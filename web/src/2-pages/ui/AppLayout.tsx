@@ -1,29 +1,30 @@
 import {Outlet} from 'react-router-dom';
-
 import {cn} from '@shared/lib';
-import {Button, ButtonType, Icon} from '@shared/ui';
+import {Button, ButtonType} from '@shared/ui';
 import {authModel} from '@entities/auth';
+//@ts-ignore
+import userIconPath from '../../../assets/user.svg';
 
 const sidebarConfigs = [
 	{
 		label: 'Home',
 		path: '/',
-		icon: Icon.user,
+		icon: <div>Home</div>,
 	},
 	{
 		label: 'Tracker',
 		path: '/',
-		icon: Icon.user,
+		icon: <div>Home</div>,
 	},
 	{
 		label: 'Invest',
 		path: '/',
-		icon: Icon.user,
+		icon: <div>Home</div>,
 	},
 	{
 		label: 'Calculator',
 		path: '/',
-		icon: Icon.user,
+		icon: <div>Home</div>,
 	},
 ];
 
@@ -39,7 +40,9 @@ export function AppLayout() {
 		>
 			{isDesktop && (
 				<div role='app-navbar' className='w-52'>
-					<div className='mb-12 flex pl-4 text-2xl font-bold'>{Icon.user}</div>
+					<div className='mb-12 flex pl-4 text-2xl font-bold'>
+						<img src={userIconPath} alt='user icon' />
+					</div>
 					{/* APP LOGO */}
 					<nav>
 						{sidebarConfigs.map(({label, path, icon}, index) => (
@@ -62,7 +65,7 @@ export function AppLayout() {
 
 			<div role='app-content' className='w-full'>
 				<header role='app-header' className='mb-4'>
-					<Button onClick={() => logout()} type={ButtonType.icon} icon={Icon.user} />
+					<Button onClick={() => logout()} type={ButtonType.icon} icon={<img src={userIconPath} alt='user icon' />} />
 				</header>
 
 				<Outlet />

@@ -93,7 +93,7 @@ export function GoalEditPage() {
 				<Card title={'Your goal'} withTitleSpace>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Name</div>
-						<Button onClick={openNameDialog} icon={Icon.edit}>
+						<Button onClick={openNameDialog} icon={<Icon type='edit' />}>
 							{data?.name}
 						</Button>
 						<Popup ref={nameDialogRef}>
@@ -108,7 +108,7 @@ export function GoalEditPage() {
 					</div>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Target amount</div>
-						<Button onClick={openTargetAmountDialog} icon={Icon.edit}>
+						<Button onClick={openTargetAmountDialog} icon={<Icon type='edit' />}>
 							{data?.targetAmount} {data && CURRENCY_MAP[data.balance.currency].symbol}
 						</Button>
 						<Popup ref={targetAmountDialogRef}>
@@ -127,7 +127,7 @@ export function GoalEditPage() {
 					</div>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Deadline</div>
-						<Button onClick={openDeadlineDialog} icon={Icon.calendar}>
+						<Button onClick={openDeadlineDialog} icon={<Icon type='calendar' />}>
 							{new DateService(deadline).getLocalDateString()}
 						</Button>
 						<Popup ref={deadlineDialogRef}>
@@ -151,7 +151,7 @@ export function GoalEditPage() {
 					</div>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Currency</div>
-						<Button onClick={openCurrencyDialog} icon={Icon.edit}>
+						<Button onClick={openCurrencyDialog} icon={<Icon type='edit' />}>
 							{data && CURRENCY_MAP[data.balance.currency].code}
 						</Button>
 						<Popup ref={currencyDialogRef}>

@@ -43,7 +43,7 @@ export function Item(props: Props) {
 
 						{statusIcon && (
 							<div className='absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'>
-								<div className='size-3'>{statusIcon}</div>
+								{statusIcon}
 							</div>
 						)}
 					</div>
