@@ -24,8 +24,8 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				onClick={() => openDialog()}
 			>
 				{options.find((option) => option.value === value)?.name}
-				<div className='ml-1.5'>
-					<Icon type='selectChevron' className='size-4' />
+				<div className='ml-2'>
+					<Icon type='selectChevron' className='size-2.5' />
 				</div>
 			</div>
 
@@ -41,7 +41,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 									closeDialog();
 									setTimeout(() => onChange(option.value), 200);
 								}}
-								rightNode={checked && <Icon type='check' className='flex size-5 self-center text-primary-violet' />}
+								rightNode={checked && <Icon type='check' className='flex size-4 self-center text-primary-violet' />}
 								className={checked && 'bg-light-grey'}
 								isNameText
 							/>

@@ -93,7 +93,7 @@ export function GoalEditPage() {
 				<Card title={'Your goal'} withTitleSpace>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Name</div>
-						<Button onClick={openNameDialog} icon={<Icon type='edit' />}>
+						<Button onClick={openNameDialog} icon={<Icon type='edit' className='size-1' />} isOnlyIcon>
 							{data?.name}
 						</Button>
 						<Popup ref={nameDialogRef}>

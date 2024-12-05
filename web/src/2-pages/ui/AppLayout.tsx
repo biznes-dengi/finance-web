@@ -1,9 +1,7 @@
 import {Outlet} from 'react-router-dom';
 import {cn} from '@shared/lib';
-import {Button, ButtonType} from '@shared/ui';
+import {Button, ButtonType, Icon} from '@shared/ui';
 import {authModel} from '@entities/auth';
-//@ts-ignore
-import userIconPath from '../../../assets/user.svg';
 
 const sidebarConfigs = [
 	{
@@ -41,7 +39,7 @@ export function AppLayout() {
 			{isDesktop && (
 				<div role='app-navbar' className='w-52'>
 					<div className='mb-12 flex pl-4 text-2xl font-bold'>
-						<img src={userIconPath} alt='user icon' />
+						<Icon type='user' />
 					</div>
 					{/* APP LOGO */}
 					<nav>
@@ -65,7 +63,7 @@ export function AppLayout() {
 
 			<div role='app-content' className='w-full'>
 				<header role='app-header' className='mb-4'>
-					<Button onClick={() => logout()} type={ButtonType.icon} icon={<img src={userIconPath} alt='user icon' />} />
+					<Button onClick={() => logout()} type={ButtonType.icon} icon={<Icon type='user' />} />
 				</header>
 
 				<Outlet />
