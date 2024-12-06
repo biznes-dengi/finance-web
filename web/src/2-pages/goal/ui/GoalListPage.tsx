@@ -1,5 +1,5 @@
-import {SavingManagement} from '@widgets/saving';
+import {GoalManagement} from '@widgets/goal';
 
 export function GoalListPage() {
-	return <SavingManagement />;
+	return <GoalManagement />;
 }

@@ -1,10 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Box, Card, Item, List, PageHeader} from '@shared/ui';
-import {getTransactionName, getTransactionRightName} from '@pages/goal/lib/goal.lib.ts';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
-import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {goalModel} from '@entities/goal';
+import {APP_TEXT, CURRENCY, CURRENCY_MAP, TRANSACTION_TYPE} from '@shared/constants';
+import {GoalModel} from '@entities/goal';
 import {DateService, textHelpers} from '@shared/lib';
 
 const monthsMap = new Map([
@@ -21,11 +20,37 @@ const monthsMap = new Map([
 	[10, 'Ноябрь'],
 	[11, 'Декабрь'],
 ]);
+export function getTransactionName(row: any) {
+	if (!row) return;
+
+	const type = row.type as TRANSACTION_TYPE;
+
+	if (type === TRANSACTION_TYPE.DEPOSIT) {
+		return APP_TEXT.fund;
+	}
+	if (type === TRANSACTION_TYPE.WITHDRAW) {
+		return APP_TEXT.withdraw;
+	}
+	if (type === TRANSACTION_TYPE.TRANSFER) {
+		return `${row.fromGoalName} → ${row.toGoalName}`;
+	}
+}
+export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, currency: CURRENCY) {
+	if (type === TRANSACTION_TYPE.DEPOSIT) {
+		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+	}
+	if (type === TRANSACTION_TYPE.WITHDRAW) {
+		return `-${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+	}
+	if (type === TRANSACTION_TYPE.TRANSFER) {
+		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+	}
+}
 
 export function GoalTransactionsPage() {
 	const {goalId} = useParams();
-	const {goalDetails: details} = goalModel.useDetails(goalId);
-	const {items, isItemsLoading} = goalModel.useGoalTransactions(goalId);
+	const {goalDetails: details} = GoalModel.useDetails(goalId);
+	const {items, isItemsLoading} = GoalModel.useGoalTransactions(goalId);
 
 	const [groupedItems, setGroupedItems] = useState({});
 
@@ -56,7 +81,7 @@ export function GoalTransactionsPage() {
 							}
 						>
 							<List
-								isFetching={isItemsLoading}
+								isLoading={isItemsLoading}
 								rows={items as any[]}
 								renderRow={(row: any) => (
 									<Item

@@ -1,53 +1,127 @@
-import zod from 'zod';
+import zod, {boolean, nativeEnum, number, object, string} from 'zod';
 import {CURRENCY, TRANSACTION_TYPE} from '@shared/constants';
-import {TApiData} from '@shared/api';
+import {type Payload} from '@shared/api';
 
-export const boardSavingIdValidator = zod.number();
-
-export const boardSavingBalanceValidator = zod.object({
-	amount: zod.number(),
-	currency: zod.nativeEnum(CURRENCY),
+const balanceValidator = object({
+	amount: number(),
+	currency: nativeEnum(CURRENCY),
 });
 
-const balanceScheme = zod.object({
-	amount: zod.number(),
-	currency: zod.nativeEnum(CURRENCY),
-});
+export const responseValidator = {
+	fetchItems: object({
+		hasNext: boolean(),
+		items: object({
+			id: number(),
+			name: string(),
+			balance: balanceValidator,
+			targetAmount: number().nullish(),
+			image: string().nullable(),
+		}).array(),
+	}),
 
-export const savingPagedValidator = zod.object({
-	hasNext: zod.boolean(),
-	items: zod
-		.object({
-			id: zod.number(),
-			name: zod.string(),
-			balance: balanceScheme,
-			targetAmount: zod.number().nullish(),
-			image: zod.string().nullable(),
-		})
-		.array(),
-});
+	fetchItem: object({
+		id: number(),
+		name: string(),
+		balance: balanceValidator,
+		targetAmount: number().nullish(),
+		deadline: string().nullish(),
+	}),
 
-export type TSavingPaged = zod.infer<typeof savingPagedValidator>;
+	createItem: object({
+		id: number(),
+		name: string(),
+	}),
 
-export type ApiFetchItemsParams = {
-	filter?: TApiData;
-	boardGoalId?: number;
+	// items[i] может быть type=transfer и там будет один validator, а может быть другой и будет другой валидатор
+	fetchItemTransactions: object({
+		hasNext: boolean(),
+		items: zod
+			.object({
+				id: number(),
+				type: nativeEnum(TRANSACTION_TYPE),
+				amount: number().nullish(),
+				date: string().nullish(),
+
+				fromGoalAmount: number().nullish(),
+				fromGoalName: string().nullish(),
+				toGoalAmount: number().nullish(),
+				toGoalName: string().nullish(),
+			})
+			.array(),
+	}),
+
+	fetchBoardGoalId: number(),
+
+	fetchTotalBalance: balanceValidator,
 };
 
-export type MutationFundGoalPayload = {
+type MoneyTransaction = {
+	boardGoalId: number;
 	id: number;
-	amount: number;
-	date: string;
-};
-export type ApiFundGoalParams = {
-	id: number;
-	boardGoalId?: number;
 	payload: {
 		type: TRANSACTION_TYPE;
 		amount: number;
 		date: string;
 	};
 };
+
+export type ApiParams = {
+	fetchItems: {
+		boardGoalId: number;
+		filter?: Payload;
+	};
+
+	fetchItem: {
+		boardGoalId: number;
+		id: number;
+	};
+
+	createItem: {
+		boardGoalId: number;
+		payload: CreatePayload;
+	};
+
+	updateItem: {
+		boardGoalId: number;
+		id: number;
+		payload: EditPayload;
+	};
+
+	deleteItem: {
+		boardGoalId: number;
+		id: number;
+	};
+
+	fetchItemTransactions: {
+		boardGoalId: number;
+		id: number;
+		filter?: Payload;
+	};
+
+	depositMoney: MoneyTransaction;
+
+	withdrawMoney: MoneyTransaction;
+
+	transferMoney: {
+		boardGoalId: number;
+		payload: TransferPayload;
+	};
+};
+
+//TODO: TODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
+
+export type ModelHooks = {
+	useCreate: {
+		CreatePayload: {
+			name: string;
+			targetAmount: number;
+			currency: CURRENCY;
+			deadline: string;
+		};
+	};
+};
+
+export type TSavingPaged = zod.infer<typeof goalItemsValidator>;
 
 export type TransferPayload = {
 	fromGoalId: number;
@@ -56,9 +130,11 @@ export type TransferPayload = {
 	toGoalAmount: number;
 	date: string;
 };
-export type TransferApiParams = {
-	boardGoalId?: number;
-	payload: TransferPayload;
+
+export type MutationFundGoalPayload = {
+	id: number;
+	amount: number;
+	date: string;
 };
 
 export type CreatePayload = {
@@ -67,48 +143,6 @@ export type CreatePayload = {
 	currency: CURRENCY;
 	deadline: string;
 };
-export type CreateApiParams = {
-	boardGoalId?: number;
-	payload: CreatePayload;
-};
-export const createResponseScheme = zod.object({
-	id: zod.number(),
-	name: zod.string(),
-});
-
-export const detailsValidator = zod.object({
-	id: zod.number(),
-	name: zod.string(),
-	balance: balanceScheme,
-	targetAmount: zod.number().nullish(),
-	deadline: zod.string().nullish(),
-});
-
-export enum TRANSACTION_ENUM {
-	DEPOSIT = 'DEPOSIT',
-	WITHDRAW = 'WITHDRAW',
-	TRANSFER = 'TRANSFER',
-}
-
-// TODO: goalTranferValidator and goalFundWithdrawValidator
-// TODO: items[i] может быть type=transfer и там будет один validator, а может быть другой и будет другой валидатор
-
-export const goalTransactionValidator = zod.object({
-	hasNext: zod.boolean(),
-	items: zod
-		.object({
-			id: zod.number(),
-			type: zod.nativeEnum(TRANSACTION_ENUM),
-			amount: zod.number().nullish(),
-			date: zod.string().nullish(),
-
-			fromGoalAmount: zod.number().nullish(),
-			fromGoalName: zod.string().nullish(),
-			toGoalAmount: zod.number().nullish(),
-			toGoalName: zod.string().nullish(),
-		})
-		.array(),
-});
 
 export type EditPayload = {
 	name: string;
@@ -116,16 +150,7 @@ export type EditPayload = {
 	deadline: string;
 	currency: CURRENCY;
 };
-export type EditApiParams = {
-	boardGoalId?: number;
-	goalId?: string;
-	payload: EditPayload;
-};
 
 export type DeletePayload = {
 	id: number;
-};
-export type DeleteApiParams = {
-	id: number;
-	boardGoalId?: number;
 };

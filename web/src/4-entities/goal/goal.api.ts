@@ -1,163 +1,85 @@
-import {isAxiosError} from 'axios';
+import {type ApiParams, responseValidator} from './goal.types.ts';
+import {HttpClient} from '@shared/api';
 
-import {getApiPath, HttpClient} from '@shared/api';
-import {
-	ApiFetchItemsParams,
-	ApiFundGoalParams,
-	boardSavingBalanceValidator,
-	boardSavingIdValidator,
-	CreateApiParams,
-	DeleteApiParams,
-	detailsValidator,
-	EditApiParams,
-	goalTransactionValidator,
-	savingPagedValidator,
-	TransferApiParams,
-} from './goal.types.ts';
-
-async function fetchBoardSavingsId(accountId: number) {
-	try {
-		const response = await HttpClient.get({url: getApiPath('board-goals/id'), data: {accountId}});
-		return boardSavingIdValidator.parse(response);
-	} catch (error) {
-		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-		return undefined;
-	}
-}
-
-async function fetchBoardSavingsBalance(boardSavingId?: number) {
-	if (!boardSavingId) return undefined;
-
-	try {
-		const response = await HttpClient.get({url: getApiPath('board-goals/balance'), data: {boardGoalId: boardSavingId}});
-		return boardSavingBalanceValidator.parse(response);
-	} catch (error) {
-		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-		return undefined;
-	}
-}
-
-async function fetchItems({filter, boardGoalId}: ApiFetchItemsParams) {
-	if (!boardGoalId) {
-		return undefined;
-	}
-
-	try {
+export class GoalApi {
+	static async fetchItems({filter, boardGoalId}: ApiParams['fetchItems']) {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-goals/${boardGoalId}/goals`),
+			url: `board-goals/${boardGoalId}/goals`,
 			data: filter,
 		});
-		return savingPagedValidator.parse(response);
-	} catch (error) {
-		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-		return undefined;
-	}
-}
-
-async function fundGoal({id, boardGoalId, payload}: ApiFundGoalParams) {
-	if (!boardGoalId) {
-		return {};
+		return responseValidator.fetchItems.parse(response);
 	}
 
-	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardGoalId}/goals/${id}/transactions`),
-		data: payload,
-	});
-}
-
-async function withdrawGoal({id, boardGoalId, payload}: ApiFundGoalParams) {
-	if (!boardGoalId) {
-		return {};
-	}
-
-	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardGoalId}/goals/${id}/transactions`),
-		data: payload,
-	});
-}
-
-async function transferGoal({boardGoalId, payload}: TransferApiParams) {
-	if (!boardGoalId) {
-		return {};
-	}
-
-	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardGoalId}/transfer`),
-		data: payload,
-	});
-}
-
-async function createGoal({boardGoalId, payload}: CreateApiParams) {
-	if (!boardGoalId) {
-		return {};
-	}
-
-	await HttpClient.post({
-		url: getApiPath(`board-goals/${boardGoalId}/goals`),
-		data: payload,
-	});
-}
-
-async function fetchDetails({boardGoalId, id}: {boardGoalId?: number; id: number}) {
-	try {
+	static async fetchItem({boardGoalId, id}: ApiParams['fetchItem']) {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-goals/${boardGoalId}/goals/${id}`),
+			url: `board-goals/${boardGoalId}/goals/${id}`,
 		});
-		return detailsValidator.parse(response);
-	} catch (error) {
-		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-		return undefined;
-	}
-}
-
-async function fetchGoalTransactions({filter, boardGoalId, id}: ApiFetchItemsParams & {id: number}) {
-	if (!boardGoalId) {
-		return undefined;
+		return responseValidator.fetchItem.parse(response);
 	}
 
-	try {
+	static async createItem({boardGoalId, payload}: ApiParams['createItem']) {
+		const response = await HttpClient.post({
+			url: `board-goals/${boardGoalId}/goals`,
+			data: payload,
+		});
+		return responseValidator.createItem.parse(response);
+	}
+
+	static async updateItem({boardGoalId, id, payload}: ApiParams['updateItem']) {
+		return await HttpClient.put({
+			url: `board-goals/${boardGoalId}/goals/${id}`,
+			data: payload,
+		});
+	}
+
+	static async deleteItem({boardGoalId, id}: ApiParams['deleteItem']) {
+		return await HttpClient.delete({
+			url: `board-goals/${boardGoalId}/goals/${id}`,
+		});
+	}
+
+	static async fetchItemTransactions({filter, boardGoalId, id}: ApiParams['fetchItemTransactions']) {
 		const response = await HttpClient.get({
-			url: getApiPath(`board-goals/${boardGoalId}/goals/${id}/transactions`),
+			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
 			data: filter,
 		});
-		return goalTransactionValidator.parse(response);
-	} catch (error) {
-		isAxiosError(error) ? console.error(error.response?.data.message) : console.error(error);
-		return undefined;
-	}
-}
-
-async function editGoal({boardGoalId, goalId, payload}: EditApiParams) {
-	if (!boardGoalId || !goalId) {
-		return {};
+		return responseValidator.fetchItemTransactions.parse(response);
 	}
 
-	await HttpClient.put({
-		url: getApiPath(`board-goals/${boardGoalId}/goals/${goalId}`),
-		data: payload,
-	});
-}
-
-async function deleteGoal({boardGoalId, id}: DeleteApiParams) {
-	if (!boardGoalId) {
-		return {};
+	static async depositMoney({id, boardGoalId, payload}: ApiParams['depositMoney']) {
+		return await HttpClient.post({
+			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
+			data: payload,
+		});
 	}
 
-	await HttpClient.delete({
-		url: getApiPath(`board-goals/${boardGoalId}/goals/${id}`),
-	});
-}
+	static async withdrawMoney({id, boardGoalId, payload}: ApiParams['withdrawMoney']) {
+		return await HttpClient.post({
+			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
+			data: payload,
+		});
+	}
 
-export const goalApi = {
-	fetchBoardSavingsId,
-	fetchBoardSavingsBalance,
-	fetchItems,
-	fundGoal,
-	withdrawGoal,
-	transferGoal,
-	createGoal,
-	fetchDetails,
-	fetchGoalTransactions,
-	editGoal,
-	deleteGoal,
-};
+	static async transferMoney({boardGoalId, payload}: ApiParams['transferMoney']) {
+		return await HttpClient.post({
+			url: `board-goals/${boardGoalId}/transfer`,
+			data: payload,
+		});
+	}
+
+	static async fetchBoardGoalId(accountId: number) {
+		const response = await HttpClient.get({
+			url: 'board-goals/id',
+			data: {accountId},
+		});
+		return responseValidator.fetchBoardGoalId.parse(response);
+	}
+
+	static async fetchTotalBalance(boardGoalId: number) {
+		const response = await HttpClient.get({
+			url: 'board-goals/balance',
+			data: {boardGoalId},
+		});
+		return responseValidator.fetchTotalBalance.parse(response);
+	}
+}

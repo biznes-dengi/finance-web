@@ -1,6 +1,6 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {authApi} from '@entities/auth/auth.api.ts';
 import {useNavigate} from 'react-router-dom';
+import {AuthApi} from '@entities/auth';
 import {APP_PATH} from '@shared/constants';
 
 // permissions
@@ -14,7 +14,7 @@ class AuthModel {
 	useAuthUser() {
 		const {data, isFetching} = useQuery({
 			queryKey: ['auth-user'],
-			queryFn: () => authApi.fetchAuthUser(),
+			queryFn: () => AuthApi.fetchAuthUser(),
 		});
 
 		return {
@@ -29,7 +29,7 @@ class AuthModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['signup'],
 			mutationFn: (payload: any) => {
-				return authApi.signup(payload);
+				return AuthApi.signup(payload);
 			},
 			onSuccess: () => {
 				setTimeout(() => {
@@ -55,7 +55,7 @@ class AuthModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['login'],
 			mutationFn: (payload: any) => {
-				return authApi.login(payload);
+				return AuthApi.login(payload);
 			},
 			onSuccess: () => {
 				navigate(APP_PATH.home);
@@ -79,7 +79,7 @@ class AuthModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['logout'],
 			mutationFn: () => {
-				return authApi.logout();
+				return AuthApi.logout();
 			},
 			onSuccess: () => {
 				navigate(APP_PATH.login);

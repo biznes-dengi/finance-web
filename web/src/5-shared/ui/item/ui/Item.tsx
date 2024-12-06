@@ -1,10 +1,10 @@
 import {useNavigate} from 'react-router-dom';
-import {Props} from '../types/Item.types.ts';
+import {ItemProps} from '../types/Item.types.ts';
 import {cn, useResponsive} from '@shared/lib';
 
 //if leftNode or rightNode is an icon => size-5
 
-export function Item(props: Props) {
+export function Item(props: ItemProps) {
 	const {
 		image,
 		statusIcon,

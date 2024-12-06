@@ -1,3 +1,3 @@
-import {TApiData} from '@shared/api';
+import {type Payload} from '@shared/api';
 
-export type TAppFilter = TApiData;
+export type AppFilter = Payload;

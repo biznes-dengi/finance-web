@@ -15,17 +15,17 @@ import {
 } from '@shared/ui';
 import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {useParams} from 'react-router-dom';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 import {cn, DateService, isNull} from '@shared/lib';
 import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
 
 export function GoalEditPage() {
 	const {goalId} = useParams();
-	const {goalDetails: data} = goalModel.useDetails(goalId);
+	const {goalDetails: data} = GoalModel.useDetails(goalId);
 
-	const {isEditPending, editGoal} = goalModel.useEdit();
-	const {deleteGoal, isDeletePending} = goalModel.useDelete();
+	const {isEditPending, editGoal} = GoalModel.useEdit();
+	const {deleteGoal, isDeletePending} = GoalModel.useDelete();
 
 	const {dialogRef: nameDialogRef, openDialog: openNameDialog, closeDialog: closeNameDialog} = usePopupState();
 	const {
@@ -90,7 +90,7 @@ export function GoalEditPage() {
 
 			{/** shit styles margin top see in inspect in browser */}
 			<Box basePaddingX>
-				<Card title={'Your goal'} withTitleSpace>
+				<Card title={'Your goal'} withTopSpace>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Name</div>
 						<Button onClick={openNameDialog} icon={<Icon type='edit' className='size-1' />} isOnlyIcon>

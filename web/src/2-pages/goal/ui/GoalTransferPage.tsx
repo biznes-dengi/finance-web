@@ -12,7 +12,7 @@ import {
 	PageHeader,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
 
 // const initialExchangeRate = 3.9071; for zł
@@ -25,7 +25,7 @@ export function GoalTransferPage() {
 
 	const [date, setDate] = useState<Date>(new DateService().value);
 
-	const {items} = goalModel.useItems({pageNumber: 0});
+	const {items} = GoalModel.useItems({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
@@ -39,7 +39,7 @@ export function GoalTransferPage() {
 
 	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
-	const {transfer, isTransferPending, isTransferSuccess, isTransferError} = goalModel.useTransfer();
+	const {transfer, isTransferPending, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
 
 	useEffect(() => {
 		if (!options) return;

@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
 import {Navigate} from 'react-router-dom';
+import {AuthApi} from '@entities/auth';
 import {APP_PATH} from '@shared/constants';
-import {authApi} from '@entities/auth';
 import {setupInterceptor} from '@shared/api';
 
 /**
@@ -12,10 +12,10 @@ import {setupInterceptor} from '@shared/api';
  * */
 
 export function PrivateRoute({page}: {page: ReactNode}) {
-	if (!authApi.token) {
+	if (!AuthApi.getToken()) {
 		return <Navigate to={APP_PATH.login} replace />;
 	} else {
-		setupInterceptor(authApi.token);
+		setupInterceptor(AuthApi.getToken()!);
 	}
 
 	return page;

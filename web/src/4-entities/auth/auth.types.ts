@@ -1,6 +1,8 @@
 import {number, object, string} from 'zod';
 
-export const authUserValidator = object({
-	id: number(),
-	email: string(),
-});
+export const responseValidator = {
+	fetchAuthUser: object({
+		id: number(),
+		email: string(),
+	}),
+};

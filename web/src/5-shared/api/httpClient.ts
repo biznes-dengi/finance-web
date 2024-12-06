@@ -1,36 +1,37 @@
 import {axiosInstance} from './api.config.ts';
-import {HttpClientMethodProps} from '@shared/api/api.types.ts';
+import {type HttpClientParams} from './api.types.ts';
+import {getApiPath} from './api.helpers.ts';
 import {getQueryString} from '@shared/lib';
 
 export class HttpClient {
-	static get({url, data, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+	static get({url, data, abortSignal}: HttpClientParams['get']): Promise<unknown> {
 		if (data) {
 			url += getQueryString(data);
 		}
 
 		return axiosInstance
-			.get(url, {signal: abortSignal})
+			.get(getApiPath(url), {signal: abortSignal})
 			.then((response) => response.data)
 			.catch((error) => Promise.reject(error));
 	}
 
-	static post({url, data, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+	static post({url, data, abortSignal}: HttpClientParams['post']): Promise<unknown> {
 		return axiosInstance
-			.post(url, data, {signal: abortSignal})
+			.post(getApiPath(url), data, {signal: abortSignal})
 			.then((response) => response.data)
 			.catch((error) => Promise.reject(error));
 	}
 
-	static put({url, data, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+	static put({url, data, abortSignal}: HttpClientParams['put']): Promise<unknown> {
 		return axiosInstance
-			.put(url, data, {signal: abortSignal})
+			.put(getApiPath(url), data, {signal: abortSignal})
 			.then((response) => response.data)
 			.catch((error) => Promise.reject(error));
 	}
 
-	static delete({url, abortSignal}: HttpClientMethodProps): Promise<unknown> {
+	static delete({url, abortSignal}: HttpClientParams['delete']): Promise<unknown> {
 		return axiosInstance
-			.delete(url, {signal: abortSignal})
+			.delete(getApiPath(url), {signal: abortSignal})
 			.then((response) => response.data)
 			.catch((error) => Promise.reject(error));
 	}

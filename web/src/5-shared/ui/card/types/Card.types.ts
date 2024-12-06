@@ -6,5 +6,5 @@ export type Props = {
 	rightTitle?: ReactNode;
 	titleInCard?: ReactNode;
 	children: ReactNode;
-	withTitleSpace?: ClassValue;
+	withTopSpace?: ClassValue;
 };

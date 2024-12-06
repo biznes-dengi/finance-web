@@ -1,11 +1,12 @@
 import {useNavigate} from 'react-router-dom';
 import {Box, Button, ButtonType, Icon} from '@shared/ui';
 import {PageHeaderProps} from '../types/PageHeader.types.ts';
+import {cn} from '@shared/lib';
 
 /** если есть возможность прокинуть backPath - лучше так и сделать */
 
 export function PageHeader(props: PageHeaderProps) {
-	const {title, description, subDescription, handleBackButtonClick, backPath, withBackButton = true} = props;
+	const {title, description, subDescription, handleBackButtonClick, backPath, withBackButton = true, className} = props;
 
 	const navigate = useNavigate();
 
@@ -17,13 +18,13 @@ export function PageHeader(props: PageHeaderProps) {
 	}
 
 	return (
-		<div role='page-header' className='mb-6 w-full'>
+		<div role='page-header' className={cn('mb-6 flex w-full flex-col items-start gap-2 px-4 pt-4', className)}>
 			{withBackButton && (
 				<Button
 					type={ButtonType.icon}
 					icon={
-						<div className='flex items-center justify-center p-2 pl-0'>
-							<Icon type='backButton' className='size-6 text-black' />
+						<div className='flex items-center justify-center'>
+							<Icon type='backButton' className='size-5' />
 						</div>
 					}
 					onClick={onBackButtonClick}
@@ -31,8 +32,8 @@ export function PageHeader(props: PageHeaderProps) {
 				/>
 			)}
 			{title && <Box className='text-3xl font-bold'>{title}</Box>}
-			{description && <div className='mt-2 font-medium'>{description}</div>}
-			{subDescription && <div className='mt-2 text-sm font-light text-primary-grey'>{subDescription}</div>}
+			{description && <div className='font-medium'>{description}</div>}
+			{subDescription && <div className='text-sm font-light text-primary-grey'>{subDescription}</div>}
 		</div>
 	);
 }

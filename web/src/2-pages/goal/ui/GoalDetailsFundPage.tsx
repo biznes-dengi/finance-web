@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Box, Button, ButtonType, DatePicker, Popup, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
 import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 import {DateService, isNumber} from '@shared/lib';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
@@ -10,8 +10,8 @@ export function GoalDetailsFundPage() {
 	const navigate = useNavigate();
 	const {goalId} = useParams();
 
-	const {goalDetails} = goalModel.useDetails(goalId);
-	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = goalModel.useFundGoal();
+	const {goalDetails} = GoalModel.useDetails(goalId);
+	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = GoalModel.useFundGoal();
 
 	const [activeOption, setActiveOption] = useState(goalDetails);
 

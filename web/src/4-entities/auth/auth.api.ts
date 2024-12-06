@@ -1,20 +1,22 @@
-import {getApiPath, HttpClient} from '@shared/api';
-import {authUserValidator} from '@entities/auth/auth.types.ts';
+import {responseValidator} from './auth.types.ts';
+import {HttpClient} from '@shared/api';
 import {APP_PATH} from '@shared/constants';
 
-class AuthApi {
-	get token() {
+export class AuthApi {
+	static getToken() {
 		return localStorage.getItem('token');
 	}
 
-	async fetchAuthUser() {
-		const response = await HttpClient.get({url: getApiPath('users/me')});
-		return authUserValidator.parse(response);
+	static async fetchAuthUser() {
+		const response = await HttpClient.get({
+			url: 'users/me',
+		});
+		return responseValidator.fetchAuthUser.parse(response);
 	}
 
-	async signup(payload: any) {
+	static async signup(payload: any) {
 		const response = await HttpClient.post({
-			url: getApiPath('auth/register'),
+			url: 'auth/register',
 			data: payload,
 		});
 
@@ -23,9 +25,9 @@ class AuthApi {
 		return response;
 	}
 
-	async login(payload: any) {
+	static async login(payload: any) {
 		const response = await HttpClient.post({
-			url: getApiPath('auth/login'),
+			url: 'auth/login',
 			data: payload,
 		});
 
@@ -34,11 +36,9 @@ class AuthApi {
 		return response;
 	}
 
-	logout() {
+	static logout() {
 		localStorage.removeItem('token');
 		window.location.href = APP_PATH.login;
 		return Promise.resolve();
 	}
 }
-
-export const authApi = new AuthApi();

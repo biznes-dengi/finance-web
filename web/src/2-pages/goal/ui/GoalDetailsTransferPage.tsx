@@ -11,7 +11,7 @@ import {
 	PageHeader,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
 import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
@@ -27,9 +27,9 @@ export function GoalDetailsTransferPage() {
 
 	const {goalId} = useParams();
 
-	const {goalDetails} = goalModel.useDetails(goalId);
+	const {goalDetails} = GoalModel.useDetails(goalId);
 
-	const {items} = goalModel.useItems({pageNumber: 0});
+	const {items} = GoalModel.useItems({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
@@ -43,7 +43,7 @@ export function GoalDetailsTransferPage() {
 
 	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
-	const {transfer, isTransferPending, isTransferSuccess, isTransferError} = goalModel.useTransfer();
+	const {transfer, isTransferPending, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
 
 	useEffect(() => {
 		if (goalDetails) {

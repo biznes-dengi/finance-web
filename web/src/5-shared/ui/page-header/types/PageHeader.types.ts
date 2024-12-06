@@ -7,4 +7,5 @@ export type PageHeaderProps = {
 	backPath?: string;
 	handleBackButtonClick?: () => void;
 	withBackButton?: boolean;
+	className?: string;
 };

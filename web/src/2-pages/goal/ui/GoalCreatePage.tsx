@@ -17,7 +17,7 @@ import {
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
 import {cn, DateService, useResponsive} from '@shared/lib';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
 
@@ -41,7 +41,7 @@ export function GoalCreatePage() {
 
 	const {isDesktop} = useResponsive();
 
-	const {create, isCreatePending, isCreateSuccess, isCreateError} = goalModel.useCreate();
+	const {create, isCreatePending, isCreateSuccess, isCreateError} = GoalModel.useCreate();
 
 	function handleCreateClick() {
 		if (!targetAmount) return;

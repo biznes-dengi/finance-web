@@ -1,6 +1,6 @@
 import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {Box, Button, ButtonType, DatePicker, Popup, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {DateService, isNumber} from '@shared/lib';
@@ -8,9 +8,9 @@ import {DateService, isNumber} from '@shared/lib';
 export function GoalWithdrawPage() {
 	const navigate = useNavigate();
 
-	const {withdrawGoal, isWithdrawGoalPending, isWithdrawGoalSuccess, isWithdrawGoalError} = goalModel.useWithdrawGoal();
+	const {withdrawGoal, isWithdrawGoalPending, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdrawGoal();
 
-	const {items} = goalModel.useItems({pageNumber: 0});
+	const {items} = GoalModel.useItems({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,

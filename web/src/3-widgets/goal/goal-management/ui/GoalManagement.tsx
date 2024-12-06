@@ -6,14 +6,14 @@ import {
 	goalStatusOptions,
 	type GoalStatusValue,
 } from '../config/savingManagement.config.tsx';
-import {goalModel} from '@entities/goal';
+import {GoalModel} from '@entities/goal';
 import {APP_TEXT, CURRENCY_MAP, getGoalDetailsPath} from '@shared/constants';
 
-export function SavingManagement() {
+export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
-	const {totalBalance, isTotalBalanceFetching} = goalModel.useTotalBalance();
-	const {items, isItemsFetching} = goalModel.useItems(filter);
+	const {totalBalance, isTotalBalanceFetching} = GoalModel.useTotalBalance();
+	const {items, isItemsFetching} = GoalModel.useItems(filter);
 
 	const isFetching = isItemsFetching || isTotalBalanceFetching;
 
@@ -75,6 +75,11 @@ export function SavingManagement() {
 				rows={items}
 				renderRow={(row) => (
 					<Item
+						name={row.name}
+						description={
+							row.targetAmount && textHelpers.getRatio(row.balance.amount, row.targetAmount, row.balance.currency)
+						}
+						onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 						image={
 							row.targetAmount ? (
 								<ItemImageWithProgress
@@ -86,11 +91,6 @@ export function SavingManagement() {
 								<div className='size-10 rounded-full bg-green-200' />
 							)
 						}
-						name={row.name}
-						description={
-							row.targetAmount && textHelpers.getRatio(row.balance.amount, row.targetAmount, row.balance.currency)
-						}
-						onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 					/>
 				)}
 				emptyStateEntity={APP_TEXT.goals}

@@ -67,7 +67,7 @@ export function SignupPage() {
 	return (
 		<>
 			<AuthLayout>
-				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} />
+				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} className='p-0' />
 
 				<div className='flex w-full flex-col gap-4'>
 					<TextField
