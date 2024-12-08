@@ -1,13 +1,15 @@
 import {cn} from '@shared/lib';
 import {ICON_MAP, type IconType} from '../config/Icon.config.tsx';
 
-//isAndroid isIos проверка
-
 export function Icon({type, className, ...rest}: {type: IconType; className?: string; onClick?: () => void}) {
 	const Icon = ICON_MAP[type];
 
 	return <Icon className={cn('shrink-0', className)} {...rest} />;
 }
+
+/**
+ * isAndroid isIos проверка, т.к. разнвые иконки
+ * */
 
 /**
  * 1. 16x16px: Этот размер часто используется для мелких иконок, таких как иконки действий или мелкие значки.
