@@ -1,12 +1,7 @@
 import {Box, Button, Card, Item, ItemImageWithProgress, List, SelectInCard} from '@shared/ui';
-import {textHelpers, useFilter} from '@shared/lib';
-import {
-	buttonConfigs,
-	defaultFilter,
-	goalStatusOptions,
-	type GoalStatusValue,
-} from '../config/GoalManagement.config.tsx';
+import {buttonConfigs, defaultFilter, goalStatusOptions} from '../config/GoalManagement.config.tsx';
 import {GoalModel} from '@entities/goal';
+import {textHelpers, useFilter} from '@shared/lib';
 import {APP_TEXT, CURRENCY_MAP, CURRENCY_SYMBOL, getGoalDetailsPath} from '@shared/constants';
 
 export function GoalManagement() {
@@ -65,7 +60,7 @@ export function GoalManagement() {
 			</div>
 
 			<div className='px-4 py-3'>
-				<SelectInCard<GoalStatusValue>
+				<SelectInCard<(typeof goalStatusOptions)[number]['value']>
 					value={filter.status}
 					onChange={(value) => setFilter({...filter, status: value})}
 					options={goalStatusOptions}

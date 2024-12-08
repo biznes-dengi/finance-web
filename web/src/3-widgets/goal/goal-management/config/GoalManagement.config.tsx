@@ -35,9 +35,7 @@ export const goalStatusOptions = [
 	{name: 'Overdue', value: 'OVERDUE'},
 ] as const;
 
-export type GoalStatusValue = (typeof goalStatusOptions)[number]['value'];
-
 export const defaultFilter = {
 	pageNumber: 0,
-	status: undefined as GoalStatusValue,
+	status: undefined as (typeof goalStatusOptions)[number]['value'],
 };
