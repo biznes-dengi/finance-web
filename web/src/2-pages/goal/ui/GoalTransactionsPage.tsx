@@ -49,8 +49,8 @@ export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, 
 
 export function GoalTransactionsPage() {
 	const {goalId} = useParams();
-	const {item: details} = GoalModel.useItemDetails({id: Number(goalId)});
-	const {items, isItemsLoading} = GoalModel.useItemDetailsTransactions(goalId, {pageNumber: 0});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {items, isItemsLoading} = GoalModel.useItemTransactions({id: Number(goalId), filter: {pageNumber: 0}});
 
 	const [groupedItems, setGroupedItems] = useState({});
 
@@ -75,7 +75,7 @@ export function GoalTransactionsPage() {
 									{total !== 0 && total > 0 ? '+' : '-'}
 									{textHelpers.getAmountWithCurrency(
 										total,
-										details ? CURRENCY_MAP[details.balance.currency].symbol : '',
+										itemDetails ? CURRENCY_MAP[itemDetails.balance.currency].symbol : '',
 									)}
 								</div>
 							}
@@ -89,11 +89,11 @@ export function GoalTransactionsPage() {
 										name={getTransactionName(row)}
 										description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
 										rightName={
-											details &&
+											itemDetails &&
 											getTransactionRightName(
 												row.type,
 												(row.amount ?? row.fromGoalAmount) as number,
-												details.balance.currency,
+												itemDetails.balance.currency,
 											)
 										}
 										// onClick={() => alert('go to transaction details')}

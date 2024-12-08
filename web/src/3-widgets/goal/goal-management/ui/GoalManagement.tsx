@@ -13,16 +13,16 @@ export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
 	const {totalBalance, isTotalBalanceLoading} = GoalModel.useTotalBalance();
-	const {items, isItemsFetching} = GoalModel.useItemList(filter);
+	const {itemList, isItemListLoading} = GoalModel.useItemList({filter});
 
-	const isFetching = isItemsFetching || isTotalBalanceLoading;
+	const isLoading = isItemListLoading || isTotalBalanceLoading;
 
 	return (
 		<Card>
 			<div className='flex justify-between p-4'>
 				<div className='flex flex-col gap-2'>
 					<Box
-						isLoading={isFetching}
+						isLoading={isLoading}
 						preloadWidth={PRELOAD_SIZE.width.xl}
 						preloadHeight={PRELOAD_SIZE.height.xl}
 						preloadClassName='mt-2 mb-1.5'
@@ -35,7 +35,7 @@ export function GoalManagement() {
 					</Box>
 					<Box
 						className='text-sm font-light text-primary-grey'
-						isLoading={isFetching}
+						isLoading={isLoading}
 						preloadWidth={PRELOAD_SIZE.width.l}
 						preloadHeight={PRELOAD_SIZE.height.xs}
 						preloadClassName='mb-1'
@@ -46,7 +46,7 @@ export function GoalManagement() {
 
 				<Box
 					className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-green-200'
-					isLoading={isFetching}
+					isLoading={isLoading}
 					preloadWidth={40}
 					preloadHeight={40}
 					preloadClassName='rounded-xl'
@@ -55,7 +55,7 @@ export function GoalManagement() {
 
 			<div className='flex justify-between px-4 py-2'>
 				{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
-					<Button key={index} isFetching={isFetching} {...restButtonConfig}>
+					<Button key={index} isLoading={isLoading} {...restButtonConfig}>
 						{name}
 					</Button>
 				))}
@@ -66,13 +66,13 @@ export function GoalManagement() {
 					value={filter.status}
 					onChange={(value) => setFilter({...filter, status: value})}
 					options={goalStatusOptions}
-					isLoading={isFetching}
+					isLoading={isLoading}
 				/>
 			</div>
 
 			<List
-				isLoading={isFetching}
-				rows={items}
+				isLoading={isLoading}
+				rows={itemList}
 				renderRow={(row) => (
 					<Item
 						name={row.name}

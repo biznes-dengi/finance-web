@@ -27,10 +27,10 @@ export function GoalDetailsTransferPage() {
 
 	const {goalId} = useParams();
 
-	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
 
-	const {items} = GoalModel.useItemList({pageNumber: 0});
-	const options = items?.map((option) => ({
+	const {itemList} = GoalModel.useItemList({filter: {pageNumber: 0}});
+	const options = itemList?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
@@ -46,18 +46,18 @@ export function GoalDetailsTransferPage() {
 	const {transfer, isTransferLoading, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
 
 	useEffect(() => {
-		if (goalDetails) {
-			setFromActiveOption({...goalDetails, image: <div className='h-10 w-10 rounded-full bg-primary-grey' />});
+		if (itemDetails) {
+			setFromActiveOption({...itemDetails, image: <div className='h-10 w-10 rounded-full bg-primary-grey' />});
 		}
 
-		if (options && goalDetails) {
+		if (options && itemDetails) {
 			options.forEach((option) => {
-				if (option.id !== goalDetails.id) {
+				if (option.id !== itemDetails.id) {
 					setToActiveOption(option);
 				}
 			});
 		}
-	}, [goalDetails, items]);
+	}, [itemDetails, itemList]);
 
 	function handleCurrencyRateChange(value: number | undefined) {
 		setExchangeRate(value ? Number(value.toFixed(4)) : initialExchangeRate);
@@ -82,15 +82,15 @@ export function GoalDetailsTransferPage() {
 	function handleTransferClick() {
 		if (!fromActiveOption || !toActiveOption || !fromGoalAmount || !toGoalAmount) return;
 
-		const payload = {
-			fromGoalId: fromActiveOption.id,
-			toGoalId: toActiveOption.id,
-			fromGoalAmount,
-			toGoalAmount,
-			date: new DateService(date).getPayloadDateFormat(),
-		};
-
-		transfer(payload);
+		transfer({
+			payload: {
+				fromGoalId: fromActiveOption.id,
+				toGoalId: toActiveOption.id,
+				fromGoalAmount,
+				toGoalAmount,
+				date: new DateService(date).getPayloadDateFormat(),
+			},
+		});
 	}
 
 	if (isTransferSuccess || isTransferError) {

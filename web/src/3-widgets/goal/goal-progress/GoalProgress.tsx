@@ -5,12 +5,13 @@ import {GoalModel} from '@entities/goal';
 
 export function GoalProgress() {
 	const {goalId} = useParams();
-	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
 
-	if (!item) return null;
+	if (!itemDetails) return null;
 
-	const {balance, deadline} = item;
+	const {balance, deadline} = itemDetails;
 
+	//TODO
 	const targetAmount = 1000000;
 
 	const percentage = Math.min(100, Math.floor((balance.amount / targetAmount) * 100));

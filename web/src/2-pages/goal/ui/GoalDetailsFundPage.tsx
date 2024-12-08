@@ -10,29 +10,29 @@ export function GoalDetailsFundPage() {
 	const navigate = useNavigate();
 	const {goalId} = useParams();
 
-	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
 	const {deposit, isDepositLoading, isDepositSuccess, isDepositError} = GoalModel.useDeposit();
 
-	const [activeOption, setActiveOption] = useState(item);
+	const [activeOption, setActiveOption] = useState(itemDetails);
 
 	const [amount, setAmount] = useState<number | undefined>();
 	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
-		if (!goalDetails) return;
-		setActiveOption(goalDetails);
-	}, [goalDetails]);
+		if (!itemDetails) return;
+		setActiveOption(itemDetails);
+	}, [itemDetails]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;
 
-		const payload = {
-			id: activeOption.id,
-			amount: amount ?? 0,
-			date: new DateService(date).getPayloadDateFormat(),
-		};
-
-		deposit(payload);
+		deposit({
+			params: {id: activeOption.id},
+			payload: {
+				amount: amount ?? 0,
+				date: new DateService(date).getPayloadDateFormat(),
+			},
+		});
 	}
 
 	if (isDepositSuccess || isDepositError) {
@@ -62,7 +62,9 @@ export function GoalDetailsFundPage() {
 				{isDepositSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.success}</div>
+							<div className='size-16 text-primary-violet'>
+								<Icon type='success' />
+							</div>
 						</div>
 						<div>
 							Goal <span className='font-medium text-primary-violet'>{activeOption.name} </span>
@@ -76,7 +78,9 @@ export function GoalDetailsFundPage() {
 				{isDepositError && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+							<div className='size-16 text-primary-violet'>
+								<Icon type='error' />
+							</div>
 						</div>
 						<div>
 							Some error occur during funding{' '}

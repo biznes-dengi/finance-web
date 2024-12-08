@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AuthLayout} from './AuthLayout.tsx';
+import {AuthModel} from '@entities/auth';
 import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
 import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {AuthModel} from '@entities/auth';
 
 export function LoginPage() {
 	const navigate = useNavigate();

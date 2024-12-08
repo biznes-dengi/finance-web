@@ -10,8 +10,8 @@ export function GoalWithdrawPage() {
 
 	const {withdraw, isWithdrawLoading, isWithdrawSuccess, isWithdrawError} = GoalModel.useWithdraw();
 
-	const {items} = GoalModel.useItemList({filter: {pageNumber: 0}});
-	const options = items?.map((option) => ({
+	const {itemList} = GoalModel.useItemList({filter: {pageNumber: 0}});
+	const options = itemList?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
@@ -24,7 +24,7 @@ export function GoalWithdrawPage() {
 	useEffect(() => {
 		if (!options) return;
 		setActiveOption(options[0]);
-	}, [items]);
+	}, [itemList]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;

@@ -10,18 +10,18 @@ export function GoalDetailsWithdrawPage() {
 	const navigate = useNavigate();
 	const {goalId} = useParams();
 
-	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
 	const {withdraw, isWithdrawLoading, isWithdrawSuccess, isWithdrawError} = GoalModel.useWithdraw();
 
-	const [activeOption, setActiveOption] = useState(item);
+	const [activeOption, setActiveOption] = useState(itemDetails);
 
 	const [amount, setAmount] = useState<number | undefined>();
 	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
-		if (!item) return;
-		setActiveOption(item);
-	}, [item]);
+		if (!itemDetails) return;
+		setActiveOption(itemDetails);
+	}, [itemDetails]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;

@@ -1,9 +1,9 @@
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import {FaChevronRight} from 'react-icons/fa6';
 import {GoalModel} from '@entities/goal';
 import {APP_TEXT, CURRENCY, CURRENCY_MAP, TRANSACTION_TYPE} from '@shared/constants';
 import {Card, Item, List} from '@shared/ui';
 import {DateService, textHelpers} from '@shared/lib';
-import {FaChevronRight} from 'react-icons/fa6';
 
 export function getTransactionName(row: any) {
 	if (!row) return;
@@ -33,10 +33,9 @@ export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, 
 }
 
 export function GoalTransactions() {
-	const navigate = useNavigate();
 	const {goalId} = useParams();
-	const {items, isItemsLoading} = GoalModel.useItemTransactions(goalId, {pageNumber: 0});
-	const {item: details} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {items, isItemsLoading} = GoalModel.useItemTransactions({id: Number(goalId), filter: {pageNumber: 0}});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
 
 	return (
 		<Card
@@ -63,11 +62,11 @@ export function GoalTransactions() {
 								name={getTransactionName(row)}
 								description={new DateService(new Date(row.date as string)).getLocalDateString()}
 								rightName={
-									details &&
+									itemDetails &&
 									getTransactionRightName(
 										row.type,
 										(row.amount ?? row.toGoalAmount) as number,
-										details.balance.currency,
+										itemDetails.balance.currency,
 									)
 								}
 								// onClick={() => alert('go to transaction details')}

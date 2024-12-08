@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import {AuthLayout} from './AuthLayout.tsx';
+import {AuthModel} from '@entities/auth';
 import {Button, ButtonType, PageHeader, StatusPopup, TextField} from '@shared/ui';
 import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {AuthModel} from '@entities/auth';
 
 export function SignupPage() {
 	const [email, setEmail] = useState('');

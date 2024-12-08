@@ -25,8 +25,8 @@ export function GoalTransferPage() {
 
 	const [date, setDate] = useState<Date>(new DateService().value);
 
-	const {items} = GoalModel.useItemList({pageNumber: 0});
-	const options = items?.map((option) => ({
+	const {itemList} = GoalModel.useItemList({filter: {pageNumber: 0}});
+	const options = itemList?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
@@ -45,7 +45,7 @@ export function GoalTransferPage() {
 		if (!options) return;
 		setFromActiveOption(options[0]);
 		setToActiveOption(options[1]);
-	}, [items]);
+	}, [itemList]);
 
 	function handleCurrencyRateChange(value: number | undefined) {
 		setExchangeRate(value ? Number(value.toFixed(4)) : initialExchangeRate);
@@ -78,7 +78,7 @@ export function GoalTransferPage() {
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
-		transfer(payload);
+		transfer({payload});
 	}
 
 	if (isTransferSuccess || isTransferError) {

@@ -6,11 +6,11 @@ import {getButtonConfigs} from '../lib/GoalImage.lib.tsx';
 
 export function GoalImage() {
 	const {goalId} = useParams();
-	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
 
 	return (
 		<Box className='flex h-[300px] flex-col justify-between bg-secondary-grey'>
-			<PageHeader title={goalDetails?.name} backPath={APP_PATH.goalList} />
+			<PageHeader title={itemDetails?.name} backPath={APP_PATH.goalList} />
 
 			<Box basePadding className='flex justify-between'>
 				{getButtonConfigs(goalId).map((buttonConfig) => (

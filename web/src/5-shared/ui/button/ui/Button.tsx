@@ -100,7 +100,7 @@ export function Button(props: Props) {
 	if (type === ButtonType.icon) {
 		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
 
-		if (isFetching) {
+		if (isFetching || isLoading) {
 			return (
 				<div className='flex flex-col items-center gap-y-3'>
 					<PreloadSkeleton isCircular width={44} height={44} />
