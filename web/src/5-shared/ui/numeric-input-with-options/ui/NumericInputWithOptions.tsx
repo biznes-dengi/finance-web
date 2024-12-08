@@ -1,4 +1,4 @@
-import {Icon, Popup, Item, List, PRELOAD_SIZE, PreloadSkeleton, usePopupState} from '@shared/ui';
+import {Icon, Popup, Item, List, PreloadSkeleton, usePopupState} from '@shared/ui';
 import {cn, isNumber, styleElement, textHelpers} from '@shared/lib';
 import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputWithOptions.types.ts';
 import {CURRENCY_MAP} from '@shared/constants';
@@ -35,9 +35,9 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 	if (!activeOption) {
 		return (
 			<div className='bg-input-grey rounded-2xl p-4'>
-				<PreloadSkeleton width={PRELOAD_SIZE.width.xl} height={PRELOAD_SIZE.height.xl} />
+				<PreloadSkeleton className='h-6 w-32' />
 				<div className='mt-[10.8px]'>
-					<PreloadSkeleton width={PRELOAD_SIZE.width.l} />
+					<PreloadSkeleton className='h-4 w-16' />
 				</div>
 			</div>
 		);

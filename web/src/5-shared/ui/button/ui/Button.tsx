@@ -20,7 +20,6 @@ interface Props extends CommonButtonSettings {
 	children?: ReactNode;
 	className?: string;
 	disabled?: boolean;
-	isFetching?: boolean;
 	isLoading?: boolean;
 	isOnlyIcon?: boolean;
 }
@@ -30,17 +29,7 @@ interface Props extends CommonButtonSettings {
 export const buttonClickStyles = 'transition duration-200 ease-in-out active:scale-95 active:brightness-95';
 
 export function Button(props: Props) {
-	const {
-		children,
-		className,
-		onClick,
-		type = ButtonType.text,
-		icon,
-		disabled,
-		isFetching,
-		isLoading,
-		isOnlyIcon,
-	} = props;
+	const {children, className, onClick, type = ButtonType.text, icon, disabled, isLoading, isOnlyIcon} = props;
 
 	const navigate = useNavigate();
 
@@ -100,11 +89,11 @@ export function Button(props: Props) {
 	if (type === ButtonType.icon) {
 		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
 
-		if (isFetching || isLoading) {
+		if (isLoading) {
 			return (
 				<div className='flex flex-col items-center gap-y-3'>
-					<PreloadSkeleton isCircular width={44} height={44} />
-					<PreloadSkeleton width={48} height={15.5} />
+					<PreloadSkeleton isCircular className='size-11' />
+					<PreloadSkeleton className='h-[15.5px] w-12' />
 				</div>
 			);
 		}

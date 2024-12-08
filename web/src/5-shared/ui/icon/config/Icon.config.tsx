@@ -6,7 +6,7 @@ import {
 	FaCalendar,
 	FaCheck,
 	FaChevronDown,
-	FaFolderPlus,
+	FaFolder,
 	FaPen,
 	FaPlus,
 	FaUser,
@@ -21,7 +21,7 @@ export const ICON_MAP = {
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,
 
-	createGoal: FaFolderPlus,
+	createGoal: FaFolder,
 	fund: FaPlus,
 	withdraw: FaArrowDown,
 	transfer: ({className}: {className: string}) => <FaArrowUp className={cn('rotate-45 transform', className)} />,

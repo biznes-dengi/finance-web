@@ -17,7 +17,7 @@ export function DatePicker(props: Props) {
 	return (
 		<>
 			<Box>
-				<Button icon={Icon.calendar} onClick={() => openDialog()}>
+				<Button icon={<Icon type='calendar' />} onClick={() => openDialog()}>
 					{new DateService(value).getLocalDateString()}
 				</Button>
 			</Box>

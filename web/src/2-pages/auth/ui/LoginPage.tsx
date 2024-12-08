@@ -100,7 +100,7 @@ export function LoginPage() {
 				>
 					{APP_TEXT.logIn}
 				</Button>
-				<Button onClick={() => navigate(APP_PATH.signup)} isFetching={isLoginPending}>
+				<Button onClick={() => navigate(APP_PATH.signup)} isLoading={isLoginPending}>
 					{APP_TEXT.signUp}
 				</Button>
 			</div>

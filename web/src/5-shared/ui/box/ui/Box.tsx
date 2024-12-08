@@ -6,6 +6,9 @@ export function Box(props: BoxProps) {
 	const {
 		children,
 		className,
+		isLoading,
+		loadingSkeletonClassName,
+
 		mediumMarginY,
 		baseMarginY,
 		baseMarginTop,
@@ -13,14 +16,10 @@ export function Box(props: BoxProps) {
 		basePaddingX,
 		basePadding,
 		baseSpaceWithoutTop,
-		isLoading,
-		preloadClassName,
-		preloadWidth,
-		preloadHeight,
 	} = props;
 
 	if (isLoading) {
-		return <PreloadSkeleton width={preloadWidth ?? 128} height={preloadHeight ?? 16} className={preloadClassName} />;
+		return <PreloadSkeleton className={loadingSkeletonClassName} />;
 	}
 
 	return (

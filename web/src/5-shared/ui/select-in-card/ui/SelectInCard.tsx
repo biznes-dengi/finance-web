@@ -11,7 +11,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {isDesktop} = useResponsive();
 
 	if (isLoading) {
-		return <PreloadSkeleton width={40} height={16} className='my-0.5' />;
+		return <PreloadSkeleton className='my-0.5 h-4 w-10' />;
 	}
 
 	return (

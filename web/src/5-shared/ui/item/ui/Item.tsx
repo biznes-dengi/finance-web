@@ -55,7 +55,9 @@ export function Item(props: ItemProps) {
 				</div>
 
 				{(rightName || rightDescription) && (
-					<div className={cn('ml-2 flex flex-shrink-0 flex-col items-end self-stretch')}>
+					<div
+						className={cn('ml-2 flex flex-shrink-0 flex-col items-end', description ? 'self-stretch' : 'self-center')}
+					>
 						{rightName && <div>{rightName}</div>}
 						{rightDescription && <div className='text-sm font-light text-primary-grey'>{rightDescription}</div>}
 					</div>

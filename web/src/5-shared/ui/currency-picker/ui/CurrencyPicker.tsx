@@ -24,7 +24,7 @@ export function CurrencyPicker(props: Props) {
 	return (
 		<>
 			<Box>
-				<Button icon={Icon.trendUp} onClick={() => openDialog()}>
+				<Button icon={<Icon type='trendUp' />} onClick={() => openDialog()}>
 					{buttonText}
 				</Button>
 			</Box>

@@ -1,4 +1,4 @@
-import {Box, Button, Card, Item, ItemImageWithProgress, List, PRELOAD_SIZE, SelectInCard} from '@shared/ui';
+import {Box, Button, Card, Item, ItemImageWithProgress, List, SelectInCard} from '@shared/ui';
 import {textHelpers, useFilter} from '@shared/lib';
 import {
 	buttonConfigs,
@@ -7,7 +7,7 @@ import {
 	type GoalStatusValue,
 } from '../config/GoalManagement.config.tsx';
 import {GoalModel} from '@entities/goal';
-import {APP_TEXT, CURRENCY_MAP, getGoalDetailsPath} from '@shared/constants';
+import {APP_TEXT, CURRENCY_MAP, CURRENCY_SYMBOL, getGoalDetailsPath} from '@shared/constants';
 
 export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
@@ -15,30 +15,35 @@ export function GoalManagement() {
 	const {totalBalance, isTotalBalanceLoading} = GoalModel.useTotalBalance();
 	const {itemList, isItemListLoading} = GoalModel.useItemList({filter});
 
-	const isLoading = isItemListLoading || isTotalBalanceLoading;
+	const isLoading = isTotalBalanceLoading || isItemListLoading;
 
 	return (
 		<Card>
 			<div className='flex justify-between p-4'>
-				<div className='flex flex-col gap-2'>
-					<Box
-						isLoading={isLoading}
-						preloadWidth={PRELOAD_SIZE.width.xl}
-						preloadHeight={PRELOAD_SIZE.height.xl}
-						preloadClassName='mt-2 mb-1.5'
-					>
-						{totalBalance && (
-							<span className='text-3xl font-medium'>
-								{textHelpers.getAmountWithCurrency(totalBalance.amount, CURRENCY_MAP[totalBalance.currency].symbol)}
-							</span>
-						)}
+				<div className='flex flex-col gap-1.5'>
+					<Box isLoading={isLoading} loadingSkeletonClassName='w-32 h-6 mt-2 mb-1.5'>
+						{totalBalance &&
+							(() => {
+								const [int, float] = textHelpers.getAmount(totalBalance.amount).split(',');
+								return (
+									<div>
+										<span className='text-3xl font-medium'>
+											<span>{int}</span>
+											{!float && <span> {CURRENCY_SYMBOL[totalBalance.currency]}</span>}
+										</span>
+										{float && (
+											<span className='text-xl font-bold'>
+												,{float} {CURRENCY_MAP[totalBalance.currency].symbol}
+											</span>
+										)}
+									</div>
+								);
+							})()}
 					</Box>
 					<Box
 						className='text-sm font-light text-primary-grey'
 						isLoading={isLoading}
-						preloadWidth={PRELOAD_SIZE.width.l}
-						preloadHeight={PRELOAD_SIZE.height.xs}
-						preloadClassName='mb-1'
+						loadingSkeletonClassName='w-16 h-[14px] mb-1'
 					>
 						{APP_TEXT.totalBalance}
 					</Box>
@@ -47,9 +52,7 @@ export function GoalManagement() {
 				<Box
 					className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-green-200'
 					isLoading={isLoading}
-					preloadWidth={40}
-					preloadHeight={40}
-					preloadClassName='rounded-xl'
+					loadingSkeletonClassName='size-10 rounded-xl'
 				/>
 			</div>
 
@@ -75,11 +78,6 @@ export function GoalManagement() {
 				rows={itemList}
 				renderRow={(row) => (
 					<Item
-						name={row.name}
-						description={
-							row.targetAmount && textHelpers.getRatio(row.balance.amount, row.targetAmount, row.balance.currency)
-						}
-						onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 						image={
 							row.targetAmount ? (
 								<ItemImageWithProgress
@@ -91,6 +89,13 @@ export function GoalManagement() {
 								<div className='size-10 rounded-full bg-green-200' />
 							)
 						}
+						name={row.name}
+						description={
+							row.targetAmount &&
+							`${APP_TEXT.target}: ${textHelpers.getAmount(row.targetAmount)} ${CURRENCY_SYMBOL[row.balance.currency]}`
+						}
+						rightName={`${textHelpers.getAmount(row.balance.amount)} ${CURRENCY_SYMBOL[row.balance.currency]}`}
+						onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
 					/>
 				)}
 				emptyStateEntity={APP_TEXT.goals}

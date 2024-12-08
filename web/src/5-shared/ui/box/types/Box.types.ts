@@ -15,7 +15,5 @@ export type BoxProps = {
 	baseSpaceWithoutTop?: ClassValue;
 
 	isLoading?: boolean;
-	preloadClassName?: string;
-	preloadWidth?: number;
-	preloadHeight?: number;
+	loadingSkeletonClassName?: string;
 };
