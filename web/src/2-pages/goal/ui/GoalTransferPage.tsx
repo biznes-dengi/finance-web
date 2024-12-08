@@ -25,7 +25,7 @@ export function GoalTransferPage() {
 
 	const [date, setDate] = useState<Date>(new DateService().value);
 
-	const {items} = GoalModel.useItems({pageNumber: 0});
+	const {items} = GoalModel.useItemList({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
@@ -39,7 +39,7 @@ export function GoalTransferPage() {
 
 	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
-	const {transfer, isTransferPending, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
+	const {transfer, isTransferLoading, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
 
 	useEffect(() => {
 		if (!options) return;
@@ -161,7 +161,7 @@ export function GoalTransferPage() {
 					disabled={!isNumber(fromGoalAmount) || !isNumber(toGoalAmount) || isFromAmountError}
 					className='w-[375px]'
 				>
-					{isTransferPending ? 'Loading...' : APP_TEXT.transfer}
+					{isTransferLoading ? 'Loading...' : APP_TEXT.transfer}
 				</Button>
 			</Box>
 

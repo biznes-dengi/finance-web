@@ -6,7 +6,7 @@ import {getButtonConfigs} from '../lib/GoalImage.lib.tsx';
 
 export function GoalImage() {
 	const {goalId} = useParams();
-	const {goalDetails} = GoalModel.useDetails(goalId);
+	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
 
 	return (
 		<Box className='flex h-[300px] flex-col justify-between bg-secondary-grey'>

@@ -3,7 +3,7 @@ import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, StatusPopup, TextField} from '@shared/ui';
 import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {authModel} from '@entities/auth';
+import {AuthModel} from '@entities/auth';
 
 export function SignupPage() {
 	const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export function SignupPage() {
 
 	const [displayBoxShadow, setDisplayBoxShadow] = useState(false);
 
-	const {signup, isSignupPending, isSignupSuccess, isSignupError} = authModel.useSignup();
+	const {signup, isSignupPending, isSignupSuccess, isSignupError} = AuthModel.useSignup();
 
 	useEffect(() => {
 		document.title = 'Sign up | Finansy';

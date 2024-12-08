@@ -101,7 +101,7 @@ export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: 
 			<Box className='flex flex-col bg-light-grey px-6 py-4'>
 				<Box className='flex items-center justify-between' baseMarginBottom>
 					<div />
-					<Box className='text-xl font-medium'>Savings</Box>
+					<Box className='text-xl font-medium'>Goals</Box>
 					<div
 						className={cn(
 							'flex size-7 items-center justify-center duration-300',

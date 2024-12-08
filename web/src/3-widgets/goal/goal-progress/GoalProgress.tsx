@@ -5,11 +5,11 @@ import {GoalModel} from '@entities/goal';
 
 export function GoalProgress() {
 	const {goalId} = useParams();
-	const {goalDetails} = GoalModel.useDetails(goalId);
+	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
 
-	if (!goalDetails) return null;
+	if (!item) return null;
 
-	const {balance, deadline} = goalDetails;
+	const {balance, deadline} = item;
 
 	const targetAmount = 1000000;
 

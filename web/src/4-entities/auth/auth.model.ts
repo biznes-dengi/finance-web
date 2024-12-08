@@ -10,8 +10,8 @@ import {APP_PATH} from '@shared/constants';
 // 	- language
 // 	- currency
 
-class AuthModel {
-	useAuthUser() {
+export class AuthModel {
+	static useAuthUser() {
 		const {data, isFetching} = useQuery({
 			queryKey: ['auth-user'],
 			queryFn: () => AuthApi.fetchAuthUser(),
@@ -19,11 +19,11 @@ class AuthModel {
 
 		return {
 			authUser: data,
-			isAuthUserFetching: isFetching,
+			isAuthUserLoading: isFetching,
 		};
 	}
 
-	useSignup() {
+	static useSignup() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
@@ -49,7 +49,7 @@ class AuthModel {
 		};
 	}
 
-	useLogin() {
+	static useLogin() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
@@ -73,7 +73,7 @@ class AuthModel {
 		};
 	}
 
-	useLogout() {
+	static useLogout() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
@@ -94,5 +94,3 @@ class AuthModel {
 		};
 	}
 }
-
-export const authModel = new AuthModel();

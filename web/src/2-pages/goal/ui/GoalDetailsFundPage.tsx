@@ -10,10 +10,10 @@ export function GoalDetailsFundPage() {
 	const navigate = useNavigate();
 	const {goalId} = useParams();
 
-	const {goalDetails} = GoalModel.useDetails(goalId);
-	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = GoalModel.useFundGoal();
+	const {item} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {deposit, isDepositLoading, isDepositSuccess, isDepositError} = GoalModel.useDeposit();
 
-	const [activeOption, setActiveOption] = useState(goalDetails);
+	const [activeOption, setActiveOption] = useState(item);
 
 	const [amount, setAmount] = useState<number | undefined>();
 	const [date, setDate] = useState<Date>(new DateService().value);
@@ -32,10 +32,10 @@ export function GoalDetailsFundPage() {
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
-		fundGoal(payload);
+		deposit(payload);
 	}
 
-	if (isFundGoalSuccess || isFundGoalError) {
+	if (isDepositSuccess || isDepositError) {
 		setTimeout(() => {
 			navigate(getGoalDetailsPath(goalId));
 		}, 2000);
@@ -58,8 +58,8 @@ export function GoalDetailsFundPage() {
 				</Box>
 			</Box>
 
-			<Popup isStatusDialogOpen={isFundGoalSuccess || isFundGoalError}>
-				{isFundGoalSuccess && activeOption && (
+			<Popup isStatusDialogOpen={isDepositSuccess || isDepositError}>
+				{isDepositSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.success}</div>
@@ -73,7 +73,7 @@ export function GoalDetailsFundPage() {
 						</div>
 					</Box>
 				)}
-				{isFundGoalError && activeOption && (
+				{isDepositError && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.error}</div>
@@ -88,7 +88,7 @@ export function GoalDetailsFundPage() {
 
 			<Box basePadding>
 				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount)}>
-					{isFundGoalPending ? 'Loading...' : APP_TEXT.fund}
+					{isDepositLoading ? 'Loading...' : APP_TEXT.fund}
 				</Button>
 			</Box>
 		</>

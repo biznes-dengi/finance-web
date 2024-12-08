@@ -49,8 +49,8 @@ export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, 
 
 export function GoalTransactionsPage() {
 	const {goalId} = useParams();
-	const {goalDetails: details} = GoalModel.useDetails(goalId);
-	const {items, isItemsLoading} = GoalModel.useGoalTransactions(goalId);
+	const {item: details} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {items, isItemsLoading} = GoalModel.useItemDetailsTransactions(goalId, {pageNumber: 0});
 
 	const [groupedItems, setGroupedItems] = useState({});
 

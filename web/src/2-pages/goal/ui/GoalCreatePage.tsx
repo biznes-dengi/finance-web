@@ -41,7 +41,7 @@ export function GoalCreatePage() {
 
 	const {isDesktop} = useResponsive();
 
-	const {create, isCreatePending, isCreateSuccess, isCreateError} = GoalModel.useCreate();
+	const {createItem, isCreateItemLoading, isCreateItemSuccess, isCreateItemError} = GoalModel.useCreateItem();
 
 	function handleCreateClick() {
 		if (!targetAmount) return;
@@ -53,7 +53,7 @@ export function GoalCreatePage() {
 			deadline: new DateService(deadline).getPayloadDateFormat(),
 		};
 
-		create(payload);
+		createItem({payload});
 	}
 
 	const activeOptionNotMapped = currencyOptions.find((option) => option.value === currency);
@@ -74,11 +74,11 @@ export function GoalCreatePage() {
 
 	const navigate = useNavigate();
 
-	// if (isCreateSuccess) {
+	// if (isCreateItemSuccess) {
 	// 	navigate(getGoalDetailsPath());
 	// }
 
-	if (isCreateSuccess || isCreateError) {
+	if (isCreateItemSuccess || isCreateItemError) {
 		setTimeout(() => {
 			navigate(APP_PATH.home);
 		}, 2000);
@@ -182,12 +182,12 @@ export function GoalCreatePage() {
 						if (activeStepIndex === 2) return targetAmount === initialTargetAmount;
 					})()}
 				>
-					{activeStepIndex === 2 ? (isCreatePending ? 'Loading...' : APP_TEXT.create) : APP_TEXT.continue}
+					{activeStepIndex === 2 ? (isCreateItemLoading ? 'Loading...' : APP_TEXT.create) : APP_TEXT.continue}
 				</Button>
 			</Box>
 
-			<Popup isStatusDialogOpen={isCreateSuccess || isCreateError}>
-				{isCreateSuccess && activeOption && (
+			<Popup isStatusDialogOpen={isCreateItemSuccess || isCreateItemError}>
+				{isCreateItemSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='flex flex-col items-center pb-4'>
 							<Icon type='check' className='mb-5 size-10 text-primary-violet' />
@@ -199,7 +199,7 @@ export function GoalCreatePage() {
 						</div>
 					</Box>
 				)}
-				{isCreateError && activeOption && (
+				{isCreateItemError && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>

@@ -1,132 +1,68 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useNavigate} from 'react-router-dom';
 import {GoalApi} from './goal.api.ts';
-import {CreatePayload, DeletePayload, EditPayload, MutationFundGoalPayload, TransferPayload} from './goal.types.ts';
-import {authModel} from '@entities/auth';
-import {AppFilter} from '@shared/types';
-import {APP_PATH, TRANSACTION_TYPE, getGoalDetailsPath} from '@shared/constants';
-
-// TODO:
-//  rename to useFund, useWithdraw
-//  static class
+import {type InitialData, type MutationProps, type Props} from './goal.types.ts';
+import {AuthModel} from '@entities/auth';
+import {APP_PATH, getGoalDetailsPath, TRANSACTION_TYPE} from '@shared/constants';
 
 export class GoalModel {
-	static useItems(filter?: AppFilter) {
-		const {boardGoalId, isBoardGoalIdFetching} = this.useBoardGoalId();
+	static useItemList(props: Props['useItemList']) {
+		const {filter} = props;
+
+		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
 
 		const {data, isFetching} = useQuery({
-			queryKey: ['goal-items', filter],
-			queryFn: () => GoalApi.fetchItems({filter, boardGoalId: boardGoalId!}),
+			queryKey: ['goal-item-list', filter],
+			queryFn: () => {
+				return GoalApi.fetchItemList({
+					params: {boardGoalId: boardGoalId!},
+					payload: filter,
+				});
+			},
 			enabled: !!boardGoalId,
-			initialData: {} as TSavingPaged,
+			initialData: {} as InitialData['useItemList'],
 		});
 
 		return {
-			items: data?.items,
+			itemList: data?.items,
 			hasNext: data?.hasNext,
-			isItemsFetching: isFetching || isBoardGoalIdFetching,
+			isItemListLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
 
-	static useDetails(id: any) {
+	static useItemDetails(props: Props['useItemDetails']) {
+		const {id} = props;
+
 		const {boardGoalId} = this.useBoardGoalId();
 
 		const {data} = useQuery({
-			queryKey: ['goal-details'],
-			queryFn: () => GoalApi.fetchItem({boardGoalId, id}),
+			queryKey: ['goal-item-details'],
+			queryFn: () => {
+				return GoalApi.fetchItemDetails({
+					params: {boardGoalId: boardGoalId!, id},
+				});
+			},
 			enabled: !!boardGoalId,
 		});
 
-		return {goalDetails: data};
-	}
-
-	static useCreate() {
-		const {boardGoalId} = this.useBoardGoalId();
-
-		const navigate = useNavigate();
-
-		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['transfer-goal'],
-			mutationFn: (payload: CreatePayload) => {
-				return GoalApi.createItem({boardGoalId: boardGoalId!, payload});
-			},
-			onSuccess: (data) => {
-				setTimeout(() => navigate(getGoalDetailsPath(data.id)), 2500);
-			},
-			onError: () => {
-				setTimeout(() => navigate(APP_PATH.home), 2500);
-			},
-		});
-
 		return {
-			create: mutate,
-			isCreatePending: isPending,
-			isCreateSuccess: isSuccess,
-			isCreateError: isError,
+			itemDetails: data,
 		};
 	}
 
-	// todo: updateItem
-	static useEdit() {
-		const {boardGoalId} = this.useBoardGoalId();
-
-		const queryClient = useQueryClient();
-
-		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['edit-goal'],
-			mutationFn: ({goalId, payload}: {goalId: number; payload: EditPayload}) => {
-				return GoalApi.updateItem({boardGoalId: boardGoalId!, id: goalId, payload});
-			},
-			onSuccess: () => {
-				void queryClient.invalidateQueries({queryKey: ['goal-details']});
-			},
-		});
-
-		return {
-			editGoal: mutate,
-			isEditPending: isPending,
-			isEditSuccess: isSuccess,
-			isEditError: isError,
-		};
-	}
-
-	static useDelete() {
-		const queryClient = useQueryClient();
-
-		const navigate = useNavigate();
+	static useItemTransactions(props: Props['useItemTransactions']) {
+		const {id, filter} = props;
 
 		const {boardGoalId} = this.useBoardGoalId();
-
-		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['delete-goal'],
-			mutationFn: (payload: DeletePayload) => {
-				return GoalApi.deleteItem({boardGoalId: boardGoalId!, id: payload.id});
-			},
-			onSuccess: () => {
-				void queryClient.invalidateQueries({queryKey: ['goal-items']});
-			},
-			onSettled: () => {
-				// TODO goal has been deleted successfully drawer
-				navigate(APP_PATH.home);
-			},
-		});
-
-		return {
-			deleteGoal: mutate,
-			isDeletePending: isPending,
-			isDeleteSuccess: isSuccess,
-			isDeleteError: isError,
-		};
-	}
-
-	static useGoalTransactions(id: any) {
-		const {boardGoalId} = this.useBoardGoalId();
-
-		const filter = {pageNumber: 0};
 
 		const {data, isFetching} = useQuery({
-			queryKey: ['goal-transactions'],
-			queryFn: () => GoalApi.fetchItemTransactions({filter, boardGoalId: boardGoalId!, id}),
+			queryKey: ['goal-transactions', filter],
+			queryFn: () => {
+				return GoalApi.fetchItemTransactions({
+					params: {boardGoalId: boardGoalId!, id},
+					payload: filter,
+				});
+			},
 			enabled: !!boardGoalId,
 		});
 
@@ -137,73 +73,8 @@ export class GoalModel {
 		};
 	}
 
-	// TODO: useDeposit
-	static useFundGoal() {
-		const {boardGoalId} = this.useBoardGoalId();
-
-		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['fund-goal'],
-			mutationFn: (payload: MutationFundGoalPayload) => {
-				const {id, ...restPayload} = payload;
-				return GoalApi.depositMoney({
-					id,
-					boardGoalId: boardGoalId!,
-					payload: {...restPayload, type: TRANSACTION_TYPE.DEPOSIT},
-				});
-			},
-		});
-
-		return {
-			fundGoal: mutate,
-			isFundGoalPending: isPending,
-			isFundGoalSuccess: isSuccess,
-			isFundGoalError: isError,
-		};
-	}
-
-	static useWithdrawGoal() {
-		const {boardGoalId} = this.useBoardGoalId();
-
-		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['withdraw-goal'],
-			mutationFn: (payload: MutationFundGoalPayload) => {
-				const {id, ...restPayload} = payload;
-				return GoalApi.withdrawMoney({
-					id,
-					boardGoalId: boardGoalId!,
-					payload: {...restPayload, type: TRANSACTION_TYPE.WITHDRAW},
-				});
-			},
-		});
-
-		return {
-			withdrawGoal: mutate,
-			isWithdrawGoalPending: isPending,
-			isWithdrawGoalSuccess: isSuccess,
-			isWithdrawGoalError: isError,
-		};
-	}
-
-	static useTransfer() {
-		const {boardGoalId} = this.useBoardGoalId();
-
-		const {mutate, isPending, isError, isSuccess} = useMutation({
-			mutationKey: ['transfer-goal'],
-			mutationFn: (payload: TransferPayload) => {
-				return GoalApi.transferMoney({boardGoalId: boardGoalId!, payload});
-			},
-		});
-
-		return {
-			transfer: mutate,
-			isTransferPending: isPending,
-			isTransferSuccess: isSuccess,
-			isTransferError: isError,
-		};
-	}
-
 	static useTotalBalance() {
-		const {boardGoalId, isBoardGoalIdFetching} = this.useBoardGoalId();
+		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
 
 		const {data, isFetching} = useQuery({
 			queryKey: ['goal-total-balance'],
@@ -213,12 +84,12 @@ export class GoalModel {
 
 		return {
 			totalBalance: data,
-			isTotalBalanceFetching: isFetching || isBoardGoalIdFetching,
+			isTotalBalanceLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
 
 	private static useBoardGoalId() {
-		const {authUser, isAuthUserFetching} = authModel.useAuthUser();
+		const {authUser, isAuthUserLoading} = AuthModel.useAuthUser();
 
 		const {data, isFetching} = useQuery({
 			queryKey: ['board-goal-id'],
@@ -228,7 +99,153 @@ export class GoalModel {
 
 		return {
 			boardGoalId: data,
-			isBoardGoalIdFetching: isFetching || isAuthUserFetching,
+			isBoardGoalIdLoading: isFetching || isAuthUserLoading,
+		};
+	}
+
+	static useCreateItem() {
+		const {boardGoalId} = this.useBoardGoalId();
+
+		const navigate = useNavigate();
+
+		const {mutate, isPending, isError, isSuccess} = useMutation({
+			mutationKey: ['goal-create'],
+			mutationFn: (props: MutationProps['useCreateItem']) => {
+				return GoalApi.createItem({
+					params: {boardGoalId: boardGoalId!},
+					payload: props.payload,
+				});
+			},
+			onSuccess: (data) => {
+				setTimeout(() => navigate(getGoalDetailsPath(data.id)), 2500);
+			},
+			onError: () => {
+				setTimeout(() => navigate(APP_PATH.home), 2500);
+			},
+		});
+
+		return {
+			createItem: mutate,
+			isCreateItemLoading: isPending,
+			isCreateItemSuccess: isSuccess,
+			isCreateItemError: isError,
+		};
+	}
+
+	static useUpdateItem() {
+		const {boardGoalId} = this.useBoardGoalId();
+
+		const queryClient = useQueryClient();
+
+		const {mutate, isPending, isError, isSuccess} = useMutation({
+			mutationKey: ['edit-goal'],
+			mutationFn: (props: MutationProps['useUpdateItem']) => {
+				return GoalApi.updateItem({
+					params: {...props.params, boardGoalId: boardGoalId!},
+					payload: props.payload,
+				});
+			},
+			onSuccess: () => {
+				void queryClient.invalidateQueries({queryKey: ['goal-details']});
+			},
+		});
+
+		return {
+			updateItem: mutate,
+			isUpdateItemLoading: isPending,
+			isUpdateItemSuccess: isSuccess,
+			isUpdateItemError: isError,
+		};
+	}
+
+	static useDeleteItem() {
+		const queryClient = useQueryClient();
+
+		const navigate = useNavigate();
+
+		const {boardGoalId} = this.useBoardGoalId();
+
+		const {mutate, isPending, isError, isSuccess} = useMutation({
+			mutationKey: ['goal-delete'],
+			mutationFn: (props: MutationProps['useDeleteItem']) => {
+				return GoalApi.deleteItem({
+					params: {...props.params, boardGoalId: boardGoalId!},
+				});
+			},
+			onSuccess: () => {
+				void queryClient.invalidateQueries({queryKey: ['goal-items']});
+				navigate(APP_PATH.goalList);
+			},
+		});
+
+		return {
+			deleteItem: mutate,
+			isDeleteItemLoading: isPending,
+			isDeleteItemSuccess: isSuccess,
+			isDeleteItemError: isError,
+		};
+	}
+
+	static useDeposit() {
+		const {boardGoalId} = this.useBoardGoalId();
+
+		const {mutate, isPending, isError, isSuccess} = useMutation({
+			mutationKey: ['goal-deposit-money'],
+			mutationFn: (props: MutationProps['useDeposit']) => {
+				return GoalApi.deposit({
+					params: {...props.params, boardGoalId: boardGoalId!},
+					payload: {...props.payload, type: TRANSACTION_TYPE.DEPOSIT},
+				});
+			},
+		});
+
+		return {
+			deposit: mutate,
+			isDepositLoading: isPending,
+			isDepositSuccess: isSuccess,
+			isDepositError: isError,
+		};
+	}
+
+	static useWithdraw() {
+		const {boardGoalId} = this.useBoardGoalId();
+
+		const {mutate, isPending, isError, isSuccess} = useMutation({
+			mutationKey: ['goal-withdraw-money'],
+			mutationFn: (props: MutationProps['useWithdraw']) => {
+				return GoalApi.withdraw({
+					params: {...props.params, boardGoalId: boardGoalId!},
+					payload: {...props.payload, type: TRANSACTION_TYPE.WITHDRAW},
+				});
+			},
+		});
+
+		return {
+			withdraw: mutate,
+			isWithdrawLoading: isPending,
+			isWithdrawSuccess: isSuccess,
+			isWithdrawError: isError,
+		};
+	}
+
+	static useTransfer() {
+		const {boardGoalId} = this.useBoardGoalId();
+
+		const {mutate, isPending, isError, isSuccess} = useMutation({
+			mutationKey: ['goal-transfer-money'],
+			mutationFn: (props: MutationProps['useTransfer']) => {
+				return GoalApi.transfer({
+					params: {boardGoalId: boardGoalId!},
+					payload: props.payload,
+				});
+			},
+		});
+
+		return {
+			transfer: mutate,
+			isTransferLoading: isPending,
+			isTransferSuccess: isSuccess,
+			isTransferError: isError,
 		};
 	}
 }

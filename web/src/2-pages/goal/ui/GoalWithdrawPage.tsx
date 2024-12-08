@@ -8,9 +8,9 @@ import {DateService, isNumber} from '@shared/lib';
 export function GoalWithdrawPage() {
 	const navigate = useNavigate();
 
-	const {withdrawGoal, isWithdrawGoalPending, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdrawGoal();
+	const {withdraw, isWithdrawLoading, isWithdrawSuccess, isWithdrawError} = GoalModel.useWithdraw();
 
-	const {items} = GoalModel.useItems({pageNumber: 0});
+	const {items} = GoalModel.useItemList({filter: {pageNumber: 0}});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
@@ -29,16 +29,16 @@ export function GoalWithdrawPage() {
 	function handleFundClick() {
 		if (!activeOption?.id) return;
 
-		const payload = {
-			id: activeOption.id,
-			amount: amount ?? 0,
-			date: new DateService(date).getPayloadDateFormat(),
-		};
-
-		withdrawGoal(payload);
+		withdraw({
+			params: {id: activeOption.id},
+			payload: {
+				amount: amount ?? 0,
+				date: new DateService(date).getPayloadDateFormat(),
+			},
+		});
 	}
 
-	if (isWithdrawGoalSuccess || isWithdrawGoalError) {
+	if (isWithdrawSuccess || isWithdrawError) {
 		setTimeout(() => {
 			navigate(APP_PATH.home);
 		}, 2000);
@@ -65,11 +65,13 @@ export function GoalWithdrawPage() {
 				</Box>
 			</Box>
 
-			<Popup isStatusDialogOpen={isWithdrawGoalSuccess || isWithdrawGoalError}>
-				{isWithdrawGoalSuccess && activeOption && (
+			<Popup isStatusDialogOpen={isWithdrawSuccess || isWithdrawError}>
+				{isWithdrawSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.success}</div>
+							<div className='size-16 text-primary-violet'>
+								<Icon type='success' />
+							</div>
 						</div>
 						<div>
 							Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>
@@ -80,10 +82,12 @@ export function GoalWithdrawPage() {
 						</div>
 					</Box>
 				)}
-				{isWithdrawGoalError && (
+				{isWithdrawError && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.error}</div>
+							<div className='size-16 text-primary-violet'>
+								<Icon type='error' />
+							</div>
 						</div>
 						<div>
 							Some error occur during withdraw from{' '}
@@ -95,7 +99,7 @@ export function GoalWithdrawPage() {
 
 			<Box basePadding>
 				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount) || isAmountError}>
-					{isWithdrawGoalPending ? 'Loading...' : APP_TEXT.withdraw}
+					{isWithdrawLoading ? 'Loading...' : APP_TEXT.withdraw}
 				</Button>
 			</Box>
 		</>

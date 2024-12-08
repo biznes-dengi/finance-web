@@ -4,7 +4,7 @@ import {AuthLayout} from './AuthLayout.tsx';
 import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
 import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {authModel} from '@entities/auth';
+import {AuthModel} from '@entities/auth';
 
 export function LoginPage() {
 	const navigate = useNavigate();
@@ -17,7 +17,7 @@ export function LoginPage() {
 
 	const [displayBoxShadow, setDisplayBoxShadow] = useState(false);
 
-	const {login, isLoginPending, isLoginError} = authModel.useLogin();
+	const {login, isLoginPending, isLoginError} = AuthModel.useLogin();
 
 	useEffect(() => {
 		document.title = 'Log in | Finansy';

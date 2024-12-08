@@ -1,15 +1,14 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-
 import {getQueryString, isEmpty, isEqual, parseQueryString} from '@shared/lib';
-import {type TAppFilter} from '@shared/types';
+import {type Payload} from '@shared/api';
 
 type TProps<TFilter> = {
 	defaultFilter: TFilter;
 	shouldSyncFilterWithURL?: boolean;
 };
 
-export function useFilter<TFilter extends TAppFilter>(props: TProps<TFilter>) {
+export function useFilter<TFilter extends Payload>(props: TProps<TFilter>) {
 	const {defaultFilter, shouldSyncFilterWithURL = true} = props;
 
 	const location = useLocation();

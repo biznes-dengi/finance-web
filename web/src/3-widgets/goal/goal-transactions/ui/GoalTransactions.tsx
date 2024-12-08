@@ -35,8 +35,8 @@ export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, 
 export function GoalTransactions() {
 	const navigate = useNavigate();
 	const {goalId} = useParams();
-	const {items, isItemsLoading} = GoalModel.useGoalTransactions(goalId);
-	const {goalDetails: details} = GoalModel.useDetails(goalId);
+	const {items, isItemsLoading} = GoalModel.useItemTransactions(goalId, {pageNumber: 0});
+	const {item: details} = GoalModel.useItemDetails({id: Number(goalId)});
 
 	return (
 		<Card

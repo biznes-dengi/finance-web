@@ -1,7 +1,7 @@
 import {isBoolean, isNull, isNumber, isString, isUndefined} from '@shared/lib';
-import {TAppFilter} from '@shared/types';
+import {type Payload} from '@shared/api';
 
-export function getQueryString(filter: TAppFilter) {
+export function getQueryString(filter: Payload) {
 	if (!filter) return;
 
 	const queryParams = [] as string[];
@@ -37,12 +37,12 @@ export function getQueryString(filter: TAppFilter) {
 	return queryParams.map((queryParam, index) => (index === 0 ? '?' + queryParam : '&' + queryParam)).join('');
 }
 
-export function parseQueryString<TFilter extends TAppFilter>(queryString: string): TFilter {
+export function parseQueryString<TFilter extends Payload>(queryString: string): TFilter {
 	if (!queryString || queryString.length < 2) return {} as TFilter;
 
 	const queryParams = queryString.slice(1).split('&');
 
-	const filter = {} as TAppFilter;
+	const filter = {} as Payload;
 
 	queryParams.forEach((param) => {
 		const [paramName, paramValue] = param.split('=');

@@ -22,7 +22,6 @@ export const APP_TEXT = {
 	transactions: 'Transactions',
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',
-	savings: 'Savings',
 	edit: 'Edit',
 	deleteGoal: 'Delete Goal',
 	email: 'Email',

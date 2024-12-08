@@ -5,17 +5,17 @@ import {
 	defaultFilter,
 	goalStatusOptions,
 	type GoalStatusValue,
-} from '../config/savingManagement.config.tsx';
+} from '../config/GoalManagement.config.tsx';
 import {GoalModel} from '@entities/goal';
 import {APP_TEXT, CURRENCY_MAP, getGoalDetailsPath} from '@shared/constants';
 
 export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
-	const {totalBalance, isTotalBalanceFetching} = GoalModel.useTotalBalance();
-	const {items, isItemsFetching} = GoalModel.useItems(filter);
+	const {totalBalance, isTotalBalanceLoading} = GoalModel.useTotalBalance();
+	const {items, isItemsFetching} = GoalModel.useItemList(filter);
 
-	const isFetching = isItemsFetching || isTotalBalanceFetching;
+	const isFetching = isItemsFetching || isTotalBalanceLoading;
 
 	return (
 		<Card>

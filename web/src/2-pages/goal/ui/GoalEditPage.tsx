@@ -22,10 +22,13 @@ import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
 
 export function GoalEditPage() {
 	const {goalId} = useParams();
-	const {goalDetails: data} = GoalModel.useDetails(goalId);
 
-	const {isEditPending, editGoal} = GoalModel.useEdit();
-	const {deleteGoal, isDeletePending} = GoalModel.useDelete();
+	const id = Number(goalId);
+
+	const {itemDetails: data} = GoalModel.useItemDetails({id});
+
+	const {isUpdateItemLoading, updateItem} = GoalModel.useUpdateItem();
+	const {deleteItem, isDeleteItemLoading} = GoalModel.useDeleteItem();
 
 	const {dialogRef: nameDialogRef, openDialog: openNameDialog, closeDialog: closeNameDialog} = usePopupState();
 	const {
@@ -66,7 +69,7 @@ export function GoalEditPage() {
 			currency,
 		};
 
-		editGoal({goalId, payload});
+		updateItem({params: {id}, payload});
 
 		closeNameDialog();
 		closeTargetAmountDialog();
@@ -75,7 +78,7 @@ export function GoalEditPage() {
 	}
 
 	// выполняется всегда после первого edit
-	// if (isEditSuccess || isEditError) {
+	// if (isUpdateItemSuccess || isUpdateItemError) {
 	// 	closeNameDialog();
 	// 	closeTargetAmountDialog();
 	// 	closeDialogDialog();
@@ -85,7 +88,7 @@ export function GoalEditPage() {
 	return (
 		<>
 			<Box className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
-				<PageHeader title={data?.name} backPath={getGoalDetailsPath(goalId)} />
+				<PageHeader title={data?.name} backPath={getGoalDetailsPath(id)} />
 			</Box>
 
 			{/** shit styles margin top see in inspect in browser */}
@@ -101,7 +104,7 @@ export function GoalEditPage() {
 							<TextField value={name} onChange={setName} placeholder='Name' />
 							<Box baseMarginY>
 								<Button onClick={handleEdit} type={ButtonType.main}>
-									{isEditPending ? 'Loading...' : 'Save'}
+									{isUpdateItemLoading ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
 						</Popup>
@@ -120,7 +123,7 @@ export function GoalEditPage() {
 							/>
 							<Box baseMarginY>
 								<Button onClick={handleEdit} type={ButtonType.main}>
-									{isEditPending ? 'Loading...' : 'Save'}
+									{isUpdateItemLoading ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
 						</Popup>
@@ -144,7 +147,7 @@ export function GoalEditPage() {
 							</div>
 							<Box baseMarginY>
 								<Button onClick={handleEdit} type={ButtonType.main}>
-									{isEditPending ? 'Loading...' : 'Save'}
+									{isUpdateItemLoading ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
 						</Popup>
@@ -163,7 +166,7 @@ export function GoalEditPage() {
 							/>
 							<Box baseMarginY>
 								<Button onClick={handleEdit} type={ButtonType.main}>
-									{isEditPending ? 'Loading...' : 'Save'}
+									{isUpdateItemLoading ? 'Loading...' : 'Save'}
 								</Button>
 							</Box>
 						</Popup>
@@ -171,10 +174,11 @@ export function GoalEditPage() {
 				</Card>
 			</Box>
 			<Box basePadding>
+				{/* TODO goal has been deleted successfully drawer */}
 				<Item
-					name={isDeletePending ? 'Loading...' : APP_TEXT.deleteGoal}
-					className={cn('text-sm text-red-600', isDeletePending && 'text-primary-grey')}
-					onClick={() => deleteGoal({id: Number(goalId)})}
+					name={isDeleteItemLoading ? 'Loading...' : APP_TEXT.deleteGoal}
+					className={cn('text-sm text-red-600', isDeleteItemLoading && 'text-primary-grey')}
+					onClick={() => deleteItem({params: {id}})}
 				/>
 			</Box>
 		</>

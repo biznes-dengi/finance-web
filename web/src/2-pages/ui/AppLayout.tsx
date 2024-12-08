@@ -1,7 +1,7 @@
 import {Outlet} from 'react-router-dom';
 import {cn} from '@shared/lib';
 import {Button, ButtonType, Icon} from '@shared/ui';
-import {authModel} from '@entities/auth';
+import {AuthModel} from '@entities/auth';
 
 const sidebarConfigs = [
 	{
@@ -27,7 +27,7 @@ const sidebarConfigs = [
 ];
 
 export function AppLayout() {
-	const {logout} = authModel.useLogout();
+	const {logout} = AuthModel.useLogout();
 
 	const isDesktop = false;
 

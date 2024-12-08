@@ -8,9 +8,9 @@ import {DateService, isNumber} from '@shared/lib';
 export function GoalFundPage() {
 	const navigate = useNavigate();
 
-	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = GoalModel.useFundGoal();
+	const {deposit, isDepositLoading, isDepositSuccess, isDepositError} = GoalModel.useDeposit();
 
-	const {items} = GoalModel.useItems({pageNumber: 0});
+	const {items} = GoalModel.useItemList({pageNumber: 0});
 	const options = items?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
@@ -35,10 +35,10 @@ export function GoalFundPage() {
 			date: new DateService(date).getPayloadDateFormat(),
 		};
 
-		fundGoal(payload);
+		deposit(payload);
 	}
 
-	if (isFundGoalSuccess || isFundGoalError) {
+	if (isDepositSuccess || isDepositError) {
 		setTimeout(() => {
 			navigate(APP_PATH.home);
 		}, 2000);
@@ -62,8 +62,8 @@ export function GoalFundPage() {
 				</Box>
 			</Box>
 
-			<Popup isStatusDialogOpen={isFundGoalSuccess || isFundGoalError}>
-				{isFundGoalSuccess && activeOption && (
+			<Popup isStatusDialogOpen={isDepositSuccess || isDepositError}>
+				{isDepositSuccess && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.success}</div>
@@ -77,7 +77,7 @@ export function GoalFundPage() {
 						</div>
 					</Box>
 				)}
-				{isFundGoalError && activeOption && (
+				{isDepositError && activeOption && (
 					<Box baseMarginY className='text-center'>
 						<div className='mb-4 flex justify-center'>
 							<div className='size-16 text-primary-violet'>{Icon.error}</div>
@@ -92,7 +92,7 @@ export function GoalFundPage() {
 
 			<Box basePadding>
 				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount)}>
-					{isFundGoalPending ? 'Loading...' : APP_TEXT.fund}
+					{isDepositLoading ? 'Loading...' : APP_TEXT.fund}
 				</Button>
 			</Box>
 		</>

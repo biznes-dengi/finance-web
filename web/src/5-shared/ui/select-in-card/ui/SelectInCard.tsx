@@ -29,7 +29,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				</div>
 			</div>
 
-			<Popup ref={dialogRef} title={APP_TEXT.savings}>
+			<Popup ref={dialogRef} title={APP_TEXT.goals}>
 				<List
 					rows={options}
 					renderRow={(option) => {
