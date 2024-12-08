@@ -7,7 +7,7 @@ export function Card(props: Props) {
 	return (
 		<div className={cn(withTopSpace && 'mt-6')}>
 			{(title || rightTitle) && (
-				<div className={cn('flex pb-3', title && rightTitle && 'justify-between')}>
+				<div className={cn('flex pb-3', title && rightTitle && 'items-center justify-between')}>
 					{title && <div className='font-semibold'>{title}</div>}
 					{rightTitle}
 				</div>

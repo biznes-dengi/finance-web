@@ -46,6 +46,36 @@ export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, 
 		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
 	}
 }
+function groupItemsByMonth(items: any) {
+	const result = {};
+
+	items.forEach((item: any) => {
+		const monthKey = getMonthKey(item.date);
+
+		// @ts-ignore
+		if (!result[monthKey]) {
+			// @ts-ignore
+			result[monthKey] = [];
+		}
+
+		// @ts-ignore
+		result[monthKey].push(item);
+	});
+
+	return result;
+}
+function getMonthKey(itemDate: string) {
+	const date = new Date(itemDate);
+	return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+}
+function getTotal(items: any) {
+	return (
+		items?.reduce((total: any, item: any) => {
+			total += (item.amount ?? item.toGoalAmount) as number;
+			return total;
+		}, 0) || 0
+	);
+}
 
 export function GoalTransactionsPage() {
 	const {goalId} = useParams();
@@ -71,7 +101,7 @@ export function GoalTransactionsPage() {
 							key={month}
 							title={monthsMap.get(new Date(month).getMonth())}
 							rightTitle={
-								<div className='text-sm font-light text-primary-grey'>
+								<div className='text-sm text-primary-grey'>
 									{total !== 0 && total > 0 ? '+' : '-'}
 									{textHelpers.getAmountWithCurrency(
 										total,
@@ -105,38 +135,5 @@ export function GoalTransactionsPage() {
 				})}
 			</Box>
 		</>
-	);
-}
-
-function groupItemsByMonth(items: any) {
-	const result = {};
-
-	items.forEach((item: any) => {
-		const monthKey = getMonthKey(item.date);
-
-		// @ts-ignore
-		if (!result[monthKey]) {
-			// @ts-ignore
-			result[monthKey] = [];
-		}
-
-		// @ts-ignore
-		result[monthKey].push(item);
-	});
-
-	return result;
-}
-
-function getMonthKey(itemDate: string) {
-	const date = new Date(itemDate);
-	return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-}
-
-function getTotal(items: any) {
-	return (
-		items?.reduce((total: any, item: any) => {
-			total += (item.amount ?? item.toGoalAmount) as number;
-			return total;
-		}, 0) || 0
 	);
 }

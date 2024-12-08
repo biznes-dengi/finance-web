@@ -1,7 +1,7 @@
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {FaChevronRight} from 'react-icons/fa6';
 import {GoalModel} from '@entities/goal';
-import {APP_TEXT, CURRENCY, CURRENCY_MAP, TRANSACTION_TYPE} from '@shared/constants';
+import {APP_TEXT, CURRENCY, CURRENCY_MAP, getGoalTransactionsPath, TRANSACTION_TYPE} from '@shared/constants';
 import {Card, Item, List} from '@shared/ui';
 import {DateService, textHelpers} from '@shared/lib';
 
@@ -33,6 +33,7 @@ export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, 
 }
 
 export function GoalTransactions() {
+	const navigate = useNavigate();
 	const {goalId} = useParams();
 	const {items, isItemsLoading} = GoalModel.useItemTransactions({id: Number(goalId), filter: {pageNumber: 0}});
 	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
@@ -40,7 +41,7 @@ export function GoalTransactions() {
 	return (
 		<Card
 			titleInCard={
-				<div className='flex items-center gap-1'>
+				<div className='flex items-center gap-1' onClick={() => navigate(getGoalTransactionsPath(goalId))}>
 					<div>{APP_TEXT.transactions}</div>
 					<div>
 						<FaChevronRight className='size-2.5 text-primary-grey' />
