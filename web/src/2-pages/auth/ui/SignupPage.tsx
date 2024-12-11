@@ -103,7 +103,7 @@ export function SignupPage() {
 				</div>
 			</AuthLayout>
 
-			<StatusPopup isOpen={isSignupSuccess} status='success' statusTextKey='accountCreated' />
+			<StatusPopup isOpen={isSignupSuccess} status='success' statusTextKey='accountCreateSuccess' />
 		</>
 	);
 }

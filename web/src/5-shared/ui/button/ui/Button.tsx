@@ -22,6 +22,7 @@ interface Props extends CommonButtonSettings {
 	disabled?: boolean;
 	isLoading?: boolean;
 	isOnlyIcon?: boolean;
+	isSecondary?: boolean;
 }
 
 // TODO: Typescript: when type = icon -> icon prop required
@@ -29,7 +30,17 @@ interface Props extends CommonButtonSettings {
 export const buttonClickStyles = 'transition duration-200 ease-in-out active:scale-95 active:brightness-95';
 
 export function Button(props: Props) {
-	const {children, className, onClick, type = ButtonType.text, icon, disabled, isLoading, isOnlyIcon} = props;
+	const {
+		children,
+		className,
+		onClick,
+		type = ButtonType.text,
+		isSecondary,
+		icon,
+		disabled,
+		isLoading,
+		isOnlyIcon,
+	} = props;
 
 	const navigate = useNavigate();
 
@@ -54,10 +65,17 @@ export function Button(props: Props) {
 				{...buttonProps}
 				className={gcn(
 					'block w-full rounded-3xl py-3 text-center text-white active:scale-100',
-					!disabled
-						? 'primaryButtonShadow bg-primary-violet active:shadow-none'
-						: 'cursor-not-allowed bg-primary-violet/20',
-					isLoading && 'cursor-not-allowed bg-primary-violet shadow-none',
+					disabled
+						? isSecondary
+							? 'cursor-not-allowed bg-secondary-violet/20'
+							: 'cursor-not-allowed bg-primary-violet/20'
+						: isSecondary
+						? 'bg-secondary-violet text-primary-violet'
+						: 'primaryButtonShadow bg-primary-violet active:shadow-none',
+					isLoading &&
+						(isSecondary
+							? 'cursor-not-allowed bg-secondary-violet'
+							: 'cursor-not-allowed bg-primary-violet shadow-none'),
 				)}
 			>
 				{isLoading ? (

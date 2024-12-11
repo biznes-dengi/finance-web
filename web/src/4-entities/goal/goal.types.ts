@@ -34,7 +34,7 @@ export type MutationProps = {
 
 	useUpdateItem: {
 		params: {
-			id: number;
+			id?: string;
 		};
 		payload: {
 			name: string;
@@ -46,13 +46,13 @@ export type MutationProps = {
 
 	useDeleteItem: {
 		params: {
-			id: number;
+			id?: string;
 		};
 	};
 
 	useDeposit: {
 		params: {
-			id: number;
+			id?: string;
 		};
 		payload: {
 			amount: number;
@@ -62,7 +62,7 @@ export type MutationProps = {
 
 	useWithdraw: {
 		params: {
-			id: number;
+			id?: string;
 		};
 		payload: {
 			amount: number;

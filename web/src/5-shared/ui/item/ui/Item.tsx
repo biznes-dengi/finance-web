@@ -17,6 +17,7 @@ export function Item(props: ItemProps) {
 		rightNode,
 		onClick,
 		className,
+		isSingle,
 	} = props;
 
 	const navigate = useNavigate();
@@ -25,7 +26,11 @@ export function Item(props: ItemProps) {
 
 	return (
 		<div
-			className={cn('group rounded-2xl bg-white p-1 [&:not(:last-child)]:pb-0', onClick && 'cursor-pointer')}
+			className={cn(
+				'group rounded-2xl bg-white p-1',
+				!isSingle && '[&:not(:last-child)]:pb-0',
+				onClick && 'cursor-pointer',
+			)}
 			onClick={() => onClick?.(navigate)}
 		>
 			<div

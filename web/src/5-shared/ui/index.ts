@@ -25,10 +25,8 @@ export * from './currency-picker/ui/CurrencyPicker.tsx';
 export * from './fields/NumericInput.tsx';
 
 export * from './spinner/ui/Spinner.tsx';
-
-export * from './progress/ui/Progress.tsx';
-
-export * from '@shared/ui/status-popup/ui/StatusPopup.tsx';
-export * from '@shared/ui/status-popup/constants/StatusPopup.constants.tsx';
-
+export * from './status-popup/ui/StatusPopup.tsx';
+export * from './status-popup/constants/StatusPopup.constants.tsx';
 export * from './loading-wrapper/ui/LoadingWrapper.tsx';
+export * from './delete-item/ui/DeleteItem.tsx';
+export * from './edit-button-field/ui/EditButtonField.tsx';

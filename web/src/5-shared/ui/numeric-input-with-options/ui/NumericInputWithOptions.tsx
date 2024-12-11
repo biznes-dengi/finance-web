@@ -17,7 +17,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 		isAutoFocusDisabled,
 	} = props;
 
-	const {dialogRef, openDialog, closeDialog} = usePopupState();
+	const {popupProps, openPopup, closePopup} = usePopupState();
 
 	function handleChange(value: string) {
 		//TODO: на клаве decimal сюда залетает запятая
@@ -70,7 +70,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 				<div className='flex items-center justify-between'>
 					<div
 						className={cn('mr-4 flex min-w-40 items-center gap-2', isMultipleOptions && 'cursor-pointer')}
-						onClick={openDialog}
+						onClick={openPopup}
 					>
 						{activeOption.image &&
 							styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
@@ -126,7 +126,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 			</label>
 
 			{isMultipleOptions && (
-				<Popup ref={dialogRef}>
+				<Popup {...popupProps}>
 					<List
 						rows={options}
 						renderRow={(option) => {
@@ -141,7 +141,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 									onClick={() => {
 										setActiveOption(option);
 										handleChange('');
-										closeDialog();
+										closePopup();
 									}}
 								/>
 							);

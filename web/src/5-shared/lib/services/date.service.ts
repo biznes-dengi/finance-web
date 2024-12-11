@@ -17,7 +17,7 @@ export class DateService {
 		return this.value
 			.toLocaleDateString('ru-RU', {
 				year: 'numeric',
-				month: 'long',
+				month: 'short',
 				day: 'numeric',
 			})
 			.replace(' г.', '');

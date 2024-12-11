@@ -6,7 +6,7 @@ import {cn, useResponsive} from '@shared/lib';
 export function SelectInCard<TValue>(props: Props<TValue>) {
 	const {value, onChange, options, isLoading} = props;
 
-	const {dialogRef, openDialog, closeDialog} = usePopupState();
+	const {popupProps, openPopup, closePopup} = usePopupState();
 
 	const {isDesktop} = useResponsive();
 
@@ -21,7 +21,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 					'flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey',
 					isDesktop && 'hover:cursor-pointer',
 				)}
-				onClick={() => openDialog()}
+				onClick={openPopup}
 			>
 				{options.find((option) => option.value === value)?.name}
 				<div className='ml-2'>
@@ -29,7 +29,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				</div>
 			</div>
 
-			<Popup ref={dialogRef} title={APP_TEXT.goals}>
+			<Popup {...popupProps} title={APP_TEXT.goals}>
 				<List
 					rows={options}
 					renderRow={(option) => {
@@ -38,7 +38,7 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 							<Item
 								name={option.name}
 								onClick={() => {
-									closeDialog();
+									closePopup();
 									setTimeout(() => onChange(option.value), 200);
 								}}
 								rightNode={checked && <Icon type='check' className='flex size-4 self-center text-primary-violet' />}

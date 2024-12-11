@@ -6,7 +6,7 @@ import {AuthModel} from '@entities/auth';
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
 
 /**
- * начиная с useTotalBalance добавить goal в return {}, для специфичности
+ * начиная с useTotalBalance добавить goal в return {}, для специфичности, а иначе можно просто возвращать useQuery
  * */
 
 export class GoalModel {
@@ -122,10 +122,14 @@ export class GoalModel {
 				});
 			},
 			onSuccess: (data) => {
-				setTimeout(() => navigate(APP_PATH.goal.getItemDetailsPath(data.id)), 2500);
+				setTimeout(() => {
+					navigate(APP_PATH.goal.getItemDetailsPath(data.id));
+				}, 2000);
 			},
 			onError: () => {
-				setTimeout(() => navigate(APP_PATH.home), 2500);
+				setTimeout(() => {
+					navigate(APP_PATH.goalList);
+				}, 2000);
 			},
 		});
 
@@ -145,21 +149,23 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['edit-goal'],
 			mutationFn: (props: MutationProps['useUpdateItem']) => {
+				if (!props.params.id) return Promise.reject('No goal id');
+
 				return GoalApi.updateItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: props.payload,
 				});
 			},
-			onSuccess: () => {
-				void queryClient.invalidateQueries({queryKey: ['goal-details']});
+			onSuccess: (data: any) => {
+				void queryClient.invalidateQueries({queryKey: [`goal-details-${data.id}`]});
 			},
 		});
 
 		return {
-			updateItem: mutate,
-			isUpdateItemLoading: isPending,
-			isUpdateItemSuccess: isSuccess,
-			isUpdateItemError: isError,
+			updateGoal: mutate,
+			isUpdateGoalLoading: isPending,
+			isUpdateGoalSuccess: isSuccess,
+			isUpdateGoalError: isError,
 		};
 	}
 
@@ -173,21 +179,25 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-delete'],
 			mutationFn: (props: MutationProps['useDeleteItem']) => {
+				if (!props.params.id) return Promise.reject('No goal id');
+
 				return GoalApi.deleteItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 				});
 			},
 			onSuccess: () => {
-				void queryClient.invalidateQueries({queryKey: ['goal-items']});
-				navigate(APP_PATH.goalList);
+				setTimeout(() => {
+					void queryClient.invalidateQueries({queryKey: ['goal-items']});
+					navigate(APP_PATH.goalList);
+				}, 2000);
 			},
 		});
 
 		return {
-			deleteItem: mutate,
-			isDeleteItemLoading: isPending,
-			isDeleteItemSuccess: isSuccess,
-			isDeleteItemError: isError,
+			deleteGoal: mutate,
+			isDeleteGoalLoading: isPending,
+			isDeleteGoalSuccess: isSuccess,
+			isDeleteGoalError: isError,
 		};
 	}
 
@@ -197,6 +207,8 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-deposit-money'],
 			mutationFn: (props: MutationProps['useDeposit']) => {
+				if (!props.params.id) return Promise.reject('No goal id');
+
 				return GoalApi.deposit({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.DEPOSIT},
@@ -218,6 +230,8 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-withdraw-money'],
 			mutationFn: (props: MutationProps['useWithdraw']) => {
+				if (!props.params.id) return Promise.reject('No goal id');
+
 				return GoalApi.withdraw({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.WITHDRAW},

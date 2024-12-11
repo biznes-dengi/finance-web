@@ -11,8 +11,10 @@ export const APP_TEXT = {
 	saved: 'Saved',
 	goalName: 'Goal name',
 	goals: 'Goals',
-	deadline: 'До',
+	deadline: 'Срок',
+	currency: 'Currency',
 	left: 'Осталось',
+	congratulations: 'Поздравляем',
 	create: 'Create',
 	fund: 'Fund',
 	transfer: 'Transfer',
@@ -28,7 +30,10 @@ export const APP_TEXT = {
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',
 	edit: 'Edit',
+	save: 'Save',
+	name: 'Name',
 	deleteGoal: 'Delete Goal',
+	deleteGoalConfirmation: 'Are you sure you want to delete the goal?',
 	email: 'Email',
 	password: 'Password',
 	welcome: 'Welcome',
@@ -36,6 +41,8 @@ export const APP_TEXT = {
 	signUp: 'Sign up',
 	finansy: 'Finansy',
 	createAccount: 'Create account',
+	cancel: 'Cancel',
+	confirm: 'Confirm',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

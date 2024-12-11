@@ -34,7 +34,7 @@ export class AuthModel {
 			onSuccess: () => {
 				setTimeout(() => {
 					navigate(APP_PATH.home);
-				}, 2500);
+				}, 2000);
 			},
 			onError: () => {
 				alert('Signup failed');

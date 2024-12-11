@@ -1,13 +1,13 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useRef, useState} from 'react';
 import {StatusDialogProps} from '../types/StatusPopup.types.ts';
-import {Button, ButtonType, Icon, STATUS_DIALOG_TEXT} from '@shared/ui';
+import {Icon, STATUS_POPUP_TEXT} from '@shared/ui';
 import {cn} from '@shared/lib';
 
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
 export function StatusPopup(props: StatusDialogProps) {
-	const {isOpen, status, statusTextKey, yesButtonText, withDuration = true, duration = 2000} = props;
+	const {isOpen, status, statusTextKey} = props;
 
 	const [progress, setProgress] = useState(0);
 
@@ -19,34 +19,39 @@ export function StatusPopup(props: StatusDialogProps) {
 		openDrawer();
 	}, [isOpen]);
 	useEffect(() => {
-		if (!withDuration) return;
+		const duration = 2000;
 
-		const animate = (time: any) => {
-			const start = performance.now(); // Начальное время анимации
+		let animationFrameId: number;
+		const start = performance.now();
 
-			const elapsed = time - start; // Сколько времени прошло с начала анимации
-			const percentage = Math.min((elapsed / duration) * 100, 100); // Рассчитываем прогресс
-			setProgress(percentage); // Обновляем значение прогресса
+		const animate = (time: number) => {
+			const elapsed = time - start;
+			const percentage = Math.min((elapsed / duration) * 100, 100);
+			setProgress(percentage);
 
 			if (elapsed < duration) {
-				requestAnimationFrame(animate); // Если ещё не завершено, продолжаем анимацию
+				animationFrameId = requestAnimationFrame(animate);
 			}
 		};
 
-		requestAnimationFrame(animate); // Запускаем анимацию
+		animationFrameId = requestAnimationFrame(animate);
+		const timeoutId = setTimeout(closeDrawer, duration);
 
-		setTimeout(closeDrawer, duration);
+		return () => {
+			cancelAnimationFrame(animationFrameId);
+			clearTimeout(timeoutId);
+		};
 	}, [isOpen]);
 
 	function openDrawer() {
-		openButtonRef.current && openButtonRef.current.click();
+		openButtonRef.current?.click();
 	}
 	function closeDrawer() {
-		closeButtonRef.current && closeButtonRef.current.click();
+		closeButtonRef.current?.click();
 	}
 
 	return (
-		<Root dismissible={!withDuration}>
+		<Root dismissible={false}>
 			<Trigger ref={openButtonRef} className='hidden' />
 			<Close ref={closeButtonRef} className='hidden' />
 
@@ -56,7 +61,7 @@ export function StatusPopup(props: StatusDialogProps) {
 				<Content className='fixed bottom-0 left-0 right-0 rounded-t-3xl bg-light-grey outline-none transition-all duration-200'>
 					<div
 						className={cn(
-							'mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-2xl p-4 pt-2 text-center',
+							'mx-auto flex w-full max-w-md flex-col overflow-auto p-4 pt-2 text-center',
 							isOpen && 'items-center',
 						)}
 					>
@@ -70,19 +75,12 @@ export function StatusPopup(props: StatusDialogProps) {
 								'mb-4 mt-2 size-10',
 								status === 'success' && 'text-primary-violet',
 								status === 'error' && 'text-error-red',
-								status === 'congratulations' && 'text-3xl',
 							)}
 						/>
 
-						<div className='text-lg font-semibold'>{STATUS_DIALOG_TEXT[statusTextKey].title}</div>
+						<div className='text-lg font-medium'>{STATUS_POPUP_TEXT[statusTextKey]?.title}</div>
 
-						<div className='mt-4'>{STATUS_DIALOG_TEXT[statusTextKey].description}</div>
-
-						{yesButtonText && (
-							<Button className='mt-4' type={ButtonType.main} onClick={closeDrawer}>
-								{yesButtonText}
-							</Button>
-						)}
+						<div className='mt-4'>{STATUS_POPUP_TEXT[statusTextKey]?.description}</div>
 					</div>
 				</Content>
 			</Portal>

@@ -10,19 +10,19 @@ type Props = {
 export function DatePicker(props: Props) {
 	const {value, onChange} = props;
 
-	const {dialogRef, openDialog, closeDialog} = usePopupState();
+	const {popupProps, openPopup, closePopup} = usePopupState();
 
 	// TODO: когда меняем на новую дату ставится дефолтное время. Продумать логику.
 
 	return (
 		<>
 			<Box>
-				<Button icon={<Icon type='calendar' />} onClick={() => openDialog()}>
+				<Button icon={<Icon type='calendar' />} onClick={openPopup}>
 					{new DateService(value).getLocalDateString()}
 				</Button>
 			</Box>
 
-			<Popup ref={dialogRef}>
+			<Popup {...popupProps}>
 				<div className='flex justify-center'>
 					<Calendar
 						mode='single'
@@ -30,7 +30,7 @@ export function DatePicker(props: Props) {
 						onSelect={(date) => {
 							if (!date) return;
 							onChange(date);
-							closeDialog();
+							closePopup();
 						}}
 					/>
 				</div>

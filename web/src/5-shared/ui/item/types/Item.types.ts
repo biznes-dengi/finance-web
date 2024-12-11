@@ -13,4 +13,5 @@ export type ItemProps = {
 	rightNode?: ReactNode;
 	onClick?: (navigate: NavigateFunction) => void;
 	className?: string | boolean;
+	isSingle?: boolean;
 };

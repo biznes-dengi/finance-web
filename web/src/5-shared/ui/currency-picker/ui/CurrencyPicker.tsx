@@ -13,7 +13,7 @@ type Props = {
 export function CurrencyPicker(props: Props) {
 	const {value, onChange, buttonText} = props;
 
-	const {dialogRef, openDialog, closeDialog} = usePopupState();
+	const {popupProps, openPopup, closePopup} = usePopupState();
 
 	const [currencyRate, setCurrencyRate] = useState<number | undefined>();
 
@@ -24,12 +24,12 @@ export function CurrencyPicker(props: Props) {
 	return (
 		<>
 			<Box>
-				<Button icon={<Icon type='trendUp' />} onClick={() => openDialog()}>
+				<Button icon={<Icon type='trendUp' />} onClick={openPopup}>
 					{buttonText}
 				</Button>
 			</Box>
 
-			<Popup ref={dialogRef}>
+			<Popup {...popupProps}>
 				<div className='flex w-full flex-col gap-4'>
 					<div className='flex items-center'>
 						<div className='mr-2 shrink-0 font-medium'>1 $ =</div>
@@ -46,7 +46,7 @@ export function CurrencyPicker(props: Props) {
 					<Button
 						onClick={() => {
 							onChange(currencyRate ? Number(currencyRate) : undefined);
-							closeDialog();
+							closePopup();
 						}}
 						type={ButtonType.main}
 					>

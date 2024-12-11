@@ -1,11 +1,7 @@
-import {STATUS_DIALOG_TEXT} from '@shared/ui';
-import {ReactNode} from 'react';
+import {STATUS_POPUP_TEXT} from '@shared/ui';
 
 export type StatusDialogProps = {
 	isOpen: boolean;
 	status: 'success' | 'error' | 'congratulations';
-	statusTextKey: keyof typeof STATUS_DIALOG_TEXT;
-	withDuration?: boolean;
-	duration?: number;
-	yesButtonText?: ReactNode;
+	statusTextKey: keyof typeof STATUS_POPUP_TEXT;
 };

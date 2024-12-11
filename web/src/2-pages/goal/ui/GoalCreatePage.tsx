@@ -1,22 +1,18 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {GoalImageField} from '@widgets/goal';
 import {
 	Box,
 	Button,
 	ButtonType,
 	DatePicker,
-	Popup,
-	Icon,
 	NumericInputWithOptions,
 	PageHeader,
 	SelectWithSearch,
-	Spinner,
 	Stepper,
 	TextField,
-	useUploadField,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {cn, DateService, useResponsive} from '@shared/lib';
+import {cn, DateService} from '@shared/lib';
 import {GoalModel} from '@entities/goal';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
@@ -36,12 +32,7 @@ export function GoalCreatePage() {
 	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 	const [deadline, setDeadline] = useState<Date>(new DateService().value);
 
-	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
-		useUploadField();
-
-	const {isDesktop} = useResponsive();
-
-	const {createItem, isCreateItemLoading, isCreateItemSuccess, isCreateItemError} = GoalModel.useCreateItem();
+	const {createItem, isCreateItemLoading} = GoalModel.useCreateItem();
 
 	function handleCreateClick() {
 		if (!targetAmount) return;
@@ -72,58 +63,16 @@ export function GoalCreatePage() {
 		/>
 	);
 
-	const navigate = useNavigate();
-
 	// if (isCreateItemSuccess) {
 	// 	navigate(APP_PATH.goal.getItemDetailsPath());
 	// }
 
-	if (isCreateItemSuccess || isCreateItemError) {
-		setTimeout(() => {
-			navigate(APP_PATH.home);
-		}, 2000);
-	}
+	// if (isCreateItemSuccess || isCreateItemError) {
+	// }
 
 	return (
 		<>
-			{activeStepIndex === initialStepIndex ? (
-				<UploadField onUpload={alert}>
-					<div
-						className={cn(
-							'flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey',
-							isUploading && 'bg-secondary-grey',
-						)}
-					>
-						{Header}
-
-						{isFileDragging && (
-							<div className='h-10 w-10 self-center text-primary-violet'>
-								<Icon type='uploadImage' />
-							</div>
-						)}
-						{isUploading && (
-							<div className='cursor-default self-center text-center'>
-								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
-								<div
-									className={cn('cursor-pointer text-sm underline', isDesktop && 'hover:text-primary-violet')}
-									onClick={abortUploading}
-								>
-									Cancel uploading
-								</div>
-							</div>
-						)}
-
-						<div
-							className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
-							onClick={startUploading}
-						>
-							{!isUploading ? <Icon type='uploadImage' /> : <Spinner className='z-20 h-5 w-5' />}
-						</div>
-					</div>
-				</UploadField>
-			) : (
-				Header
-			)}
+			{activeStepIndex === initialStepIndex ? <GoalImageField>{Header}</GoalImageField> : Header}
 
 			<div className='flex-grow'>
 				<Stepper
@@ -186,32 +135,32 @@ export function GoalCreatePage() {
 				</Button>
 			</Box>
 
-			<Popup isStatusDialogOpen={isCreateItemSuccess || isCreateItemError}>
-				{isCreateItemSuccess && activeOption && (
-					<Box baseMarginY className='text-center'>
-						<div className='flex flex-col items-center pb-4'>
-							<Icon type='check' className='mb-5 size-10 text-primary-violet' />
-							<div className='text-center font-semibold'>
-								{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
-								{APP_TEXT.createdSuccess}
-							</div>
-							<div className='mt-2'>Welcome to Finansy family 🤗</div>
-						</div>
-					</Box>
-				)}
-				{isCreateItemError && activeOption && (
-					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>
-								<Icon type='error' />
-							</div>
-						</div>
-						<div>
-							Some error occur during creating <span className='font-medium text-primary-violet'>{name}</span>
-						</div>
-					</Box>
-				)}
-			</Popup>
+			{/*<Popup isStatusDialogOpen={isCreateItemSuccess || isCreateItemError}>*/}
+			{/*	{isCreateItemSuccess && activeOption && (*/}
+			{/*		<Box baseMarginY className='text-center'>*/}
+			{/*			<div className='flex flex-col items-center pb-4'>*/}
+			{/*				<Icon type='check' className='mb-5 size-10 text-primary-violet' />*/}
+			{/*				<div className='text-center font-semibold'>*/}
+			{/*					{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}*/}
+			{/*					{APP_TEXT.createdSuccess}*/}
+			{/*				</div>*/}
+			{/*				<div className='mt-2'>Welcome to Finansy family 🤗</div>*/}
+			{/*			</div>*/}
+			{/*		</Box>*/}
+			{/*	)}*/}
+			{/*	{isCreateItemError && activeOption && (*/}
+			{/*		<Box baseMarginY className='text-center'>*/}
+			{/*			<div className='mb-4 flex justify-center'>*/}
+			{/*				<div className='size-16 text-primary-violet'>*/}
+			{/*					<Icon type='error' />*/}
+			{/*				</div>*/}
+			{/*			</div>*/}
+			{/*			<div>*/}
+			{/*				Some error occur during creating <span className='font-medium text-primary-violet'>{name}</span>*/}
+			{/*			</div>*/}
+			{/*		</Box>*/}
+			{/*	)}*/}
+			{/*</Popup>*/}
 		</>
 	);
 }

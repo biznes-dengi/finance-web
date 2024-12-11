@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {getGoalProgressData} from '../../lib/goal.lib.ts';
 import {GoalModel} from '@entities/goal';
-import {Card, Icon, LoadingWrapper, StatusPopup} from '@shared/ui';
+import {Button, ButtonType, Card, Icon, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
 import {cn, DateService} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
@@ -10,6 +10,8 @@ export function GoalProgress() {
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
 	const {percentage, ratio, isCompleted} = getGoalProgressData(isGoalDetailsLoading, goalDetails) || {};
+
+	const {popupProps, closePopup} = usePopupState({initialState: isCompleted});
 
 	return (
 		<Card>
@@ -59,13 +61,26 @@ export function GoalProgress() {
 				</div>
 			</div>
 
-			<StatusPopup
-				isOpen={!!isCompleted}
-				status='congratulations'
-				statusTextKey='goalAchieved'
-				withDuration={false}
-				yesButtonText={APP_TEXT.kaif}
-			/>
+			<Popup {...popupProps}>
+				<div className='flex flex-col items-center justify-center text-center'>
+					<Icon type='congratulations' className='mb-4 mt-2 text-3xl' />
+
+					<div className='mb-4 text-lg font-medium'>{APP_TEXT.congratulations}</div>
+
+					<div>Вы пришли к своей цели! Это отличный результат, и мы гордимся вами.</div>
+					<div className='mt-2'>
+						Когда другие сдавались, вы проявили настойчивость — и вот результат:{' '}
+						<span className='font-medium text-primary-violet'>вы можете осуществить свою мечту</span>.
+					</div>
+					<div className='mt-2'>
+						Желаем вам дальнейших успехов и пусть впереди будет еще больше целей, которые вы легко достигнете!
+					</div>
+
+					<Button className='mt-4' type={ButtonType.main} onClick={closePopup}>
+						{APP_TEXT.kaif}
+					</Button>
+				</div>
+			</Popup>
 		</Card>
 	);
 }
