@@ -4,6 +4,7 @@ import {GoalApi} from './goal.api.ts';
 import {type InitialData, type MutationProps, type Props} from './goal.types.ts';
 import {AuthModel} from '@entities/auth';
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
+import {runAfterStatusPopup} from '@shared/ui';
 
 /**
  * начиная с useTotalBalance добавить goal в return {}, для специфичности, а иначе можно просто возвращать useQuery
@@ -122,14 +123,14 @@ export class GoalModel {
 				});
 			},
 			onSuccess: (data) => {
-				setTimeout(() => {
+				runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(data.id));
-				}, 2000);
+				});
 			},
 			onError: () => {
-				setTimeout(() => {
+				runAfterStatusPopup(() => {
 					navigate(APP_PATH.goalList);
-				}, 2000);
+				});
 			},
 		});
 
@@ -186,10 +187,10 @@ export class GoalModel {
 				});
 			},
 			onSuccess: () => {
-				setTimeout(() => {
+				runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: ['goal-items']});
 					navigate(APP_PATH.goalList);
-				}, 2000);
+				});
 			},
 		});
 

@@ -1,5 +1,6 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useRef, useState} from 'react';
+import {statusDuration} from '../lib/StatusPopup.lib.ts';
 import {StatusDialogProps} from '../types/StatusPopup.types.ts';
 import {Icon, STATUS_POPUP_TEXT} from '@shared/ui';
 import {cn} from '@shared/lib';
@@ -19,23 +20,21 @@ export function StatusPopup(props: StatusDialogProps) {
 		openDrawer();
 	}, [isOpen]);
 	useEffect(() => {
-		const duration = 2000;
-
 		let animationFrameId: number;
 		const start = performance.now();
 
 		const animate = (time: number) => {
 			const elapsed = time - start;
-			const percentage = Math.min((elapsed / duration) * 100, 100);
+			const percentage = Math.min((elapsed / statusDuration) * 100, 100);
 			setProgress(percentage);
 
-			if (elapsed < duration) {
+			if (elapsed < statusDuration) {
 				animationFrameId = requestAnimationFrame(animate);
 			}
 		};
 
 		animationFrameId = requestAnimationFrame(animate);
-		const timeoutId = setTimeout(closeDrawer, duration);
+		const timeoutId = setTimeout(closeDrawer, statusDuration);
 
 		return () => {
 			cancelAnimationFrame(animationFrameId);

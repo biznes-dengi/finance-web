@@ -2,6 +2,7 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import {useNavigate} from 'react-router-dom';
 import {AuthApi} from '@entities/auth';
 import {APP_PATH} from '@shared/constants';
+import {runAfterStatusPopup} from '@shared/ui';
 
 // permissions
 // featureAccess
@@ -32,9 +33,9 @@ export class AuthModel {
 				return AuthApi.signup(payload);
 			},
 			onSuccess: () => {
-				setTimeout(() => {
+				runAfterStatusPopup(() => {
 					navigate(APP_PATH.home);
-				}, 2000);
+				});
 			},
 			onError: () => {
 				alert('Signup failed');

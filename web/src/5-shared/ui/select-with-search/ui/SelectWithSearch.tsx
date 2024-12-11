@@ -5,6 +5,8 @@ import {cn, isNumber} from '@shared/lib';
 import {CURRENCY} from '@shared/constants';
 import {Props} from '../types/SelectWithSearch.types.ts';
 
+// cпроектирован под select currency
+
 export function SelectWithSearch(props: Props) {
 	const {options, onChange, value} = props;
 
