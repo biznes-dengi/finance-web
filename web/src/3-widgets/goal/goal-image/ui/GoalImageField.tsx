@@ -37,10 +37,10 @@ export function GoalImageField({children}: {children: ReactNode}) {
 				)}
 
 				<div
-					className='mb-4 mr-4 flex size-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
+					className='mb-4 mr-4 flex size-8 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'
 					onClick={startUploading}
 				>
-					{!isUploading ? <Icon type='uploadImage' /> : <Spinner className='z-20 h-5 w-5' />}
+					{!isUploading ? <Icon type='uploadImage' className='size-4' /> : <Spinner className='size-4' />}
 				</div>
 			</div>
 		</UploadField>
