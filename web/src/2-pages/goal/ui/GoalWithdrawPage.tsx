@@ -1,5 +1,5 @@
-import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
-import {Box, Button, ButtonType, DatePicker, Popup, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {Box, Button, ButtonType, DatePicker, NumericInputWithOptions, PageHeader} from '@shared/ui';
 import {GoalModel} from '@entities/goal';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -30,7 +30,7 @@ export function GoalWithdrawPage() {
 		if (!activeOption?.id) return;
 
 		withdraw({
-			params: {id: activeOption.id},
+			params: {id: String(activeOption.id)},
 			payload: {
 				amount: amount ?? 0,
 				date: new DateService(date).getPayloadDateFormat(),
@@ -65,37 +65,37 @@ export function GoalWithdrawPage() {
 				</Box>
 			</Box>
 
-			<Popup isStatusDialogOpen={isWithdrawSuccess || isWithdrawError}>
-				{isWithdrawSuccess && activeOption && (
-					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>
-								<Icon type='success' />
-							</div>
-						</div>
-						<div>
-							Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>
-							has been withdrawn by{' '}
-							<span className='font-medium text-primary-violet'>
-								{amount} {CURRENCY_MAP[activeOption.balance.currency].symbol}
-							</span>
-						</div>
-					</Box>
-				)}
-				{isWithdrawError && (
-					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>
-								<Icon type='error' />
-							</div>
-						</div>
-						<div>
-							Some error occur during withdraw from{' '}
-							<span className='font-medium text-primary-violet'>{activeOption?.name}</span>
-						</div>
-					</Box>
-				)}
-			</Popup>
+			{/*<Popup isStatusDialogOpen={isWithdrawSuccess || isWithdrawError}>*/}
+			{/*	{isWithdrawSuccess && activeOption && (*/}
+			{/*		<Box baseMarginY className='text-center'>*/}
+			{/*			<div className='mb-4 flex justify-center'>*/}
+			{/*				<div className='size-16 text-primary-violet'>*/}
+			{/*					<Icon type='success' />*/}
+			{/*				</div>*/}
+			{/*			</div>*/}
+			{/*			<div>*/}
+			{/*				Goal <span className='font-medium text-primary-violet'>{activeOption?.name} </span>*/}
+			{/*				has been withdrawn by{' '}*/}
+			{/*				<span className='font-medium text-primary-violet'>*/}
+			{/*					{amount} {CURRENCY_MAP[activeOption.balance.currency].symbol}*/}
+			{/*				</span>*/}
+			{/*			</div>*/}
+			{/*		</Box>*/}
+			{/*	)}*/}
+			{/*	{isWithdrawError && (*/}
+			{/*		<Box baseMarginY className='text-center'>*/}
+			{/*			<div className='mb-4 flex justify-center'>*/}
+			{/*				<div className='size-16 text-primary-violet'>*/}
+			{/*					<Icon type='error' />*/}
+			{/*				</div>*/}
+			{/*			</div>*/}
+			{/*			<div>*/}
+			{/*				Some error occur during withdraw from{' '}*/}
+			{/*				<span className='font-medium text-primary-violet'>{activeOption?.name}</span>*/}
+			{/*			</div>*/}
+			{/*		</Box>*/}
+			{/*	)}*/}
+			{/*</Popup>*/}
 
 			<Box basePadding>
 				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount) || isAmountError}>
