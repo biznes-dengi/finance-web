@@ -39,32 +39,32 @@ const goalWithdrawRoute = {
 };
 
 const goalDetailsRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId`,
+	path: `${APP_PATH.goalDetails}/:id`,
 	element: <PrivateRoute page={<GoalDetailsPage />} />,
 };
 
 const goalDetailsFundRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId/fund`,
+	path: `${APP_PATH.goalDetails}/:id/fund`,
 	element: <PrivateRoute page={<GoalDetailsFundPage />} />,
 };
 
 const goalDetailsWithdrawRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId/withdraw`,
+	path: `${APP_PATH.goalDetails}/:id/withdraw`,
 	element: <PrivateRoute page={<GoalDetailsWithdrawPage />} />,
 };
 
 const goalEditRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId/edit`,
+	path: `${APP_PATH.goalDetails}/:id/edit`,
 	element: <PrivateRoute page={<GoalEditPage />} />,
 };
 
 const goalTransactionsRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId/transactions`,
+	path: `${APP_PATH.goalDetails}/:id/transactions`,
 	element: <PrivateRoute page={<GoalTransactionsPage />} />,
 };
 
 const goalDetailsTransferRoute = {
-	path: `${APP_PATH.goalDetails}/:goalId/transfer`,
+	path: `${APP_PATH.goalDetails}/:id/transfer`,
 	element: <PrivateRoute page={<GoalDetailsTransferPage />} />,
 };
 

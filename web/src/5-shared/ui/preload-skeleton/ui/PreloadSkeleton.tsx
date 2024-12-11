@@ -12,15 +12,20 @@ export function PreloadSkeleton(props: {isCircular?: boolean; className?: string
 
 	// Функция для извлечения стандартного значения width или height (формат w-*, h-*, size-*)
 	const extractTailwindDimension = (className: string, type: 'w' | 'h' | 'size') => {
-		const match = className.match(new RegExp(`${type}-(\\d+)`));
-		return match ? parseInt(match[1], 10) * 4 : undefined; // умножаем на 4 для стандартных классов
+		const match = className.match(new RegExp(`${type}-(\\d*\\.?\\d+)`)); // паттерн для дробных значений
+		return match ? parseFloat(match[1]) * 4 : undefined; // умножаем на 4 для стандартных классов
 	};
 
 	// Функция для фильтрации классов, исключая w-*, h-* и size-*
 	const filterClassNames = (className: string) => {
 		return className
 			.split(' ') // разбиваем className на массив классов
-			.filter((cls) => !/^w-\d+|^h-\d+|^size-\d+|^w-\[\d*\.?\d+px\]|^h-\[\d*\.?\d+px\]|^size-\[\d*\.?\d+px\]/.test(cls)) // исключаем классы w-*, h-*, size-* и w-[*px], h-[*px], size-[*px]
+			.filter(
+				(cls) =>
+					!/^w-\d+(\.\d+)?|^h-\d+(\.\d+)?|^size-\d+(\.\d+)?|^w-\[\d*\.?\d+px\]|^h-\[\d*\.?\d+px\]|^size-\[\d*\.?\d+px\]/.test(
+						cls,
+					),
+			) // исключаем классы w-*, h-*, size-* и w-[*px], h-[*px], size-[*px]
 			.join(' '); // собираем обратно в строку
 	};
 

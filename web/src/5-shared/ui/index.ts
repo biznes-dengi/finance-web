@@ -18,6 +18,7 @@ export * from './list';
 export * from './select-in-card';
 export * from './select-with-search';
 export * from './card';
+export * from './card/ui/LinkTitleInCard.tsx';
 
 export * from './date-picker/ui/DatePicker.tsx';
 export * from './currency-picker/ui/CurrencyPicker.tsx';
@@ -29,3 +30,5 @@ export * from './progress/ui/Progress.tsx';
 
 export * from '@shared/ui/status-popup/ui/StatusPopup.tsx';
 export * from '@shared/ui/status-popup/constants/StatusPopup.constants.tsx';
+
+export * from './loading-wrapper/ui/LoadingWrapper.tsx';

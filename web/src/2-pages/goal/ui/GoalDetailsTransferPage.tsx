@@ -13,7 +13,6 @@ import {
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 // const initialExchangeRate = 3.9071; for zł
 const initialExchangeRate = 1;
@@ -25,12 +24,12 @@ export function GoalDetailsTransferPage() {
 
 	const [date, setDate] = useState<Date>(new DateService().value);
 
-	const {goalId} = useParams();
+	const {id} = useParams();
 
-	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {goalDetails} = GoalModel.useItemDetails({id});
 
-	const {itemList} = GoalModel.useItemList({filter: {pageNumber: 0}});
-	const options = itemList?.map((option) => ({
+	const {goals} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const options = goals?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
@@ -46,18 +45,18 @@ export function GoalDetailsTransferPage() {
 	const {transfer, isTransferLoading, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
 
 	useEffect(() => {
-		if (itemDetails) {
-			setFromActiveOption({...itemDetails, image: <div className='h-10 w-10 rounded-full bg-primary-grey' />});
+		if (goalDetails) {
+			setFromActiveOption({...goalDetails, image: <div className='h-10 w-10 rounded-full bg-primary-grey' />});
 		}
 
-		if (options && itemDetails) {
+		if (options && goalDetails) {
 			options.forEach((option) => {
-				if (option.id !== itemDetails.id) {
+				if (option.id !== goalDetails.id) {
 					setToActiveOption(option);
 				}
 			});
 		}
-	}, [itemDetails, itemList]);
+	}, [goalDetails, goals]);
 
 	function handleCurrencyRateChange(value: number | undefined) {
 		setExchangeRate(value ? Number(value.toFixed(4)) : initialExchangeRate);
@@ -95,7 +94,7 @@ export function GoalDetailsTransferPage() {
 
 	if (isTransferSuccess || isTransferError) {
 		setTimeout(() => {
-			navigate(getGoalDetailsPath(goalId));
+			navigate(APP_PATH.goal.getItemDetailsPath(id));
 		}, 2000);
 	}
 

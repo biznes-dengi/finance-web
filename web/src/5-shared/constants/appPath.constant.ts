@@ -12,28 +12,29 @@ export const APP_PATH = {
 	goalDetails: '/goal-details',
 	login: '/log-in',
 	signup: '/sign-up',
+
+	goal: {
+		getItemDetailsPath(id: any) {
+			return `${APP_PATH.goalDetails}/${id}`;
+		},
+		getItemTransactionsPath(id: any) {
+			return `${APP_PATH.goalDetails}/${id}/transactions`;
+		},
+		getItemDetailsFundPath(id: any) {
+			return `${APP_PATH.goalDetails}/${id}/fund`;
+		},
+		getItemDetailsWithdrawPath(id: any) {
+			return `${APP_PATH.goalDetails}/${id}/withdraw`;
+		},
+		getItemDetailsTransferPath(id: any) {
+			return `${APP_PATH.goalDetails}/${id}/transfer`;
+		},
+		getItemEditPath(id: any) {
+			return `${APP_PATH.goalDetails}/${id}/edit`;
+		},
+	},
 };
 
-export function getGoalDetailsPath(id: any) {
+export function getItemDetailsPath(id: any) {
 	return `${APP_PATH.goalDetails}/${id}`;
-}
-
-export function getGoalTransactionsPath(id: any) {
-	return `${APP_PATH.goalDetails}/${id}/transactions`;
-}
-
-export function getGoalDetailsFundPath(id: any) {
-	return `${APP_PATH.goalDetails}/${id}/fund`;
-}
-
-export function getGoalDetailsWithdrawPath(id: any) {
-	return `${APP_PATH.goalDetails}/${id}/withdraw`;
-}
-
-export function getGoalDetailsTransferPath(id: any) {
-	return `${APP_PATH.goalDetails}/${id}/transfer`;
-}
-
-export function getGoalDetailsEditPath(id: any) {
-	return `${APP_PATH.goalDetails}/${id}/edit`;
 }

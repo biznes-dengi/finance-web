@@ -16,4 +16,5 @@ export type BoxProps = {
 
 	isLoading?: boolean;
 	loadingSkeletonClassName?: string;
+	onClick?: () => void;
 };

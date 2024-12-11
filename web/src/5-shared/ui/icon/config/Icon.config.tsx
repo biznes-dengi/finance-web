@@ -2,10 +2,12 @@ import {EyeIcon, EyeOffIcon, Search, TrendingUp} from 'lucide-react';
 import {
 	FaArrowDown,
 	FaArrowLeft,
+	FaArrowRight,
 	FaArrowUp,
 	FaCalendar,
 	FaCheck,
 	FaChevronDown,
+	FaChevronRight,
 	FaFolder,
 	FaPen,
 	FaPlus,
@@ -46,6 +48,16 @@ export const ICON_MAP = {
 	calendar: FaCalendar,
 
 	search: Search,
+
+	depositTransaction: FaArrowLeft,
+	withdrawTransaction: FaArrowRight,
+	transferTransaction: ({className}: {className: string}) => (
+		<FaArrowUp className={cn('rotate-45 transform', className)} />
+	),
+
+	chevronRight: FaChevronRight,
+
+	congratulations: ({className}: {className: string}) => <div className={className}>🎉</div>,
 } as const;
 
 export type IconType = keyof typeof ICON_MAP;

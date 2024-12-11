@@ -10,8 +10,8 @@ export function GoalFundPage() {
 
 	const {deposit, isDepositLoading, isDepositSuccess, isDepositError} = GoalModel.useDeposit();
 
-	const {itemList} = GoalModel.useItemList({filter: {pageNumber: 0}});
-	const options = itemList?.map((option) => ({
+	const {goals} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const options = goals?.map((option) => ({
 		...option,
 		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
 	}));
@@ -24,7 +24,7 @@ export function GoalFundPage() {
 	useEffect(() => {
 		if (!options) return;
 		setActiveOption(options[0]);
-	}, [itemList]);
+	}, [goals]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;

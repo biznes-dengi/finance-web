@@ -1,27 +1,26 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Box, Button, ButtonType, DatePicker, Popup, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
-import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
 import {DateService, isNumber} from '@shared/lib';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 export function GoalDetailsFundPage() {
 	const navigate = useNavigate();
-	const {goalId} = useParams();
+	const {id} = useParams();
 
-	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {goalDetails} = GoalModel.useItemDetails({id});
 	const {deposit, isDepositLoading, isDepositSuccess, isDepositError} = GoalModel.useDeposit();
 
-	const [activeOption, setActiveOption] = useState(itemDetails);
+	const [activeOption, setActiveOption] = useState(goalDetails);
 
 	const [amount, setAmount] = useState<number | undefined>();
 	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
-		if (!itemDetails) return;
-		setActiveOption(itemDetails);
-	}, [itemDetails]);
+		if (!goalDetails) return;
+		setActiveOption(goalDetails);
+	}, [goalDetails]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;
@@ -37,13 +36,13 @@ export function GoalDetailsFundPage() {
 
 	if (isDepositSuccess || isDepositError) {
 		setTimeout(() => {
-			navigate(getGoalDetailsPath(goalId));
+			navigate(APP_PATH.goal.getItemDetailsPath(id));
 		}, 2000);
 	}
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.fund} backPath={getGoalDetailsPath(goalId)} />
+			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions

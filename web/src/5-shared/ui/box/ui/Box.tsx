@@ -8,6 +8,7 @@ export function Box(props: BoxProps) {
 		className,
 		isLoading,
 		loadingSkeletonClassName,
+		onClick,
 
 		mediumMarginY,
 		baseMarginY,
@@ -36,6 +37,7 @@ export function Box(props: BoxProps) {
 				className,
 			)}
 			role='box'
+			onClick={onClick}
 		>
 			{children}
 		</div>

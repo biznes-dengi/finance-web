@@ -4,28 +4,26 @@ import {
 	Button,
 	ButtonType,
 	Card,
-	Popup,
 	Icon,
 	Item,
 	NumericInput,
 	PageHeader,
+	Popup,
 	SelectWithSearch,
 	TextField,
 	usePopupState,
 } from '@shared/ui';
-import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 import {cn, DateService, isNull} from '@shared/lib';
 import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
 
 export function GoalEditPage() {
-	const {goalId} = useParams();
+	//@ts-ignore
+	const {id} = useParams() as {id: number};
 
-	const id = Number(goalId);
-
-	const {itemDetails: data} = GoalModel.useItemDetails({id});
+	const {goalDetails: data} = GoalModel.useItemDetails({id});
 
 	const {isUpdateItemLoading, updateItem} = GoalModel.useUpdateItem();
 	const {deleteItem, isDeleteItemLoading} = GoalModel.useDeleteItem();
@@ -88,12 +86,12 @@ export function GoalEditPage() {
 	return (
 		<>
 			<Box className='flex h-[290px] flex-col justify-between bg-secondary-grey'>
-				<PageHeader title={data?.name} backPath={getGoalDetailsPath(id)} />
+				<PageHeader title={data?.name} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 			</Box>
 
 			{/** shit styles margin top see in inspect in browser */}
 			<Box basePaddingX>
-				<Card title={'Your goal'} withTopSpace>
+				<Card title={'Your goal'}>
 					<div className='flex justify-between p-4 text-sm'>
 						<div className='font-medium text-primary-grey'>Name</div>
 						<Button onClick={openNameDialog} icon={<Icon type='edit' className='size-1' />} isOnlyIcon>

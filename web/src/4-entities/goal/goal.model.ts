@@ -3,10 +3,14 @@ import {useNavigate} from 'react-router-dom';
 import {GoalApi} from './goal.api.ts';
 import {type InitialData, type MutationProps, type Props} from './goal.types.ts';
 import {AuthModel} from '@entities/auth';
-import {APP_PATH, getGoalDetailsPath, TRANSACTION_TYPE} from '@shared/constants';
+import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
+
+/**
+ * начиная с useTotalBalance добавить goal в return {}, для специфичности
+ * */
 
 export class GoalModel {
-	static useItemList(props: Props['useItemList']) {
+	static useItems(props: Props['useItems']) {
 		const {filter} = props;
 
 		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
@@ -20,33 +24,34 @@ export class GoalModel {
 				});
 			},
 			enabled: !!boardGoalId,
-			initialData: {} as InitialData['useItemList'],
+			initialData: {} as InitialData['useItems'],
 		});
 
 		return {
-			itemList: data?.items,
+			goals: data?.items,
+			isGoalsLoading: isFetching || isBoardGoalIdLoading,
 			hasNext: data?.hasNext,
-			isItemListLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
 
 	static useItemDetails(props: Props['useItemDetails']) {
 		const {id} = props;
 
-		const {boardGoalId} = this.useBoardGoalId();
+		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
 
-		const {data} = useQuery({
-			queryKey: ['goal-item-details'],
+		const {data, isFetching} = useQuery({
+			queryKey: [`goal-details-${id}`],
 			queryFn: () => {
 				return GoalApi.fetchItemDetails({
-					params: {boardGoalId: boardGoalId!, id},
+					params: {boardGoalId: boardGoalId!, id: id!},
 				});
 			},
-			enabled: !!boardGoalId,
+			enabled: !!boardGoalId && !!id,
 		});
 
 		return {
-			itemDetails: data,
+			goalDetails: data,
+			isGoalDetailsLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
 
@@ -56,7 +61,7 @@ export class GoalModel {
 		const {boardGoalId} = this.useBoardGoalId();
 
 		const {data, isFetching} = useQuery({
-			queryKey: ['goal-transactions', filter],
+			queryKey: [`goal-transactions-${id}`, filter],
 			queryFn: () => {
 				return GoalApi.fetchItemTransactions({
 					params: {boardGoalId: boardGoalId!, id},
@@ -67,9 +72,9 @@ export class GoalModel {
 		});
 
 		return {
-			items: data?.items,
+			goalTransactions: data?.items,
+			isGoalTransactionsLoading: isFetching,
 			hasNext: data?.hasNext,
-			isItemsLoading: isFetching,
 		};
 	}
 
@@ -117,7 +122,7 @@ export class GoalModel {
 				});
 			},
 			onSuccess: (data) => {
-				setTimeout(() => navigate(getGoalDetailsPath(data.id)), 2500);
+				setTimeout(() => navigate(APP_PATH.goal.getItemDetailsPath(data.id)), 2500);
 			},
 			onError: () => {
 				setTimeout(() => navigate(APP_PATH.home), 2500);

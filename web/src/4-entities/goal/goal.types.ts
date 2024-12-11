@@ -4,22 +4,22 @@ import {type Payload} from '@shared/api';
 import {balanceValidator} from '@shared/types';
 
 export type Props = {
-	useItemList: {
+	useItems: {
 		filter?: Payload;
 	};
 
 	useItemDetails: {
-		id: number;
+		id?: number | string;
 	};
 
 	useItemTransactions: {
-		id: number;
+		id?: string;
 		filter?: Payload;
 	};
 };
 
 export type InitialData = {
-	useItemList: zod.infer<typeof responseValidator.fetchItems>;
+	useItems: zod.infer<typeof responseValidator.fetchItems>;
 };
 
 export type MutationProps = {
@@ -84,7 +84,7 @@ export type MutationProps = {
 export type ApiProps = {
 	fetchItemList: {
 		params: {boardGoalId: number};
-		payload: Props['useItemList']['filter'];
+		payload: Props['useItems']['filter'];
 	};
 
 	fetchItemDetails: {

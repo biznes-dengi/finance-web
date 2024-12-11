@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {Box, Card, Item, List, PageHeader} from '@shared/ui';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
+import {Box, Card, Icon, Item, List, PageHeader} from '@shared/ui';
+import {APP_PATH} from '@shared/constants/appPath.constant.ts';
 import {APP_TEXT, CURRENCY, CURRENCY_MAP, TRANSACTION_TYPE} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
-import {DateService, textHelpers} from '@shared/lib';
+import {DateService, TextHelpers} from '@shared/lib';
 
 const monthsMap = new Map([
 	[0, 'Январь'],
@@ -37,13 +37,13 @@ export function getTransactionName(row: any) {
 }
 export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, currency: CURRENCY) {
 	if (type === TRANSACTION_TYPE.DEPOSIT) {
-		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+		return `+${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
 	}
 	if (type === TRANSACTION_TYPE.WITHDRAW) {
-		return `-${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+		return `-${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
 	}
 	if (type === TRANSACTION_TYPE.TRANSFER) {
-		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+		return `+${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
 	}
 }
 function groupItemsByMonth(items: any) {
@@ -76,22 +76,37 @@ function getTotal(items: any) {
 		}, 0) || 0
 	);
 }
+export function getTransactionIcon(row: any) {
+	if (!row) return;
+
+	const type = row.type as TRANSACTION_TYPE;
+
+	if (type === TRANSACTION_TYPE.DEPOSIT) {
+		return <Icon type='depositTransaction' />;
+	}
+	if (type === TRANSACTION_TYPE.WITHDRAW) {
+		return <Icon type='withdrawTransaction' />;
+	}
+	if (type === TRANSACTION_TYPE.TRANSFER) {
+		return <Icon type='transferTransaction' />;
+	}
+}
 
 export function GoalTransactionsPage() {
-	const {goalId} = useParams();
-	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
-	const {items, isItemsLoading} = GoalModel.useItemTransactions({id: Number(goalId), filter: {pageNumber: 0}});
+	const {id} = useParams();
+	const {goalDetails} = GoalModel.useItemDetails({id});
+	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
 
 	const [groupedItems, setGroupedItems] = useState({});
 
 	useEffect(() => {
-		if (!items?.length) return;
-		setGroupedItems(groupItemsByMonth(items));
-	}, [items]);
+		if (!goalTransactions?.length) return;
+		setGroupedItems(groupItemsByMonth(goalTransactions));
+	}, [goalTransactions]);
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.transactions} backPath={getGoalDetailsPath(goalId)} />
+			<PageHeader title={APP_TEXT.transactions} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 
 			<Box basePaddingX className='flex flex-col gap-6 pb-6'>
 				{Object.entries(groupedItems).map(([month, items]) => {
@@ -103,27 +118,31 @@ export function GoalTransactionsPage() {
 							rightTitle={
 								<div className='text-sm text-primary-grey'>
 									{total !== 0 && total > 0 ? '+' : '-'}
-									{textHelpers.getAmountWithCurrency(
+									{TextHelpers.getAmountWithCurrency(
 										total,
-										itemDetails ? CURRENCY_MAP[itemDetails.balance.currency].symbol : '',
+										goalDetails ? CURRENCY_MAP[goalDetails.balance.currency].symbol : '',
 									)}
 								</div>
 							}
 						>
 							<List
-								isLoading={isItemsLoading}
+								isLoading={isGoalTransactionsLoading}
 								rows={items as any[]}
 								renderRow={(row: any) => (
 									<Item
-										image={<div className='size-10 rounded-full bg-secondary-violet' />}
+										image={
+											<div className='flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
+												{getTransactionIcon(row)}
+											</div>
+										}
 										name={getTransactionName(row)}
 										description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
 										rightName={
-											itemDetails &&
+											goalDetails &&
 											getTransactionRightName(
 												row.type,
 												(row.amount ?? row.fromGoalAmount) as number,
-												itemDetails.balance.currency,
+												goalDetails.balance.currency,
 											)
 										}
 										// onClick={() => alert('go to transaction details')}

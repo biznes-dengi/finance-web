@@ -1,12 +1,14 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useRef, useState} from 'react';
-import {Icon, STATUS_DIALOG_TEXT} from '@shared/ui';
 import {StatusDialogProps} from '../types/StatusPopup.types.ts';
+import {Button, ButtonType, Icon, STATUS_DIALOG_TEXT} from '@shared/ui';
 import {cn} from '@shared/lib';
 
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
-export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) {
+export function StatusPopup(props: StatusDialogProps) {
+	const {isOpen, status, statusTextKey, yesButtonText, withDuration = true, duration = 2000} = props;
+
 	const [progress, setProgress] = useState(0);
 
 	const openButtonRef = useRef<HTMLButtonElement>(null);
@@ -14,13 +16,14 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 
 	useEffect(() => {
 		if (!isOpen) return;
-
 		openDrawer();
-
-		const duration = 2000; // 2 секунды для полного прогресса
-		const start = performance.now(); // Начальное время анимации
+	}, [isOpen]);
+	useEffect(() => {
+		if (!withDuration) return;
 
 		const animate = (time: any) => {
+			const start = performance.now(); // Начальное время анимации
+
 			const elapsed = time - start; // Сколько времени прошло с начала анимации
 			const percentage = Math.min((elapsed / duration) * 100, 100); // Рассчитываем прогресс
 			setProgress(percentage); // Обновляем значение прогресса
@@ -32,7 +35,7 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 
 		requestAnimationFrame(animate); // Запускаем анимацию
 
-		setTimeout(closeDrawer, 2000);
+		setTimeout(closeDrawer, duration);
 	}, [isOpen]);
 
 	function openDrawer() {
@@ -43,7 +46,7 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 	}
 
 	return (
-		<Root dismissible={!isOpen}>
+		<Root dismissible={!withDuration}>
 			<Trigger ref={openButtonRef} className='hidden' />
 			<Close ref={closeButtonRef} className='hidden' />
 
@@ -63,10 +66,23 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 
 						<Icon
 							type={status}
-							className={cn('mb-4 mt-2 size-10', status === 'success' ? 'text-primary-violet' : 'text-error-red')}
+							className={cn(
+								'mb-4 mt-2 size-10',
+								status === 'success' && 'text-primary-violet',
+								status === 'error' && 'text-error-red',
+								status === 'congratulations' && 'text-3xl',
+							)}
 						/>
+
 						<div className='text-lg font-semibold'>{STATUS_DIALOG_TEXT[statusTextKey].title}</div>
-						{/*<div className='mt-2'>{STATUS_DIALOG_TEXT[statusTextKey].description}</div>*/}
+
+						<div className='mt-4'>{STATUS_DIALOG_TEXT[statusTextKey].description}</div>
+
+						{yesButtonText && (
+							<Button className='mt-4' type={ButtonType.main} onClick={closeDrawer}>
+								{yesButtonText}
+							</Button>
+						)}
 					</div>
 				</Content>
 			</Portal>

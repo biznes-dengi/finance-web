@@ -75,7 +75,7 @@ export function GoalCreatePage() {
 	const navigate = useNavigate();
 
 	// if (isCreateItemSuccess) {
-	// 	navigate(getGoalDetailsPath());
+	// 	navigate(APP_PATH.goal.getItemDetailsPath());
 	// }
 
 	if (isCreateItemSuccess || isCreateItemError) {

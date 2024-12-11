@@ -1,5 +1,5 @@
 import {Icon, Popup, Item, List, PreloadSkeleton, usePopupState} from '@shared/ui';
-import {cn, isNumber, styleElement, textHelpers} from '@shared/lib';
+import {cn, isNumber, styleElement, TextHelpers} from '@shared/lib';
 import {TBaseOption, TNumericInputWithOptionsProps} from '../types/NumericInputWithOptions.types.ts';
 import {CURRENCY_MAP} from '@shared/constants';
 
@@ -27,7 +27,7 @@ export function NumericInputWithOptions<Option extends TBaseOption>(props: TNume
 
 	function getOptionLabel(option: Option) {
 		if (getLabel) return getLabel(option);
-		return textHelpers.getBalance(option.balance.amount ?? 0, CURRENCY_MAP[option.balance.currency].symbol);
+		return TextHelpers.getBalance(option.balance.amount ?? 0, CURRENCY_MAP[option.balance.currency].symbol);
 	}
 
 	const isMultipleOptions = options?.length && options.length > 1 && setActiveOption;

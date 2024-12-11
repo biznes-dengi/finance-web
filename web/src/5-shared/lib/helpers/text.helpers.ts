@@ -1,7 +1,7 @@
 import {APP_TEXT, CURRENCY, CURRENCY_MAP} from '@shared/constants';
 import {isNumber} from '@shared/lib';
 
-export class textHelpers {
+export class TextHelpers {
 	static getDontHaveAny(item: string) {
 		return `You do not have any ${item.toLowerCase()} yet`;
 	}

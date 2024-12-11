@@ -1,16 +1,16 @@
 import {Box, Button, Card, Item, ItemImageWithProgress, List, SelectInCard} from '@shared/ui';
 import {buttonConfigs, defaultFilter, goalStatusOptions} from '../config/GoalManagement.config.tsx';
 import {GoalModel} from '@entities/goal';
-import {textHelpers, useFilter} from '@shared/lib';
-import {APP_TEXT, CURRENCY_MAP, CURRENCY_SYMBOL, getGoalDetailsPath} from '@shared/constants';
+import {TextHelpers, useFilter} from '@shared/lib';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP, CURRENCY_SYMBOL} from '@shared/constants';
 
 export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
 	const {totalBalance, isTotalBalanceLoading} = GoalModel.useTotalBalance();
-	const {itemList, isItemListLoading} = GoalModel.useItemList({filter});
+	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
 
-	const isLoading = isTotalBalanceLoading || isItemListLoading;
+	const isLoading = isTotalBalanceLoading || isGoalsLoading;
 
 	return (
 		<Card>
@@ -19,7 +19,7 @@ export function GoalManagement() {
 					<Box isLoading={isLoading} loadingSkeletonClassName='w-32 h-6 mt-2 mb-1.5'>
 						{totalBalance &&
 							(() => {
-								const [int, float] = textHelpers.getAmount(totalBalance.amount).split(',');
+								const [int, float] = TextHelpers.getAmount(totalBalance.amount).split(',');
 								return (
 									<div>
 										<span className='text-3xl font-medium'>
@@ -69,8 +69,9 @@ export function GoalManagement() {
 			</div>
 
 			<List
+				emptyTextKey='goals'
 				isLoading={isLoading}
-				rows={itemList}
+				rows={goals}
 				renderRow={(row) => (
 					<Item
 						image={
@@ -87,13 +88,12 @@ export function GoalManagement() {
 						name={row.name}
 						description={
 							row.targetAmount &&
-							`${APP_TEXT.target}: ${textHelpers.getAmount(row.targetAmount)} ${CURRENCY_SYMBOL[row.balance.currency]}`
+							`${APP_TEXT.target}: ${TextHelpers.getAmount(row.targetAmount)} ${CURRENCY_SYMBOL[row.balance.currency]}`
 						}
-						rightName={`${textHelpers.getAmount(row.balance.amount)} ${CURRENCY_SYMBOL[row.balance.currency]}`}
-						onClick={(navigate) => navigate(getGoalDetailsPath(row.id))}
+						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${CURRENCY_SYMBOL[row.balance.currency]}`}
+						onClick={(navigate) => navigate(APP_PATH.goal.getItemDetailsPath(row.id))}
 					/>
 				)}
-				emptyStateEntity={APP_TEXT.goals}
 			/>
 		</Card>
 	);

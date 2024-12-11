@@ -1,81 +1,62 @@
-import {useNavigate, useParams} from 'react-router-dom';
-import {FaChevronRight} from 'react-icons/fa6';
+import {useParams} from 'react-router-dom';
+import {getGoalProgressData} from '../../lib/goal.lib.ts';
 import {GoalModel} from '@entities/goal';
-import {APP_TEXT, CURRENCY, CURRENCY_MAP, getGoalTransactionsPath, TRANSACTION_TYPE} from '@shared/constants';
-import {Card, Item, List} from '@shared/ui';
-import {DateService, textHelpers} from '@shared/lib';
-
-export function getTransactionName(row: any) {
-	if (!row) return;
-
-	const type = row.type as TRANSACTION_TYPE;
-
-	if (type === TRANSACTION_TYPE.DEPOSIT) {
-		return APP_TEXT.fund;
-	}
-	if (type === TRANSACTION_TYPE.WITHDRAW) {
-		return APP_TEXT.withdraw;
-	}
-	if (type === TRANSACTION_TYPE.TRANSFER) {
-		return `${row.fromGoalName} → ${row.toGoalName}`;
-	}
-}
-export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, currency: CURRENCY) {
-	if (type === TRANSACTION_TYPE.DEPOSIT) {
-		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
-	}
-	if (type === TRANSACTION_TYPE.WITHDRAW) {
-		return `-${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
-	}
-	if (type === TRANSACTION_TYPE.TRANSFER) {
-		return `+${textHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
-	}
-}
+import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {Card, Item, LinkTitleInCard, List} from '@shared/ui';
+import {cn, DateService, TransactionHelpers} from '@shared/lib';
 
 export function GoalTransactions() {
-	const navigate = useNavigate();
-	const {goalId} = useParams();
-	const {items, isItemsLoading} = GoalModel.useItemTransactions({id: Number(goalId), filter: {pageNumber: 0}});
-	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {id} = useParams();
+	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
+	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
+
+	const isLoading = isGoalTransactionsLoading || isGoalDetailsLoading;
+
+	const {isCompleted} = getGoalProgressData(isGoalDetailsLoading, goalDetails) || {};
 
 	return (
 		<Card
 			titleInCard={
-				<div className='flex items-center gap-1' onClick={() => navigate(getGoalTransactionsPath(goalId))}>
-					<div>{APP_TEXT.transactions}</div>
-					<div>
-						<FaChevronRight className='size-2.5 text-primary-grey' />
-					</div>
-				</div>
+				!isLoading && !goalTransactions?.length ? null : (
+					<LinkTitleInCard title={APP_TEXT.transactions} path={APP_PATH.goal.getItemTransactionsPath(id)} />
+				)
 			}
-			// rightTitle={<Button onClick={() => navigate(getGoalTransactionsPath(goalId))}>{APP_TEXT.seeAll}</Button>}
-			withTopSpace
+			isLoading={isLoading}
 		>
-			{items && (
-				<List
-					isLoading={isItemsLoading}
-					rows={[items[0], items[1], items[2]]}
-					renderRow={(row) => {
-						if (!row) return null;
-						return (
-							<Item
-								image={<div className='size-10 rounded-full bg-secondary-violet' />}
-								name={getTransactionName(row)}
-								description={new DateService(new Date(row.date as string)).getLocalDateString()}
-								rightName={
-									itemDetails &&
-									getTransactionRightName(
-										row.type,
-										(row.amount ?? row.toGoalAmount) as number,
-										itemDetails.balance.currency,
-									)
-								}
-								// onClick={() => alert('go to transaction details')}
-							/>
-						);
-					}}
-				/>
-			)}
+			<List
+				emptyTextKey='transactions'
+				isLoading={isLoading}
+				rows={goalTransactions ? [goalTransactions[0], goalTransactions[1], goalTransactions[2]] : []}
+				renderRow={(row, index) => {
+					if (!row) return null;
+					return (
+						<Item
+							image={
+								<div
+									className={cn(
+										'flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet',
+										isCompleted && index === 0 && 'bg-green-100 text-green-600',
+									)}
+								>
+									{TransactionHelpers.getTransactionIcon(row)}
+								</div>
+							}
+							name={TransactionHelpers.getTransactionName(row)}
+							description={new DateService(new Date(row.date as string)).getLocalDateString()}
+							// TODO: написал 10 дек в финансы чат, row && itemDetails - должно быть только row
+							rightName={
+								row &&
+								goalDetails &&
+								TransactionHelpers.getTransactionRightName(
+									row.type,
+									(row.amount ?? row.toGoalAmount) as number,
+									goalDetails.balance.currency,
+								)
+							}
+						/>
+					);
+				}}
+			/>
 		</Card>
 	);
 }

@@ -1,27 +1,26 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Box, Button, ButtonType, DatePicker, Popup, Icon, NumericInputWithOptions, PageHeader} from '@shared/ui';
-import {APP_TEXT, CURRENCY_MAP} from '@shared/constants';
+import {Box, Button, ButtonType, DatePicker, Icon, NumericInputWithOptions, PageHeader, Popup} from '@shared/ui';
+import {APP_PATH, APP_TEXT, CURRENCY_MAP} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
 import {DateService, isNumber} from '@shared/lib';
-import {getGoalDetailsPath} from '@shared/constants/appPath.constant.ts';
 
 export function GoalDetailsWithdrawPage() {
 	const navigate = useNavigate();
-	const {goalId} = useParams();
+	const {id} = useParams();
 
-	const {itemDetails} = GoalModel.useItemDetails({id: Number(goalId)});
+	const {goalDetails} = GoalModel.useItemDetails({id});
 	const {withdraw, isWithdrawLoading, isWithdrawSuccess, isWithdrawError} = GoalModel.useWithdraw();
 
-	const [activeOption, setActiveOption] = useState(itemDetails);
+	const [activeOption, setActiveOption] = useState(goalDetails);
 
 	const [amount, setAmount] = useState<number | undefined>();
 	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
-		if (!itemDetails) return;
-		setActiveOption(itemDetails);
-	}, [itemDetails]);
+		if (!goalDetails) return;
+		setActiveOption(goalDetails);
+	}, [goalDetails]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;
@@ -37,7 +36,7 @@ export function GoalDetailsWithdrawPage() {
 
 	if (isWithdrawSuccess || isWithdrawError) {
 		setTimeout(() => {
-			navigate(getGoalDetailsPath(goalId));
+			navigate(APP_PATH.goal.getItemDetailsPath(id));
 		}, 2000);
 	}
 
@@ -45,7 +44,7 @@ export function GoalDetailsWithdrawPage() {
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT.withdraw} backPath={getGoalDetailsPath(goalId)} />
+			<PageHeader title={APP_TEXT.withdraw} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 
 			<Box className='flex-1' basePaddingX>
 				<NumericInputWithOptions
