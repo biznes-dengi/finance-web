@@ -72,7 +72,7 @@ export function GoalCreatePage() {
 
 	return (
 		<>
-			{activeStepIndex === initialStepIndex ? <GoalImageField>{Header}</GoalImageField> : Header}
+			{activeStepIndex === initialStepIndex ? <GoalImageField isCreatePage>{Header}</GoalImageField> : Header}
 
 			<div className='flex-grow'>
 				<Stepper

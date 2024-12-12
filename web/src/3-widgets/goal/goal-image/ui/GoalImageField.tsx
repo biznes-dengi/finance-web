@@ -4,7 +4,7 @@ import {Icon, LoadingWrapper, Spinner, useUploadField} from '@shared/ui';
 import {GoalModel} from '@entities/goal';
 import {useParams} from 'react-router-dom';
 
-export function GoalImageField({children}: {children: ReactNode}) {
+export function GoalImageField({children, isCreatePage}: {children: ReactNode; isCreatePage?: boolean}) {
 	const {id} = useParams();
 
 	const {isGoalDetailsLoading} = GoalModel.useItemDetails({id});
@@ -44,7 +44,7 @@ export function GoalImageField({children}: {children: ReactNode}) {
 				)}
 
 				<div className='mb-4 mr-4'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='size-8 rounded-full'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading && !isCreatePage} className='size-8 rounded-full'>
 						<div
 							className='flex size-8 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'
 							// onClick={startUploading}
