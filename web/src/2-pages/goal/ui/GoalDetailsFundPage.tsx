@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {Box, Button, ButtonType, DatePicker, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {Box, Button, ButtonType, DatePicker, AmountField, PageHeader} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {DateService, isNumber} from '@shared/lib';
 
@@ -45,7 +45,7 @@ export function GoalDetailsFundPage() {
 			<PageHeader title={APP_TEXT.fund} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 
 			<Box className='flex-1' basePaddingX>
-				<NumericInputWithOptions
+				<AmountField
 					value={amount}
 					onChange={setAmount}
 					activeOption={activeOption}

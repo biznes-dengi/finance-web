@@ -1,26 +1,18 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {DeleteItemProps} from '../types/DeleteItem.types.ts';
-import {cn} from '@shared/lib';
 import {Button, ButtonType, Item, Popup, StatusPopup, usePopupState} from '@shared/ui';
+import {cn} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
 export function DeleteItem(props: DeleteItemProps) {
 	const {title, confirmationText, isLoading, handleDelete, isSuccess, isError, children} = props;
 
-	const [isSuccessPopupOpen, setSuccessPopupOpen] = useState(false);
-	const [isErrorPopupOpen, setErrorPopupOpen] = useState(false);
-
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
+	//duplicated fragment with EditButtonField
 	useEffect(() => {
-		if (isSuccess) {
+		if (isSuccess || isError) {
 			closePopup();
-			setSuccessPopupOpen(true);
-		}
-
-		if (isError) {
-			closePopup();
-			setErrorPopupOpen(true);
 		}
 	}, [isSuccess, isError]);
 
@@ -40,8 +32,8 @@ export function DeleteItem(props: DeleteItemProps) {
 				</div>
 			</Popup>
 
-			<StatusPopup isOpen={isSuccessPopupOpen} status='success' statusTextKey='goalDeleteSuccess' />
-			<StatusPopup isOpen={isErrorPopupOpen} status='error' statusTextKey='goalDeleteError' />
+			<StatusPopup isOpen={isSuccess} status='success' statusTextKey='goalDeleteSuccess' />
+			<StatusPopup isOpen={isError} status='error' statusTextKey='goalDeleteError' />
 		</>
 	);
 }

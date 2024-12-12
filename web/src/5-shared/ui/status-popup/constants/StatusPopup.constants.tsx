@@ -1,18 +1,12 @@
 export const STATUS_POPUP_TEXT = {
-	accountCreateSuccess: {
-		title: (
-			<>
-				Your account has been <span className='text-primary-violet'>successfully</span> created
-			</>
-		),
-		description: '',
-	},
-	goalDeleteSuccess: {
-		title: 'Goal has been deleted',
-		description: '',
-	},
-	goalDeleteError: {
-		title: 'Goal has not been deleted',
-		description: '',
-	},
+	accountCreateSuccess: () => (
+		<>
+			Your account has been <span className='text-primary-violet'>successfully</span> created
+		</>
+	),
+	//TODO: Your goal has been renamed to "Бабки 2"
+	goalUpdateSuccess: (statusTextProps?: any) => 'Your goal has been updated',
+	goalUpdateError: () => 'Your goal has not been updated',
+	goalDeleteSuccess: () => 'Your goal has been deleted',
+	goalDeleteError: () => 'Your goal has not been deleted',
 } as const;

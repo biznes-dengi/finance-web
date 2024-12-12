@@ -8,12 +8,18 @@ import {cn} from '@shared/lib';
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
 export function StatusPopup(props: StatusDialogProps) {
-	const {isOpen, status, statusTextKey} = props;
+	const {isOpen, status, statusTextKey, statusTextProps} = props;
 
 	const [progress, setProgress] = useState(0);
 
 	const openButtonRef = useRef<HTMLButtonElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
+	function openDrawer() {
+		openButtonRef.current?.click();
+	}
+	function closeDrawer() {
+		closeButtonRef.current?.click();
+	}
 
 	useEffect(() => {
 		if (!isOpen) return;
@@ -41,13 +47,6 @@ export function StatusPopup(props: StatusDialogProps) {
 			clearTimeout(timeoutId);
 		};
 	}, [isOpen]);
-
-	function openDrawer() {
-		openButtonRef.current?.click();
-	}
-	function closeDrawer() {
-		closeButtonRef.current?.click();
-	}
 
 	return (
 		<Root dismissible={false}>
@@ -77,9 +76,7 @@ export function StatusPopup(props: StatusDialogProps) {
 							)}
 						/>
 
-						<div className='text-lg font-medium'>{STATUS_POPUP_TEXT[statusTextKey]?.title}</div>
-
-						<div className='mt-4'>{STATUS_POPUP_TEXT[statusTextKey]?.description}</div>
+						<div className='text-lg font-medium'>{STATUS_POPUP_TEXT[statusTextKey](statusTextProps)}</div>
 					</div>
 				</Content>
 			</Portal>

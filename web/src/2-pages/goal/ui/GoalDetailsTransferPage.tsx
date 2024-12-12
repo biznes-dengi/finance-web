@@ -1,15 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {
-	Box,
-	Button,
-	ButtonType,
-	CurrencyPicker,
-	DatePicker,
-	Icon,
-	NumericInputWithOptions,
-	PageHeader,
-} from '@shared/ui';
+import {Box, Button, ButtonType, CurrencyPicker, DatePicker, Icon, AmountField, PageHeader} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
 import {cn, DateService, isEqual, isNumber} from '@shared/lib';
@@ -107,7 +98,7 @@ export function GoalDetailsTransferPage() {
 
 			<Box basePaddingX className='relative flex-1'>
 				<Box className='flex flex-col gap-2'>
-					<NumericInputWithOptions
+					<AmountField
 						value={fromGoalAmount}
 						onChange={handleFromAmountChange}
 						activeOption={fromActiveOption}
@@ -131,7 +122,7 @@ export function GoalDetailsTransferPage() {
 						<Icon type='transferTo' className='size-4 text-primary-violet' />
 					</div>
 
-					<NumericInputWithOptions
+					<AmountField
 						value={toGoalAmount}
 						onChange={handleToAmountChange}
 						activeOption={toActiveOption}

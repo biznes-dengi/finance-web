@@ -1,4 +1,4 @@
-import {Card, EditButtonField} from '@shared/ui';
+import {Card, EditButtonField, LoadingWrapper, StatusPopup} from '@shared/ui';
 import {APP_TEXT, CURRENCY, CURRENCY_MAP, CURRENCY_SYMBOL} from '@shared/constants';
 import {DateService, TextHelpers} from '@shared/lib';
 import {useParams} from 'react-router-dom';
@@ -8,11 +8,11 @@ import {useEffect, useState} from 'react';
 export function GoalEditDetails() {
 	const {id} = useParams();
 
-	const {goalDetails} = GoalModel.useItemDetails({id});
-	const {updateGoal, isUpdateGoalLoading, isUpdateGoalSuccess} = GoalModel.useUpdateItem();
+	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
+	const {updateGoal, isUpdateGoalLoading, isUpdateGoalSuccess, isUpdateGoalError} = GoalModel.useUpdateItem();
 
 	const [name, setName] = useState('');
-	const [targetAmount, setTargetAmount] = useState<number | null | undefined>();
+	const [targetAmount, setTargetAmount] = useState<string>('');
 	const [deadline, setDeadline] = useState<Date>();
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 
@@ -20,12 +20,14 @@ export function GoalEditDetails() {
 		if (!goalDetails) return;
 
 		setName(goalDetails.name);
-		setTargetAmount(goalDetails.targetAmount);
+		setTargetAmount(String(goalDetails.targetAmount));
 		setDeadline(new Date(goalDetails.deadline as string));
 		setCurrency(goalDetails.balance.currency);
 	}, [goalDetails]);
 
 	function handleUpdate() {
+		// TODO: сравнивать что isChanged, заносить text в стейт в зависимости от этого и отображать его в status popup
+
 		const payload = {
 			name,
 			targetAmount,
@@ -39,64 +41,90 @@ export function GoalEditDetails() {
 	const editButtonCommonProps = {
 		isLoading: isUpdateGoalLoading,
 		isSuccess: isUpdateGoalSuccess,
+		isError: isUpdateGoalError,
 		handleUpdate,
 	};
 
 	return (
-		<Card>
-			<div className='flex justify-between p-4 text-sm'>
-				<div className='font-medium text-primary-grey'>Name</div>
-				<EditButtonField<string>
-					type='text'
-					fieldName={APP_TEXT.name}
-					value={name}
-					onChange={setName}
-					{...editButtonCommonProps}
-				>
-					{goalDetails?.name}
-				</EditButtonField>
-			</div>
-			<div className='flex justify-between p-4 text-sm'>
-				<div className='font-medium text-primary-grey'>Target amount</div>
-				<EditButtonField<number | null | undefined>
-					type='amount'
-					fieldName={APP_TEXT.targetAmount}
-					value={targetAmount}
-					onChange={setTargetAmount}
-					{...editButtonCommonProps}
-				>
-					<span>
-						{goalDetails?.targetAmount && TextHelpers.getAmount(goalDetails.targetAmount)}{' '}
-						{goalDetails && CURRENCY_SYMBOL[goalDetails.balance.currency]}
-					</span>
-				</EditButtonField>
-			</div>
-			<div className='flex justify-between p-4 text-sm'>
-				<div className='font-medium text-primary-grey'>Deadline</div>
-				<EditButtonField<Date | undefined>
-					type='date'
-					fieldName={APP_TEXT.deadline}
-					value={deadline}
-					onChange={setDeadline}
-					{...editButtonCommonProps}
-				>
-					{new DateService(deadline).getLocalDateString()}
-				</EditButtonField>
-			</div>
-			<div className='flex justify-between p-4 text-sm'>
-				<div className='font-medium text-primary-grey'>Currency</div>
-				<EditButtonField<CURRENCY>
-					type='select'
-					fieldName={APP_TEXT.currency}
-					value={currency}
-					onChange={setCurrency}
-					options={[{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}]}
-					{...editButtonCommonProps}
-				>
-					{goalDetails && CURRENCY_MAP[goalDetails.balance.currency].code}
-				</EditButtonField>
-			</div>
-		</Card>
+		<>
+			<Card>
+				<div className='flex justify-between p-4 text-sm'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<div className='font-medium text-primary-grey'>Name</div>
+					</LoadingWrapper>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<EditButtonField<string>
+							type='text'
+							fieldName={APP_TEXT.name}
+							value={name}
+							onChange={setName}
+							isChanged={goalDetails?.name !== name.trim()}
+							{...editButtonCommonProps}
+						>
+							{goalDetails?.name}
+						</EditButtonField>
+					</LoadingWrapper>
+				</div>
+				<div className='flex justify-between p-4 text-sm'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<div className='font-medium text-primary-grey'>Target amount</div>
+					</LoadingWrapper>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<EditButtonField<string>
+							type='amount'
+							fieldName={APP_TEXT.targetAmount}
+							value={targetAmount}
+							onChange={setTargetAmount}
+							isChanged={String(goalDetails?.targetAmount) !== targetAmount}
+							{...editButtonCommonProps}
+						>
+							<span>
+								{goalDetails?.targetAmount && TextHelpers.getAmount(goalDetails.targetAmount)}{' '}
+								{goalDetails && CURRENCY_SYMBOL[goalDetails.balance.currency]}
+							</span>
+						</EditButtonField>
+					</LoadingWrapper>
+				</div>
+				<div className='flex justify-between p-4 text-sm'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
+					</LoadingWrapper>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<EditButtonField<Date | undefined>
+							type='date'
+							fieldName={APP_TEXT.deadline}
+							value={deadline}
+							onChange={setDeadline}
+							isChanged={goalDetails?.deadline !== deadline}
+							{...editButtonCommonProps}
+						>
+							{new DateService(deadline).getLocalDateString()}
+						</EditButtonField>
+					</LoadingWrapper>
+				</div>
+				<div className='flex justify-between p-4 text-sm'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<div className='font-medium text-primary-grey'>{APP_TEXT.currency}</div>
+					</LoadingWrapper>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+						<EditButtonField<CURRENCY>
+							type='select'
+							fieldName={APP_TEXT.currency}
+							value={currency}
+							onChange={setCurrency}
+							options={[{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}]}
+							isChanged={goalDetails?.balance.currency !== currency}
+							{...editButtonCommonProps}
+						>
+							{goalDetails && CURRENCY_MAP[goalDetails.balance.currency].code}
+						</EditButtonField>
+					</LoadingWrapper>
+				</div>
+			</Card>
+
+			<StatusPopup isOpen={isUpdateGoalSuccess} status='success' statusTextKey='goalUpdateSuccess' />
+			<StatusPopup isOpen={isUpdateGoalError} status='error' statusTextKey='goalDeleteError' />
+		</>
 	);
 }
 

@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Box, Button, ButtonType, DatePicker, NumericInputWithOptions, PageHeader} from '@shared/ui';
+import {Box, Button, ButtonType, DatePicker, AmountField, PageHeader} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
 import {DateService, isNumber} from '@shared/lib';
@@ -47,7 +47,7 @@ export function GoalDetailsWithdrawPage() {
 			<PageHeader title={APP_TEXT.withdraw} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 
 			<Box className='flex-1' basePaddingX>
-				<NumericInputWithOptions
+				<AmountField
 					value={amount}
 					onChange={setAmount}
 					activeOption={activeOption}

@@ -8,6 +8,8 @@ export type EditButtonFieldProps<Value> = {
 	options?: {name: string; description: string; value: CURRENCY}[];
 	isLoading: boolean;
 	isSuccess: boolean;
+	isError: boolean;
+	isChanged: boolean;
 	fieldName: string;
 	handleUpdate: () => void;
 	children?: ReactNode;

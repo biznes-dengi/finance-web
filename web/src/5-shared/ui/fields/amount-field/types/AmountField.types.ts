@@ -1,7 +1,7 @@
 import {ReactNode} from 'react';
 import {CURRENCY} from '@shared/constants';
 
-export type TBaseOption = {
+export type AmountFieldBaseOption = {
 	id?: number;
 	image?: any;
 	name: string;
@@ -11,10 +11,12 @@ export type TBaseOption = {
 	};
 };
 
-export type TNumericInputWithOptionsProps<Option> = {
-	value: number | undefined;
-	onChange: (value: number | undefined) => void;
+export type AmountFieldProps<Option> = {
+	value: string;
+	onChange: (value: string) => void;
 	activeOption?: Option;
+	isLoading?: boolean;
+
 	setActiveOption?: (option: Option) => void;
 	options?: Option[];
 	getLabel?: (option: Option) => ReactNode;

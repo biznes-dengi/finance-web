@@ -38,9 +38,9 @@ export type MutationProps = {
 		};
 		payload: {
 			name: string;
-			targetAmount: number | undefined | null;
-			deadline: string;
 			currency: CURRENCY;
+			targetAmount?: string;
+			deadline?: string;
 		};
 	};
 

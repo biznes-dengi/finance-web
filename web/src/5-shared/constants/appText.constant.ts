@@ -30,7 +30,7 @@ export const APP_TEXT = {
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',
 	edit: 'Edit',
-	save: 'Save',
+	update: 'Update',
 	name: 'Name',
 	deleteGoal: 'Delete Goal',
 	deleteGoalConfirmation: 'Are you sure you want to delete the goal?',

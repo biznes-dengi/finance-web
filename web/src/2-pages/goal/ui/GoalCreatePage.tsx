@@ -5,7 +5,7 @@ import {
 	Button,
 	ButtonType,
 	DatePicker,
-	NumericInputWithOptions,
+	AmountField,
 	PageHeader,
 	SelectWithSearch,
 	Stepper,
@@ -107,7 +107,7 @@ export function GoalCreatePage() {
 							/>
 						</Box>,
 						<Box key={activeStepIndex} basePaddingX>
-							<NumericInputWithOptions
+							<AmountField
 								value={targetAmount}
 								onChange={setTargetAmount}
 								activeOption={activeOption}

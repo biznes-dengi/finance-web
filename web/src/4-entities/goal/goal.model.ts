@@ -158,7 +158,9 @@ export class GoalModel {
 				});
 			},
 			onSuccess: (data: any) => {
-				void queryClient.invalidateQueries({queryKey: [`goal-details-${data.id}`]});
+				runAfterStatusPopup(() => {
+					void queryClient.invalidateQueries({queryKey: [`goal-details-${data.id}`]});
+				});
 			},
 		});
 
