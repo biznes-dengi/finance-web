@@ -1,14 +1,42 @@
 import {useEffect} from 'react';
-import {AmountField, Button, ButtonType, Icon, Popup, SelectWithSearch, TextField, usePopupState} from '@shared/ui';
 import {EditButtonFieldProps} from '../types/EditButtonField.types.ts';
-import {Calendar} from '@shared/ui/date-picker/ui/Calendar.tsx';
+import {
+	AmountField,
+	Button,
+	ButtonType,
+	DateField,
+	Icon,
+	Popup,
+	SelectWithSearch,
+	TextField,
+	usePopupState,
+} from '@shared/ui';
 import {APP_TEXT, CURRENCY} from '@shared/constants';
 
 export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
-	const {type, isLoading, isSuccess, isError, isChanged, options, value, onChange, handleUpdate, fieldName, children} =
-		props;
+	const {
+		type,
+		icon = 'edit',
+		isLoading,
+		isSuccess,
+		isError,
+		isChanged,
+		isRequired,
+		activeOption,
+		options,
+		initialValue,
+		value,
+		onChange,
+		handleUpdate,
+		title,
+		children,
+	} = props;
 
-	const {popupProps, openPopup, closePopup} = usePopupState();
+	const {
+		popupProps: {isOpen, setIsOpen},
+		openPopup,
+		closePopup,
+	} = usePopupState();
 
 	useEffect(() => {
 		if (isSuccess || isError) {
@@ -18,36 +46,42 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 
 	return (
 		<>
-			<Button onClick={openPopup} icon={<Icon type='edit' className='size-1' />}>
+			<Button
+				onClick={openPopup}
+				icon={icon === 'add' ? <Icon type='fund' /> : <Icon type={icon} className='size-1' />}
+			>
 				{children}
 			</Button>
 
-			<Popup {...popupProps}>
-				<div className='mb-4 text-center text-xl font-medium'>{fieldName}</div>
+			<Popup
+				isOpen={isOpen}
+				setIsOpen={(open) => {
+					setIsOpen(open);
+
+					if (!open && isChanged) {
+						onChange(initialValue as Value);
+					}
+				}}
+			>
+				<div className='mb-4 text-center text-xl font-medium'>
+					{APP_TEXT.edit} {title.toLowerCase()}
+				</div>
 
 				{type === 'text' && (
-					<TextField value={value as string} onChange={(value) => onChange(value as Value)} placeholder={fieldName} />
+					<TextField value={value as string} onChange={(value) => onChange(value as Value)} placeholder={title} />
 				)}
-
-				{/*{type === 'amount' && (*/}
-				{/*	<NumericInput*/}
-				{/*		value={isNull(value) ? undefined : (value as number)}*/}
-				{/*		onChange={(value) => onChange(value as Value)}*/}
-				{/*		placeholder={fieldName}*/}
-				{/*	/>*/}
-				{/*)}*/}
 
 				{type === 'amount' && (
 					<AmountField
 						value={value as string}
 						onChange={(value) => onChange(value as Value)}
-						activeOption={{id: 1, name: 'GENA', balance: {amount: 10, currency: CURRENCY.USD}}}
+						activeOption={activeOption}
 					/>
 				)}
 
 				{type === 'date' && (
 					<div className='flex w-full justify-center'>
-						<Calendar mode='single' selected={value as Date | undefined} onSelect={(date) => onChange(date as Value)} />
+						<DateField value={value as Date | undefined} onChange={(date) => onChange(date as Value)} />
 					</div>
 				)}
 
@@ -64,9 +98,9 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 					type={ButtonType.main}
 					onClick={handleUpdate}
 					isLoading={isLoading}
-					disabled={!isChanged}
+					disabled={!isChanged || (isRequired && !value)}
 				>
-					{APP_TEXT.update}
+					{APP_TEXT.save}
 				</Button>
 			</Popup>
 		</>

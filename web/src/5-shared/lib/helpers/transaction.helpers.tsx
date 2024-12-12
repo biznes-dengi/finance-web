@@ -1,4 +1,4 @@
-import {APP_TEXT, CURRENCY, CURRENCY_MAP, TRANSACTION_TYPE} from '@shared/constants';
+import {APP_TEXT, CURRENCY, CURRENCY_SYMBOL, TRANSACTION_TYPE} from '@shared/constants';
 import {Icon} from '@shared/ui';
 import {TextHelpers} from '@shared/lib';
 
@@ -37,13 +37,13 @@ export class TransactionHelpers {
 
 	static getTransactionRightName(type: TRANSACTION_TYPE, amount: number, currency: CURRENCY) {
 		if (type === TRANSACTION_TYPE.DEPOSIT) {
-			return `+${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+			return `+${TextHelpers.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 		}
 		if (type === TRANSACTION_TYPE.WITHDRAW) {
-			return `-${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+			return `-${TextHelpers.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 		}
 		if (type === TRANSACTION_TYPE.TRANSFER) {
-			return `+${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+			return `+${TextHelpers.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 		}
 	}
 }

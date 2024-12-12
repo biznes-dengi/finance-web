@@ -3,8 +3,9 @@ import {cn, useResponsive} from '@shared/lib';
 import {Icon, Spinner, useUploadField} from '@shared/ui';
 
 export function GoalImageField({children}: {children: ReactNode}) {
-	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
-		useUploadField();
+	// const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
+	// 	useUploadField();
+	const {UploadField, abortUploading, uploadProgressPercent, isUploading, isFileDragging} = useUploadField();
 
 	const {isDesktop} = useResponsive();
 
@@ -38,7 +39,8 @@ export function GoalImageField({children}: {children: ReactNode}) {
 
 				<div
 					className='mb-4 mr-4 flex size-8 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'
-					onClick={startUploading}
+					// onClick={startUploading}
+					onClick={() => alert('Да, скоро можно будет загружать картинки 😁')}
 				>
 					{!isUploading ? <Icon type='uploadImage' className='size-4' /> : <Spinner className='size-4' />}
 				</div>

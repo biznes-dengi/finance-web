@@ -1,6 +1,5 @@
 import {DateService} from '@shared/lib';
-import {Box, Button, Popup, Icon, usePopupState} from '@shared/ui';
-import {Calendar} from './Calendar.tsx';
+import {Box, Button, Popup, Icon, usePopupState, DateField} from '@shared/ui';
 
 type Props = {
 	value: Date | undefined;
@@ -12,8 +11,6 @@ export function DatePicker(props: Props) {
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
-	// TODO: когда меняем на новую дату ставится дефолтное время. Продумать логику.
-
 	return (
 		<>
 			<Box>
@@ -24,10 +21,9 @@ export function DatePicker(props: Props) {
 
 			<Popup {...popupProps}>
 				<div className='flex justify-center'>
-					<Calendar
-						mode='single'
-						selected={value}
-						onSelect={(date) => {
+					<DateField
+						value={value}
+						onChange={(date) => {
 							if (!date) return;
 							onChange(date);
 							closePopup();

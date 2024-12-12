@@ -1,7 +1,7 @@
 import {type AmountFieldBaseOption, type AmountFieldProps} from '../types/AmountField.types.ts';
 import {Icon, Item, List, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
-import {cn, isNumber, styleElement, TextHelpers} from '@shared/lib';
-import {CURRENCY_MAP, CURRENCY_SYMBOL} from '@shared/constants';
+import {cn, styleElement, TextHelpers} from '@shared/lib';
+import {CURRENCY_SYMBOL} from '@shared/constants';
 
 export function AmountField<Option extends AmountFieldBaseOption>(props: AmountFieldProps<Option>) {
 	const {
@@ -9,9 +9,8 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 		onChange,
 		activeOption,
 		isLoading,
-
+		getCustomDescription,
 		options,
-		getLabel,
 		setActiveOption,
 		errorText,
 		withMinus,
@@ -21,37 +20,20 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
-	function handleChange(value: string) {
-		//TODO: на клаве decimal сюда залетает запятая
-		/** 123. превращает в 123 */
-		onChange(value);
-	}
-
-	// if (!activeOption) {
-	// 	return (
-	// 		<div className='bg-input-grey rounded-2xl p-4'>
-	// 			<PreloadSkeleton className='h-6 w-32' />
-	// 			<div className='mt-[10.8px]'>
-	// 				<PreloadSkeleton className='h-4 w-16' />
-	// 			</div>
-	// 		</div>
-	// 	);
-	// }
-
-	function getOptionLabel(option: Option) {
-		if (getLabel) return getLabel(option);
-		return TextHelpers.getBalance(option.balance.amount ?? 0, CURRENCY_MAP[option.balance.currency].symbol);
-	}
 	const getValue = () => {
-		if (withMinus && isNumber(value)) {
-			return `- ${value}`;
+		if (!value) return '';
+
+		const amountValue = TextHelpers.getAmount(value);
+
+		if (withMinus) {
+			return `- ${amountValue}`;
 		}
 
-		if (withPlus && isNumber(value)) {
-			return `+ ${value}`;
+		if (withPlus) {
+			return `+ ${amountValue}`;
 		}
 
-		return value ?? '';
+		return amountValue;
 	};
 	const getPlaceholder = () => {
 		if (withMinus) {
@@ -64,6 +46,10 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 	};
 
 	const isMultipleOptions = options?.length && options.length > 1 && setActiveOption;
+
+	const description = !getCustomDescription
+		? activeOption?.balance && TextHelpers.getBalance(activeOption.balance, CURRENCY_SYMBOL[activeOption.currency])
+		: activeOption && getCustomDescription(activeOption);
 
 	return (
 		<>
@@ -95,7 +81,7 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 							)}
 							value={getValue()}
 							onChange={(event) => {
-								handleChange(event.target.value.replace(/[^0-9.]/g, '').trim());
+								onChange(event.target.value.replace(/[^0-9.]/g, '').trim());
 							}}
 							onKeyDown={(event) => {
 								if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -107,8 +93,8 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 						/>
 
 						{activeOption && (
-							<div className={cn('ml-2 text-xl font-semibold', !isNumber(value) && 'text-[#9CA3AF]')}>
-								{CURRENCY_SYMBOL[activeOption.balance.currency]}
+							<div className={cn('ml-2 text-xl font-semibold', !value && 'text-[#9CA3AF]')}>
+								{CURRENCY_SYMBOL[activeOption.currency]}
 							</div>
 						)}
 					</div>
@@ -121,9 +107,9 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 								'mr-4 flex-shrink-0 basis-40 cursor-pointer text-sm font-light text-primary-grey',
 								!!errorText && 'text-[#B51F2D]',
 							)}
-							onClick={() => !getLabel && handleChange(String(activeOption.balance.amount))}
+							onClick={() => !getCustomDescription && onChange(String(activeOption.balance))}
 						>
-							{getOptionLabel(activeOption)}
+							{description}
 						</div>
 					)}
 					{!!errorText && <div className='text-sm font-light text-[#B51F2D]'>{errorText}</div>}
@@ -135,17 +121,24 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 					<List
 						rows={options}
 						renderRow={(option) => {
-							const selected = option.id === activeOption?.id;
+							let selected;
+
+							if (option.id && activeOption?.id) {
+								selected = option.id === activeOption.id;
+							} else {
+								selected = option.name === activeOption?.name;
+							}
+
 							return (
 								<Item
 									statusIcon={selected && <Icon type='check' />}
 									className={cn(selected && 'bg-light-grey')}
 									image={option.image}
 									name={option.name}
-									description={getOptionLabel(option)}
+									description={description}
 									onClick={() => {
 										setActiveOption(option);
-										handleChange('');
+										onChange('');
 										closePopup();
 									}}
 								/>

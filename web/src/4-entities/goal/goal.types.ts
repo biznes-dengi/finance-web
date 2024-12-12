@@ -26,9 +26,9 @@ export type MutationProps = {
 	useCreateItem: {
 		payload: {
 			name: string;
-			targetAmount: number;
 			currency: CURRENCY;
-			deadline: string;
+			targetAmount?: number;
+			deadline?: string;
 		};
 	};
 
@@ -39,8 +39,8 @@ export type MutationProps = {
 		payload: {
 			name: string;
 			currency: CURRENCY;
-			targetAmount?: string;
-			deadline?: string;
+			targetAmount?: number;
+			deadline?: string | null;
 		};
 	};
 

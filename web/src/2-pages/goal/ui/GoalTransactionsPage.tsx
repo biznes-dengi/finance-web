@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Box, Card, Icon, Item, List, PageHeader} from '@shared/ui';
 import {APP_PATH} from '@shared/constants/appPath.constant.ts';
-import {APP_TEXT, CURRENCY, CURRENCY_MAP, TRANSACTION_TYPE} from '@shared/constants';
+import {APP_TEXT, CURRENCY, CURRENCY_SYMBOL, TRANSACTION_TYPE} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
 import {DateService, TextHelpers} from '@shared/lib';
 
@@ -37,13 +37,13 @@ export function getTransactionName(row: any) {
 }
 export function getTransactionRightName(type: TRANSACTION_TYPE, amount: number, currency: CURRENCY) {
 	if (type === TRANSACTION_TYPE.DEPOSIT) {
-		return `+${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+		return `+${TextHelpers.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 	}
 	if (type === TRANSACTION_TYPE.WITHDRAW) {
-		return `-${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+		return `-${TextHelpers.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 	}
 	if (type === TRANSACTION_TYPE.TRANSFER) {
-		return `+${TextHelpers.getAmount(amount)} ${CURRENCY_MAP[currency].symbol}`;
+		return `+${TextHelpers.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 	}
 }
 function groupItemsByMonth(items: any) {
@@ -120,7 +120,7 @@ export function GoalTransactionsPage() {
 									{total !== 0 && total > 0 ? '+' : '-'}
 									{TextHelpers.getAmountWithCurrency(
 										total,
-										goalDetails ? CURRENCY_MAP[goalDetails.balance.currency].symbol : '',
+										goalDetails ? CURRENCY_SYMBOL[goalDetails.balance.currency] : '',
 									)}
 								</div>
 							}

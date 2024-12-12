@@ -1,6 +1,7 @@
-export * from './fields/TextField.tsx';
+export * from './fields/text-field/ui/TextField.tsx';
 export * from './fields/upload-field/useUploadField.tsx';
 export * from './fields/amount-field/ui/AmountField.tsx';
+export * from './fields/date-field/ui/DateField.tsx';
 
 export * from './spinner/ui/Spinner.tsx';
 export * from './card/ui/LinkTitleInCard.tsx';

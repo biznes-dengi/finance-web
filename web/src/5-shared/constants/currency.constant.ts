@@ -10,17 +10,8 @@ export const CURRENCY_SYMBOL = {
 	[CURRENCY.RUB]: '₽',
 };
 
-export const CURRENCY_MAP = {
-	[CURRENCY.USD]: {
-		code: 'USD',
-		symbol: '$',
-	},
-	[CURRENCY.PLN]: {
-		code: 'USD',
-		symbol: '$',
-	},
-	[CURRENCY.RUB]: {
-		code: 'RUB',
-		symbol: '₽',
-	},
+export const CURRENCY_CODE = {
+	[CURRENCY.USD]: 'USD',
+	[CURRENCY.PLN]: 'PLN',
+	[CURRENCY.RUB]: 'RUB',
 };

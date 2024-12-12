@@ -2,10 +2,10 @@ import dayjs from 'dayjs';
 import {isString} from '@shared/lib';
 
 export class DateService {
-	public value: Date;
+	public value: Date | undefined;
 
-	constructor(date?: Date | string) {
-		if (!date) {
+	constructor(date?: Date | string, skipTodayDate = false) {
+		if (!date && !skipTodayDate) {
 			this.value = new Date();
 			return;
 		}
@@ -14,6 +14,8 @@ export class DateService {
 	}
 
 	getLocalDateString() {
+		if (!this.value) return 'No date';
+
 		return this.value
 			.toLocaleDateString('ru-RU', {
 				year: 'numeric',
@@ -24,14 +26,10 @@ export class DateService {
 	}
 
 	getPayloadDateFormat() {
+		if (!this.value) return null;
+
 		return this.value.toISOString().split('.')[0]; // Убираем миллисекунды и таймзону;
 	}
-
-	// calculateDaysLeft() {
-	// 	const today = dayjs();
-	// 	const deadlineDate = dayjs(this.value);
-	// 	return deadlineDate.diff(today, 'day');
-	// }
 
 	private formatTime(value: number, singular: string, dual: string, plural: string): string {
 		const absValue = Math.abs(value);
@@ -51,6 +49,7 @@ export class DateService {
 			return `${value} ${plural}`;
 		}
 	}
+
 	calculateDaysLeft() {
 		const today = dayjs();
 		const deadlineDate = dayjs(this.value);
@@ -66,5 +65,14 @@ export class DateService {
 			return this.formatTime(diffInMonths, 'месяц', 'месяца', 'месяцев');
 		}
 		return this.formatTime(diffInYears, 'год', 'года', 'лет');
+	}
+
+	isEqualTo(date: Date | string): boolean {
+		if (!this.value) return false;
+
+		const comparisonDate = isString(date) ? new Date(date) : date;
+
+		// Сравниваем только дату (игнорируем время)
+		return dayjs(this.value).isSame(comparisonDate, 'day');
 	}
 }

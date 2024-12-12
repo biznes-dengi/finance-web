@@ -2,7 +2,7 @@ import {Box, Button, Card, Item, ItemImageWithProgress, List, SelectInCard} from
 import {buttonConfigs, defaultFilter, goalStatusOptions} from '../config/GoalManagement.config.tsx';
 import {GoalModel} from '@entities/goal';
 import {TextHelpers, useFilter} from '@shared/lib';
-import {APP_PATH, APP_TEXT, CURRENCY_MAP, CURRENCY_SYMBOL} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
 
 export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
@@ -28,7 +28,7 @@ export function GoalManagement() {
 										</span>
 										{float && (
 											<span className='text-xl font-bold'>
-												,{float} {CURRENCY_MAP[totalBalance.currency].symbol}
+												,{float} {CURRENCY_SYMBOL[totalBalance.currency]}
 											</span>
 										)}
 									</div>
