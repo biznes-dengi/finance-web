@@ -1,12 +1,12 @@
 import {APP_TEXT} from '@shared/constants';
-import {DeleteItem} from '@shared/ui';
+import {DeleteItem, LoadingWrapper} from '@shared/ui';
 import {GoalModel} from '@entities/goal';
 import {useParams} from 'react-router-dom';
 
 export function GoalDelete() {
 	const {id} = useParams();
 	const {deleteGoal, isDeleteGoalLoading, isDeleteGoalSuccess, isDeleteGoalError} = GoalModel.useDeleteItem();
-	const {goalDetails} = GoalModel.useItemDetails({id});
+	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
 	return (
 		<DeleteItem
@@ -17,7 +17,9 @@ export function GoalDelete() {
 			isError={isDeleteGoalError}
 			handleDelete={() => deleteGoal({params: {id}})}
 		>
-			{APP_TEXT.deleteGoal}
+			<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+				{APP_TEXT.deleteGoal}
+			</LoadingWrapper>
 		</DeleteItem>
 	);
 }

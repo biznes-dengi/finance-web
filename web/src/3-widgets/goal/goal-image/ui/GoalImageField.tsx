@@ -1,8 +1,14 @@
 import {ReactNode} from 'react';
 import {cn, useResponsive} from '@shared/lib';
-import {Icon, Spinner, useUploadField} from '@shared/ui';
+import {Icon, LoadingWrapper, Spinner, useUploadField} from '@shared/ui';
+import {GoalModel} from '@entities/goal';
+import {useParams} from 'react-router-dom';
 
 export function GoalImageField({children}: {children: ReactNode}) {
+	const {id} = useParams();
+
+	const {isGoalDetailsLoading} = GoalModel.useItemDetails({id});
+
 	// const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
 	// 	useUploadField();
 	const {UploadField, abortUploading, uploadProgressPercent, isUploading, isFileDragging} = useUploadField();
@@ -37,12 +43,16 @@ export function GoalImageField({children}: {children: ReactNode}) {
 					</div>
 				)}
 
-				<div
-					className='mb-4 mr-4 flex size-8 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'
-					// onClick={startUploading}
-					onClick={() => alert('Да, скоро можно будет загружать картинки 😁')}
-				>
-					{!isUploading ? <Icon type='uploadImage' className='size-4' /> : <Spinner className='size-4' />}
+				<div className='mb-4 mr-4'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='size-8 rounded-full'>
+						<div
+							className='flex size-8 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'
+							// onClick={startUploading}
+							onClick={() => alert('Да, скоро можно будет загружать картинки 😁')}
+						>
+							{!isUploading ? <Icon type='uploadImage' className='size-4' /> : <Spinner className='size-4' />}
+						</div>
+					</LoadingWrapper>
 				</div>
 			</div>
 		</UploadField>
