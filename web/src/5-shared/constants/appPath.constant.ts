@@ -1,5 +1,3 @@
-//TODO: convert APP_PATH keys from strings to functions, to be able to paste params into URL
-
 export const APP_PATH = {
 	root: '/',
 	home: '/goal-list',
@@ -34,7 +32,3 @@ export const APP_PATH = {
 		},
 	},
 };
-
-export function getItemDetailsPath(id: any) {
-	return `${APP_PATH.goalDetails}/${id}`;
-}

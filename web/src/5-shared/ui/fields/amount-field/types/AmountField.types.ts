@@ -5,7 +5,7 @@ export type AmountFieldBaseOption = {
 	name: string;
 	currency: CURRENCY;
 	image?: any;
-	balance?: number;
+	amount?: number;
 	id?: number;
 };
 

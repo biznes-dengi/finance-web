@@ -46,6 +46,7 @@ export const APP_TEXT = {
 	createAccount: 'Create account',
 	cancel: 'Cancel',
 	confirm: 'Confirm',
+	noDate: 'No date',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

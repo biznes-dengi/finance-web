@@ -4,6 +4,7 @@ import {cva} from 'class-variance-authority';
 import {DateFieldProps} from '../types/DateField.types.ts';
 import {cn, DateService} from '@shared/lib';
 import {Button} from '@shared/ui';
+import {APP_TEXT} from '@shared/constants';
 
 const buttonVariants = cva(
 	'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-300',
@@ -43,7 +44,7 @@ export function DateField(props: DateFieldProps) {
 	return (
 		<div className='rounded-2xl bg-white p-2'>
 			<div className='mb-2 flex justify-between px-2 text-sm'>
-				<div className='text-primary-grey'>{new DateService(value, true).getLocalDateString()}</div>
+				<div className='text-primary-grey'>{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}</div>
 				<Button onClick={() => onChange(undefined)}>Reset</Button>
 			</div>
 			<DayPicker

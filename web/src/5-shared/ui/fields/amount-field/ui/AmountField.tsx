@@ -1,6 +1,6 @@
 import {type AmountFieldBaseOption, type AmountFieldProps} from '../types/AmountField.types.ts';
 import {Icon, Item, List, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
-import {cn, styleElement, TextHelpers} from '@shared/lib';
+import {cn, isNumber, styleElement, TextHelpers} from '@shared/lib';
 import {CURRENCY_SYMBOL} from '@shared/constants';
 
 export function AmountField<Option extends AmountFieldBaseOption>(props: AmountFieldProps<Option>) {
@@ -48,7 +48,9 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 	const isMultipleOptions = options?.length && options.length > 1 && setActiveOption;
 
 	const description = !getCustomDescription
-		? activeOption?.balance && TextHelpers.getBalance(activeOption.balance, CURRENCY_SYMBOL[activeOption.currency])
+		? activeOption &&
+		  isNumber(activeOption.amount) &&
+		  TextHelpers.getBalance(activeOption.amount, activeOption.currency)
 		: activeOption && getCustomDescription(activeOption);
 
 	return (
@@ -107,7 +109,7 @@ export function AmountField<Option extends AmountFieldBaseOption>(props: AmountF
 								'mr-4 flex-shrink-0 basis-40 cursor-pointer text-sm font-light text-primary-grey',
 								!!errorText && 'text-[#B51F2D]',
 							)}
-							onClick={() => !getCustomDescription && onChange(String(activeOption.balance))}
+							onClick={() => !getCustomDescription && onChange(String(activeOption.amount))}
 						>
 							{description}
 						</div>

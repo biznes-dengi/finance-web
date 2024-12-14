@@ -34,7 +34,7 @@ export type MutationProps = {
 
 	useUpdateItem: {
 		params: {
-			id?: string;
+			id: string | number;
 		};
 		payload: {
 			name: string;
@@ -46,13 +46,13 @@ export type MutationProps = {
 
 	useDeleteItem: {
 		params: {
-			id?: string;
+			id: string | number;
 		};
 	};
 
-	useDeposit: {
+	useFund: {
 		params: {
-			id?: string;
+			id: string | number;
 		};
 		payload: {
 			amount: number;
@@ -62,7 +62,7 @@ export type MutationProps = {
 
 	useWithdraw: {
 		params: {
-			id?: string;
+			id: string | number;
 		};
 		payload: {
 			amount: number;
@@ -111,8 +111,8 @@ export type ApiProps = {
 	};
 
 	depositMoney: {
-		params: MutationProps['useDeposit']['params'] & {boardGoalId: number};
-		payload: MutationProps['useDeposit']['payload'] & {type: TRANSACTION_TYPE};
+		params: MutationProps['useFund']['params'] & {boardGoalId: number};
+		payload: MutationProps['useFund']['payload'] & {type: TRANSACTION_TYPE};
 	};
 
 	withdrawMoney: {

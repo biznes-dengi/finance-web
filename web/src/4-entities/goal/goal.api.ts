@@ -94,16 +94,18 @@ export class GoalApi {
 		});
 	}
 
-	static async deposit(props: ApiProps['depositMoney']) {
+	static async fund(props: ApiProps['depositMoney']) {
 		const {
 			params: {boardGoalId, id},
 			payload,
 		} = props;
 
-		return await HttpClient.post({
+		await HttpClient.post({
 			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
 			data: payload,
 		});
+
+		return {id};
 	}
 
 	static async withdraw(props: ApiProps['withdrawMoney']) {
@@ -112,10 +114,12 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		return await HttpClient.post({
+		await HttpClient.post({
 			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
 			data: payload,
 		});
+
+		return {id};
 	}
 
 	static async transfer(props: ApiProps['transferMoney']) {

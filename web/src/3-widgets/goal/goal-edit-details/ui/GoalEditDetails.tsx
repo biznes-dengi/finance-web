@@ -37,14 +37,19 @@ export function GoalEditDetails() {
 	}, [goalDetails]);
 
 	function handleUpdate() {
-		const payload = {
-			name,
-			targetAmount: Number(targetAmount),
-			deadline: new DateService(deadline).getPayloadDateFormat(),
-			currency,
-		};
+		if (!id) return;
 
-		updateGoal({params: {id}, payload});
+		updateGoal({
+			params: {
+				id,
+			},
+			payload: {
+				name,
+				targetAmount: Number(targetAmount),
+				deadline: new DateService(deadline).getPayloadDateFormat(),
+				currency,
+			},
+		});
 	}
 
 	const editButtonCommonProps = {
@@ -156,8 +161,8 @@ export function GoalEditDetails() {
 				</div>
 			</Card>
 
-			<StatusPopup isOpen={isUpdateGoalSuccess} status='success' statusTextKey='goalUpdateSuccess' />
-			<StatusPopup isOpen={isUpdateGoalError} status='error' statusTextKey='goalDeleteError' />
+			<StatusPopup isOpen={isUpdateGoalSuccess} status='success' statusTextKey='updateGoalSuccess' />
+			<StatusPopup isOpen={isUpdateGoalError} status='error' statusTextKey='updateGoalError' />
 		</>
 	);
 }

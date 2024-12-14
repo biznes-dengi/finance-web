@@ -1,46 +1,49 @@
 import {useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
-import {Box, Button, ButtonType, DatePicker, AmountField, PageHeader} from '@shared/ui';
-import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {DateService, isNumber} from '@shared/lib';
+import {AmountField, Box, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
+import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {DateService, isNumber, TextHelpers} from '@shared/lib';
 
 export function GoalDetailsWithdrawPage() {
-	const navigate = useNavigate();
 	const {id} = useParams();
 
 	const {goalDetails} = GoalModel.useItemDetails({id});
-	const {withdraw, isWithdrawLoading, isWithdrawSuccess, isWithdrawError} = GoalModel.useWithdraw();
+	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw();
 
-	const [activeOption, setActiveOption] = useState(goalDetails);
+	const [activeOption, setActiveOption] = useState<{id?: number; name: string; amount: number; currency: CURRENCY}>();
 
-	const [amount, setAmount] = useState<number | undefined>();
+	const [amount, setAmount] = useState<string>('');
 	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
 		if (!goalDetails) return;
-		setActiveOption(goalDetails);
+
+		const activeOption = {
+			id: goalDetails.id,
+			name: goalDetails.name,
+			amount: goalDetails.balance.amount,
+			currency: goalDetails.balance.currency,
+		};
+
+		setActiveOption(activeOption);
 	}, [goalDetails]);
 
-	function handleFundClick() {
+	function handleWithdrawClick() {
 		if (!activeOption?.id) return;
 
-		withdraw({
-			params: {id: String(activeOption.id)},
+		withdrawGoal({
+			params: {
+				id: activeOption.id,
+			},
 			payload: {
-				amount: amount ?? 0,
+				amount: Number(amount),
 				date: new DateService(date).getPayloadDateFormat(),
 			},
 		});
 	}
 
-	if (isWithdrawSuccess || isWithdrawError) {
-		setTimeout(() => {
-			navigate(APP_PATH.goal.getItemDetailsPath(id));
-		}, 2000);
-	}
-
-	const isAmountError = activeOption && isNumber(amount) && amount > activeOption.balance.amount;
+	const showAmountValidation = activeOption && isNumber(amount) && amount > activeOption.amount;
 
 	return (
 		<>
@@ -52,7 +55,7 @@ export function GoalDetailsWithdrawPage() {
 					onChange={setAmount}
 					activeOption={activeOption}
 					setActiveOption={setActiveOption}
-					errorText={isAmountError && 'exceeds balance'}
+					errorText={showAmountValidation && 'exceeds balance'}
 					withMinus
 				/>
 				<Box baseMarginY>
@@ -60,41 +63,34 @@ export function GoalDetailsWithdrawPage() {
 				</Box>
 			</Box>
 
-			{/*<Popup isStatusDialogOpen={isWithdrawSuccess || isWithdrawError}>*/}
-			{/*	{isWithdrawSuccess && activeOption && (*/}
-			{/*		<Box baseMarginY className='text-center'>*/}
-			{/*			<div className='mb-4 flex justify-center'>*/}
-			{/*				<div className='size-16 text-primary-violet'>*/}
-			{/*					<Icon type='success' />*/}
-			{/*				</div>*/}
-			{/*			</div>*/}
-			{/*			<div>*/}
-			{/*				Goal <span className='font-medium text-primary-violet'>{activeOption.name} </span>*/}
-			{/*				has been funded by{' '}*/}
-			{/*				<span className='font-medium text-primary-violet'>*/}
-			{/*					{amount} {CURRENCY_MAP[activeOption.balance.currency].symbol}*/}
-			{/*				</span>*/}
-			{/*			</div>*/}
-			{/*		</Box>*/}
-			{/*	)}*/}
-			{/*	{isWithdrawError && activeOption && (*/}
-			{/*		<Box baseMarginY className='text-center'>*/}
-			{/*			<div className='mb-4 flex justify-center'>*/}
-			{/*				<div className='size-16 text-primary-violet'>*/}
-			{/*					<Icon type='error' />*/}
-			{/*				</div>*/}
-			{/*			</div>*/}
-			{/*			<div>*/}
-			{/*				Some error occur during funding{' '}*/}
-			{/*				<span className='font-medium text-primary-violet'>{activeOption.name}</span>*/}
-			{/*			</div>*/}
-			{/*		</Box>*/}
-			{/*	)}*/}
-			{/*</Popup>*/}
+			{activeOption && (
+				<StatusPopup
+					isOpen={isWithdrawGoalSuccess}
+					status='success'
+					statusTextKey='withdrawGoalSuccess'
+					statusTextProps={{
+						goalName: activeOption.name,
+						amount: `${TextHelpers.getAmountWithCurrency(amount, activeOption.currency)}`,
+					}}
+				/>
+			)}
+			{activeOption && (
+				<StatusPopup
+					isOpen={isWithdrawGoalError}
+					status='error'
+					statusTextKey='withdrawGoalError'
+					statusTextProps={{goalName: activeOption.name}}
+				/>
+			)}
 
 			<Box basePadding>
-				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount) || isAmountError}>
-					{isWithdrawLoading ? 'Loading...' : APP_TEXT.withdraw}
+				<Button
+					type={ButtonType.main}
+					onClick={handleWithdrawClick}
+					disabled={!amount}
+					isLoading={isWithdrawGoalLoading}
+				>
+					{APP_TEXT.withdraw}
 				</Button>
 			</Box>
 		</>

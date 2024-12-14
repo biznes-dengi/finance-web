@@ -2,10 +2,10 @@ import dayjs from 'dayjs';
 import {isString} from '@shared/lib';
 
 export class DateService {
-	public value: Date | undefined;
+	public value: Date;
 
-	constructor(date?: Date | string, skipTodayDate = false) {
-		if (!date && !skipTodayDate) {
+	constructor(date?: Date | string) {
+		if (!date) {
 			this.value = new Date();
 			return;
 		}
@@ -14,8 +14,6 @@ export class DateService {
 	}
 
 	getLocalDateString() {
-		if (!this.value) return 'No date';
-
 		return this.value
 			.toLocaleDateString('ru-RU', {
 				year: 'numeric',
@@ -26,8 +24,6 @@ export class DateService {
 	}
 
 	getPayloadDateFormat() {
-		if (!this.value) return null;
-
 		return this.value.toISOString().split('.')[0]; // Убираем миллисекунды и таймзону;
 	}
 

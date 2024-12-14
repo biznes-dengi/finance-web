@@ -150,8 +150,6 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['edit-goal'],
 			mutationFn: (props: MutationProps['useUpdateItem']) => {
-				if (!props.params.id) return Promise.reject('No goal id');
-
 				return GoalApi.updateItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: props.payload,
@@ -182,8 +180,6 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-delete'],
 			mutationFn: (props: MutationProps['useDeleteItem']) => {
-				if (!props.params.id) return Promise.reject('No goal id');
-
 				return GoalApi.deleteItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 				});
@@ -204,49 +200,59 @@ export class GoalModel {
 		};
 	}
 
-	static useDeposit() {
+	static useFund() {
 		const {boardGoalId} = this.useBoardGoalId();
+
+		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-deposit-money'],
-			mutationFn: (props: MutationProps['useDeposit']) => {
-				if (!props.params.id) return Promise.reject('No goal id');
-
-				return GoalApi.deposit({
+			mutationFn: (props: MutationProps['useFund']) => {
+				return GoalApi.fund({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.DEPOSIT},
+				});
+			},
+			onSettled: (goal: any) => {
+				runAfterStatusPopup(() => {
+					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
 
 		return {
-			deposit: mutate,
-			isDepositLoading: isPending,
-			isDepositSuccess: isSuccess,
-			isDepositError: isError,
+			fundGoal: mutate,
+			isFundGoalLoading: isPending,
+			isFundGoalSuccess: isSuccess,
+			isFundGoalError: isError,
 		};
 	}
 
 	static useWithdraw() {
 		const {boardGoalId} = this.useBoardGoalId();
 
+		const navigate = useNavigate();
+
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-withdraw-money'],
 			mutationFn: (props: MutationProps['useWithdraw']) => {
-				if (!props.params.id) return Promise.reject('No goal id');
-
 				return GoalApi.withdraw({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.WITHDRAW},
 				});
 			},
+			onSettled: (goal: any) => {
+				runAfterStatusPopup(() => {
+					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
+				});
+			},
 		});
 
 		return {
-			withdraw: mutate,
-			isWithdrawLoading: isPending,
-			isWithdrawSuccess: isSuccess,
-			isWithdrawError: isError,
+			withdrawGoal: mutate,
+			isWithdrawGoalLoading: isPending,
+			isWithdrawGoalSuccess: isSuccess,
+			isWithdrawGoalError: isError,
 		};
 	}
 

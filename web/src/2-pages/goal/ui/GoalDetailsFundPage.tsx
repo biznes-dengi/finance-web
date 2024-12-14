@@ -1,43 +1,46 @@
 import {useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {Box, Button, ButtonType, DatePicker, AmountField, PageHeader} from '@shared/ui';
-import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {DateService, isNumber} from '@shared/lib';
+import {AmountField, Box, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
+import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {DateService, TextHelpers} from '@shared/lib';
 
 export function GoalDetailsFundPage() {
-	const navigate = useNavigate();
 	const {id} = useParams();
 
 	const {goalDetails} = GoalModel.useItemDetails({id});
-	const {deposit, isDepositLoading, isDepositSuccess, isDepositError} = GoalModel.useDeposit();
+	const {fundGoal, isFundGoalLoading, isFundGoalSuccess, isFundGoalError} = GoalModel.useFund();
 
-	const [activeOption, setActiveOption] = useState(goalDetails);
+	const [activeOption, setActiveOption] = useState<{id?: number; name: string; amount: number; currency: CURRENCY}>();
 
-	const [amount, setAmount] = useState<number | undefined>();
-	const [date, setDate] = useState<Date>(new DateService().value);
+	const [amount, setAmount] = useState<string>('');
+	const [date, setDate] = useState<Date>(new DateService().value!);
 
 	useEffect(() => {
 		if (!goalDetails) return;
-		setActiveOption(goalDetails);
+
+		const activeOption = {
+			id: goalDetails.id,
+			name: goalDetails.name,
+			amount: goalDetails.balance.amount,
+			currency: goalDetails.balance.currency,
+		};
+
+		setActiveOption(activeOption);
 	}, [goalDetails]);
 
 	function handleFundClick() {
 		if (!activeOption?.id) return;
 
-		deposit({
-			params: {id: String(activeOption.id)},
+		fundGoal({
+			params: {
+				id: activeOption.id,
+			},
 			payload: {
-				amount: amount ?? 0,
+				amount: Number(amount),
 				date: new DateService(date).getPayloadDateFormat(),
 			},
 		});
-	}
-
-	if (isDepositSuccess || isDepositError) {
-		setTimeout(() => {
-			navigate(APP_PATH.goal.getItemDetailsPath(id));
-		}, 2000);
 	}
 
 	return (
@@ -57,41 +60,29 @@ export function GoalDetailsFundPage() {
 				</Box>
 			</Box>
 
-			{/*<Popup isStatusDialogOpen={isDepositSuccess || isDepositError}>*/}
-			{/*	{isDepositSuccess && activeOption && (*/}
-			{/*		<Box baseMarginY className='text-center'>*/}
-			{/*			<div className='mb-4 flex justify-center'>*/}
-			{/*				<div className='size-16 text-primary-violet'>*/}
-			{/*					<Icon type='success' />*/}
-			{/*				</div>*/}
-			{/*			</div>*/}
-			{/*			<div>*/}
-			{/*				Goal <span className='font-medium text-primary-violet'>{activeOption.name} </span>*/}
-			{/*				has been funded by{' '}*/}
-			{/*				<span className='font-medium text-primary-violet'>*/}
-			{/*					{amount} {CURRENCY_MAP[activeOption.balance.currency].symbol}*/}
-			{/*				</span>*/}
-			{/*			</div>*/}
-			{/*		</Box>*/}
-			{/*	)}*/}
-			{/*	{isDepositError && activeOption && (*/}
-			{/*		<Box baseMarginY className='text-center'>*/}
-			{/*			<div className='mb-4 flex justify-center'>*/}
-			{/*				<div className='size-16 text-primary-violet'>*/}
-			{/*					<Icon type='error' />*/}
-			{/*				</div>*/}
-			{/*			</div>*/}
-			{/*			<div>*/}
-			{/*				Some error occur during funding{' '}*/}
-			{/*				<span className='font-medium text-primary-violet'>{activeOption.name}</span>*/}
-			{/*			</div>*/}
-			{/*		</Box>*/}
-			{/*	)}*/}
-			{/*</Popup>*/}
+			{activeOption && (
+				<StatusPopup
+					isOpen={isFundGoalSuccess}
+					status='success'
+					statusTextKey='fundGoalSuccess'
+					statusTextProps={{
+						goalName: activeOption.name,
+						amount: `${TextHelpers.getAmountWithCurrency(amount, activeOption.currency)}`,
+					}}
+				/>
+			)}
+			{activeOption && (
+				<StatusPopup
+					isOpen={isFundGoalError}
+					status='error'
+					statusTextKey='fundGoalError'
+					statusTextProps={{goalName: activeOption.name}}
+				/>
+			)}
 
 			<Box basePadding>
-				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!isNumber(amount)}>
-					{isDepositLoading ? 'Loading...' : APP_TEXT.fund}
+				<Button type={ButtonType.main} onClick={handleFundClick} disabled={!amount} isLoading={isFundGoalLoading}>
+					{APP_TEXT.fund}
 				</Button>
 			</Box>
 		</>

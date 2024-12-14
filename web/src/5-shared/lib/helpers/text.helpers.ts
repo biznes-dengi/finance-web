@@ -1,5 +1,4 @@
 import {APP_TEXT, CURRENCY, CURRENCY_SYMBOL} from '@shared/constants';
-import {isNumber} from '@shared/lib';
 
 export class TextHelpers {
 	static getAmount(amount: number | string) {
@@ -29,10 +28,8 @@ export class TextHelpers {
 		return beforeComma + afterComma;
 	}
 
-	static getAmountWithCurrency(amount: number, currencySymbol: string) {
-		if (!isNumber(amount) || !currencySymbol) return null;
-
-		return `${this.getAmount(amount)} ${currencySymbol}`;
+	static getAmountWithCurrency(amount: number | string, currency: CURRENCY) {
+		return `${this.getAmount(amount)} ${CURRENCY_SYMBOL[currency]}`;
 	}
 
 	static getRatio(currentAmount: number, targetAmount: number, currency?: CURRENCY) {
@@ -47,7 +44,7 @@ export class TextHelpers {
 		return `${current} / ${target}`;
 	}
 
-	static getBalance(balance: number, currencySymbol: string) {
-		return `${APP_TEXT.balance}: ${this.getAmountWithCurrency(balance, currencySymbol)}`;
+	static getBalance(balance: number, currency: CURRENCY) {
+		return `${APP_TEXT.balance}: ${this.getAmountWithCurrency(balance, currency)}`;
 	}
 }

@@ -32,8 +32,8 @@ export function DeleteItem(props: DeleteItemProps) {
 				</div>
 			</Popup>
 
-			<StatusPopup isOpen={isSuccess} status='success' statusTextKey='goalDeleteSuccess' />
-			<StatusPopup isOpen={isError} status='error' statusTextKey='goalDeleteError' />
+			<StatusPopup isOpen={isSuccess} status='success' statusTextKey='deleteGoalSuccess' />
+			<StatusPopup isOpen={isError} status='error' statusTextKey='deleteGoalError' />
 		</>
 	);
 }
