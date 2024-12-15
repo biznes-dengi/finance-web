@@ -1,5 +1,5 @@
 import {ReactNode} from 'react';
-import {AmountFieldBaseOption} from '@shared/ui/fields/amount-field/types/AmountField.types.ts';
+import {AmountFieldOption} from '@shared/ui/fields/amount-field/types/AmountField.types.ts';
 import {CURRENCY} from '@shared/constants';
 
 export type EditButtonFieldProps<Value> = {
@@ -9,7 +9,7 @@ export type EditButtonFieldProps<Value> = {
 	value: Value;
 	onChange: (value: Value) => void;
 	options?: {name: string; description: string; value: CURRENCY}[];
-	activeOption?: AmountFieldBaseOption;
+	activeOption?: AmountFieldOption;
 	isLoading: boolean;
 	isSuccess: boolean;
 	isError: boolean;

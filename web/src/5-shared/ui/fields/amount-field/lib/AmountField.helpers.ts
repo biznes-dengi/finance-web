@@ -1,5 +1,5 @@
 import {isNumber, TextHelpers} from '@shared/lib';
-import {AmountFieldBaseOption} from '../types/AmountField.types.ts';
+import {AmountFieldOption} from '../types/AmountField.types.ts';
 import {ReactNode} from 'react';
 
 export class AmountFieldHelpers {
@@ -29,7 +29,7 @@ export class AmountFieldHelpers {
 		return '0';
 	}
 
-	static getDescription<Option extends AmountFieldBaseOption>(props: {
+	static getDescription<Option extends AmountFieldOption>(props: {
 		getCustomDescription?: (option: Option) => ReactNode;
 		activeOption: Option | null;
 	}) {
@@ -46,7 +46,7 @@ export class AmountFieldHelpers {
 		);
 	}
 
-	static isItemSelected<Option extends AmountFieldBaseOption>(option: Option, activeOption: Option | null) {
+	static isItemSelected<Option extends AmountFieldOption>(option: Option, activeOption: Option | null) {
 		if (option.id && activeOption?.id) {
 			return option.id === activeOption.id;
 		} else {

@@ -1,6 +1,7 @@
 export * from './fields/text-field/ui/TextField.tsx';
 export * from './fields/upload-field/useUploadField.tsx';
 export * from './fields/amount-field/ui/AmountField.tsx';
+export * from './fields/amount-field/types/AmountField.types.ts';
 export * from './fields/date-field/ui/DateField.tsx';
 
 export * from './spinner/ui/Spinner.tsx';
@@ -14,6 +15,7 @@ export * from './delete-item/ui/DeleteItem.tsx';
 export * from './edit-button-field/ui/EditButtonField.tsx';
 export * from './date-picker/ui/DatePicker.tsx';
 export * from './currency-picker/ui/CurrencyPicker.tsx';
+export * from './transaction-page/ui/TransactionPage.tsx';
 
 // new pattern -> get rid of index.ts
 

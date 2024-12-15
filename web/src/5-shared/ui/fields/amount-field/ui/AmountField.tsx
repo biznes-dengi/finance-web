@@ -1,10 +1,10 @@
-import {type AmountFieldBaseOption, type AmountFieldProps} from '../types/AmountField.types.ts';
+import {type AmountFieldOption, type AmountFieldProps} from '../types/AmountField.types.ts';
 import {AmountFieldHelpers} from '../lib/AmountField.helpers.ts';
 import {Icon, Item, List, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
 import {cn, styleElement, useResponsive} from '@shared/lib';
 import {CURRENCY_SYMBOL} from '@shared/constants';
 
-export function AmountField<Option extends AmountFieldBaseOption>(props: AmountFieldProps<Option>) {
+export function AmountField<Option extends AmountFieldOption>(props: AmountFieldProps<Option>) {
 	const {
 		value,
 		onChange,

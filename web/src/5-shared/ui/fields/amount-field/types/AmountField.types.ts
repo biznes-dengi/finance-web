@@ -1,12 +1,12 @@
 import {ReactNode} from 'react';
 import {CURRENCY} from '@shared/constants';
 
-export type AmountFieldBaseOption = {
+export type AmountFieldOption = {
+	id?: number | string;
 	name: string;
+	amount?: number;
 	currency: CURRENCY;
 	image?: any;
-	amount?: number;
-	id?: number | string;
 };
 
 export type AmountFieldProps<Option> = {

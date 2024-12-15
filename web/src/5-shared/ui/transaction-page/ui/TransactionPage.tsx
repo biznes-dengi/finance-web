@@ -1,37 +1,15 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import {AmountField, Button, ButtonType, DatePicker, PageHeader, StatusPopup, type StatusTextKey} from '@shared/ui';
-import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {GoalDetailsTransactionPageProps} from '../types/TransactionPage.types.ts';
+import {TransactionPageHelpers} from '../lib/TransactionPage.helpers.ts';
+import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
+import {APP_TEXT} from '@shared/constants';
 import {DateService, isNumber, TextHelpers} from '@shared/lib';
-
-type actionParams = {
-	params: {id: number | string};
-	payload: {amount: number; date: string};
-};
-
-interface GoalDetailsTransactionPageProps {
-	details: any;
-	isDetailsLoading: boolean;
-	actionType: 'fund' | 'withdraw';
-	action: (params: actionParams) => void;
-	isActionLoading: boolean;
-	isActionSuccess: boolean;
-	isActionError: boolean;
-	successMessageKey: StatusTextKey;
-	errorMessageKey: StatusTextKey;
-}
-
-type ActiveOption = {
-	id: number | string;
-	name: string;
-	amount: number;
-	currency: CURRENCY;
-};
 
 export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 	const {
-		details,
-		isDetailsLoading,
+		itemDetails,
+		items,
+		isItemDataLoading,
 		actionType,
 		action,
 		isActionLoading,
@@ -39,26 +17,24 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 		isActionError,
 		successMessageKey,
 		errorMessageKey,
+		backPath,
 	} = props;
 
-	const {id} = useParams();
-
-	const [activeOption, setActiveOption] = useState<ActiveOption | null>(null);
+	const [activeOption, setActiveOption] = useState<AmountFieldOption | null>(null);
 	const [amount, setAmount] = useState<string>('');
 	const [date, setDate] = useState<Date>(new DateService().value!);
 
 	useEffect(() => {
-		if (!details) {
-			return setActiveOption(null);
+		if (itemDetails) {
+			return setActiveOption(TransactionPageHelpers.mapItemDataToOption(itemDetails));
 		}
 
-		setActiveOption({
-			id: details.id,
-			name: details.name,
-			amount: details.balance.amount,
-			currency: details.balance.currency,
-		});
-	}, [details]);
+		if (items) {
+			return setActiveOption(TransactionPageHelpers.mapItemDataToOption(items[0]));
+		}
+
+		return setActiveOption(null);
+	}, [itemDetails, items]);
 
 	function handleActionClick() {
 		if (!activeOption?.id) return;
@@ -70,18 +46,18 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 	}
 
 	const showWithdrawValidation =
-		actionType === 'withdraw' && !!activeOption && isNumber(amount) && Number(amount) > activeOption.amount;
+		actionType === 'withdraw' && !!activeOption && isNumber(amount) && Number(amount) > Number(activeOption.amount);
 
 	return (
 		<>
-			<PageHeader title={APP_TEXT[actionType]} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
+			<PageHeader title={APP_TEXT[actionType]} backPath={backPath} />
 
 			<div className='flex-1 px-4'>
 				<AmountField
 					value={amount}
 					onChange={setAmount}
 					activeOption={activeOption}
-					isLoading={isDetailsLoading}
+					isLoading={isItemDataLoading}
 					errorText={showWithdrawValidation && 'exceeds balance'}
 					withPlus={actionType === 'fund'}
 					withMinus={actionType === 'withdraw'}

@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {TransactionPage} from '@pages/goal/ui/TransactionPage.tsx';
+import {TransactionPage} from '@shared/ui';
+import {APP_PATH} from '@shared/constants';
 
 export function GoalDetailsFundPage() {
 	const {id} = useParams();
@@ -10,8 +11,8 @@ export function GoalDetailsFundPage() {
 
 	return (
 		<TransactionPage
-			details={goalDetails}
-			isDetailsLoading={isGoalDetailsLoading}
+			itemDetails={goalDetails}
+			isItemDataLoading={isGoalDetailsLoading}
 			actionType='fund'
 			action={fundGoal}
 			isActionLoading={isFundGoalLoading}
@@ -19,6 +20,7 @@ export function GoalDetailsFundPage() {
 			isActionError={isFundGoalError}
 			successMessageKey='fundGoalSuccess'
 			errorMessageKey='fundGoalError'
+			backPath={APP_PATH.goal.getItemDetailsPath(id)}
 		/>
 	);
 }
