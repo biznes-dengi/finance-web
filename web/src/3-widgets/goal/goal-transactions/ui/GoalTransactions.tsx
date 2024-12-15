@@ -1,5 +1,4 @@
 import {useParams} from 'react-router-dom';
-import {getGoalProgressData} from '../../lib/goal.lib.ts';
 import {GoalModel} from '@entities/goal';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {Card, Item, LinkTitleInCard, List} from '@shared/ui';
@@ -12,8 +11,6 @@ export function GoalTransactions() {
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
 	const isLoading = isGoalTransactionsLoading || isGoalDetailsLoading;
-
-	const {isCompleted} = getGoalProgressData(isGoalDetailsLoading, goalDetails) || {};
 
 	return (
 		<Card
@@ -34,7 +31,10 @@ export function GoalTransactions() {
 						<Item
 							image={
 								<div className='flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
-									{TransactionHelpers.getTransactionIcon(row, isCompleted && index === 0)}
+									{TransactionHelpers.getTransactionIcon(
+										row,
+										Number(goalDetails?.balance.amount) >= Number(goalDetails?.targetAmount) && index === 0,
+									)}
 								</div>
 							}
 							name={TransactionHelpers.getTransactionName(row)}

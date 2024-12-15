@@ -1,15 +1,29 @@
 import {useParams} from 'react-router-dom';
-import {getGoalProgressData} from '../../lib/goal.lib.ts';
 import {GoalModel} from '@entities/goal';
 import {Button, ButtonType, Card, Icon, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
-import {cn, DateService} from '@shared/lib';
+import {cn, DateService, TextHelpers} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
 export function GoalProgress() {
 	const {id} = useParams();
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
-	const {percentage, ratio, isCompleted} = getGoalProgressData(isGoalDetailsLoading, goalDetails) || {};
+	const {balance, targetAmount} = goalDetails || {};
+
+	const {
+		percentage = 0,
+		ratio = 0,
+		isCompleted = false,
+	} = (() => {
+		if (!balance || !targetAmount) return {};
+
+		const percentage = Math.min(100, Math.floor((balance!.amount / (targetAmount as number)) * 100));
+		const isCompleted = balance.amount >= targetAmount;
+
+		const ratio = TextHelpers.getRatio(balance!.amount, targetAmount as number, balance?.currency);
+
+		return {percentage, ratio, isCompleted};
+	})();
 
 	const {popupProps, closePopup} = usePopupState({initialState: isCompleted});
 

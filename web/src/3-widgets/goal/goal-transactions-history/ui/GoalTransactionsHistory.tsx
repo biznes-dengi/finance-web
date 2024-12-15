@@ -2,7 +2,6 @@ import {Card, Item, List, LoadingItem, LoadingWrapper} from '@shared/ui';
 import {DateService, TextHelpers, TransactionHelpers} from '@shared/lib';
 import {GoalModel} from '@entities/goal';
 import {useEffect, useState} from 'react';
-import {getGoalProgressData} from '@widgets/goal';
 import {useParams} from 'react-router-dom';
 
 export function GoalTransactionsHistory() {
@@ -19,8 +18,6 @@ export function GoalTransactionsHistory() {
 	}, [goalTransactions]);
 
 	const isLoading = isGoalDetailsLoading || isGoalTransactionsLoading;
-
-	const {isCompleted} = getGoalProgressData(isGoalDetailsLoading, goalDetails) || {};
 
 	return (
 		<div className='flex flex-col gap-6 px-4 pb-6'>
@@ -47,7 +44,9 @@ export function GoalTransactionsHistory() {
 								<Item
 									image={TransactionHelpers.getTransactionIcon(
 										row,
-										isCompleted && transactionGroupIndex === 0 && index === 0,
+										Number(goalDetails?.balance.amount) >= Number(goalDetails?.targetAmount) &&
+											transactionGroupIndex === 0 &&
+											index === 0,
 									)}
 									name={TransactionHelpers.getTransactionName(row)}
 									description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
