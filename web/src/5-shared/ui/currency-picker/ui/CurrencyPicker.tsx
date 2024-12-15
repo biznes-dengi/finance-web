@@ -4,8 +4,8 @@ import {Box, Button, ButtonType, Popup, Icon, usePopupState} from '@shared/ui';
 
 type Props = {
 	buttonText: ReactNode;
-	value: number | undefined;
-	onChange: (value: number | undefined) => void;
+	value: number;
+	onChange: (value: number) => void;
 };
 
 // CurrencyRatePicker, CurrencyPicker когда выбираю какая валюта (USD, RUB)
@@ -15,11 +15,17 @@ export function CurrencyPicker(props: Props) {
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
-	const [currencyRate, setCurrencyRate] = useState<number | undefined>();
+	const [currencyRate, setCurrencyRate] = useState<number>();
 
 	useEffect(() => {
-		setCurrencyRate(value ? Number(value) : undefined);
+		setCurrencyRate(value);
 	}, [value]);
+
+	function handleSaveClick() {
+		if (!currencyRate) return;
+		onChange(currencyRate);
+		closePopup();
+	}
 
 	return (
 		<>
@@ -43,13 +49,7 @@ export function CurrencyPicker(props: Props) {
 							/>
 						</label>
 					</div>
-					<Button
-						onClick={() => {
-							onChange(currencyRate ? Number(currencyRate) : undefined);
-							closePopup();
-						}}
-						type={ButtonType.main}
-					>
+					<Button onClick={handleSaveClick} type={ButtonType.main}>
 						Change currency rate
 					</Button>
 				</div>

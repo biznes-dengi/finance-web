@@ -37,25 +37,21 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 				className={cn(
 					'block cursor-pointer rounded-2xl bg-field p-4 duration-200 focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
-					!!errorText && 'bg-[#FDE3E5]',
+					!!errorText && '!bg-[#FDE3E5]',
 				)}
 			>
 				<div className='flex items-center justify-between'>
 					<LoadingWrapper isLoading={!!isLoading} className='mb-1 h-6 w-20'>
 						<div
-							className={cn('mr-4 flex min-w-40 items-center gap-2', isMultipleOptions && 'cursor-pointer')}
+							className={cn('mr-4 flex min-w-40 items-center gap-1.5', isMultipleOptions && 'cursor-pointer')}
 							onClick={openPopup}
 						>
 							{activeOption?.image &&
 								styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
 
-							<div className='truncate text-xl'>{activeOption?.name}</div>
+							<div className='truncate'>{activeOption?.name}</div>
 
-							{isMultipleOptions && (
-								<div className='size-4 flex-shrink-0 text-black'>
-									<Icon type='selectChevron' />
-								</div>
-							)}
+							{isMultipleOptions && <Icon type='selectChevron' className='size-3 flex-shrink-0' />}
 						</div>
 					</LoadingWrapper>
 
@@ -90,7 +86,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 					</div>
 				</div>
 
-				<div className='mt-1.5 flex justify-between'>
+				<div className='mt-1 flex justify-between'>
 					<LoadingWrapper isLoading={!!isLoading} className='mb-1 h-4 w-10'>
 						<div
 							className={cn(

@@ -25,20 +25,18 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 	const [activeOption, setActiveOption] = useState<AmountFieldOption | null>(null);
 	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
 
-	const [amount, setAmount] = useState<string>('');
+	const [amount, setAmount] = useState('');
 	const [date, setDate] = useState<Date>(new DateService().value!);
 
 	useEffect(() => {
 		if (itemDetails) {
-			return setActiveOption(TransactionPageHelpers.mapItemDataToOption(itemDetails));
+			setActiveOption(TransactionPageHelpers.mapItemDataToOption(itemDetails));
 		}
 
 		if (items) {
 			setOptions(items.map(TransactionPageHelpers.mapItemDataToOption));
-			return setActiveOption(TransactionPageHelpers.mapItemDataToOption(items[0]));
+			setActiveOption(TransactionPageHelpers.mapItemDataToOption(items[0]));
 		}
-
-		return setActiveOption(null);
 	}, [itemDetails, items]);
 
 	function handleActionClick() {

@@ -1,101 +1,123 @@
 import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Box, Button, ButtonType, CurrencyPicker, DatePicker, Icon, AmountField, PageHeader} from '@shared/ui';
+import {
+	AmountField,
+	type AmountFieldOption,
+	Box,
+	Button,
+	ButtonType,
+	CurrencyPicker,
+	DatePicker,
+	Icon,
+	PageHeader,
+} from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {GoalModel} from '@entities/goal';
-import {cn, DateService, isEqual, isNumber} from '@shared/lib';
+import {cn, DateService, isEqual, isNumber, useResponsive} from '@shared/lib';
+import {TransactionPageHelpers} from '@shared/ui/transaction-page/lib/TransactionPage.helpers.ts';
 
 // const initialExchangeRate = 3.9071; for zł
 const initialExchangeRate = 1;
 
 export function GoalTransferPage() {
-	const [exchangeRate, setExchangeRate] = useState<number>(initialExchangeRate);
-
-	const navigate = useNavigate();
-
-	const [date, setDate] = useState<Date>(new DateService().value);
+	const [exchangeRate, setExchangeRate] = useState(initialExchangeRate);
 
 	const {goals} = GoalModel.useItems({filter: {pageNumber: 0}});
-	const options = goals?.map((option) => ({
-		...option,
-		image: <div className='h-10 w-10 rounded-full bg-primary-grey' />,
-	}));
-	// think about how to type activeOption
-	const [fromActiveOption, setFromActiveOption] = useState(options?.[0]);
-	const [fromGoalAmount, setFromGoalAmount] = useState<number | undefined>();
 
-	const [toActiveOption, setToActiveOption] = useState(options?.[1]);
-	const [toGoalAmount, setToGoalAmount] = useState<number | undefined>();
+	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
+	const [fromActiveOption, setFromActiveOption] = useState<AmountFieldOption | null>(null);
+	const [toActiveOption, setToActiveOption] = useState<AmountFieldOption | null>(null);
+	const [fromGoalAmount, setFromGoalAmount] = useState('');
+	const [toGoalAmount, setToGoalAmount] = useState('');
 
 	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
-	const {transfer, isTransferLoading, isTransferSuccess, isTransferError} = GoalModel.useTransfer();
+	const [date, setDate] = useState<Date>(new DateService().value);
+
+	const {transferGoal, isTransferGoalLoading} = GoalModel.useTransfer();
+
+	const {isMobile} = useResponsive();
 
 	useEffect(() => {
-		if (!options) return;
+		if (!goals) return;
+
+		const options = goals.map(TransactionPageHelpers.mapItemDataToOption);
+
 		setFromActiveOption(options[0]);
 		setToActiveOption(options[1]);
+		setOptions(options);
 	}, [goals]);
+
+	function handleFromAmountChange(fromValue: string) {
+		setFromGoalAmount(fromValue);
+
+		// setToGoalAmount(fromValue ? Number((fromValue * exchangeRate).toFixed(2)) : undefined);
+	}
+	function handleToAmountChange(toValue: string) {
+		setToGoalAmount(toValue);
+
+		// if (isNumber(fromGoalAmount)) {
+		// 	handleCurrencyRateChange(toValue ? toValue / fromGoalAmount : initialExchangeRate);
+		// }
+		//
+		// if (!isNumber(fromGoalAmount)) {
+		// 	setFromGoalAmount(toValue ? Number((toValue * exchangeRate).toFixed(2)) : undefined);
+		// }
+	}
+
+	function handleFromOptionSelect(activeOption: AmountFieldOption) {
+		setFromActiveOption(activeOption);
+		if (toActiveOption && isEqual(activeOption.id, toActiveOption.id)) {
+			setToActiveOption(fromActiveOption);
+		}
+	}
+
+	function handleToOptionSelect(activeOption: AmountFieldOption) {
+		if (isEqual(activeOption.id, fromActiveOption?.id)) {
+			setFromActiveOption(toActiveOption);
+		}
+		setToActiveOption(activeOption);
+	}
 
 	function handleCurrencyRateChange(value: number | undefined) {
 		setExchangeRate(value ? Number(value.toFixed(4)) : initialExchangeRate);
 	}
 
-	function handleFromAmountChange(fromValue: number | undefined) {
-		setFromGoalAmount(fromValue);
+	function handleCurrencyChange(value: number) {
+		handleCurrencyRateChange(value);
 
-		setToGoalAmount(fromValue ? Number((fromValue * exchangeRate).toFixed(2)) : undefined);
-	}
-	function handleToAmountChange(toValue: number | undefined) {
-		setToGoalAmount(toValue);
-
-		if (isNumber(fromGoalAmount)) {
-			handleCurrencyRateChange(toValue ? toValue / fromGoalAmount : initialExchangeRate);
-		}
-
-		if (!isNumber(fromGoalAmount)) {
-			setFromGoalAmount(toValue ? Number((toValue * exchangeRate).toFixed(2)) : undefined);
+		if (isNumber(toGoalAmount) && isNumber(fromGoalAmount) && value) {
+			setToGoalAmount((fromGoalAmount * value).toFixed(2));
 		}
 	}
+
 	function handleTransferClick() {
 		if (!fromActiveOption || !toActiveOption || !fromGoalAmount || !toGoalAmount) return;
 
-		const payload = {
-			fromGoalId: fromActiveOption.id,
-			toGoalId: toActiveOption.id,
-			fromGoalAmount,
-			toGoalAmount,
-			date: new DateService(date).getPayloadDateFormat(),
-		};
-
-		transfer({payload});
-	}
-
-	if (isTransferSuccess || isTransferError) {
-		setTimeout(() => {
-			navigate(APP_PATH.home);
-		}, 2000);
+		transferGoal({
+			payload: {
+				fromGoalId: fromActiveOption.id!,
+				toGoalId: toActiveOption.id!,
+				fromGoalAmount: Number(fromGoalAmount),
+				toGoalAmount: Number(toGoalAmount),
+				date: new DateService(date).getPayloadDateFormat(),
+			},
+		});
 	}
 
 	const isFromAmountError =
-		isNumber(fromGoalAmount) && fromActiveOption && fromGoalAmount > fromActiveOption.balance.amount;
+		!!fromGoalAmount && !!fromActiveOption && Number(fromGoalAmount) > Number(fromActiveOption.amount);
 
 	return (
 		<>
 			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.home} />
 
-			<Box basePaddingX className='relative flex-1'>
-				<Box className='flex flex-col gap-2'>
+			<div className='relative flex-1 px-4'>
+				<div className='flex flex-col gap-2'>
 					<AmountField
 						value={fromGoalAmount}
 						onChange={handleFromAmountChange}
 						activeOption={fromActiveOption}
-						setActiveOption={(activeOption) => {
-							setFromActiveOption(activeOption);
-							if (isEqual(activeOption.id, toActiveOption?.id)) {
-								setToActiveOption(fromActiveOption);
-							}
-						}}
+						setActiveOption={handleFromOptionSelect}
 						options={options}
 						errorText={isFromAmountError && 'exceeds balance'}
 						withMinus
@@ -115,70 +137,34 @@ export function GoalTransferPage() {
 						value={toGoalAmount}
 						onChange={handleToAmountChange}
 						activeOption={toActiveOption}
-						setActiveOption={(activeOption) => {
-							if (isEqual(activeOption.id, fromActiveOption?.id)) {
-								setFromActiveOption(toActiveOption);
-							}
-							setToActiveOption(activeOption);
-						}}
+						setActiveOption={handleToOptionSelect}
 						options={options}
 						withPlus
 						isAutoFocusDisabled
 					/>
-				</Box>
+				</div>
 
 				<Box baseMarginY className='flex flex-col gap-3'>
 					<CurrencyPicker
 						buttonText={`1 $ = ${exchangeRate ?? ''} $`}
 						value={exchangeRate}
-						onChange={(value) => {
-							handleCurrencyRateChange(value);
-
-							if (isNumber(toGoalAmount) && isNumber(fromGoalAmount) && value) {
-								setToGoalAmount(Number((fromGoalAmount * value).toFixed(2)));
-							}
-						}}
+						onChange={handleCurrencyChange}
 					/>
 
 					<DatePicker value={date} onChange={setDate} />
 				</Box>
-			</Box>
+			</div>
 
-			<Box basePadding className='flex items-center justify-center'>
+			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
 					type={ButtonType.main}
 					onClick={handleTransferClick}
-					disabled={!isNumber(fromGoalAmount) || !isNumber(toGoalAmount) || isFromAmountError}
-					className='w-[375px]'
+					disabled={!fromGoalAmount || !toGoalAmount}
+					isLoading={isTransferGoalLoading}
 				>
-					{isTransferLoading ? 'Loading...' : APP_TEXT.transfer}
+					{APP_TEXT.transfer}
 				</Button>
-			</Box>
-
-			{/*<StatusPopup isOpen={isTransferSuccess || isTransferError} status={} statusTextKey={}*/}
-			{/*	{isTransferSuccess && fromGoalAmount && fromActiveOption && toActiveOption && (*/}
-			{/*		<Box baseMarginY className='text-center'>*/}
-			{/*			<div className='mb-4 flex justify-center'>*/}
-			{/*				<div className='size-16 text-primary-violet'>SuccessIcon</div>*/}
-			{/*			</div>*/}
-			{/*			<div>*/}
-			{/*				<span className='font-medium text-primary-violet'>*/}
-			{/*					{fromGoalAmount} {CURRENCY_MAP[fromActiveOption.balance.currency].symbol}{' '}*/}
-			{/*				</span>*/}
-			{/*				has been transferred from <span className='font-medium text-primary-violet'>{fromActiveOption.name}</span>{' '}*/}
-			{/*				to <span className='font-medium text-primary-violet'>{toActiveOption.name}</span>*/}
-			{/*			</div>*/}
-			{/*		</Box>*/}
-			{/*	)}*/}
-			{/*	{isTransferError && (*/}
-			{/*		<Box baseMarginY className='text-center'>*/}
-			{/*			<div className='mb-4 flex justify-center'>*/}
-			{/*				<div className='size-16 text-primary-violet'>ErrorIcon</div>*/}
-			{/*			</div>*/}
-			{/*			<div>Some error occur during transferring</div>*/}
-			{/*		</Box>*/}
-			{/*	)}*/}
-			{/*</StatusPopup>*/}
+			</div>
 		</>
 	);
 }

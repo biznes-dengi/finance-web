@@ -80,9 +80,9 @@ export type MutationProps = {
 
 	useTransfer: {
 		payload: {
-			fromGoalId: number;
+			fromGoalId: string | number;
 			fromGoalAmount: number;
-			toGoalId: number;
+			toGoalId: string | number;
 			toGoalAmount: number;
 			date: string;
 		};
