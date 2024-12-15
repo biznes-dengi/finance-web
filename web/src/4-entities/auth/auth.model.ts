@@ -2,7 +2,7 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import {useNavigate} from 'react-router-dom';
 import {AuthApi} from '@entities/auth';
 import {APP_PATH} from '@shared/constants';
-import {runAfterStatusPopup} from '@shared/ui';
+import {StatusPopupHelpers} from '@shared/ui';
 
 // permissions
 // featureAccess
@@ -33,7 +33,7 @@ export class AuthModel {
 				return AuthApi.signup(payload);
 			},
 			onSuccess: () => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.home);
 				});
 			},

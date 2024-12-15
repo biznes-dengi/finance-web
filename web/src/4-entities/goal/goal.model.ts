@@ -4,7 +4,7 @@ import {GoalApi} from './goal.api.ts';
 import {type InitialData, type MutationProps, type Props} from './goal.types.ts';
 import {AuthModel} from '@entities/auth';
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
-import {runAfterStatusPopup} from '@shared/ui';
+import {StatusPopupHelpers} from '@shared/ui';
 
 /**
  * начиная с useTotalBalance добавить goal в return {}, для специфичности, а иначе можно просто возвращать useQuery
@@ -123,12 +123,12 @@ export class GoalModel {
 				});
 			},
 			onSuccess: (data) => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(data.id));
 				});
 			},
 			onError: () => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goalList);
 				});
 			},
@@ -156,7 +156,7 @@ export class GoalModel {
 				});
 			},
 			onSuccess: (data: any) => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: [`goal-details-${data.id}`]});
 				});
 			},
@@ -185,7 +185,7 @@ export class GoalModel {
 				});
 			},
 			onSuccess: () => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: ['goal-items']});
 					navigate(APP_PATH.goalList);
 				});
@@ -214,7 +214,7 @@ export class GoalModel {
 				});
 			},
 			onSettled: (goal: any) => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
@@ -242,7 +242,7 @@ export class GoalModel {
 				});
 			},
 			onSettled: (goal: any) => {
-				runAfterStatusPopup(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},

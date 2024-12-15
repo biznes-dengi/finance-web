@@ -1,8 +1,10 @@
 import {STATUS_POPUP_TEXT} from '@shared/ui';
 
-export type StatusDialogProps = {
+export type StatusTextKey = keyof typeof STATUS_POPUP_TEXT;
+
+export type StatusPopupProps = {
 	isOpen: boolean;
 	status: 'success' | 'error' | 'congratulations';
-	statusTextKey: keyof typeof STATUS_POPUP_TEXT;
+	statusTextKey: StatusTextKey;
 	statusTextProps?: any;
 };

@@ -6,18 +6,17 @@ export type AmountFieldBaseOption = {
 	currency: CURRENCY;
 	image?: any;
 	amount?: number;
-	id?: number;
+	id?: number | string;
 };
 
 export type AmountFieldProps<Option> = {
 	value: string;
 	onChange: (value: string) => void;
-	activeOption?: Option;
+	activeOption: Option | null;
 	isLoading?: boolean;
 	getCustomDescription?: (option: Option) => ReactNode;
-
-	setActiveOption?: (option: Option) => void;
 	options?: Option[];
+	setActiveOption?: (option: Option) => void;
 	errorText?: string | boolean;
 	withPlus?: boolean;
 	withMinus?: boolean;

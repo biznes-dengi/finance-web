@@ -1,13 +1,14 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useRef, useState} from 'react';
-import {statusDuration} from '../lib/StatusPopup.lib.ts';
-import {StatusDialogProps} from '../types/StatusPopup.types.ts';
-import {Icon, STATUS_POPUP_TEXT} from '@shared/ui';
+import {statusDuration} from '../lib/StatusPopup.helpers.ts';
+import {StatusPopupProps} from '../types/StatusPopup.types.ts';
+import {STATUS_POPUP_TEXT} from '../constants/StatusPopup.constants.tsx';
+import {Icon} from '@shared/ui';
 import {cn} from '@shared/lib';
 
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
-export function StatusPopup(props: StatusDialogProps) {
+export function StatusPopup(props: StatusPopupProps) {
 	const {isOpen, status, statusTextKey, statusTextProps} = props;
 
 	const [progress, setProgress] = useState(0);

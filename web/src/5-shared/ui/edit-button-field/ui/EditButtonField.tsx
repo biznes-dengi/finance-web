@@ -71,7 +71,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 					<TextField value={value as string} onChange={(value) => onChange(value as Value)} placeholder={title} />
 				)}
 
-				{type === 'amount' && (
+				{type === 'amount' && activeOption && (
 					<AmountField
 						value={value as string}
 						onChange={(value) => onChange(value as Value)}
