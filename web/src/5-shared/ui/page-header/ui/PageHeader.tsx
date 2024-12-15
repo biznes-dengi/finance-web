@@ -17,6 +17,7 @@ export function PageHeader(props: PageHeaderProps) {
 		className,
 		stepsCount,
 		activeStepIndex,
+		appleTitle,
 	} = props;
 
 	const navigate = useNavigate();
@@ -29,7 +30,7 @@ export function PageHeader(props: PageHeaderProps) {
 	return (
 		<div
 			role='page-header'
-			className={cn('mb-6 flex w-full flex-col items-start gap-2 px-4 pt-4', isNumber(stepsCount) && 'pt-2', className)}
+			className={cn('mb-6 flex w-full flex-col items-start gap-4 px-4 pt-4', isNumber(stepsCount) && 'pt-2', className)}
 		>
 			{isNumber(stepsCount) && isNumber(activeStepIndex) && (
 				<div className='flex w-full gap-0.5'>
@@ -44,18 +45,38 @@ export function PageHeader(props: PageHeaderProps) {
 					))}
 				</div>
 			)}
-			{withBackButton && (
-				<Button
-					type={ButtonType.icon}
-					icon={
-						<div className='flex items-center justify-center'>
-							<Icon type='backButton' className='size-5' />
-						</div>
-					}
-					onClick={onBackButtonClick}
-					isOnlyIcon
-				/>
+
+			{appleTitle ? (
+				<div className={cn('flex w-full items-center justify-between')}>
+					{withBackButton && (
+						<Button
+							type={ButtonType.icon}
+							icon={
+								<div className='flex items-center justify-center'>
+									<Icon type='backButton' className='size-5' />
+								</div>
+							}
+							onClick={onBackButtonClick}
+							isOnlyIcon
+						/>
+					)}
+					<div className='absolute left-1/2 -translate-x-1/2 transform font-bold'>{appleTitle}</div>
+				</div>
+			) : (
+				withBackButton && (
+					<Button
+						type={ButtonType.icon}
+						icon={
+							<div className='flex items-center justify-center'>
+								<Icon type='backButton' className='size-5' />
+							</div>
+						}
+						onClick={onBackButtonClick}
+						isOnlyIcon
+					/>
+				)
 			)}
+
 			{title && <div className='text-3xl font-bold'>{title}</div>}
 			{description && <div className='font-medium'>{description}</div>}
 			{subDescription && <div className='text-sm font-light text-primary-grey'>{subDescription}</div>}

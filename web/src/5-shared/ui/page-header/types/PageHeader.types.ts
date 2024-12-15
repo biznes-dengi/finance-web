@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 
 export type PageHeaderProps = {
+	appleTitle?: string;
 	title?: string;
 	description?: ReactNode;
 	subDescription?: ReactNode;

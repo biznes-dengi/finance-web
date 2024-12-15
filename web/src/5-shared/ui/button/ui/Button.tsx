@@ -64,7 +64,7 @@ export function Button(props: Props) {
 			<button
 				{...buttonProps}
 				className={gcn(
-					'block w-full rounded-3xl py-3 text-center text-white active:scale-100',
+					'block w-full rounded-3xl p-3 text-center text-white active:scale-100 ',
 					disabled
 						? isSecondary
 							? 'cursor-not-allowed bg-secondary-violet/20'

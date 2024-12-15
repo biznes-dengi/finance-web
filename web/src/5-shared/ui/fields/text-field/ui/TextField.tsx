@@ -70,15 +70,15 @@ export function TextField(props: Props) {
 				className={cn(
 					'group flex cursor-text items-center rounded-2xl bg-field p-4 transition-colors duration-300 ease-in-out focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
-					isSearch && 'rounded-3xl p-1',
+					isSearch && 'rounded-3xl px-3 py-1',
 				)}
 				onClick={focusInput}
 			>
-				{isSearch && <Icon type='search' className='mx-1 size-4 text-primary-grey' />}
+				{isSearch && <Icon type='search' className='mr-2 size-4 text-primary-grey' />}
 
 				<input
 					ref={inputRef}
-					className='w-full bg-inherit font-light caret-primary-violet outline-none'
+					className={cn('w-full bg-inherit font-light caret-primary-violet outline-none', isSearch && 'py-1 text-sm')}
 					type={type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type}
 					inputMode={type === 'email' ? 'email' : 'text'}
 					value={value}

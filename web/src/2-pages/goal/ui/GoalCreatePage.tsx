@@ -15,18 +15,14 @@ import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
 import {cn, DateService, useResponsive} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone', 'Education'];
-const initialStepIndex = 0;
-const initialName = '';
-const initialTargetAmount = '';
 const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
 
 export function GoalCreatePage() {
-	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
+	const [activeStepIndex, setActiveStepIndex] = useState(0);
 
-	/** Form state */
-	const [name, setName] = useState(initialName);
+	const [name, setName] = useState('');
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
-	const [targetAmount, setTargetAmount] = useState(initialTargetAmount);
+	const [targetAmount, setTargetAmount] = useState('');
 	const [deadline, setDeadline] = useState<Date>();
 
 	const {createGoal, isCreateGoalLoading, isCreateGoalSuccess, isCreateGoalError} = GoalModel.useCreateItem();
@@ -67,10 +63,10 @@ export function GoalCreatePage() {
 
 	return (
 		<>
-			{activeStepIndex !== initialStepIndex && Header}
+			{activeStepIndex !== 0 && Header}
 
 			<div className='flex-grow'>
-				{activeStepIndex === initialStepIndex && (
+				{activeStepIndex === 0 && (
 					<>
 						<GoalImageField isCreatePage>{Header}</GoalImageField>
 						<div className='mt-4 px-4'>
@@ -79,13 +75,15 @@ export function GoalCreatePage() {
 						{!name && (
 							<div className={cn('flex flex-wrap gap-2 p-4')}>
 								{hints.map((hint, index) => (
-									<div
+									<Button
+										type={ButtonType.main}
 										key={hint + index}
-										className='w-fit cursor-pointer rounded-2xl bg-secondary-violet px-2.5 py-1.5 text-sm text-primary-violet'
+										className='w-fit px-2.5 py-1.5 text-sm'
 										onClick={() => setName(hint)}
+										isSecondary
 									>
 										{hint}
-									</div>
+									</Button>
 								))}
 							</div>
 						)}
@@ -98,7 +96,7 @@ export function GoalCreatePage() {
 							options={currencyOptions}
 							onChange={(value) => {
 								setCurrency(value);
-								setTargetAmount(initialTargetAmount);
+								setTargetAmount('');
 							}}
 							value={currency}
 						/>
@@ -116,14 +114,11 @@ export function GoalCreatePage() {
 				)}
 			</div>
 
-			<div className={cn('p-4', activeStepIndex === 2 && 'flex gap-2', !isMobile && 'w-96 self-center')}>
+			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
 					type={ButtonType.main}
 					onClick={activeStepIndex === 2 ? handleCreateClick : () => setActiveStepIndex(activeStepIndex + 1)}
-					disabled={
-						(activeStepIndex === 0 && name === initialName) ||
-						(activeStepIndex === 2 && targetAmount === initialTargetAmount)
-					}
+					disabled={(activeStepIndex === 0 && !name) || (activeStepIndex === 2 && !targetAmount)}
 					isLoading={isCreateGoalLoading}
 				>
 					{activeStepIndex === 2 ? APP_TEXT.create : APP_TEXT.continue}
