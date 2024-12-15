@@ -1,8 +1,7 @@
 import {useState} from 'react';
-import {Icon, Box, Card, Item, TextField} from '@shared/ui';
-import {APP_TEXT} from '@shared/constants';
+import {Card, Icon, Item, TextField} from '@shared/ui';
+import {APP_TEXT, CURRENCY} from '@shared/constants';
 import {cn, isNumber} from '@shared/lib';
-import {CURRENCY} from '@shared/constants';
 import {Props} from '../types/SelectWithSearch.types.ts';
 
 // cпроектирован под select currency
@@ -36,9 +35,9 @@ export function SelectWithSearch(props: Props) {
 
 	return (
 		<>
-			<Box baseMarginBottom>
+			<div className='mb-4'>
 				<TextField value={search} onChange={setSearch} placeholder={APP_TEXT.search} isSearch />
-			</Box>
+			</div>
 
 			<Card>
 				{selectOptions

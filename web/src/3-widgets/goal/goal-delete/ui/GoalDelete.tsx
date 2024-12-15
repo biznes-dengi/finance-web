@@ -15,7 +15,7 @@ export function GoalDelete() {
 			isLoading={isDeleteGoalLoading}
 			isSuccess={isDeleteGoalSuccess}
 			isError={isDeleteGoalError}
-			handleDelete={() => deleteGoal({params: {id}})}
+			handleDelete={() => deleteGoal({params: {id: id!}})}
 		>
 			<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
 				{APP_TEXT.deleteGoal}

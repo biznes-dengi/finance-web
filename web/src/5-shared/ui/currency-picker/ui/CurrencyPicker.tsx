@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {cn} from '@shared/lib';
-import {Box, Button, ButtonType, Popup, Icon, usePopupState} from '@shared/ui';
+import {Button, ButtonType, Icon, Popup, usePopupState} from '@shared/ui';
 
 type Props = {
 	buttonText: ReactNode;
@@ -29,11 +29,11 @@ export function CurrencyPicker(props: Props) {
 
 	return (
 		<>
-			<Box>
+			<div>
 				<Button icon={<Icon type='trendUp' />} onClick={openPopup}>
 					{buttonText}
 				</Button>
-			</Box>
+			</div>
 
 			<Popup {...popupProps}>
 				<div className='flex w-full flex-col gap-4'>

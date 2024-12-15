@@ -16,19 +16,18 @@ export * from './edit-button-field/ui/EditButtonField.tsx';
 export * from './date-picker/ui/DatePicker.tsx';
 export * from './currency-picker/ui/CurrencyPicker.tsx';
 export * from './transaction-page/ui/TransactionPage.tsx';
+export * from './page-header/ui/PageHeader.tsx';
+export * from './icon/ui/Icon.tsx';
+export * from './popup/ui/Popup.tsx';
+export * from './popup/hooks/usePopupState.ts';
+export * from './item/ui/Item.tsx';
+export * from './item/ui/LoadingItem.tsx';
+export * from './item/ui/ItemImageWithProgress.tsx';
 
 // new pattern -> get rid of index.ts
 
 export * from './Tabs.tsx';
-export * from './icon/ui/Icon.tsx';
-export * from './EmptyState.tsx';
-export * from './box/ui/Box.tsx';
-export * from './page-header/ui/PageHeader.tsx';
-export * from './Stepper.tsx';
-
 export * from './button';
-export * from './popup';
-export * from './item';
 export * from './preload-skeleton';
 export * from './list';
 export * from './select-in-card';

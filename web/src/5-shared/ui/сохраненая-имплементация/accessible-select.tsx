@@ -1,5 +1,5 @@
 import {Listbox, ListboxButton, ListboxOption, ListboxOptions} from '@headlessui/react';
-import {Box, Icon, Item} from '@shared/ui';
+import {Icon, Item} from '@shared/ui';
 import {Fragment, ReactNode} from 'react';
 import Drawer from '@mui/material/Drawer';
 import {cn, styleElement, useResponsive} from '@shared/lib';
@@ -98,10 +98,10 @@ export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: 
 			PaperProps={{className: 'rounded-t-2xl'}}
 			transitionDuration={200}
 		>
-			<Box className='flex flex-col bg-light-grey px-6 py-4'>
-				<Box className='flex items-center justify-between' baseMarginBottom>
+			<div className='flex flex-col bg-light-grey px-6 py-4'>
+				<div className='mb-4 flex items-center justify-between'>
 					<div />
-					<Box className='text-xl font-medium'>Goals</Box>
+					<div className='text-xl font-medium'>Goals</div>
 					<div
 						className={cn(
 							'flex size-7 items-center justify-center duration-300',
@@ -111,10 +111,10 @@ export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: 
 					>
 						<div className='h-6 w-6'>X</div>
 					</div>
-				</Box>
+				</div>
 
 				{children}
-			</Box>
+			</div>
 		</Drawer>
 	);
 }

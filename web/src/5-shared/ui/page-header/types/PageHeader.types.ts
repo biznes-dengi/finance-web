@@ -8,4 +8,6 @@ export type PageHeaderProps = {
 	handleBackButtonClick?: () => void;
 	withBackButton?: boolean;
 	className?: string;
+	stepsCount?: number;
+	activeStepIndex?: number;
 };

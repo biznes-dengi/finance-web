@@ -1,4 +1,4 @@
-import {Box, Button, Card, Item, ItemImageWithProgress, List, SelectInCard} from '@shared/ui';
+import {Button, Card, Item, ItemImageWithProgress, List, LoadingWrapper, SelectInCard} from '@shared/ui';
 import {buttonConfigs, defaultFilter, goalStatusOptions} from '../config/GoalManagement.config.tsx';
 import {GoalModel} from '@entities/goal';
 import {TextHelpers, useFilter} from '@shared/lib';
@@ -16,7 +16,7 @@ export function GoalManagement() {
 		<Card>
 			<div className='flex justify-between p-4'>
 				<div className='flex flex-col gap-1.5'>
-					<Box isLoading={isLoading} loadingSkeletonClassName='w-32 h-6 mt-2 mb-1.5'>
+					<LoadingWrapper isLoading={isLoading} className='mb-1.5 mt-2 h-6 w-32'>
 						{goalTotalBalance &&
 							(() => {
 								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split(',');
@@ -34,21 +34,15 @@ export function GoalManagement() {
 									</div>
 								);
 							})()}
-					</Box>
-					<Box
-						className='text-sm font-light text-primary-grey'
-						isLoading={isLoading}
-						loadingSkeletonClassName='w-16 h-[14px] mb-1'
-					>
-						{APP_TEXT.totalBalance}
-					</Box>
+					</LoadingWrapper>
+					<LoadingWrapper isLoading={isLoading} className='mb-1 h-[14px] w-16'>
+						<span className='text-sm font-light text-primary-grey'>{APP_TEXT.totalBalance}</span>
+					</LoadingWrapper>
 				</div>
 
-				<Box
-					className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-green-200'
-					isLoading={isLoading}
-					loadingSkeletonClassName='size-10 rounded-xl'
-				/>
+				<LoadingWrapper isLoading={isLoading} className='mb-1 size-10 rounded-xl'>
+					<div className='ml-2 flex size-10 shrink-0 items-center justify-center rounded-xl bg-green-200' />
+				</LoadingWrapper>
 			</div>
 
 			<div className='flex justify-between px-4 py-2'>

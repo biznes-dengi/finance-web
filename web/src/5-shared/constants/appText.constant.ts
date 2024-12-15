@@ -11,7 +11,7 @@ export const APP_TEXT = {
 	saved: 'Saved',
 	goalName: 'Goal name',
 	goals: 'Goals',
-	deadline: 'Срок',
+	deadline: 'Deadline',
 	addDeadline: 'Add deadline',
 	currency: 'Currency',
 	left: 'Осталось',
@@ -47,6 +47,10 @@ export const APP_TEXT = {
 	cancel: 'Cancel',
 	confirm: 'Confirm',
 	noDate: 'No date',
+	noDeadline: 'No deadline',
+	customise: 'Customise',
+	selectCurrency: 'Select a currency',
+	enterTargetAmount: 'Enter target amount',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

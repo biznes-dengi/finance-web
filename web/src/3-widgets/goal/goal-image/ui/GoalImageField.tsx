@@ -18,6 +18,7 @@ export function GoalImageField({children, isCreatePage}: {children: ReactNode; i
 	return (
 		<UploadField onUpload={alert}>
 			<div
+				role='upload-field'
 				className={cn(
 					'flex h-[310px] flex-col items-end justify-between bg-secondary-grey',
 					isUploading && 'bg-secondary-grey',

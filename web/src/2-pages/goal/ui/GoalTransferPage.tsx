@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import {
 	AmountField,
 	type AmountFieldOption,
-	Box,
 	Button,
 	ButtonType,
 	CurrencyPicker,
@@ -144,7 +143,7 @@ export function GoalTransferPage() {
 					/>
 				</div>
 
-				<Box baseMarginY className='flex flex-col gap-3'>
+				<div className='my-4 flex flex-col gap-3'>
 					<CurrencyPicker
 						buttonText={`1 $ = ${exchangeRate ?? ''} $`}
 						value={exchangeRate}
@@ -152,7 +151,7 @@ export function GoalTransferPage() {
 					/>
 
 					<DatePicker value={date} onChange={setDate} />
-				</Box>
+				</div>
 			</div>
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
