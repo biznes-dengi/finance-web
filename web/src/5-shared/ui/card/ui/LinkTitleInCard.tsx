@@ -8,7 +8,7 @@ export function LinkTitleInCard(props: LinkTitleInCardProps) {
 	const navigate = useNavigate();
 
 	return (
-		<div className='flex items-center gap-1' onClick={() => navigate(path)}>
+		<div className='flex w-fit cursor-pointer items-center gap-1' onClick={() => navigate(path)}>
 			<div>{title}</div>
 			<div>
 				<Icon type='chevronRight' className='size-2.5 text-primary-grey' />

@@ -4,4 +4,5 @@ export type LoadingWrapperProps = {
 	isLoading: boolean;
 	className: string;
 	children?: ReactNode;
+	loadingChildren?: ReactNode;
 };

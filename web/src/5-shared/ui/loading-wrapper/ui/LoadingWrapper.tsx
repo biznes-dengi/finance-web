@@ -2,10 +2,15 @@ import {PreloadSkeleton} from '@shared/ui';
 import {LoadingWrapperProps} from '../types/LoadingWrapper.types.ts';
 
 export function LoadingWrapper(props: LoadingWrapperProps) {
-	const {isLoading, className, children} = props;
+	const {isLoading, className, loadingChildren, children} = props;
 
 	if (isLoading) {
-		return <PreloadSkeleton className={className} />;
+		return (
+			<>
+				<PreloadSkeleton className={className} />
+				{loadingChildren}
+			</>
+		);
 	}
 
 	return children;

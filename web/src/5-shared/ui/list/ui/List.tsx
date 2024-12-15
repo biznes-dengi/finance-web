@@ -1,13 +1,13 @@
 import {Fragment} from 'react';
 import {getEmptyText} from '../lib/List.lib.ts';
 import {ListProps} from '../types/List.types.ts';
-import {Card, Item, ItemSkeleton} from '@shared/ui';
+import {Card, Item, LoadingItem} from '@shared/ui';
 
 export function List<R>(props: ListProps<R>) {
 	const {rows, renderRow, isLoading, emptyTextKey} = props;
 
 	if (isLoading) {
-		return <ItemSkeleton />;
+		return <LoadingItem withRightName />;
 	}
 
 	return (

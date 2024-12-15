@@ -1,6 +1,6 @@
 import {PreloadSkeleton} from '@shared/ui';
 
-export function ItemSkeleton({withRightNumbers}: {withRightNumbers?: boolean}) {
+export function LoadingItem({withRightName}: {withRightName?: boolean}) {
 	return (
 		<div className='rounded-2xl bg-white px-4 py-[18px]'>
 			<div className='flex'>
@@ -11,10 +11,10 @@ export function ItemSkeleton({withRightNumbers}: {withRightNumbers?: boolean}) {
 					<PreloadSkeleton className='h-3 w-16' />
 				</div>
 
-				{withRightNumbers && (
+				{withRightName && (
 					<div className='flex flex-col items-end justify-between'>
-						<PreloadSkeleton className='h-4 w-8' />
-						<PreloadSkeleton className='h-3 w-6' />
+						<PreloadSkeleton className='mb-1 h-4 w-10' />
+						{/*<PreloadSkeleton className='h-3 w-6' />*/}
 					</div>
 				)}
 			</div>

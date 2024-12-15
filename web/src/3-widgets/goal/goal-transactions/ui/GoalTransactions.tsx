@@ -3,10 +3,11 @@ import {getGoalProgressData} from '../../lib/goal.lib.ts';
 import {GoalModel} from '@entities/goal';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {Card, Item, LinkTitleInCard, List} from '@shared/ui';
-import {cn, DateService, TransactionHelpers} from '@shared/lib';
+import {DateService, TransactionHelpers} from '@shared/lib';
 
 export function GoalTransactions() {
 	const {id} = useParams();
+
 	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
@@ -32,13 +33,8 @@ export function GoalTransactions() {
 					return (
 						<Item
 							image={
-								<div
-									className={cn(
-										'flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet',
-										isCompleted && index === 0 && 'bg-green-100 text-green-600',
-									)}
-								>
-									{TransactionHelpers.getTransactionIcon(row)}
+								<div className='flex size-10 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
+									{TransactionHelpers.getTransactionIcon(row, isCompleted && index === 0)}
 								</div>
 							}
 							name={TransactionHelpers.getTransactionName(row)}

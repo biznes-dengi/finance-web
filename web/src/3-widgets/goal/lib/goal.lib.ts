@@ -13,7 +13,7 @@ export function getGoalProgressData(
 	const {balance, targetAmount} = itemDetails;
 
 	const percentage = Math.min(100, Math.floor((balance!.amount / (targetAmount as number)) * 100));
-	const isCompleted = percentage === 100;
+	const isCompleted = balance.amount >= targetAmount;
 
 	const ratio = TextHelpers.getRatio(balance!.amount, targetAmount as number, balance?.currency);
 

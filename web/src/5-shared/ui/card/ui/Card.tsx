@@ -1,6 +1,6 @@
 import {CardProps} from '../types/Card.types.ts';
 import {cn} from '@shared/lib';
-import {Box} from '@shared/ui';
+import {LoadingWrapper} from '@shared/ui';
 
 export function Card(props: CardProps) {
 	const {title, rightTitle, titleInCard, children, isLoading} = props;
@@ -9,7 +9,11 @@ export function Card(props: CardProps) {
 		<div>
 			{(title || rightTitle) && (
 				<div className={cn('flex pb-3', title && rightTitle && 'items-center justify-between')}>
-					{title && <div className='font-semibold'>{title}</div>}
+					{title && (
+						<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
+							<div className='font-semibold'>{title}</div>
+						</LoadingWrapper>
+					)}
 					{rightTitle}
 				</div>
 			)}
@@ -17,9 +21,9 @@ export function Card(props: CardProps) {
 			<div role='card' className='w-full rounded-2xl bg-white'>
 				{titleInCard && (
 					<div className='px-4 py-3 text-sm font-medium text-primary-grey'>
-						<Box isLoading={isLoading} loadingSkeletonClassName='my-0.5 h-4 w-10'>
+						<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
 							{titleInCard}
-						</Box>
+						</LoadingWrapper>
 					</div>
 				)}
 
