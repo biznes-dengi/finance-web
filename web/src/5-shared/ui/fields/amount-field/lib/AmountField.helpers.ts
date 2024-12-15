@@ -31,19 +31,15 @@ export class AmountFieldHelpers {
 
 	static getDescription<Option extends AmountFieldOption>(props: {
 		getCustomDescription?: (option: Option) => ReactNode;
-		activeOption: Option | null;
+		option: Option | null;
 	}) {
-		const {getCustomDescription, activeOption} = props;
+		const {getCustomDescription, option} = props;
 
-		if (getCustomDescription && activeOption) {
-			return getCustomDescription(activeOption);
+		if (getCustomDescription && option) {
+			return getCustomDescription(option);
 		}
 
-		return (
-			activeOption &&
-			isNumber(activeOption.amount) &&
-			TextHelpers.getBalance(activeOption.amount, activeOption.currency)
-		);
+		return option && isNumber(option.amount) && TextHelpers.getBalance(option.amount, option.currency);
 	}
 
 	static isItemSelected<Option extends AmountFieldOption>(option: Option, activeOption: Option | null) {

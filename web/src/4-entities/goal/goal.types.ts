@@ -16,6 +16,14 @@ export type Props = {
 		id?: string;
 		filter?: Payload;
 	};
+
+	useFund: {
+		isFromListPage?: boolean;
+	};
+
+	useWithdraw: {
+		isFromListPage?: boolean;
+	};
 };
 
 export type InitialData = {

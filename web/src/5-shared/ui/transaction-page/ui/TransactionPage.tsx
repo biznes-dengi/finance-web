@@ -21,6 +21,8 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 	} = props;
 
 	const [activeOption, setActiveOption] = useState<AmountFieldOption | null>(null);
+	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
+
 	const [amount, setAmount] = useState<string>('');
 	const [date, setDate] = useState<Date>(new DateService().value!);
 
@@ -30,6 +32,7 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 		}
 
 		if (items) {
+			setOptions(items.map(TransactionPageHelpers.mapItemDataToOption));
 			return setActiveOption(TransactionPageHelpers.mapItemDataToOption(items[0]));
 		}
 
@@ -57,6 +60,8 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 					value={amount}
 					onChange={setAmount}
 					activeOption={activeOption}
+					options={options}
+					setActiveOption={setActiveOption}
 					isLoading={isItemDataLoading}
 					errorText={showWithdrawValidation && 'exceeds balance'}
 					withPlus={actionType === 'fund'}

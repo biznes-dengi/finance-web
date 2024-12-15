@@ -200,7 +200,9 @@ export class GoalModel {
 		};
 	}
 
-	static useFund() {
+	static useFund(props?: Props['useFund']) {
+		const {isFromListPage = false} = props || {};
+
 		const {boardGoalId} = this.useBoardGoalId();
 
 		const navigate = useNavigate();
@@ -214,6 +216,8 @@ export class GoalModel {
 				});
 			},
 			onSettled: (goal: any) => {
+				if (isFromListPage) return;
+
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
@@ -228,7 +232,9 @@ export class GoalModel {
 		};
 	}
 
-	static useWithdraw() {
+	static useWithdraw(props?: Props['useWithdraw']) {
+		const {isFromListPage = false} = props || {};
+
 		const {boardGoalId} = this.useBoardGoalId();
 
 		const navigate = useNavigate();
@@ -242,6 +248,8 @@ export class GoalModel {
 				});
 			},
 			onSettled: (goal: any) => {
+				if (isFromListPage) return;
+
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
 				});

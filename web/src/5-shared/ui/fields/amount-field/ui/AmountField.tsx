@@ -29,9 +29,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 		closePopup();
 	}
 
-	const description = AmountFieldHelpers.getDescription<Option>({getCustomDescription, activeOption});
-
-	const isMultipleOptions = options?.length && options.length > 1 && setActiveOption;
+	const isMultipleOptions = Number(options?.length) > 1 && setActiveOption;
 
 	return (
 		<>
@@ -101,7 +99,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 							)}
 							onClick={() => !getCustomDescription && onChange(String(activeOption?.amount))}
 						>
-							{description}
+							{AmountFieldHelpers.getDescription<Option>({getCustomDescription, option: activeOption})}
 						</div>
 					</LoadingWrapper>
 
@@ -118,9 +116,14 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 								className={cn(AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && 'bg-light-grey')}
 								onClick={() => handleOptionSelect(option)}
 								image={option.image}
-								statusIcon={AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && <Icon type='check' />}
 								name={option.name}
-								description={description}
+								description={AmountFieldHelpers.getDescription<Option>({getCustomDescription, option})}
+								rightNode={
+									AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && <Icon type='check' /> && (
+										<Icon type='check' className='flex size-4 self-center text-primary-violet' />
+									)
+								}
+								// statusIcon={AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && <Icon type='check' />}
 							/>
 						)}
 					/>
