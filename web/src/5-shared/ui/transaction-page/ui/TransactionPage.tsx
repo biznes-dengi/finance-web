@@ -3,7 +3,7 @@ import {GoalDetailsTransactionPageProps} from '../types/TransactionPage.types.ts
 import {TransactionPageHelpers} from '../lib/TransactionPage.helpers.ts';
 import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
-import {DateService, isNumber, TextHelpers} from '@shared/lib';
+import {cn, DateService, isNumber, TextHelpers, useResponsive} from '@shared/lib';
 
 export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 	const {
@@ -19,6 +19,8 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 		errorMessageKey,
 		backPath,
 	} = props;
+
+	const {isMobile} = useResponsive();
 
 	const [activeOption, setActiveOption] = useState<AmountFieldOption | null>(null);
 	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
@@ -92,7 +94,7 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 				/>
 			)}
 
-			<div className='my-6 px-4'>
+			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button type={ButtonType.main} onClick={handleActionClick} disabled={!amount} isLoading={isActionLoading}>
 					{APP_TEXT[actionType]}
 				</Button>
