@@ -94,7 +94,7 @@ export class GoalApi {
 		});
 	}
 
-	static async fund(props: ApiProps['depositMoney']) {
+	static async fundItem(props: ApiProps['depositMoney']) {
 		const {
 			params: {boardGoalId, id},
 			payload,
@@ -108,7 +108,7 @@ export class GoalApi {
 		return {id};
 	}
 
-	static async withdraw(props: ApiProps['withdrawMoney']) {
+	static async withdrawItem(props: ApiProps['withdrawMoney']) {
 		const {
 			params: {boardGoalId, id},
 			payload,
@@ -122,7 +122,7 @@ export class GoalApi {
 		return {id};
 	}
 
-	static async transfer(props: ApiProps['transferMoney']) {
+	static async transferItem(props: ApiProps['transferMoney']) {
 		const {
 			params: {boardGoalId},
 			payload,

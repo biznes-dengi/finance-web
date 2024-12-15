@@ -89,8 +89,8 @@ export class GoalModel {
 		});
 
 		return {
-			totalBalance: data,
-			isTotalBalanceLoading: isFetching || isBoardGoalIdLoading,
+			goalTotalBalance: data,
+			isGoalTotalBalanceLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
 
@@ -135,10 +135,10 @@ export class GoalModel {
 		});
 
 		return {
-			createItem: mutate,
-			isCreateItemLoading: isPending,
-			isCreateItemSuccess: isSuccess,
-			isCreateItemError: isError,
+			createGoal: mutate,
+			isCreateGoalLoading: isPending,
+			isCreateGoalSuccess: isSuccess,
+			isCreateGoalError: isError,
 		};
 	}
 
@@ -210,7 +210,7 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-deposit-money'],
 			mutationFn: (props: MutationProps['useFund']) => {
-				return GoalApi.fund({
+				return GoalApi.fundItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.DEPOSIT},
 				});
@@ -242,7 +242,7 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-withdraw-money'],
 			mutationFn: (props: MutationProps['useWithdraw']) => {
-				return GoalApi.withdraw({
+				return GoalApi.withdrawItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.WITHDRAW},
 				});
@@ -270,7 +270,7 @@ export class GoalModel {
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-transfer-money'],
 			mutationFn: (props: MutationProps['useTransfer']) => {
-				return GoalApi.transfer({
+				return GoalApi.transferItem({
 					params: {boardGoalId: boardGoalId!},
 					payload: props.payload,
 				});
@@ -278,10 +278,10 @@ export class GoalModel {
 		});
 
 		return {
-			transfer: mutate,
-			isTransferLoading: isPending,
-			isTransferSuccess: isSuccess,
-			isTransferError: isError,
+			transferGoal: mutate,
+			isTransferGoalLoading: isPending,
+			isTransferGoalSuccess: isSuccess,
+			isTransferGoalError: isError,
 		};
 	}
 }

@@ -7,28 +7,28 @@ import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
 export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
 
-	const {totalBalance, isTotalBalanceLoading} = GoalModel.useTotalBalance();
+	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
 	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
 
-	const isLoading = isTotalBalanceLoading || isGoalsLoading;
+	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading;
 
 	return (
 		<Card>
 			<div className='flex justify-between p-4'>
 				<div className='flex flex-col gap-1.5'>
 					<Box isLoading={isLoading} loadingSkeletonClassName='w-32 h-6 mt-2 mb-1.5'>
-						{totalBalance &&
+						{goalTotalBalance &&
 							(() => {
-								const [int, float] = TextHelpers.getAmount(totalBalance.amount).split(',');
+								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split(',');
 								return (
 									<div>
 										<span className='text-3xl font-medium'>
 											<span>{int}</span>
-											{!float && <span> {CURRENCY_SYMBOL[totalBalance.currency]}</span>}
+											{!float && <span> {CURRENCY_SYMBOL[goalTotalBalance.currency]}</span>}
 										</span>
 										{float && (
 											<span className='text-xl font-bold'>
-												,{float} {CURRENCY_SYMBOL[totalBalance.currency]}
+												,{float} {CURRENCY_SYMBOL[goalTotalBalance.currency]}
 											</span>
 										)}
 									</div>

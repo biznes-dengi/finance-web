@@ -32,7 +32,7 @@ export function GoalCreatePage() {
 	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
 	const [deadline, setDeadline] = useState<Date>(new DateService().value);
 
-	const {createItem, isCreateItemLoading} = GoalModel.useCreateItem();
+	const {createGoal, isCreateGoalLoading} = GoalModel.useCreateItem();
 
 	function handleCreateClick() {
 		if (!targetAmount) return;
@@ -44,7 +44,7 @@ export function GoalCreatePage() {
 			deadline: new DateService(deadline).getPayloadDateFormat(),
 		};
 
-		createItem({payload});
+		createGoal({payload});
 	}
 
 	const activeOptionNotMapped = currencyOptions.find((option) => option.value === currency);
@@ -131,7 +131,7 @@ export function GoalCreatePage() {
 						if (activeStepIndex === 2) return targetAmount === initialTargetAmount;
 					})()}
 				>
-					{activeStepIndex === 2 ? (isCreateItemLoading ? 'Loading...' : APP_TEXT.create) : APP_TEXT.continue}
+					{activeStepIndex === 2 ? (isCreateGoalLoading ? 'Loading...' : APP_TEXT.create) : APP_TEXT.continue}
 				</Button>
 			</Box>
 
