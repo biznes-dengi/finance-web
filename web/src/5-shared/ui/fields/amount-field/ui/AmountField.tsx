@@ -41,7 +41,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 				)}
 			>
 				<div className='flex items-center justify-between'>
-					<LoadingWrapper isLoading={!!isLoading} className='mb-1 h-6 w-20'>
+					<LoadingWrapper isLoading={!!isLoading} className='mb-2 mt-1 h-4 w-20'>
 						<div
 							className={cn('mr-4 flex min-w-40 items-center gap-1.5', isMultipleOptions && 'cursor-pointer')}
 							onClick={openPopup}
@@ -56,7 +56,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 					</LoadingWrapper>
 
 					<div className='flex min-w-[1ch] flex-shrink'>
-						<LoadingWrapper isLoading={!!isLoading} className='mb-1 h-6 w-20'>
+						<LoadingWrapper isLoading={!!isLoading} className='mb-2 mt-1 h-4 w-10'>
 							<input
 								type='text'
 								inputMode='decimal'
