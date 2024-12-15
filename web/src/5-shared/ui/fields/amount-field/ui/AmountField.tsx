@@ -49,7 +49,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 							{activeOption?.image &&
 								styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
 
-							<div className='truncate'>{activeOption?.name}</div>
+							<div className='truncate font-medium'>{activeOption?.name}</div>
 
 							{isMultipleOptions && <Icon type='selectChevron' className='size-3 flex-shrink-0' />}
 						</div>
