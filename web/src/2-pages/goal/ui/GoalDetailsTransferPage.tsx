@@ -20,8 +20,8 @@ const initialExchangeRate = 1;
 
 export function GoalDetailsTransferPage() {
 	const {id} = useParams();
-	const {goalDetails} = GoalModel.useItemDetails({id});
-	const {goals} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
+	const {goals, isGoalsLoading} = GoalModel.useItems({filter: {pageNumber: 0}});
 
 	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
 	const [fromActiveOption, setFromActiveOption] = useState<AmountFieldOption | null>(null);
@@ -109,6 +109,7 @@ export function GoalDetailsTransferPage() {
 							}
 						}}
 						errorText={isFromAmountError && 'exceeds balance'}
+						isLoading={isGoalDetailsLoading || isGoalsLoading}
 						withMinus
 					/>
 
@@ -133,12 +134,13 @@ export function GoalDetailsTransferPage() {
 							setToActiveOption(activeOption);
 						}}
 						options={options}
+						isLoading={isGoalDetailsLoading || isGoalsLoading}
 						withPlus
 						isAutoFocusDisabled
 					/>
 				</div>
 
-				<div className='my-4 flex flex-col gap-3'>
+				<div className='my-4 flex flex-col gap-2'>
 					<CurrencyPicker
 						buttonText={`1 $ = ${exchangeRate ?? ''} $`}
 						value={exchangeRate}
@@ -150,8 +152,7 @@ export function GoalDetailsTransferPage() {
 							}
 						}}
 					/>
-
-					<DatePicker value={date} onChange={setDate} />
+					<DatePicker type='transactionDate' value={date} onChange={setDate} />
 				</div>
 			</div>
 

@@ -68,7 +68,7 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 					withMinus={actionType === 'withdraw'}
 				/>
 				<div className='my-4'>
-					<DatePicker value={date} onChange={setDate} />
+					<DatePicker type='transactionDate' value={date} onChange={setDate} />
 				</div>
 			</div>
 

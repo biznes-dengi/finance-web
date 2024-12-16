@@ -106,9 +106,8 @@ export function GoalCreatePage() {
 				{activeStepIndex === 2 && (
 					<div key={activeStepIndex} className='px-4'>
 						<AmountField value={targetAmount} onChange={setTargetAmount} activeOption={activeOption} />
-						<div className='mt-4 flex items-center px-4 text-sm'>
-							<div className='w-full justify-between font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
-							<DatePicker value={deadline} onChange={setDeadline} />
+						<div className='mt-4'>
+							<DatePicker type='deadline' value={deadline} onChange={setDeadline} />
 						</div>
 					</div>
 				)}

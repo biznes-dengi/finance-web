@@ -20,7 +20,7 @@ const initialExchangeRate = 1;
 export function GoalTransferPage() {
 	const [exchangeRate, setExchangeRate] = useState(initialExchangeRate);
 
-	const {goals} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const {goals, isGoalsLoading} = GoalModel.useItems({filter: {pageNumber: 0}});
 
 	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
 	const [fromActiveOption, setFromActiveOption] = useState<AmountFieldOption | null>(null);
@@ -119,6 +119,7 @@ export function GoalTransferPage() {
 						setActiveOption={handleFromOptionSelect}
 						options={options}
 						errorText={isFromAmountError && 'exceeds balance'}
+						isLoading={isGoalsLoading}
 						withMinus
 					/>
 
@@ -138,19 +139,19 @@ export function GoalTransferPage() {
 						activeOption={toActiveOption}
 						setActiveOption={handleToOptionSelect}
 						options={options}
+						isLoading={isGoalsLoading}
 						withPlus
 						isAutoFocusDisabled
 					/>
 				</div>
 
-				<div className='my-4 flex flex-col gap-3'>
+				<div className='my-4 flex flex-col gap-2'>
 					<CurrencyPicker
 						buttonText={`1 $ = ${exchangeRate ?? ''} $`}
 						value={exchangeRate}
 						onChange={handleCurrencyChange}
 					/>
-
-					<DatePicker value={date} onChange={setDate} />
+					<DatePicker type='transactionDate' value={date} onChange={setDate} />
 				</div>
 			</div>
 
