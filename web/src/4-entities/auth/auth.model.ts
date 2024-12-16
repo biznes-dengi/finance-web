@@ -1,30 +1,41 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {authApi} from '@entities/auth/auth.api.ts';
 import {useNavigate} from 'react-router-dom';
+import {AuthApi} from '@entities/auth';
 import {APP_PATH} from '@shared/constants';
+import {StatusPopupHelpers} from '@shared/ui';
 
-class AuthModel {
-	useAuthUser() {
-		const {data} = useQuery({
+// permissions
+// featureAccess
+// preferences
+// 	- ui-main-color
+// 	- language
+// 	- currency
+
+export class AuthModel {
+	static useAuthUser() {
+		const {data, isFetching} = useQuery({
 			queryKey: ['auth-user'],
-			queryFn: () => authApi.fetchAuthUser(),
+			queryFn: () => AuthApi.fetchAuthUser(),
 		});
 
-		return data;
+		return {
+			authUser: data,
+			isAuthUserLoading: isFetching,
+		};
 	}
 
-	useSignup() {
+	static useSignup() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['signup'],
 			mutationFn: (payload: any) => {
-				return authApi.signup(payload);
+				return AuthApi.signup(payload);
 			},
 			onSuccess: () => {
-				setTimeout(() => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.home);
-				}, 2500);
+				});
 			},
 			onError: () => {
 				alert('Signup failed');
@@ -39,13 +50,13 @@ class AuthModel {
 		};
 	}
 
-	useLogin() {
+	static useLogin() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['login'],
 			mutationFn: (payload: any) => {
-				return authApi.login(payload);
+				return AuthApi.login(payload);
 			},
 			onSuccess: () => {
 				navigate(APP_PATH.home);
@@ -63,13 +74,13 @@ class AuthModel {
 		};
 	}
 
-	useLogout() {
+	static useLogout() {
 		const navigate = useNavigate();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['logout'],
 			mutationFn: () => {
-				return authApi.logout();
+				return AuthApi.logout();
 			},
 			onSuccess: () => {
 				navigate(APP_PATH.login);
@@ -84,5 +95,3 @@ class AuthModel {
 		};
 	}
 }
-
-export const authModel = new AuthModel();

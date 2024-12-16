@@ -1,7 +1,7 @@
 import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction} from 'react-router-dom';
 
-export type Props = {
+export type ItemProps = {
 	image?: ReactElement;
 	statusIcon?: ReactNode;
 	name: ReactNode;
@@ -13,4 +13,5 @@ export type Props = {
 	rightNode?: ReactNode;
 	onClick?: (navigate: NavigateFunction) => void;
 	className?: string | boolean;
+	isSingle?: boolean;
 };

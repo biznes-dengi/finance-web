@@ -1,8 +1,8 @@
 import {Listbox, ListboxButton, ListboxOption, ListboxOptions} from '@headlessui/react';
-import {Box, Icon, Item} from '@shared/ui';
+import {Icon, Item} from '@shared/ui';
 import {Fragment, ReactNode} from 'react';
 import Drawer from '@mui/material/Drawer';
-import {cn, styleElement} from '@shared/lib';
+import {cn, styleElement, useResponsive} from '@shared/lib';
 
 // Работает, когда value = {name: string; value: any}
 
@@ -20,13 +20,22 @@ export function AccessibleSelectInCard({
 	onChange: any;
 	options: {name: string; value: any}[];
 }) {
+	const {isDesktop} = useResponsive();
+
 	return (
 		<Listbox value={value} onChange={onChange}>
 			{({open}) => (
 				<>
-					<ListboxButton className='flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey hover:cursor-pointer'>
+					<ListboxButton
+						className={cn(
+							'flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey',
+							isDesktop && 'hover:cursor-pointer',
+						)}
+					>
 						{value.name}
-						<div className='ml-1 size-4'>{Icon.chevronDown}</div>
+						<div className='ml-1 size-4'>
+							<Icon type='selectChevron' />
+						</div>
 					</ListboxButton>
 
 					<Dialog isOpen={open}>
@@ -79,6 +88,8 @@ export function AccessibleSelectInCard({
 export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: ReactNode}) {
 	const {children, isOpen, onClose} = props;
 
+	const {isDesktop} = useResponsive();
+
 	return (
 		<Drawer
 			anchor='bottom'
@@ -87,20 +98,23 @@ export function Dialog(props: {isOpen: boolean; onClose?: () => void; children: 
 			PaperProps={{className: 'rounded-t-2xl'}}
 			transitionDuration={200}
 		>
-			<Box className='flex flex-col bg-light-grey px-6 py-4'>
-				<Box className='flex items-center justify-between' baseMarginBottom>
+			<div className='flex flex-col bg-light-grey px-6 py-4'>
+				<div className='mb-4 flex items-center justify-between'>
 					<div />
-					<Box className='text-xl font-medium'>Savings</Box>
+					<div className='text-xl font-medium'>Goals</div>
 					<div
-						className='flex h-7 w-7 items-center justify-center duration-300 hover:cursor-pointer hover:rounded-full hover:bg-secondary-grey'
+						className={cn(
+							'flex size-7 items-center justify-center duration-300',
+							isDesktop && 'hover:cursor-pointer hover:rounded-full hover:bg-secondary-grey',
+						)}
 						onClick={onClose}
 					>
 						<div className='h-6 w-6'>X</div>
 					</div>
-				</Box>
+				</div>
 
 				{children}
-			</Box>
+			</div>
 		</Drawer>
 	);
 }

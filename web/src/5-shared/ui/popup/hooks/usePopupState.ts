@@ -1,12 +1,22 @@
-import {useRef} from 'react';
-import {DrawerRef} from '@shared/ui';
+import {useEffect, useState} from 'react';
 
-export function usePopupState() {
-	const dialogRef = useRef<DrawerRef>(null);
+export function usePopupState({initialState = false}: {initialState?: boolean} = {}) {
+	const [isOpen, setIsOpen] = useState(initialState);
+
+	useEffect(() => {
+		setIsOpen(initialState);
+	}, [initialState]);
+
+	function handleOpen() {
+		setIsOpen(true);
+	}
+	function handleClose() {
+		setIsOpen(false);
+	}
 
 	return {
-		dialogRef,
-		openDialog: () => dialogRef.current?.openDrawer(),
-		closeDialog: () => dialogRef.current?.closeDrawer(),
+		popupProps: {isOpen, setIsOpen},
+		openPopup: handleOpen,
+		closePopup: handleClose,
 	};
 }

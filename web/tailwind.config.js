@@ -4,6 +4,7 @@ export default {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
+			// primary-contract / primary-system
 			colors: {
 				black: '#191C1F',
 

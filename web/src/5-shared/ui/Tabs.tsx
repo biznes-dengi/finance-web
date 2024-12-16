@@ -30,6 +30,7 @@ export function Tabs(props: Props) {
 
 		const tabConfig = tabConfigs[index];
 
+		//@ts-ignore
 		tabConfig?.path && navigate(tabConfig.path);
 	}
 

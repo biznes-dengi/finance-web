@@ -1,1 +1,1 @@
-export * from './app.types.ts';
+export * from './balance.types.ts';

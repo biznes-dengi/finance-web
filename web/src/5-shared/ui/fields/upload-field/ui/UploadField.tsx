@@ -3,6 +3,12 @@ import React, {ChangeEvent, forwardRef, useId, useImperativeHandle, useRef} from
 import {UploadFieldProps, UploadFieldRef} from '@shared/ui';
 import {cn} from '@shared/lib';
 
+// function uploadFile() {
+// 	const controller = new AbortController();
+// 	const response = fetch('/upload', {method: 'POST', body: 'file', signal: controller.signal});
+// 	return {response, controller};
+// }
+
 export const UploadField = forwardRef<UploadFieldRef, UploadFieldProps>((props, ref) => {
 	const {onUpload, children, className, setIsFileDragging, setIsUploading, setUploadProgressPercent, isUploading} =
 		props;

@@ -1,35 +1,17 @@
 export enum CURRENCY {
 	USD = 'USD',
 	PLN = 'PLN',
-	BYN = 'BYN',
 	RUB = 'RUB',
-	EUR = 'EUR',
-	GBP = 'GBP',
 }
 
-export const CURRENCY_MAP = {
-	[CURRENCY.USD]: {
-		code: 'USD',
-		symbol: '$',
-	},
-	[CURRENCY.PLN]: {
-		code: 'USD',
-		symbol: '$',
-	},
-	[CURRENCY.BYN]: {
-		code: 'USD',
-		symbol: '$',
-	},
-	[CURRENCY.RUB]: {
-		code: 'RUB',
-		symbol: '₽',
-	},
-	[CURRENCY.EUR]: {
-		code: 'USD',
-		symbol: '$',
-	},
-	[CURRENCY.GBP]: {
-		code: 'USD',
-		symbol: '$',
-	},
+export const CURRENCY_SYMBOL = {
+	[CURRENCY.USD]: '$',
+	[CURRENCY.PLN]: 'zł',
+	[CURRENCY.RUB]: '₽',
+};
+
+export const CURRENCY_CODE = {
+	[CURRENCY.USD]: 'USD',
+	[CURRENCY.PLN]: 'PLN',
+	[CURRENCY.RUB]: 'RUB',
 };

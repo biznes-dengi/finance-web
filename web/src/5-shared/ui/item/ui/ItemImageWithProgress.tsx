@@ -1,8 +1,8 @@
 import Chart from 'react-apexcharts';
-import {TItemImageWithProgress} from '../types/ItemImageWithProgress.types.ts';
+import {type ItemImageWithProgressProps} from '../types/ItemImageWithProgress.types.ts';
 import {options} from '../config/ItemImageWithProgress.config.ts';
 
-export const ItemImageWithProgress = ({image, current, target}: TItemImageWithProgress) => {
+export const ItemImageWithProgress = ({image, current, target}: ItemImageWithProgressProps) => {
 	const series = [current, target - current];
 
 	return (

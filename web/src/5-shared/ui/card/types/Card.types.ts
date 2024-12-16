@@ -1,10 +1,14 @@
 import {ReactNode} from 'react';
-import {ClassValue} from 'clsx';
 
-export type Props = {
+export type CardProps = {
 	title?: ReactNode;
 	rightTitle?: ReactNode;
 	titleInCard?: ReactNode;
 	children: ReactNode;
-	withTitleSpace?: ClassValue;
+	isLoading?: boolean;
+};
+
+export type LinkTitleInCardProps = {
+	title: ReactNode;
+	path: string;
 };

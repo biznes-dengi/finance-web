@@ -26,5 +26,5 @@ export const options = {
 			enabled: false,
 		},
 	},
-	colors: ['#805CF5', '#F2EEFE'], // primary and secondary violet
+	colors: ['#805CF5', '#DFE3E7'], // primary violet and secondary grey
 } as ApexOptions;

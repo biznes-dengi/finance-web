@@ -1,24 +1,35 @@
-import {Item, Icon, List, Popup, PreloadSkeleton, usePopupState, AppIcon} from '@shared/ui';
+import {Icon, Item, List, Popup, PreloadSkeleton, usePopupState} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {Props} from '../types/SelectInCard.types.ts';
+import {cn, useResponsive} from '@shared/lib';
 
 export function SelectInCard<TValue>(props: Props<TValue>) {
-	const {value, onChange, options, isFetching} = props;
+	const {value, onChange, options, isLoading} = props;
 
-	const {dialogRef, openDialog, closeDialog} = usePopupState();
+	const {popupProps, openPopup, closePopup} = usePopupState();
 
-	if (isFetching) {
-		return <PreloadSkeleton width={40} height={16} />;
+	const {isDesktop} = useResponsive();
+
+	if (isLoading) {
+		return <PreloadSkeleton className='my-0.5 h-4 w-10' />;
 	}
 
 	return (
 		<>
-			<div className='flex w-fit cursor-pointer items-center hover:cursor-pointer' onClick={() => openDialog()}>
+			<div
+				className={cn(
+					'flex w-fit cursor-pointer items-center text-sm font-medium text-primary-grey',
+					isDesktop && 'hover:cursor-pointer',
+				)}
+				onClick={openPopup}
+			>
 				{options.find((option) => option.value === value)?.name}
-				<div className='ml-2 size-3'>{Icon.chevronDown}</div>
+				<div className='ml-2'>
+					<Icon type='selectChevron' className='size-2.5' />
+				</div>
 			</div>
 
-			<Popup ref={dialogRef} title={APP_TEXT.savings}>
+			<Popup {...popupProps} title={APP_TEXT.goals}>
 				<List
 					rows={options}
 					renderRow={(option) => {
@@ -27,10 +38,10 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 							<Item
 								name={option.name}
 								onClick={() => {
-									closeDialog();
+									closePopup();
 									setTimeout(() => onChange(option.value), 200);
 								}}
-								rightNode={checked && <AppIcon type='check' className='flex size-5 self-center text-primary-violet' />}
+								rightNode={checked && <Icon type='check' className='flex size-4 self-center text-primary-violet' />}
 								className={checked && 'bg-light-grey'}
 								isNameText
 							/>

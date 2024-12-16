@@ -1,49 +1,56 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useRef, useState} from 'react';
-import {AppIcon, STATUS_DIALOG_TEXT} from '@shared/ui';
-import {StatusDialogProps} from '../types/StatusPopup.types.ts';
+import {statusDuration} from '../lib/StatusPopup.helpers.ts';
+import {StatusPopupProps} from '../types/StatusPopup.types.ts';
+import {STATUS_POPUP_TEXT} from '../constants/StatusPopup.constants.tsx';
+import {Icon} from '@shared/ui';
 import {cn} from '@shared/lib';
 
 const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
 
-export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) {
+export function StatusPopup(props: StatusPopupProps) {
+	const {isOpen, status, statusTextKey, statusTextProps} = props;
+
 	const [progress, setProgress] = useState(0);
 
 	const openButtonRef = useRef<HTMLButtonElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
+	function openDrawer() {
+		openButtonRef.current?.click();
+	}
+	function closeDrawer() {
+		closeButtonRef.current?.click();
+	}
 
 	useEffect(() => {
 		if (!isOpen) return;
-
 		openDrawer();
+	}, [isOpen]);
+	useEffect(() => {
+		let animationFrameId: number;
+		const start = performance.now();
 
-		const duration = 2000; // 2 секунды для полного прогресса
-		const start = performance.now(); // Начальное время анимации
+		const animate = (time: number) => {
+			const elapsed = time - start;
+			const percentage = Math.min((elapsed / statusDuration) * 100, 100);
+			setProgress(percentage);
 
-		const animate = (time: any) => {
-			const elapsed = time - start; // Сколько времени прошло с начала анимации
-			const percentage = Math.min((elapsed / duration) * 100, 100); // Рассчитываем прогресс
-			setProgress(percentage); // Обновляем значение прогресса
-
-			if (elapsed < duration) {
-				requestAnimationFrame(animate); // Если ещё не завершено, продолжаем анимацию
+			if (elapsed < statusDuration) {
+				animationFrameId = requestAnimationFrame(animate);
 			}
 		};
 
-		requestAnimationFrame(animate); // Запускаем анимацию
+		animationFrameId = requestAnimationFrame(animate);
+		const timeoutId = setTimeout(closeDrawer, statusDuration);
 
-		setTimeout(closeDrawer, 2000);
+		return () => {
+			cancelAnimationFrame(animationFrameId);
+			clearTimeout(timeoutId);
+		};
 	}, [isOpen]);
 
-	function openDrawer() {
-		openButtonRef.current && openButtonRef.current.click();
-	}
-	function closeDrawer() {
-		closeButtonRef.current && closeButtonRef.current.click();
-	}
-
 	return (
-		<Root dismissible={!isOpen}>
+		<Root dismissible={false}>
 			<Trigger ref={openButtonRef} className='hidden' />
 			<Close ref={closeButtonRef} className='hidden' />
 
@@ -53,20 +60,24 @@ export function StatusPopup({isOpen, status, statusTextKey}: StatusDialogProps) 
 				<Content className='fixed bottom-0 left-0 right-0 rounded-t-3xl bg-light-grey outline-none transition-all duration-200'>
 					<div
 						className={cn(
-							'mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-2xl p-4 pt-2',
+							'mx-auto flex w-full max-w-md flex-col overflow-auto p-4 pt-2 text-center',
 							isOpen && 'items-center',
 						)}
 					>
-						<div className='mx-auto mb-4 h-1.5 w-12 rounded-full bg-zinc-300'>
-							<div className='h-full rounded-full bg-zinc-400' style={{width: `${progress}%`}} />
+						<div className='mx-auto mb-4 h-1.5 w-12 rounded-full bg-secondary-grey'>
+							<div className='h-full rounded-full bg-[#BAC3CA]' style={{width: `${progress}%`}} />
 						</div>
 
-						<AppIcon
+						<Icon
 							type={status}
-							className={cn('mb-4 size-10', status === 'success' ? 'text-primary-violet' : 'text-error-red')}
+							className={cn(
+								'mb-4 mt-2 size-10',
+								status === 'success' && 'text-primary-violet',
+								status === 'error' && 'text-error-red',
+							)}
 						/>
-						<div className='font-semibold'>{STATUS_DIALOG_TEXT[statusTextKey].title}</div>
-						<div className='mt-2'>{STATUS_DIALOG_TEXT[statusTextKey].description}</div>
+
+						<div className='text-lg font-medium'>{STATUS_POPUP_TEXT[statusTextKey](statusTextProps)}</div>
 					</div>
 				</Content>
 			</Portal>

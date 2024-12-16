@@ -1,9 +1,10 @@
 import {useState} from 'react';
-import {AppIcon, Box, Card, Item, TextField} from '@shared/ui';
-import {APP_TEXT} from '@shared/constants';
+import {Card, Icon, Item, TextField} from '@shared/ui';
+import {APP_TEXT, CURRENCY} from '@shared/constants';
 import {cn, isNumber} from '@shared/lib';
-import {CURRENCY} from '@shared/constants';
 import {Props} from '../types/SelectWithSearch.types.ts';
+
+// cпроектирован под select currency
 
 export function SelectWithSearch(props: Props) {
 	const {options, onChange, value} = props;
@@ -34,9 +35,9 @@ export function SelectWithSearch(props: Props) {
 
 	return (
 		<>
-			<Box baseMarginBottom>
+			<div className='mb-4'>
 				<TextField value={search} onChange={setSearch} placeholder={APP_TEXT.search} isSearch />
-			</Box>
+			</div>
 
 			<Card>
 				{selectOptions
@@ -50,8 +51,7 @@ export function SelectWithSearch(props: Props) {
 							description={option.description}
 							image={<div className={'size-10 rounded-full bg-primary-grey'} />}
 							onClick={() => handleOptionClick(option.value)}
-							//TODO: heroicon
-							statusIcon={option.checked && <AppIcon type='check' />}
+							statusIcon={option.checked && <Icon type='check' className='size-3' />}
 							className={cn(option.checked && 'bg-light-grey')}
 						/>
 					))}

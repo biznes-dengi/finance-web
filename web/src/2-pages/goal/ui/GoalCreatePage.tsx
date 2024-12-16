@@ -1,207 +1,141 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {GoalImageField} from '@widgets/goal';
+import {GoalModel} from '@entities/goal';
 import {
-	AppIcon,
-	Box,
+	AmountField,
 	Button,
 	ButtonType,
 	DatePicker,
-	Popup,
-	Icon,
-	NumericInputWithOptions,
 	PageHeader,
 	SelectWithSearch,
-	Spinner,
-	Stepper,
+	StatusPopup,
 	TextField,
-	useUploadField,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {cn, DateService} from '@shared/lib';
-import {goalModel} from '@entities/goal';
+import {cn, DateService, useResponsive} from '@shared/lib';
 
-const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone 17', 'Book'];
-
-const initialStepIndex = 0;
-const initialName = '';
-const initialTargetAmount = undefined;
-
+const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone', 'Education'];
 const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
 
 export function GoalCreatePage() {
-	const [activeStepIndex, setActiveStepIndex] = useState(initialStepIndex);
+	const [activeStepIndex, setActiveStepIndex] = useState(0);
 
-	/** Form state */
-	const [name, setName] = useState(initialName);
+	const [name, setName] = useState('');
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
-	const [targetAmount, setTargetAmount] = useState<number | undefined>(initialTargetAmount);
-	const [deadline, setDeadline] = useState<Date>(new DateService().value);
+	const [targetAmount, setTargetAmount] = useState('');
+	const [deadline, setDeadline] = useState<Date>();
 
-	const {UploadField, startUploading, abortUploading, uploadProgressPercent, isUploading, isFileDragging} =
-		useUploadField();
+	const {createGoal, isCreateGoalLoading, isCreateGoalSuccess, isCreateGoalError} = GoalModel.useCreateItem();
 
-	const {create, isCreatePending, isCreateSuccess, isCreateError} = goalModel.useCreate();
+	const {isMobile} = useResponsive();
+
+	const activeOption = {
+		name: currencyOptions.find((option) => option.value === currency)?.description ?? '',
+		currency: currency as CURRENCY,
+	};
 
 	function handleCreateClick() {
 		if (!targetAmount) return;
 
-		const payload = {
-			name,
-			currency,
-			targetAmount,
-			deadline: new DateService(deadline).getPayloadDateFormat(),
-		};
-
-		create(payload);
+		createGoal({
+			payload: {
+				name,
+				currency,
+				targetAmount: Number(targetAmount),
+				deadline: new DateService(deadline).getPayloadDateFormat(),
+			},
+		});
 	}
-
-	const activeOptionNotMapped = currencyOptions.find((option) => option.value === currency);
-	const activeOption = {
-		name: activeOptionNotMapped?.description ?? '',
-		balance: {
-			amount: 0,
-			currency: currency as CURRENCY,
-		},
-	};
 
 	const Header = (
 		<PageHeader
+			title={cn(
+				activeStepIndex === 0 && APP_TEXT.customise,
+				activeStepIndex === 1 && APP_TEXT.selectCurrency,
+				activeStepIndex === 2 && APP_TEXT.enterTargetAmount,
+			)}
 			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
-			backPath={APP_PATH.home}
+			backPath={APP_PATH.goalList}
+			stepsCount={3}
+			activeStepIndex={activeStepIndex}
 		/>
 	);
 
-	const navigate = useNavigate();
-
-	// if (isCreateSuccess) {
-	// 	navigate(getGoalDetailsPath());
-	// }
-
-	if (isCreateSuccess || isCreateError) {
-		setTimeout(() => {
-			navigate(APP_PATH.home);
-		}, 2000);
-	}
-
 	return (
 		<>
-			{activeStepIndex === initialStepIndex ? (
-				<UploadField onUpload={alert}>
-					<div
-						className={cn(
-							'flex h-[290px] flex-col items-end justify-between rounded-b-2xl bg-secondary-grey',
-							isUploading && 'bg-secondary-grey',
-						)}
-					>
-						{Header}
-
-						{isFileDragging && <div className='h-10 w-10 self-center text-primary-violet'>{Icon.uploadImage}</div>}
-						{isUploading && (
-							<div className='cursor-default self-center text-center'>
-								<div className='mb-4 font-semibold text-primary-violet'>{uploadProgressPercent}%</div>
-								<div className='cursor-pointer text-sm underline hover:text-primary-violet' onClick={abortUploading}>
-									Cancel uploading
-								</div>
-							</div>
-						)}
-
-						<div
-							className='z-10 mb-4 mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_4px_white_inset]'
-							onClick={startUploading}
-						>
-							{!isUploading ? Icon.camera : <Spinner className='z-20 h-5 w-5' />}
-						</div>
-					</div>
-				</UploadField>
-			) : (
-				Header
-			)}
+			{activeStepIndex !== 0 && Header}
 
 			<div className='flex-grow'>
-				<Stepper
-					activeStepIndex={activeStepIndex}
-					steps={[
-						<>
-							<Box basePaddingX>
-								<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
-							</Box>
-							{!name && (
-								<Box basePaddingX className={cn('flex flex-wrap gap-2 pt-4')}>
-									{hints.map((hint, index) => (
-										<div
-											key={hint + index}
-											className={cn('w-fit cursor-pointer rounded-2xl bg-secondary-grey px-2 py-0.5 text-sm')}
-											onClick={() => setName(hint)}
-										>
-											{hint}
-										</div>
-									))}
-								</Box>
-							)}
-						</>,
-						<Box key={activeStepIndex} basePaddingX>
-							<SelectWithSearch
-								options={currencyOptions}
-								onChange={(value) => {
-									setCurrency(value);
-									setTargetAmount(initialTargetAmount);
-								}}
-								value={currency}
-							/>
-						</Box>,
-						<Box key={activeStepIndex} basePaddingX>
-							<NumericInputWithOptions
-								value={targetAmount}
-								onChange={setTargetAmount}
-								activeOption={activeOption}
-								getLabel={() => APP_TEXT.targetAmount}
-							/>
-							<Box baseMarginY>
-								<Box className='mb-2 font-medium'>Deadline</Box>
-								<DatePicker value={deadline} onChange={setDeadline} />
-							</Box>
-						</Box>,
-					]}
-				/>
+				{activeStepIndex === 0 && (
+					<>
+						<GoalImageField isCreatePage>{Header}</GoalImageField>
+						<div className='mt-4 px-4'>
+							<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
+						</div>
+						{!name && (
+							<div className={cn('flex flex-wrap gap-2 p-4')}>
+								{hints.map((hint, index) => (
+									<Button
+										type={ButtonType.main}
+										key={hint + index}
+										className='w-fit px-2.5 py-1.5 text-sm'
+										onClick={() => setName(hint)}
+										isSecondary
+									>
+										{hint}
+									</Button>
+								))}
+							</div>
+						)}
+					</>
+				)}
+
+				{activeStepIndex === 1 && (
+					<div className='px-4'>
+						<SelectWithSearch
+							options={currencyOptions}
+							onChange={(value) => {
+								setCurrency(value);
+								setTargetAmount('');
+							}}
+							value={currency}
+						/>
+					</div>
+				)}
+
+				{activeStepIndex === 2 && (
+					<div key={activeStepIndex} className='px-4'>
+						<AmountField value={targetAmount} onChange={setTargetAmount} activeOption={activeOption} />
+						<div className='mt-4'>
+							<DatePicker type='deadline' value={deadline} onChange={setDeadline} />
+						</div>
+					</div>
+				)}
 			</div>
 
-			<Box basePaddingX mediumMarginY>
+			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					onClick={activeStepIndex === 2 ? handleCreateClick : () => setActiveStepIndex(activeStepIndex + 1)}
 					type={ButtonType.main}
-					disabled={(() => {
-						if (activeStepIndex === 0) return name === initialName;
-						if (activeStepIndex === 2) return targetAmount === initialTargetAmount;
-					})()}
+					onClick={activeStepIndex === 2 ? handleCreateClick : () => setActiveStepIndex(activeStepIndex + 1)}
+					disabled={(activeStepIndex === 0 && !name) || (activeStepIndex === 2 && !targetAmount)}
+					isLoading={isCreateGoalLoading}
 				>
-					{activeStepIndex === 2 ? (isCreatePending ? 'Loading...' : APP_TEXT.create) : APP_TEXT.continue}
+					{activeStepIndex === 2 ? APP_TEXT.create : APP_TEXT.continue}
 				</Button>
-			</Box>
+			</div>
 
-			<Popup isStatusDialogOpen={isCreateSuccess || isCreateError}>
-				{isCreateSuccess && activeOption && (
-					<Box baseMarginY className='text-center'>
-						<div className='flex flex-col items-center pb-4'>
-							<AppIcon type='check' className='mb-5 size-10 text-primary-violet' />
-							<div className='text-center font-semibold'>
-								{APP_TEXT.goal} <span className='text-primary-violet'>{name}</span> {APP_TEXT.createdSuccess}
-								{APP_TEXT.createdSuccess}
-							</div>
-							<div className='mt-2'>Welcome to Finansy family 🤗</div>
-						</div>
-					</Box>
-				)}
-				{isCreateError && activeOption && (
-					<Box baseMarginY className='text-center'>
-						<div className='mb-4 flex justify-center'>
-							<div className='size-16 text-primary-violet'>{Icon.error}</div>
-						</div>
-						<div>
-							Some error occur during creating <span className='font-medium text-primary-violet'>{name}</span>
-						</div>
-					</Box>
-				)}
-			</Popup>
+			<StatusPopup
+				isOpen={isCreateGoalSuccess}
+				status='success'
+				statusTextKey='createGoalSuccess'
+				statusTextProps={{goalName: name}}
+			/>
+			<StatusPopup
+				isOpen={isCreateGoalError}
+				status='error'
+				statusTextKey='createGoalError'
+				statusTextProps={{goalName: name}}
+			/>
 		</>
 	);
 }

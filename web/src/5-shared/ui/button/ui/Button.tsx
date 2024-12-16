@@ -2,7 +2,7 @@ import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
 import {cn, styleElement} from '@shared/lib';
-import {PRELOAD_SIZE, PreloadSkeleton, Spinner} from '@shared/ui';
+import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
 export enum ButtonType {
@@ -20,9 +20,9 @@ interface Props extends CommonButtonSettings {
 	children?: ReactNode;
 	className?: string;
 	disabled?: boolean;
-	isFetching?: boolean;
 	isLoading?: boolean;
 	isOnlyIcon?: boolean;
+	isSecondary?: boolean;
 }
 
 // TODO: Typescript: when type = icon -> icon prop required
@@ -35,9 +35,9 @@ export function Button(props: Props) {
 		className,
 		onClick,
 		type = ButtonType.text,
+		isSecondary,
 		icon,
 		disabled,
-		isFetching,
 		isLoading,
 		isOnlyIcon,
 	} = props;
@@ -64,11 +64,18 @@ export function Button(props: Props) {
 			<button
 				{...buttonProps}
 				className={gcn(
-					'block w-full rounded-3xl py-3 text-center text-white active:scale-100',
-					!disabled
-						? 'primaryButtonShadow bg-primary-violet active:shadow-none'
-						: 'cursor-not-allowed bg-primary-violet/20',
-					isLoading && 'cursor-not-allowed bg-primary-violet shadow-none',
+					'block w-full rounded-3xl p-3 text-center text-white active:scale-100 ',
+					disabled
+						? isSecondary
+							? 'cursor-not-allowed bg-secondary-violet/20'
+							: 'cursor-not-allowed bg-primary-violet/20'
+						: isSecondary
+						? 'bg-secondary-violet text-primary-violet'
+						: 'primaryButtonShadow bg-primary-violet active:shadow-none',
+					isLoading &&
+						(isSecondary
+							? 'cursor-not-allowed bg-secondary-violet'
+							: 'cursor-not-allowed bg-primary-violet shadow-none'),
 				)}
 			>
 				{isLoading ? (
@@ -91,18 +98,20 @@ export function Button(props: Props) {
 				{...buttonProps}
 				className={gcn('w-fit text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
 			>
-				{icon && styleElement(icon, 'size-4')}
+				{icon && styleElement(icon, 'size-3')}
 				<span>{children}</span>
 			</button>
 		);
 	}
 
 	if (type === ButtonType.icon) {
-		if (isFetching) {
+		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
+
+		if (isLoading) {
 			return (
-				<div className='flex flex-col items-center gap-y-3 py-1.5'>
-					<PreloadSkeleton isCircular />
-					<PreloadSkeleton width={48} height={PRELOAD_SIZE.height.xs} />
+				<div className='flex flex-col items-center gap-y-3'>
+					<PreloadSkeleton isCircular className='size-11' />
+					<PreloadSkeleton className='h-[15.5px] w-12' />
 				</div>
 			);
 		}
@@ -118,11 +127,11 @@ export function Button(props: Props) {
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
 				{icon && (
-					<div className='m-1 flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet'>
-						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-[22px]')}
+					<div className='flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet'>
+						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-4')}
 					</div>
 				)}
-				{children && <div className='mt-0.5 text-[13px] text-primary-violet'>{children}</div>}
+				{children && <div className='mt-2 text-[13px] text-primary-violet'>{children}</div>}
 			</button>
 		);
 	}

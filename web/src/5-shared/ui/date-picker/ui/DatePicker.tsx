@@ -1,36 +1,39 @@
-import {DateService} from '@shared/lib';
-import {Box, Button, Popup, Icon, usePopupState} from '@shared/ui';
-import {Calendar} from './Calendar.tsx';
+import {cn, DateService} from '@shared/lib';
+import {Button, DateField, Icon, Popup, usePopupState} from '@shared/ui';
+import {APP_TEXT} from '@shared/constants';
 
 type Props = {
+	type: 'transactionDate' | 'deadline';
 	value: Date | undefined;
 	onChange: (value: Date) => void;
 };
 
 export function DatePicker(props: Props) {
-	const {value, onChange} = props;
+	const {type, value, onChange} = props;
 
-	const {dialogRef, openDialog, closeDialog} = usePopupState();
-
-	// TODO: когда меняем на новую дату ставится дефолтное время. Продумать логику.
+	const {popupProps, openPopup, closePopup} = usePopupState();
 
 	return (
 		<>
-			<Box>
-				<Button icon={Icon.calendar} onClick={() => openDialog()}>
-					{new DateService(value).getLocalDateString()}
-				</Button>
-			</Box>
+			<div className='flex w-full items-center justify-between px-4 text-sm '>
+				<div className='font-medium text-primary-grey'>
+					{cn(type === 'deadline' && APP_TEXT.deadline, type === 'transactionDate' && APP_TEXT.transactionDate)}
+				</div>
+				<div className='shrink-0'>
+					<Button icon={<Icon type='edit' />} onClick={openPopup}>
+						{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}
+					</Button>
+				</div>
+			</div>
 
-			<Popup ref={dialogRef}>
+			<Popup {...popupProps}>
 				<div className='flex justify-center'>
-					<Calendar
-						mode='single'
-						selected={value}
-						onSelect={(date) => {
+					<DateField
+						value={value}
+						onChange={(date) => {
 							if (!date) return;
 							onChange(date);
-							closeDialog();
+							closePopup();
 						}}
 					/>
 				</div>

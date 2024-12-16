@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 #root {
-    @apply bg-light-grey;
     font-family: "Inter", sans-serif;
+    font-size: 16px;
+    @apply text-black;
+    @apply bg-light-grey;
 }
 
 /* shadcn UI */
