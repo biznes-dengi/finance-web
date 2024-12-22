@@ -6,7 +6,7 @@ import {STATUS_POPUP_TEXT} from '../constants/StatusPopup.constants.tsx';
 import {Icon} from '@shared/ui';
 import {cn} from '@shared/lib';
 
-const {Root, Overlay, Content, Portal} = VaulDrawer;
+const {Root, Overlay, Content, Portal, Title} = VaulDrawer;
 
 export function StatusPopup(props: StatusPopupProps) {
 	const {isOpen, status, statusTextKey, statusTextProps} = props;
@@ -58,6 +58,8 @@ export function StatusPopup(props: StatusPopupProps) {
 				<Overlay className='fixed inset-0 bg-black/40' />
 
 				<Content className='fixed bottom-0 left-0 right-0 rounded-t-3xl bg-light-grey outline-none transition-all duration-200'>
+					<Title className='hidden' />
+
 					<div
 						className={cn(
 							'mx-auto flex w-full max-w-md flex-col overflow-auto p-4 pt-2 text-center',

@@ -128,9 +128,11 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		return await HttpClient.post({
+		await HttpClient.post({
 			url: `board-goals/${boardGoalId}/transfer`,
 			data: payload,
 		});
+
+		return {id: payload.fromGoalId};
 	}
 }

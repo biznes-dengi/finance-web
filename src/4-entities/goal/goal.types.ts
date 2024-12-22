@@ -24,6 +24,10 @@ export type Props = {
 	useWithdraw: {
 		isFromListPage?: boolean;
 	};
+
+	useTransfer: {
+		isFromListPage?: boolean;
+	};
 };
 
 export type InitialData = {

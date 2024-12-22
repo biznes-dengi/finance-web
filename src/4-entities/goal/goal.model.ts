@@ -18,13 +18,16 @@ export class GoalModel {
 
 		const {data, isFetching} = useQuery({
 			queryKey: ['goal-item-list', filter],
+
 			queryFn: () => {
 				return GoalApi.fetchItemList({
 					params: {boardGoalId: boardGoalId!},
 					payload: filter,
 				});
 			},
+
 			enabled: !!boardGoalId,
+
 			initialData: {} as InitialData['useItems'],
 		});
 
@@ -42,11 +45,13 @@ export class GoalModel {
 
 		const {data, isFetching} = useQuery({
 			queryKey: [`goal-details-${id}`],
+
 			queryFn: () => {
 				return GoalApi.fetchItemDetails({
 					params: {boardGoalId: boardGoalId!, id: id!},
 				});
 			},
+
 			enabled: !!boardGoalId && !!id,
 		});
 
@@ -63,12 +68,14 @@ export class GoalModel {
 
 		const {data, isFetching} = useQuery({
 			queryKey: [`goal-transactions-${id}`, filter],
+
 			queryFn: () => {
 				return GoalApi.fetchItemTransactions({
 					params: {boardGoalId: boardGoalId!, id},
 					payload: filter,
 				});
 			},
+
 			enabled: !!boardGoalId,
 		});
 
@@ -84,7 +91,9 @@ export class GoalModel {
 
 		const {data, isFetching} = useQuery({
 			queryKey: ['goal-total-balance'],
+
 			queryFn: () => GoalApi.fetchTotalBalance(boardGoalId!),
+
 			enabled: !!boardGoalId,
 		});
 
@@ -99,7 +108,9 @@ export class GoalModel {
 
 		const {data, isFetching} = useQuery({
 			queryKey: ['board-goal-id'],
+
 			queryFn: () => GoalApi.fetchBoardGoalId(authUser!.id),
+
 			enabled: !!authUser,
 		});
 
@@ -116,17 +127,20 @@ export class GoalModel {
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-create'],
+
 			mutationFn: (props: MutationProps['useCreateItem']) => {
 				return GoalApi.createItem({
 					params: {boardGoalId: boardGoalId!},
 					payload: props.payload,
 				});
 			},
+
 			onSuccess: (data) => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goal.getItemDetailsPath(data.id));
 				});
 			},
+
 			onError: () => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					navigate(APP_PATH.goalList);
@@ -149,12 +163,14 @@ export class GoalModel {
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['edit-goal'],
+
 			mutationFn: (props: MutationProps['useUpdateItem']) => {
 				return GoalApi.updateItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: props.payload,
 				});
 			},
+
 			onSuccess: (data: any) => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: [`goal-details-${data.id}`]});
@@ -179,11 +195,13 @@ export class GoalModel {
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-delete'],
+
 			mutationFn: (props: MutationProps['useDeleteItem']) => {
 				return GoalApi.deleteItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 				});
 			},
+
 			onSuccess: () => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: ['goal-items']});
@@ -200,26 +218,26 @@ export class GoalModel {
 		};
 	}
 
-	static useFund(props?: Props['useFund']) {
-		const {isFromListPage = false} = props || {};
-
-		const {boardGoalId} = this.useBoardGoalId();
+	static useFund(props: Props['useFund'] = {}) {
+		const {isFromListPage = false} = props;
 
 		const navigate = useNavigate();
 
+		const {boardGoalId} = this.useBoardGoalId();
+
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-deposit-money'],
+
 			mutationFn: (props: MutationProps['useFund']) => {
 				return GoalApi.fundItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.DEPOSIT},
 				});
 			},
-			onSettled: (goal: any) => {
-				if (isFromListPage) return;
 
+			onSettled: (goal: any) => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
@@ -232,26 +250,26 @@ export class GoalModel {
 		};
 	}
 
-	static useWithdraw(props?: Props['useWithdraw']) {
-		const {isFromListPage = false} = props || {};
-
-		const {boardGoalId} = this.useBoardGoalId();
+	static useWithdraw(props: Props['useWithdraw'] = {}) {
+		const {isFromListPage = false} = props;
 
 		const navigate = useNavigate();
 
+		const {boardGoalId} = this.useBoardGoalId();
+
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-withdraw-money'],
+
 			mutationFn: (props: MutationProps['useWithdraw']) => {
 				return GoalApi.withdrawItem({
 					params: {...props.params, boardGoalId: boardGoalId!},
 					payload: {...props.payload, type: TRANSACTION_TYPE.WITHDRAW},
 				});
 			},
-			onSettled: (goal: any) => {
-				if (isFromListPage) return;
 
+			onSettled: (goal: any) => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
@@ -264,15 +282,26 @@ export class GoalModel {
 		};
 	}
 
-	static useTransfer() {
+	static useTransfer(props: Props['useTransfer'] = {}) {
+		const {isFromListPage = false} = props;
+
+		const navigate = useNavigate();
+
 		const {boardGoalId} = this.useBoardGoalId();
 
 		const {mutate, isPending, isError, isSuccess} = useMutation({
 			mutationKey: ['goal-transfer-money'],
+
 			mutationFn: (props: MutationProps['useTransfer']) => {
 				return GoalApi.transferItem({
 					params: {boardGoalId: boardGoalId!},
 					payload: props.payload,
+				});
+			},
+
+			onSettled: (goal: any) => {
+				StatusPopupHelpers.runAfterStatusPopup(() => {
+					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});

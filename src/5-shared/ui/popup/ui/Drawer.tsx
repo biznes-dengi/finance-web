@@ -1,7 +1,8 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {DrawerProps} from '../types/Popup.types.ts';
+import {cn} from '@shared/lib';
 
-const {Root, Trigger, Close, Overlay, Content, Portal} = VaulDrawer;
+const {Root, Trigger, Close, Overlay, Content, Portal, Title} = VaulDrawer;
 
 export function Drawer(props: DrawerProps) {
 	const {title, children, isOpen, setIsOpen, handleClose} = props;
@@ -28,7 +29,7 @@ export function Drawer(props: DrawerProps) {
 					<div className='mx-auto flex w-full max-w-md flex-col overflow-auto rounded-t-2xl p-4 pt-2'>
 						<div className='mx-auto mb-4 h-1 w-12 rounded-full bg-[#BAC3CA]' />
 
-						{title && <div className='mb-4 text-center text-xl font-medium'>{title}</div>}
+						<Title className={cn(title ? 'mb-4 text-center text-xl font-medium' : 'hidden')}>{title}</Title>
 
 						{children}
 					</div>

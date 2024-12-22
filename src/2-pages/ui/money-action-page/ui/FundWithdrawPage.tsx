@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
-import {GoalDetailsTransactionPageProps} from '../types/TransactionPage.types.ts';
-import {TransactionPageHelpers} from '../lib/TransactionPage.helpers.ts';
+import {type FundWithdrawPageProps} from '../types/MoneyActionPage.types.ts';
+import {MoneyActionPageHelpers} from '../lib/MoneyActionPage.helpers.ts';
 import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, DateService, isNumber, TextHelpers, useResponsive} from '@shared/lib';
 
-export function TransactionPage(props: GoalDetailsTransactionPageProps) {
+export function FundWithdrawPage(props: FundWithdrawPageProps) {
 	const {
 		itemDetails,
 		items,
@@ -15,8 +15,8 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 		isActionLoading,
 		isActionSuccess,
 		isActionError,
-		successMessageKey,
-		errorMessageKey,
+		successTextKey,
+		errorTextKey,
 		backPath,
 	} = props;
 
@@ -30,12 +30,12 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 
 	useEffect(() => {
 		if (itemDetails) {
-			setActiveOption(TransactionPageHelpers.mapItemDataToOption(itemDetails));
+			setActiveOption(MoneyActionPageHelpers.mapItemDataToOption(itemDetails));
 		}
 
 		if (items) {
-			setOptions(items.map(TransactionPageHelpers.mapItemDataToOption));
-			setActiveOption(TransactionPageHelpers.mapItemDataToOption(items[0]));
+			setOptions(items.map(MoneyActionPageHelpers.mapItemDataToOption));
+			setActiveOption(MoneyActionPageHelpers.mapItemDataToOption(items[0]));
 		}
 	}, [itemDetails, items]);
 
@@ -72,13 +72,24 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 				</div>
 			</div>
 
+			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
+				<Button
+					type={ButtonType.main}
+					onClick={handleActionClick}
+					disabled={!amount}
+					isLoading={isActionLoading}
+				>
+					{APP_TEXT[actionType]}
+				</Button>
+			</div>
+
 			{activeOption && (
 				<StatusPopup
 					isOpen={isActionSuccess}
 					status='success'
-					statusTextKey={successMessageKey}
+					statusTextKey={successTextKey}
 					statusTextProps={{
-						goalName: activeOption.name,
+						name: activeOption.name,
 						amount: `${TextHelpers.getAmountWithCurrency(amount, activeOption.currency)}`,
 					}}
 				/>
@@ -87,16 +98,10 @@ export function TransactionPage(props: GoalDetailsTransactionPageProps) {
 				<StatusPopup
 					isOpen={isActionError}
 					status='error'
-					statusTextKey={errorMessageKey}
-					statusTextProps={{goalName: activeOption.name}}
+					statusTextKey={errorTextKey}
+					statusTextProps={{name: activeOption.name}}
 				/>
 			)}
-
-			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
-				<Button type={ButtonType.main} onClick={handleActionClick} disabled={!amount} isLoading={isActionLoading}>
-					{APP_TEXT[actionType]}
-				</Button>
-			</div>
 		</>
 	);
 }
