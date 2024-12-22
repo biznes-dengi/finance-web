@@ -148,7 +148,11 @@ export function GoalEditDetails() {
 							value={deadline}
 							onChange={setDeadline}
 							isChanged={
-								!!(deadline && goalDetails?.deadline && !new DateService(goalDetails.deadline).isEqualTo(deadline))
+								!!(
+									deadline &&
+									goalDetails?.deadline &&
+									!new DateService(goalDetails.deadline).isEqualTo(deadline)
+								)
 							}
 							icon={!goalDetails?.deadline ? 'add' : undefined}
 							{...editButtonCommonProps}
