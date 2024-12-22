@@ -16,6 +16,7 @@ export * from './edit-button-field/ui/EditButtonField.tsx';
 export * from './date-picker/ui/DatePicker.tsx';
 export * from './currency-picker/ui/CurrencyPicker.tsx';
 export * from './transaction-page/ui/TransactionPage.tsx';
+export * from './transaction-page/lib/TransactionPage.helpers.ts';
 export * from './page-header/ui/PageHeader.tsx';
 export * from './icon/ui/Icon.tsx';
 export * from './popup/ui/Popup.tsx';

@@ -159,7 +159,7 @@ export function GoalTransferPage() {
 				<Button
 					type={ButtonType.main}
 					onClick={handleTransferClick}
-					disabled={!fromGoalAmount || !toGoalAmount}
+					disabled={!fromGoalAmount || !toGoalAmount || isFromAmountError}
 					isLoading={isTransferGoalLoading}
 				>
 					{APP_TEXT.transfer}

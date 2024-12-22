@@ -6,17 +6,13 @@ import {
 	AmountFieldOption,
 	Button,
 	ButtonType,
-	CurrencyPicker,
 	DatePicker,
 	Icon,
 	PageHeader,
+	TransactionPageHelpers,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {cn, DateService, isEqual, isNumber, useResponsive} from '@shared/lib';
-import {TransactionPageHelpers} from '@shared/ui/transaction-page/lib/TransactionPage.helpers.ts';
-
-// const initialExchangeRate = 3.9071; for zł
-const initialExchangeRate = 1;
+import {cn, DateService, isEqual, useResponsive} from '@shared/lib';
 
 export function GoalDetailsTransferPage() {
 	const {id} = useParams();
@@ -26,13 +22,11 @@ export function GoalDetailsTransferPage() {
 	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
 	const [fromActiveOption, setFromActiveOption] = useState<AmountFieldOption | null>(null);
 	const [toActiveOption, setToActiveOption] = useState<AmountFieldOption | null>(null);
+
 	const [fromGoalAmount, setFromGoalAmount] = useState('');
 	const [toGoalAmount, setToGoalAmount] = useState('');
 
-	const [exchangeRate, setExchangeRate] = useState(initialExchangeRate);
 	const [date, setDate] = useState<Date>(new DateService().value);
-
-	// const [isOrderChanged, setIsOrderChanged] = useState(false);
 
 	const {transferGoal, isTransferGoalLoading} = GoalModel.useTransfer();
 
@@ -50,31 +44,12 @@ export function GoalDetailsTransferPage() {
 				}
 			});
 
-			setOptions(goals.filter((goal) => goal.id !== goalDetails.id).map(TransactionPageHelpers.mapItemDataToOption));
+			setOptions(
+				goals.filter((goal) => goal.id !== goalDetails.id).map(TransactionPageHelpers.mapItemDataToOption),
+			);
 		}
 	}, [goalDetails, goals]);
 
-	function handleFromAmountChange(fromValue: string) {
-		setFromGoalAmount(fromValue);
-
-		// if (fromValue) {
-		// 	setToGoalAmount((Number(fromValue) * exchangeRate).toFixed(2));
-		// }
-	}
-	function handleToAmountChange(toValue: string) {
-		setToGoalAmount(toValue);
-
-		// if (isNumber(fromGoalAmount)) {
-		// 	handleCurrencyRateChange(toValue ? toValue / fromGoalAmount : initialExchangeRate);
-		// }
-		//
-		// if (!isNumber(fromGoalAmount)) {
-		// 	setFromGoalAmount(toValue ? Number((toValue * exchangeRate).toFixed(2)) : undefined);
-		// }
-	}
-	function handleCurrencyRateChange(value: number | undefined) {
-		setExchangeRate(value ? Number(value.toFixed(4)) : initialExchangeRate);
-	}
 	function handleTransferClick() {
 		if (!fromActiveOption || !toActiveOption || !fromGoalAmount || !toGoalAmount) return;
 
@@ -96,11 +71,11 @@ export function GoalDetailsTransferPage() {
 		<>
 			<PageHeader title={APP_TEXT.transfer} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
 
-			<div className='relative flex-1 px-4'>
-				<div className='flex flex-col gap-2'>
+			<div className='flex-1 px-4'>
+				<div className='relative flex flex-col gap-2'>
 					<AmountField
 						value={fromGoalAmount}
-						onChange={handleFromAmountChange}
+						onChange={setFromGoalAmount}
 						activeOption={fromActiveOption}
 						setActiveOption={(activeOption) => {
 							setFromActiveOption(activeOption);
@@ -115,17 +90,15 @@ export function GoalDetailsTransferPage() {
 
 					<div
 						className={cn(
-							// isOrderChanged && 'rotate-180 transition-transform',
-							'absolute left-[170px] top-[74px] flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white transition-all duration-200',
+							'absolute left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-white transition-all duration-200',
 						)}
-						// onClick={() => setIsOrderChanged(!isOrderChanged)}
 					>
 						<Icon type='transferTo' className='size-4 text-primary-violet' />
 					</div>
 
 					<AmountField
 						value={toGoalAmount}
-						onChange={handleToAmountChange}
+						onChange={setToGoalAmount}
 						activeOption={toActiveOption}
 						setActiveOption={(activeOption) => {
 							if (isEqual(activeOption.id, fromActiveOption?.id)) {
@@ -141,17 +114,6 @@ export function GoalDetailsTransferPage() {
 				</div>
 
 				<div className='my-4 flex flex-col gap-2'>
-					<CurrencyPicker
-						buttonText={`1 $ = ${exchangeRate ?? ''} $`}
-						value={exchangeRate}
-						onChange={(value) => {
-							handleCurrencyRateChange(value);
-
-							if (isNumber(toGoalAmount) && isNumber(fromGoalAmount) && value) {
-								setToGoalAmount((fromGoalAmount * value).toFixed(2));
-							}
-						}}
-					/>
 					<DatePicker type='transactionDate' value={date} onChange={setDate} />
 				</div>
 			</div>
@@ -160,7 +122,7 @@ export function GoalDetailsTransferPage() {
 				<Button
 					type={ButtonType.main}
 					onClick={handleTransferClick}
-					disabled={!fromGoalAmount || !toGoalAmount}
+					disabled={!fromGoalAmount || !toGoalAmount || isFromAmountError}
 					isLoading={isTransferGoalLoading}
 				>
 					{APP_TEXT.transfer}
