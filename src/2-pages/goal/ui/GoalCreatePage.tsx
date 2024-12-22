@@ -128,13 +128,13 @@ export function GoalCreatePage() {
 				isOpen={isCreateGoalSuccess}
 				status='success'
 				statusTextKey='createGoalSuccess'
-				statusTextProps={{goalName: name}}
+				statusTextProps={{name}}
 			/>
 			<StatusPopup
 				isOpen={isCreateGoalError}
 				status='error'
 				statusTextKey='createGoalError'
-				statusTextProps={{goalName: name}}
+				statusTextProps={{name}}
 			/>
 		</>
 	);

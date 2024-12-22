@@ -87,10 +87,11 @@ export function GoalManagement() {
 						}
 						name={row.name}
 						description={
-							row.targetAmount &&
-							`${APP_TEXT.target}: ${TextHelpers.getAmount(row.targetAmount)} ${
-								CURRENCY_SYMBOL[row.balance.currency]
-							}`
+							row.targetAmount && row.targetAmount > row.balance.amount
+								? `${APP_TEXT.left}: ${TextHelpers.getAmount(row.targetAmount - row.balance.amount)} ${
+										CURRENCY_SYMBOL[row.balance.currency]
+								  }`
+								: APP_TEXT.goalCompleted
 						}
 						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${
 							CURRENCY_SYMBOL[row.balance.currency]

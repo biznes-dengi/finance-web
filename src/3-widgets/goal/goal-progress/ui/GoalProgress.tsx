@@ -59,7 +59,7 @@ export function GoalProgress() {
 					)}
 				</div>
 
-				<div className='flex justify-between pt-4 text-sm text-primary-grey'>
+				<div className='flex justify-between gap-4 pt-4 text-sm text-primary-grey'>
 					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
 						<div>
 							{goalDetails?.deadline &&
@@ -69,7 +69,7 @@ export function GoalProgress() {
 					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
 						<div>
 							{goalDetails?.deadline &&
-								`${APP_TEXT.left}: ${new DateService(goalDetails.deadline).calculateDaysLeft()}`}
+								`${APP_TEXT.left}: ${new DateService(goalDetails.deadline).calculateTimeLeft()}`}
 						</div>
 					</LoadingWrapper>
 				</div>
@@ -87,7 +87,8 @@ export function GoalProgress() {
 						<span className='font-medium text-primary-violet'>вы можете осуществить свою мечту</span>.
 					</div>
 					<div className='mt-2'>
-						Желаем вам дальнейших успехов и пусть впереди будет еще больше целей, которые вы легко достигнете!
+						Желаем вам дальнейших успехов и пусть впереди будет еще больше целей, которые вы легко
+						достигнете!
 					</div>
 
 					<Button className='mt-4' type={ButtonType.main} onClick={closePopup}>

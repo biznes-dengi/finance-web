@@ -17,7 +17,7 @@ export class DateService {
 		return this.value
 			.toLocaleDateString('ru-RU', {
 				year: 'numeric',
-				month: 'short',
+				month: 'long',
 				day: 'numeric',
 			})
 			.replace(' г.', '');
@@ -46,21 +46,69 @@ export class DateService {
 		}
 	}
 
-	calculateDaysLeft() {
+	calculateTimeLeft() {
 		const today = dayjs();
 		const deadlineDate = dayjs(this.value);
 
+		// Разница в днях
+		const diffInDays = deadlineDate.diff(today, 'day');
+		// Разница в месяцах
+		const diffInMonths = deadlineDate.diff(today, 'month');
+		// Разница в годах
+		const diffInYears = deadlineDate.diff(today, 'year');
+
+		// Если разница в днях меньше 30, выводим в днях
+		if (diffInDays < 30) {
+			return this.formatTime(diffInDays, 'день', 'дня', 'дней');
+		}
+
+		// Если разница в годах больше или равна 1, выводим в годах
+		if (diffInYears >= 1) {
+			return this.formatTime(diffInYears, 'год', 'года', 'лет');
+		}
+
+		// Разница в месяцах без учёта годов (нормализуем, если месяц "перелетает" через год)
+		const remainingMonths = deadlineDate.month() - today.month() + 12 * (deadlineDate.year() - today.year());
+
+		// Если разница в месяцах менее 12, выводим в месяцах
+		if (remainingMonths > 0) {
+			return this.formatTime(remainingMonths, 'мес.', 'мес.', 'мес.');
+		}
+
+		// В случае, если это всё ещё менее месяца, выводим дни
+		return this.formatTime(diffInDays, 'день', 'дня', 'дней');
+	}
+
+	calculateTimeLeft() {
+		const today = dayjs();
+		const deadlineDate = dayjs(this.value);
+
+		// Получаем разницу в днях (неправильно считает, с декабря 2024 по март 2025 diffInMonths = 2)
 		const diffInDays = deadlineDate.diff(today, 'day');
 		const diffInMonths = deadlineDate.diff(today, 'month');
 		const diffInYears = deadlineDate.diff(today, 'year');
 
+		// Если разница менее 30 дней, выводим в днях
 		if (diffInDays < 30) {
 			return this.formatTime(diffInDays, 'день', 'дня', 'дней');
 		}
-		if (diffInMonths < 12) {
-			return this.formatTime(diffInMonths, 'месяц', 'месяца', 'месяцев');
+
+		// Если разница больше или равна 12 месяцам, выводим в годах
+		if (diffInYears >= 1) {
+			return this.formatTime(diffInYears, 'год', 'года', 'лет');
 		}
-		return this.formatTime(diffInYears, 'год', 'года', 'лет');
+
+		// Если разница в месяцах меньше 12, но не достаточно для года, то мы проверяем количество месяцев с точностью до дней
+		const remainingMonths = deadlineDate.month() - today.month();
+		// const remainingYears = deadlineDate.year() - today.year();
+
+		if (remainingMonths < 0) {
+			// return this.formatTime(diffInMonths + 12, 'месяц', 'месяца', 'месяцев');
+			return this.formatTime(diffInMonths + 12, 'мес.', 'мес.', 'мес.');
+		}
+
+		// return this.formatTime(diffInMonths, 'месяц', 'месяца', 'месяцев');
+		return this.formatTime(diffInMonths, 'мес.', 'мес.', 'мес.');
 	}
 
 	isEqualTo(date: Date | string): boolean {
