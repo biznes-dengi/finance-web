@@ -1,9 +1,9 @@
+import {ChangeEvent, MouseEvent, useRef} from 'react';
 import {type AmountFieldOption, type AmountFieldProps} from '../types/AmountField.types.ts';
 import {AmountFieldHelpers} from '../lib/AmountField.helpers.ts';
 import {Icon, Item, List, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
 import {cn, styleElement, useResponsive} from '@shared/lib';
 import {CURRENCY_SYMBOL} from '@shared/constants';
-import {MouseEvent, useRef} from 'react';
 
 export function AmountField<Option extends AmountFieldOption>(props: AmountFieldProps<Option>) {
 	const {
@@ -31,6 +31,27 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 		setActiveOption!(option);
 		onChange('');
 		closePopup();
+	}
+	function handleChange(event: ChangeEvent<HTMLInputElement>) {
+		const value = event.target.value.trim().replace(',', '.');
+
+		// Если в значении уже есть точка, запрещаем вводить еще точку
+		if (value.includes('.') && value.endsWith('.') && value.split('.').length > 2) {
+			return;
+		}
+
+		// Если в значении уже есть точка, запрещаем вводить запятую
+		if (value.includes('.') && value.endsWith(',')) {
+			return;
+		}
+
+		// Если в значении 2 цифры после точки, запрещаем вводить еще цифры
+		if (value.includes('.') && value.split('.')[1].length > 2) {
+			return;
+		}
+
+		// Оставляем только цифры и точку
+		onChange(value.replace(/[^0-9.]/g, ''));
 	}
 
 	function focusInput(event?: MouseEvent<HTMLDivElement>) {
@@ -85,13 +106,9 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 									!!errorText && 'caret-[#B51F2D]',
 								)}
 								value={AmountFieldHelpers.getValue(value, withMinus, withPlus)}
-								onChange={(event) => {
-									onChange(event.target.value.replace(/[^0-9.]/g, '').trim());
-								}}
+								onChange={handleChange}
 								onKeyDown={(event) => {
-									if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-										event.preventDefault();
-									}
+									if (event.key === 'ArrowUp' || event.key === 'ArrowDown') event.preventDefault();
 								}}
 								placeholder={AmountFieldHelpers.getPlaceholder(withMinus, withPlus)}
 								autoFocus={!isAutoFocusDisabled}
