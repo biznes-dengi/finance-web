@@ -50,39 +50,6 @@ export class DateService {
 		const today = dayjs();
 		const deadlineDate = dayjs(this.value);
 
-		// Разница в днях
-		const diffInDays = deadlineDate.diff(today, 'day');
-		// Разница в месяцах
-		const diffInMonths = deadlineDate.diff(today, 'month');
-		// Разница в годах
-		const diffInYears = deadlineDate.diff(today, 'year');
-
-		// Если разница в днях меньше 30, выводим в днях
-		if (diffInDays < 30) {
-			return this.formatTime(diffInDays, 'день', 'дня', 'дней');
-		}
-
-		// Если разница в годах больше или равна 1, выводим в годах
-		if (diffInYears >= 1) {
-			return this.formatTime(diffInYears, 'год', 'года', 'лет');
-		}
-
-		// Разница в месяцах без учёта годов (нормализуем, если месяц "перелетает" через год)
-		const remainingMonths = deadlineDate.month() - today.month() + 12 * (deadlineDate.year() - today.year());
-
-		// Если разница в месяцах менее 12, выводим в месяцах
-		if (remainingMonths > 0) {
-			return this.formatTime(remainingMonths, 'мес.', 'мес.', 'мес.');
-		}
-
-		// В случае, если это всё ещё менее месяца, выводим дни
-		return this.formatTime(diffInDays, 'день', 'дня', 'дней');
-	}
-
-	calculateTimeLeft() {
-		const today = dayjs();
-		const deadlineDate = dayjs(this.value);
-
 		// Получаем разницу в днях (неправильно считает, с декабря 2024 по март 2025 diffInMonths = 2)
 		const diffInDays = deadlineDate.diff(today, 'day');
 		const diffInMonths = deadlineDate.diff(today, 'month');
