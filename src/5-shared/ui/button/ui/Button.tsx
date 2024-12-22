@@ -52,7 +52,7 @@ export function Button(props: Props) {
 	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn(
 			'block',
-			buttonClickStyles,
+			!disabled && buttonClickStyles,
 			disabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			...buttonClassName,
 			className,
@@ -127,11 +127,20 @@ export function Button(props: Props) {
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
 				{icon && (
-					<div className='flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet'>
+					<div
+						className={cn(
+							'flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet',
+							disabled && 'bg-secondary-violet/20  text-primary-violet/20',
+						)}
+					>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-4')}
 					</div>
 				)}
-				{children && <div className='mt-2 text-[13px] text-primary-violet'>{children}</div>}
+				{children && (
+					<div className={cn('mt-2 text-[13px] text-primary-violet', disabled && 'text-primary-violet/20')}>
+						{children}
+					</div>
+				)}
 			</button>
 		);
 	}

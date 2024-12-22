@@ -17,7 +17,10 @@ export function DatePicker(props: Props) {
 		<>
 			<div className='flex w-full items-center justify-between px-4 text-sm '>
 				<div className='font-medium text-primary-grey'>
-					{cn(type === 'deadline' && APP_TEXT.deadline, type === 'transactionDate' && APP_TEXT.transactionDate)}
+					{cn(
+						type === 'deadline' && APP_TEXT.deadline,
+						type === 'transactionDate' && APP_TEXT.transactionDate,
+					)}
 				</div>
 				<div className='shrink-0'>
 					<Button icon={<Icon type='edit' />} onClick={openPopup}>
@@ -26,7 +29,7 @@ export function DatePicker(props: Props) {
 				</div>
 			</div>
 
-			<Popup {...popupProps}>
+			<Popup {...popupProps} title={APP_TEXT.transactionDate}>
 				<div className='flex justify-center'>
 					<DateField
 						value={value}

@@ -1,11 +1,12 @@
 import {Button, Card, Item, ItemImageWithProgress, List, LoadingWrapper, SelectInCard} from '@shared/ui';
-import {buttonConfigs, defaultFilter, goalStatusOptions} from '../config/GoalManagement.config.tsx';
+import {buttonConfigs, goalStatusOptions} from '../config/GoalManagement.config.tsx';
+import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {TextHelpers, useFilter} from '@shared/lib';
 import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
 
 export function GoalManagement() {
-	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
+	const {filter, setFilter} = useFilter<typeof goalsDefaultFilter>({defaultFilter: goalsDefaultFilter});
 
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
 	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
@@ -47,7 +48,12 @@ export function GoalManagement() {
 
 			<div className='flex justify-between px-4 py-2'>
 				{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
-					<Button key={index} isLoading={isLoading} {...restButtonConfig}>
+					<Button
+						key={index}
+						isLoading={isLoading}
+						disabled={name === APP_TEXT.transfer && goals?.length <= 1}
+						{...restButtonConfig}
+					>
 						{name}
 					</Button>
 				))}
@@ -82,9 +88,13 @@ export function GoalManagement() {
 						name={row.name}
 						description={
 							row.targetAmount &&
-							`${APP_TEXT.target}: ${TextHelpers.getAmount(row.targetAmount)} ${CURRENCY_SYMBOL[row.balance.currency]}`
+							`${APP_TEXT.target}: ${TextHelpers.getAmount(row.targetAmount)} ${
+								CURRENCY_SYMBOL[row.balance.currency]
+							}`
 						}
-						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${CURRENCY_SYMBOL[row.balance.currency]}`}
+						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${
+							CURRENCY_SYMBOL[row.balance.currency]
+						}`}
 						onClick={(navigate) => navigate(APP_PATH.goal.getItemDetailsPath(row.id))}
 					/>
 				)}

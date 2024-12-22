@@ -34,8 +34,3 @@ export const goalStatusOptions = [
 	{name: 'Achieved', value: 'ACHIEVED'},
 	{name: 'Overdue', value: 'OVERDUE'},
 ] as const;
-
-export const defaultFilter = {
-	pageNumber: 0,
-	status: undefined as (typeof goalStatusOptions)[number]['value'],
-};

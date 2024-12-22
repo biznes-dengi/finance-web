@@ -64,7 +64,7 @@ export function StatusPopup(props: StatusPopupProps) {
 							isOpen && 'items-center',
 						)}
 					>
-						<div className='mx-auto mb-4 h-1.5 w-12 rounded-full bg-secondary-grey'>
+						<div className='mx-auto mb-4 h-1 w-12 rounded-full bg-secondary-grey'>
 							<div className='h-full rounded-full bg-[#BAC3CA]' style={{width: `${progress}%`}} />
 						</div>
 
