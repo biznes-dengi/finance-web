@@ -20,7 +20,7 @@ export function GoalManagement() {
 					<LoadingWrapper isLoading={isLoading} className='mb-1.5 mt-2 h-6 w-32'>
 						{goalTotalBalance &&
 							(() => {
-								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split(',');
+								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split('.');
 								return (
 									<div>
 										<span className='text-3xl font-medium'>
@@ -29,7 +29,7 @@ export function GoalManagement() {
 										</span>
 										{float && (
 											<span className='text-xl font-bold'>
-												,{float} {CURRENCY_SYMBOL[goalTotalBalance.currency]}
+												.{float} {CURRENCY_SYMBOL[goalTotalBalance.currency]}
 											</span>
 										)}
 									</div>
