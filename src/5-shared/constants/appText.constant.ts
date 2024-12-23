@@ -27,7 +27,7 @@ export const APP_TEXT = {
 	targetAmount: 'Target amount',
 	addTargetAmount: 'Add target amount',
 	target: 'Target',
-	goalCompleted: 'Goal completed',
+	goalAchieved: 'Goal achieved',
 	progress: 'Progress',
 	transaction: 'Transaction',
 	transactions: 'Transactions',

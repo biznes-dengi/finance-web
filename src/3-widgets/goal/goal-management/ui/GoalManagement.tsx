@@ -91,7 +91,7 @@ export function GoalManagement() {
 								? `${APP_TEXT.left}: ${TextHelpers.getAmount(row.targetAmount - row.balance.amount)} ${
 										CURRENCY_SYMBOL[row.balance.currency]
 								  }`
-								: APP_TEXT.goalCompleted
+								: APP_TEXT.goalAchieved
 						}
 						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${
 							CURRENCY_SYMBOL[row.balance.currency]
