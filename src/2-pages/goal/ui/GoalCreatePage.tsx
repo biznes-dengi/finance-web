@@ -5,14 +5,14 @@ import {
 	AmountField,
 	Button,
 	ButtonType,
-	DatePicker,
+	EditButtonField,
 	PageHeader,
 	SelectWithSearch,
 	StatusPopup,
 	TextField,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
-import {cn, DateService, useResponsive} from '@shared/lib';
+import {cn, DateService, isUndefined, useResponsive} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone', 'Education'];
 const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
@@ -104,8 +104,20 @@ export function GoalCreatePage() {
 				{activeStepIndex === 2 && (
 					<div key={activeStepIndex} className='px-4'>
 						<AmountField value={targetAmount} onChange={setTargetAmount} activeOption={activeOption} />
-						<div className='mt-4'>
-							<DatePicker type='deadline' value={deadline} onChange={setDeadline} />
+						<div className='mt-4 flex justify-between px-4 text-sm'>
+							<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
+							<EditButtonField<Date | undefined>
+								type='date'
+								title={APP_TEXT.deadline}
+								initialValue={undefined}
+								value={deadline}
+								onChange={setDeadline}
+								isChanged={!isUndefined(deadline)}
+								icon={!deadline ? 'add' : undefined}
+								isNotEdit
+							>
+								{deadline ? new DateService(deadline).getLocalDateString() : APP_TEXT.addDeadline}
+							</EditButtonField>
 						</div>
 					</div>
 				)}

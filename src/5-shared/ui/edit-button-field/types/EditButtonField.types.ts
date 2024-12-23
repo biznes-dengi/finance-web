@@ -10,12 +10,13 @@ export type EditButtonFieldProps<Value> = {
 	onChange: (value: Value) => void;
 	options?: {name: string; description: string; value: CURRENCY}[];
 	activeOption?: AmountFieldOption;
-	isLoading: boolean;
-	isSuccess: boolean;
-	isError: boolean;
 	isChanged: boolean;
 	isRequired?: boolean;
 	title: string;
-	handleUpdate: () => void;
 	children?: ReactNode;
+	isLoading?: boolean;
+	isSuccess?: boolean;
+	isError?: boolean;
+	handleUpdate?: () => void;
+	isNotEdit?: boolean;
 };

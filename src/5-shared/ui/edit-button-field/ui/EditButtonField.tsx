@@ -30,6 +30,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 		handleUpdate,
 		title,
 		children,
+		isNotEdit,
 	} = props;
 
 	const {
@@ -64,11 +65,15 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 				}}
 			>
 				<div className='mb-4 text-center text-xl font-medium'>
-					{APP_TEXT.edit} {title.toLowerCase()}
+					{isNotEdit ? title : APP_TEXT.edit + ' ' + title.toLowerCase()}
 				</div>
 
 				{type === 'text' && (
-					<TextField value={value as string} onChange={(value) => onChange(value as Value)} placeholder={title} />
+					<TextField
+						value={value as string}
+						onChange={(value) => onChange(value as Value)}
+						placeholder={title}
+					/>
 				)}
 
 				{type === 'amount' && activeOption && (
@@ -96,7 +101,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 				<Button
 					className='mt-6'
 					type={ButtonType.main}
-					onClick={handleUpdate}
+					onClick={isNotEdit ? closePopup : handleUpdate!}
 					isLoading={isLoading}
 					disabled={!isChanged || (isRequired && !value)}
 				>

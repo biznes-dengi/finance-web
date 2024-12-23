@@ -13,8 +13,6 @@ export * from './status-popup/types/StatusPopup.types.ts';
 export * from './loading-wrapper/ui/LoadingWrapper.tsx';
 export * from './delete-item/ui/DeleteItem.tsx';
 export * from './edit-button-field/ui/EditButtonField.tsx';
-export * from './date-picker/ui/DatePicker.tsx';
-export * from './currency-picker/ui/CurrencyPicker.tsx';
 export * from './page-header/ui/PageHeader.tsx';
 export * from './icon/ui/Icon.tsx';
 export * from './popup/ui/Popup.tsx';
@@ -32,3 +30,5 @@ export * from './list';
 export * from './select-in-card';
 export * from './select-with-search';
 export * from './card';
+
+export * from './currency-picker/ui/CurrencyPicker.tsx';

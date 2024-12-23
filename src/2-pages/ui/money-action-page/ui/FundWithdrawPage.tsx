@@ -1,7 +1,15 @@
 import {useEffect, useState} from 'react';
 import {type FundWithdrawPageProps} from '../types/MoneyActionPage.types.ts';
 import {MoneyActionPageHelpers} from '../lib/MoneyActionPage.helpers.ts';
-import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
+import {
+	AmountField,
+	type AmountFieldOption,
+	Button,
+	ButtonType,
+	EditButtonField,
+	PageHeader,
+	StatusPopup,
+} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, DateService, isNumber, TextHelpers, useResponsive} from '@shared/lib';
 
@@ -26,7 +34,7 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 	const [options, setOptions] = useState<AmountFieldOption[] | undefined>();
 
 	const [amount, setAmount] = useState('');
-	const [date, setDate] = useState<Date>(new DateService().value!);
+	const [date, setDate] = useState<Date>(new DateService().value);
 
 	useEffect(() => {
 		if (itemDetails) {
@@ -67,8 +75,22 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 					withPlus={actionType === 'fund'}
 					withMinus={actionType === 'withdraw'}
 				/>
-				<div className='my-4'>
-					<DatePicker type='transactionDate' value={date} onChange={setDate} />
+				<div className='mt-4 flex justify-between px-4 text-sm'>
+					<div className='font-medium text-primary-grey'>{APP_TEXT.transactionDate}</div>
+					<EditButtonField<Date | undefined>
+						type='date'
+						title={APP_TEXT.transactionDate}
+						initialValue={undefined}
+						value={date}
+						onChange={(value) => {
+							if (!value) return;
+							setDate(value);
+						}}
+						isChanged={!new DateService(new DateService().value).isEqualTo(date)}
+						isNotEdit
+					>
+						{new DateService(date).getLocalDateString()}
+					</EditButtonField>
 				</div>
 			</div>
 
@@ -78,7 +100,6 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 					onClick={handleActionClick}
 					disabled={!amount}
 					isLoading={isActionLoading}
-					onEnterUp={handleActionClick}
 				>
 					{APP_TEXT[actionType]}
 				</Button>
