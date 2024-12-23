@@ -35,8 +35,8 @@ export function Item(props: ItemProps) {
 		>
 			<div
 				className={cn(
-					'flex w-full rounded-2xl p-3 text-left duration-300',
-					onClick && (isDesktop ? 'duration-300 group-hover:bg-light-grey' : 'duration-300 group-active:bg-light-grey'),
+					'flex w-full rounded-2xl p-3 text-left',
+					onClick && (isDesktop ? 'duration-300 group-hover:bg-light-grey' : 'group-active:bg-light-grey'),
 					className,
 				)}
 			>
@@ -61,10 +61,15 @@ export function Item(props: ItemProps) {
 
 				{(rightName || rightDescription) && (
 					<div
-						className={cn('ml-2 flex flex-shrink-0 flex-col items-end', description ? 'self-stretch' : 'self-center')}
+						className={cn(
+							'ml-2 flex flex-shrink-0 flex-col items-end',
+							description ? 'self-stretch' : 'self-center',
+						)}
 					>
 						{rightName && <div>{rightName}</div>}
-						{rightDescription && <div className='text-sm font-light text-primary-grey'>{rightDescription}</div>}
+						{rightDescription && (
+							<div className='text-sm font-light text-primary-grey'>{rightDescription}</div>
+						)}
 					</div>
 				)}
 

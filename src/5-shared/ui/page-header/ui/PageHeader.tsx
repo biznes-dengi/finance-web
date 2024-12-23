@@ -30,12 +30,12 @@ export function PageHeader(props: PageHeaderProps) {
 	return (
 		<div role='page-header' className={cn('mb-6 w-full pt-4', isNumber(stepsCount) && 'pt-2', className)}>
 			{isNumber(stepsCount) && isNumber(activeStepIndex) && (
-				<div className='mb-3 px-2 flex w-full gap-0.5'>
+				<div className='mb-3 px-2 flex w-full gap-1'>
 					{Array.from({length: 3}).map((item, index) => (
 						<div
 							key={cn(item as any, index)}
 							className={cn(
-								'h-0.5 w-full rounded-2xl bg-primary-grey opacity-40',
+								'h-0.5 w-full rounded-3xl bg-primary-grey opacity-40',
 								index <= activeStepIndex && 'opacity-1 bg-black',
 							)}
 						/>

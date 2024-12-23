@@ -1,7 +1,7 @@
 import {ReactElement, ReactNode, useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
-import {cn, styleElement, useKeyClick} from '@shared/lib';
+import {cn, styleElement, useKeyClick, useResponsive} from '@shared/lib';
 import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
@@ -26,9 +26,7 @@ interface Props extends CommonButtonSettings {
 	disableDefaultEnterClick?: boolean;
 }
 
-// TODO: Typescript: when type = icon -> icon prop required
-
-export const buttonClickStyles = 'transition duration-200 ease-in-out active:scale-95 active:brightness-95';
+// Typescript: when type = icon -> icon prop required
 
 export function Button(props: Props) {
 	const {
@@ -46,6 +44,8 @@ export function Button(props: Props) {
 
 	const navigate = useNavigate();
 
+	const {isDesktop} = useResponsive();
+
 	const [displayBoxShadow, setDisplayBoxShadow] = useState(true);
 
 	useKeyClick({
@@ -62,8 +62,9 @@ export function Button(props: Props) {
 	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn(
 			'block',
-			!disabled && buttonClickStyles,
-			disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+			!disabled && 'active:scale-95 active:brightness-95',
+			type === ButtonType.text && !isDesktop && 'transition duration-200 ease-in-out',
+			isDesktop && cn('transition duration-200 ease-in-out', disabled ? 'cursor-not-allowed' : 'cursor-pointer'),
 			...buttonClassName,
 			className,
 		);
