@@ -21,10 +21,12 @@ export function GoalEditDetails() {
 	useEffect(() => {
 		if (!goalDetails) return;
 
+		console.log('goalDetails.deadline ', goalDetails.deadline);
+
 		const initialState = {
 			name: goalDetails.name,
 			targetAmount: String(goalDetails.targetAmount),
-			deadline: new Date(goalDetails.deadline as string),
+			deadline: goalDetails.deadline ? new DateService(goalDetails.deadline).value : undefined,
 			currency: goalDetails.balance.currency,
 		};
 
@@ -46,7 +48,7 @@ export function GoalEditDetails() {
 			payload: {
 				name,
 				targetAmount: Number(targetAmount),
-				deadline: new DateService(deadline).getPayloadDateFormat(),
+				deadline: deadline ? new DateService(deadline).getPayloadDateFormat() : undefined,
 				currency,
 			},
 		});
@@ -165,8 +167,22 @@ export function GoalEditDetails() {
 				</div>
 			</Card>
 
-			<StatusPopup isOpen={isUpdateGoalSuccess} status='success' statusTextKey='updateGoalSuccess' />
-			<StatusPopup isOpen={isUpdateGoalError} status='error' statusTextKey='updateGoalError' />
+			{goalDetails && (
+				<StatusPopup
+					isOpen={isUpdateGoalSuccess}
+					status='success'
+					statusTextKey='updateGoalSuccess'
+					statusTextProps={{name: goalDetails.name}}
+				/>
+			)}
+			{goalDetails && (
+				<StatusPopup
+					isOpen={isUpdateGoalError}
+					status='error'
+					statusTextKey='updateGoalError'
+					statusTextProps={{name: goalDetails.name}}
+				/>
+			)}
 		</>
 	);
 }

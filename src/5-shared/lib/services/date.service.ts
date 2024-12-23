@@ -10,7 +10,7 @@ export class DateService {
 			return;
 		}
 
-		this.value = isString(date) ? new Date(date) : date;
+		this.value = new Date(date);
 	}
 
 	getLocalDateString() {

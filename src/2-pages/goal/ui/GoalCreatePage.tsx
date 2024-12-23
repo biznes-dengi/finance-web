@@ -42,7 +42,7 @@ export function GoalCreatePage() {
 				name,
 				currency,
 				targetAmount: Number(targetAmount),
-				deadline: new DateService(deadline).getPayloadDateFormat(),
+				deadline: deadline ? new DateService(deadline).getPayloadDateFormat() : undefined,
 			},
 		});
 	}
