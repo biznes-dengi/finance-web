@@ -1,7 +1,7 @@
-import {ReactElement, ReactNode} from 'react';
+import {ReactElement, ReactNode, useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
-import {cn, styleElement} from '@shared/lib';
+import {cn, styleElement, useKeyClick} from '@shared/lib';
 import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
@@ -23,6 +23,7 @@ interface Props extends CommonButtonSettings {
 	isLoading?: boolean;
 	isOnlyIcon?: boolean;
 	isSecondary?: boolean;
+	disableDefaultEnterClick?: boolean;
 }
 
 // TODO: Typescript: when type = icon -> icon prop required
@@ -40,14 +41,23 @@ export function Button(props: Props) {
 		disabled,
 		isLoading,
 		isOnlyIcon,
+		disableDefaultEnterClick,
 	} = props;
 
 	const navigate = useNavigate();
 
-	const buttonProps = {
-		onClick: disabled ? undefined : () => onClick({navigate}),
-		disabled,
-	};
+	const [displayBoxShadow, setDisplayBoxShadow] = useState(true);
+
+	useKeyClick({
+		key: 'Enter',
+		onKeyDown: () => setDisplayBoxShadow(false),
+		onKeyUp: () => {
+			onClick({navigate});
+			setDisplayBoxShadow(true);
+		},
+		disabled: disabled || disableDefaultEnterClick || type !== ButtonType.main,
+		deps: [],
+	});
 
 	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn(
@@ -58,6 +68,11 @@ export function Button(props: Props) {
 			className,
 		);
 	}
+
+	const buttonProps = {
+		onClick: disabled ? undefined : () => onClick({navigate}),
+		disabled,
+	};
 
 	if (type === ButtonType.main) {
 		return (
@@ -76,6 +91,7 @@ export function Button(props: Props) {
 						(isSecondary
 							? 'cursor-not-allowed bg-secondary-violet'
 							: 'cursor-not-allowed bg-primary-violet shadow-none'),
+					!displayBoxShadow && 'shadow-none',
 				)}
 			>
 				{isLoading ? (

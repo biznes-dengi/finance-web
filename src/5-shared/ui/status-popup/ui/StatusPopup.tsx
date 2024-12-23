@@ -23,7 +23,7 @@ export function StatusPopup(props: StatusPopupProps) {
 		const timeoutId = setTimeout(() => {
 			setIsDismissible(true);
 			setIsPopupOpen(false);
-		}, statusDuration);
+		}, statusDuration + 200);
 
 		return () => {
 			clearTimeout(timeoutId);

@@ -97,6 +97,7 @@ export function LoginPage() {
 					disabled={!email || !password}
 					className={cn(!displayBoxShadow && 'shadow-none')}
 					isLoading={isLoginPending}
+					disableDefaultEnterClick
 				>
 					{APP_TEXT.logIn}
 				</Button>

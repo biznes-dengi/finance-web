@@ -97,6 +97,7 @@ export function SignupPage() {
 						disabled={!email || !password}
 						className={cn(!displayBoxShadow && 'shadow-none')}
 						isLoading={isSignupPending}
+						disableDefaultEnterClick
 					>
 						{APP_TEXT.signUp}
 					</Button>

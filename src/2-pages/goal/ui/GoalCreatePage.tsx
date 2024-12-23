@@ -35,8 +35,6 @@ export function GoalCreatePage() {
 	};
 
 	function handleCreateClick() {
-		if (!targetAmount) return;
-
 		createGoal({
 			payload: {
 				name,

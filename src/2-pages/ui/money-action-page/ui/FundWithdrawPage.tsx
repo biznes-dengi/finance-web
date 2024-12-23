@@ -78,6 +78,7 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 					onClick={handleActionClick}
 					disabled={!amount}
 					isLoading={isActionLoading}
+					onEnterUp={handleActionClick}
 				>
 					{APP_TEXT[actionType]}
 				</Button>
