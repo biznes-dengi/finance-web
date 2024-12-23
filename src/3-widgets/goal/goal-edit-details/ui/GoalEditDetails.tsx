@@ -21,8 +21,6 @@ export function GoalEditDetails() {
 	useEffect(() => {
 		if (!goalDetails) return;
 
-		console.log('goalDetails.deadline ', goalDetails.deadline);
-
 		const initialState = {
 			name: goalDetails.name,
 			targetAmount: String(goalDetails.targetAmount),
@@ -60,6 +58,14 @@ export function GoalEditDetails() {
 		isError: isUpdateGoalError,
 		handleUpdate,
 	};
+
+	const isDeadlineChanged = (() => {
+		if (deadline && goalDetails?.deadline) {
+			return !new DateService(goalDetails.deadline).isEqualTo(deadline);
+		}
+
+		return !!deadline && !goalDetails?.deadline;
+	})();
 
 	return (
 		<>
@@ -149,13 +155,7 @@ export function GoalEditDetails() {
 							initialValue={initialState.deadline}
 							value={deadline}
 							onChange={setDeadline}
-							isChanged={
-								!!(
-									deadline &&
-									goalDetails?.deadline &&
-									!new DateService(goalDetails.deadline).isEqualTo(deadline)
-								)
-							}
+							isChanged={isDeadlineChanged}
 							icon={!goalDetails?.deadline ? 'add' : undefined}
 							{...editButtonCommonProps}
 						>

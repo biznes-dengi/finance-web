@@ -44,7 +44,9 @@ export function DateField(props: DateFieldProps) {
 	return (
 		<div className='rounded-2xl bg-white p-2'>
 			<div className='mb-2 flex justify-between px-2 text-sm'>
-				<div className='text-primary-grey'>{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}</div>
+				<div className='text-primary-grey'>
+					{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}
+				</div>
 				<Button onClick={() => onChange(undefined)}>Reset</Button>
 			</div>
 			<DayPicker
