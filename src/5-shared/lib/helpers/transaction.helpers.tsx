@@ -2,6 +2,23 @@ import {APP_TEXT, CURRENCY, CURRENCY_SYMBOL, TRANSACTION_TYPE} from '@shared/con
 import {Icon} from '@shared/ui';
 import {cn, TextHelpers} from '@shared/lib';
 
+export type Transactions = {id: number; type: TRANSACTION_TYPE; amount: number}[];
+
+const monthsMap = new Map([
+	[0, 'Январь'],
+	[1, 'Февраль'],
+	[2, 'Март'],
+	[3, 'Апрель'],
+	[4, 'Май'],
+	[5, 'Июнь'],
+	[6, 'Июль'],
+	[7, 'Август'],
+	[8, 'Сентябрь'],
+	[9, 'Октябрь'],
+	[10, 'Ноябрь'],
+	[11, 'Декабрь'],
+]);
+
 export class TransactionHelpers {
 	static getTransactionName(row: any) {
 		if (!row) return;
@@ -60,8 +77,10 @@ export class TransactionHelpers {
 		);
 	}
 
-	static groupItemsByMonth(items: any) {
-		const result = {};
+	static groupItemsByMonth(items: any): {string: Transactions} {
+		if (!items) return {} as {string: Transactions};
+
+		const result = {} as {string: Transactions};
 
 		function getMonthKey(itemDate: string) {
 			const date = new Date(itemDate);
@@ -100,48 +119,19 @@ export class TransactionHelpers {
 		return total > 0 ? `+${total}` : total;
 	}
 
-	static getTransactionTitle(monthData: any) {
-		const monthsMap = new Map([
-			[0, 'Январь'],
-			[1, 'Февраль'],
-			[2, 'Март'],
-			[3, 'Апрель'],
-			[4, 'Май'],
-			[5, 'Июнь'],
-			[6, 'Июль'],
-			[7, 'Август'],
-			[8, 'Сентябрь'],
-			[9, 'Октябрь'],
-			[10, 'Ноябрь'],
-			[11, 'Декабрь'],
-		]);
+	static getTransactionGroupTitle(month: string, uniqueYears: number[] | null) {
+		if (!uniqueYears) return;
 
-		const [yearMonth, transactions] = monthData; // Получаем год-месяц и список транзакций
-		const month = new Date(yearMonth).getMonth(); // Извлекаем месяц из "YYYY-MM"
+		const monthIndex = new Date(month).getMonth();
+		const monthYear = new Date(month).getFullYear();
 
-		// Массив уникальных годов для транзакций
-		const years = transactions.map((tx: any) => new Date(tx.date).getFullYear());
-		const uniqueYears = [...new Set(years)]; // Уникальные годы
+		// Находим максимальный год среди транзакций
+		const maxYear = Math.max(...uniqueYears);
 
-		// Если все транзакции из одного года
-		if (uniqueYears.length === 1) {
-			const year = uniqueYears[0];
-			if (year === 2025) {
-				return monthsMap.get(month); // Для 2025 года возвращаем только месяц без года
-			} else {
-				return `${monthsMap.get(month)} ${year}`; // Для 2024 года выводим месяц с годом
-			}
+		if (monthYear === maxYear) {
+			return monthsMap.get(monthIndex);
 		}
 
-		// Если транзакции из разных лет
-		const lastTransactionYear = Math.max(...(uniqueYears as number[])); // Находим последний год среди транзакций
-
-		// Если год последней транзакции это 2025
-		if (lastTransactionYear === 2025) {
-			return monthsMap.get(month); // Для месяцев 2025 года показываем только месяц
-		}
-
-		// Для месяцев 2024 года показываем месяц с годом
-		return `${monthsMap.get(month)} ${uniqueYears[0]}`;
+		return [monthsMap.get(monthIndex), monthYear].join(' ');
 	}
 }
