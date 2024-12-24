@@ -8,11 +8,11 @@ import {
 	FaCheck,
 	FaChevronDown,
 	FaChevronRight,
-	FaFolder,
 	FaPen,
 	FaPlus,
 	FaUser,
 	FaXmark,
+	FaStar,
 } from 'react-icons/fa6';
 import {FaCamera} from 'react-icons/fa';
 import {cn} from '@shared/lib';
@@ -23,7 +23,7 @@ export const ICON_MAP = {
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,
 
-	createGoal: FaFolder,
+	createGoal: FaStar,
 	fund: FaPlus,
 	withdraw: FaArrowDown,
 	transfer: ({className}: {className: string}) => <FaArrowUp className={cn('rotate-45 transform', className)} />,
