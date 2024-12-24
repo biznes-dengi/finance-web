@@ -1,5 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {TransferPage} from '@pages/ui';
+import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {APP_PATH} from '@shared/constants';
 
@@ -7,7 +8,7 @@ export function GoalDetailsTransferPage() {
 	const {id} = useParams();
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const {goals, isGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
 
 	const {transferGoal, isTransferGoalLoading, isTransferGoalSuccess, isTransferGoalError} = GoalModel.useTransfer();
 

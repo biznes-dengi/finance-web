@@ -10,8 +10,9 @@ export function GoalManagement() {
 
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
 	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
+	const {goals: activeGoals, isGoalsLoading: isActiveGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
 
-	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading;
+	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading || isActiveGoalsLoading;
 
 	return (
 		<Card>
@@ -51,7 +52,7 @@ export function GoalManagement() {
 					<Button
 						key={index}
 						isLoading={isLoading}
-						disabled={name === APP_TEXT.transfer && goals?.length <= 1}
+						disabled={name === APP_TEXT.transfer && activeGoals?.length <= 1}
 						{...restButtonConfig}
 					>
 						{name}
