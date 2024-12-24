@@ -24,7 +24,7 @@ export function GoalImage() {
 					{goalDetails && (
 						<>
 							<div className='text text-sm'>{goalDetails.name}</div>
-							<div className='text-3xl font-medium'>
+							<div className='text-3xl font-[600]'>
 								{`${TextHelpers.getAmount(goalDetails.balance.amount)} ${
 									CURRENCY_SYMBOL[goalDetails.balance.currency]
 								}`}

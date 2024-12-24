@@ -23,7 +23,7 @@ export function GoalManagement() {
 								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split('.');
 								return (
 									<div>
-										<span className='text-3xl font-medium'>
+										<span className='text-3xl font-[600]'>
 											<span>{int}</span>
 											{!float && <span> {CURRENCY_SYMBOL[goalTotalBalance.currency]}</span>}
 										</span>
