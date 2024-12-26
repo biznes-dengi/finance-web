@@ -37,7 +37,7 @@ export const APP_TEXT = {
 	update: 'Update',
 	save: 'Save',
 	name: 'Name',
-	deleteGoal: 'Delete Goal',
+	deleteGoal: 'Delete goal',
 	deleteGoalConfirmation: 'Are you sure you want to delete the goal?',
 	email: 'Email',
 	password: 'Password',

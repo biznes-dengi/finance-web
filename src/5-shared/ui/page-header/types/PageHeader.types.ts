@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 
 export type PageHeaderProps = {
+	className?: string;
 	appleTitle?: string;
 	title?: string;
 	description?: ReactNode;
@@ -8,7 +9,7 @@ export type PageHeaderProps = {
 	backPath?: string;
 	handleBackButtonClick?: () => void;
 	withBackButton?: boolean;
-	className?: string;
+	withNoSpace?: boolean;
 	stepsCount?: number;
 	activeStepIndex?: number;
 };

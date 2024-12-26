@@ -47,7 +47,7 @@ export function GoalManagement() {
 				</LoadingWrapper>
 			</div>
 
-			<div className='flex justify-between px-4 py-2'>
+			<div className='flex justify-between px-4 pb-2 pt-1'>
 				{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
 					<Button
 						key={index}

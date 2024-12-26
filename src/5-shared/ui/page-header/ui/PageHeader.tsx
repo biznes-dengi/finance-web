@@ -14,10 +14,11 @@ export function PageHeader(props: PageHeaderProps) {
 		handleBackButtonClick,
 		backPath,
 		withBackButton = true,
-		className,
+		withNoSpace,
 		stepsCount,
 		activeStepIndex,
 		appleTitle,
+		className,
 	} = props;
 
 	const navigate = useNavigate();
@@ -28,7 +29,10 @@ export function PageHeader(props: PageHeaderProps) {
 	}
 
 	return (
-		<div role='page-header' className={cn('mb-6 w-full pt-4', isNumber(stepsCount) && 'pt-2', className)}>
+		<div
+			role='page-header'
+			className={cn('mb-6 w-full pt-4', isNumber(stepsCount) && 'pt-2', withNoSpace && 'p-0', className)}
+		>
 			{isNumber(stepsCount) && isNumber(activeStepIndex) && (
 				<div className='mb-3 px-2 flex w-full gap-1'>
 					{Array.from({length: 3}).map((item, index) => (
@@ -43,7 +47,7 @@ export function PageHeader(props: PageHeaderProps) {
 				</div>
 			)}
 
-			<div className='px-4 flex flex-col items-start gap-2'>
+			<div className={cn('px-4 flex flex-col items-start gap-2', withNoSpace && 'p-0')}>
 				{appleTitle ? (
 					<div className={cn('flex w-full items-center justify-between')}>
 						{withBackButton && (
