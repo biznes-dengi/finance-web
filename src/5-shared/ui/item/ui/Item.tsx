@@ -36,7 +36,7 @@ export function Item(props: ItemProps) {
 			<div
 				className={cn(
 					'flex w-full rounded-2xl p-3 text-left',
-					onClick && (isDesktop ? 'duration-300 group-hover:bg-light-grey' : 'group-active:bg-light-grey'),
+					onClick && (isDesktop ? 'duration-300 group-hover:bg-light-grey' : 'duration-100 group-active:bg-light-grey'),
 					className,
 				)}
 			>
@@ -54,22 +54,17 @@ export function Item(props: ItemProps) {
 					</div>
 				)}
 
-				<div className={cn('min-w-0 flex-1 self-center')}>
+				<div className='min-w-0 flex-1 self-center'>
 					<div className={cn('truncate font-medium', isNameText && 'font-normal')}>{name}</div>
 					{description && <div className='truncate text-sm font-light text-primary-grey'>{description}</div>}
 				</div>
 
 				{(rightName || rightDescription) && (
 					<div
-						className={cn(
-							'ml-2 flex flex-shrink-0 flex-col items-end',
-							description ? 'self-stretch' : 'self-center',
-						)}
+						className={cn('ml-2 flex flex-shrink-0 flex-col items-end', description ? 'self-stretch' : 'self-center')}
 					>
 						{rightName && <div>{rightName}</div>}
-						{rightDescription && (
-							<div className='text-sm font-light text-primary-grey'>{rightDescription}</div>
-						)}
+						{rightDescription && <div className='text-sm font-light text-primary-grey'>{rightDescription}</div>}
 					</div>
 				)}
 

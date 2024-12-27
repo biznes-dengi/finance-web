@@ -62,9 +62,8 @@ export function Button(props: Props) {
 	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn(
 			'block',
-			!disabled && 'active:scale-95 active:brightness-95',
-			type === ButtonType.text && !isDesktop && 'transition duration-200 ease-in-out',
-			isDesktop && cn('transition duration-200 ease-in-out', disabled ? 'cursor-not-allowed' : 'cursor-pointer'),
+			disabled ? 'cursor-not-allowed' : 'active:scale-95 active:brightness-95 transition ease-in-out cursor-pointer',
+			isDesktop ? 'duration-200' : 'duration-100',
 			...buttonClassName,
 			className,
 		);
