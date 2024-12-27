@@ -17,7 +17,7 @@ export function PageHeader(props: PageHeaderProps) {
 		withNoSpace,
 		stepsCount,
 		activeStepIndex,
-		appleTitle,
+		// appleTitle,
 		className,
 	} = props;
 
@@ -34,7 +34,7 @@ export function PageHeader(props: PageHeaderProps) {
 			className={cn('mb-6 w-full pt-4', isNumber(stepsCount) && 'pt-2', withNoSpace && 'p-0', className)}
 		>
 			{isNumber(stepsCount) && isNumber(activeStepIndex) && (
-				<div className='mb-3 flex w-full gap-1 px-2'>
+				<div className='mb-1 flex w-full gap-1 px-2'>
 					{Array.from({length: 3}).map((item, index) => (
 						<div
 							key={cn(item as any, index)}
@@ -47,25 +47,21 @@ export function PageHeader(props: PageHeaderProps) {
 				</div>
 			)}
 
-			<div className={cn('flex flex-col items-start gap-2 px-4', withNoSpace && 'p-0')}>
-				{(withBackButton || appleTitle) && (
-					<div className={cn('flex w-full items-center justify-between')}>
-						{withBackButton && (
-							<Button
-								type={ButtonType.icon}
-								icon={
-									<div className='flex items-center justify-center'>
-										<Icon type='backButton' className='size-5' />
-									</div>
-								}
-								onClick={onBackButtonClick}
-								isOnlyIcon
-							/>
-						)}
-						{appleTitle && <div className='absolute left-1/2 -translate-x-1/2 transform font-bold'>{appleTitle}</div>}
-					</div>
-				)}
+			{withBackButton && (
+				<Button
+					type={ButtonType.icon}
+					icon={
+						<div className='flex items-center justify-center'>
+							<Icon type='backButton' className='size-5' />
+						</div>
+					}
+					onClick={onBackButtonClick}
+					isOnlyIcon
+					className={cn('ml-2 p-2', withNoSpace && 'ml-0')}
+				/>
+			)}
 
+			<div className={cn('flex flex-col items-start gap-2 px-4', withNoSpace && 'p-0')}>
 				{title && <div className='text-3xl font-bold'>{title}</div>}
 				{description && <div className='font-medium'>{description}</div>}
 				{subDescription && <div className='text-sm font-light text-primary-grey'>{subDescription}</div>}
@@ -73,3 +69,22 @@ export function PageHeader(props: PageHeaderProps) {
 		</div>
 	);
 }
+
+// 	{appleTitle && (
+// 					<div className={cn('flex w-full items-center justify-between')}>
+// 						{/*{withBackButton && (*/}
+// 						{/*	<Button*/}
+// 						{/*		type={ButtonType.icon}*/}
+// 						{/*		icon={*/}
+// 						{/*			<div className='flex items-center justify-center'>*/}
+// 						{/*				<Icon type='backButton' className='size-5' />*/}
+// 						{/*			</div>*/}
+// 						{/*		}*/}
+// 						{/*		onClick={onBackButtonClick}*/}
+// 						{/*		isOnlyIcon*/}
+// 						{/*		className='p-2'*/}
+// 						{/*	/>*/}
+// 						{/*)}*/}
+// 						{appleTitle && <div className='absolute left-1/2 -translate-x-1/2 transform font-bold'>{appleTitle}</div>}
+// 					</div>
+// 				)}
