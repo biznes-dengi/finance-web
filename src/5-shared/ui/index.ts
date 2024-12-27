@@ -20,6 +20,8 @@ export * from './popup/hooks/usePopupState.ts';
 export * from './item/ui/Item.tsx';
 export * from './item/ui/LoadingItem.tsx';
 export * from './item/ui/ItemImageWithProgress.tsx';
+export * from './select-with-search/ui/SelectWithSearch.tsx';
+export * from './card/ui/Card.tsx';
 
 // new pattern -> get rid of index.ts
 
@@ -28,7 +30,7 @@ export * from './button';
 export * from './preload-skeleton';
 export * from './list';
 export * from './select-in-card';
-export * from './select-with-search';
-export * from './card';
+
+// editButtonField instead
 
 export * from './currency-picker/ui/CurrencyPicker.tsx';

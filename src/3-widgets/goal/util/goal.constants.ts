@@ -5,4 +5,4 @@ export const goalsDefaultFilter = {
 	status: undefined as (typeof goalStatusOptions)[number]['value'],
 };
 
-export const goalNameMaxLength = 30;
+export const goalNameMaxLength = 25;

@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {Card, EditButtonField, LoadingWrapper, StatusPopup} from '@shared/ui';
-import {APP_TEXT, CURRENCY, CURRENCY_CODE, CURRENCY_SYMBOL} from '@shared/constants';
+import {APP_TEXT, CURRENCY, CURRENCY_CODE, CURRENCY_OPTIONS, CURRENCY_SYMBOL} from '@shared/constants';
 import {DateService, TextHelpers} from '@shared/lib';
 
 export function GoalEditDetails() {
@@ -103,7 +103,7 @@ export function GoalEditDetails() {
 							initialValue={initialState.currency}
 							value={currency}
 							onChange={setCurrency}
-							options={[{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}]}
+							options={CURRENCY_OPTIONS}
 							isChanged={goalDetails?.balance.currency !== currency}
 							isRequired
 							{...editButtonCommonProps}

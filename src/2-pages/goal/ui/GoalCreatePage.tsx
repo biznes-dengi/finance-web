@@ -12,11 +12,10 @@ import {
 	StatusPopup,
 	TextField,
 } from '@shared/ui';
-import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_OPTIONS} from '@shared/constants';
 import {cn, DateService, isUndefined, useResponsive} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone', 'Education'];
-const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
 
 export function GoalCreatePage() {
 	const [activeStepIndex, setActiveStepIndex] = useState(0);
@@ -31,7 +30,7 @@ export function GoalCreatePage() {
 	const {isMobile} = useResponsive();
 
 	const activeOption = {
-		name: currencyOptions.find((option) => option.value === currency)?.description ?? '',
+		name: CURRENCY_OPTIONS.find((option) => option.value === currency)?.description ?? '',
 		currency: currency as CURRENCY,
 	};
 
@@ -59,6 +58,8 @@ export function GoalCreatePage() {
 			activeStepIndex={activeStepIndex}
 		/>
 	);
+
+	console.log('currency ', currency);
 
 	return (
 		<>
@@ -97,7 +98,7 @@ export function GoalCreatePage() {
 				{activeStepIndex === 1 && (
 					<div className='px-4'>
 						<SelectWithSearch
-							options={currencyOptions}
+							options={CURRENCY_OPTIONS}
 							onChange={(value) => {
 								setCurrency(value);
 								setTargetAmount('');

@@ -63,7 +63,7 @@ export function LoginPage() {
 
 	return (
 		<AuthLayout>
-			<PageHeader title={APP_TEXT.welcome} withBackButton={false} className='p-0' />
+			<PageHeader title={APP_TEXT.welcome} withBackButton={false} withNoSpace />
 
 			<div className='flex w-full flex-col gap-4'>
 				<TextField

@@ -77,16 +77,13 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 						<div ref={optionsRef} className='mr-4 min-w-40'>
 							<div
 								className={cn(
-									'w-fit flex items-center gap-1.5',
+									'flex w-fit items-center gap-1.5',
 									isMultipleOptions ? 'cursor-pointer' : 'cursor-default',
 								)}
 								onClick={openPopup}
 							>
 								{activeOption?.image &&
-									styleElement(
-										activeOption.image,
-										'size-5 flex-shrink-0 rounded-full bg-primary-grey',
-									)}
+									styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
 
 								<div className='truncate font-medium'>{activeOption?.name}</div>
 
@@ -152,19 +149,16 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 						rows={options}
 						renderRow={(option) => (
 							<Item
-								className={cn(
-									AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && 'bg-light-grey',
-								)}
+								className={cn(AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && 'bg-light-grey')}
 								onClick={() => handleOptionSelect(option)}
 								image={option.image}
 								name={option.name}
 								description={AmountFieldHelpers.getDescription<Option>({getCustomDescription, option})}
 								rightNode={
 									AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && (
-										<Icon type='check' />
-									) && <Icon type='check' className='flex size-4 self-center text-primary-violet' />
+										<Icon type='check' className='flex size-4 self-center text-primary-violet' />
+									)
 								}
-								// statusIcon={AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && <Icon type='check' />}
 							/>
 						)}
 					/>

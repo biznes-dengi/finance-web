@@ -7,7 +7,7 @@ import {cn, useResponsive} from '@shared/lib';
 export function Item(props: ItemProps) {
 	const {
 		image,
-		statusIcon,
+		imageIcon,
 		name,
 		description,
 		rightName,
@@ -46,9 +46,9 @@ export function Item(props: ItemProps) {
 					<div className='relative my-0.5 mr-4 flex-shrink-0'>
 						{image}
 
-						{statusIcon && (
+						{imageIcon && (
 							<div className='absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'>
-								{statusIcon}
+								{imageIcon}
 							</div>
 						)}
 					</div>
