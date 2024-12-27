@@ -34,7 +34,7 @@ export function PageHeader(props: PageHeaderProps) {
 			className={cn('mb-6 w-full pt-4', isNumber(stepsCount) && 'pt-2', withNoSpace && 'p-0', className)}
 		>
 			{isNumber(stepsCount) && isNumber(activeStepIndex) && (
-				<div className='mb-3 px-2 flex w-full gap-1'>
+				<div className='mb-3 flex w-full gap-1 px-2'>
 					{Array.from({length: 3}).map((item, index) => (
 						<div
 							key={cn(item as any, index)}
@@ -47,8 +47,8 @@ export function PageHeader(props: PageHeaderProps) {
 				</div>
 			)}
 
-			<div className={cn('px-4 flex flex-col items-start gap-2', withNoSpace && 'p-0')}>
-				{appleTitle ? (
+			<div className={cn('flex flex-col items-start gap-2 px-4', withNoSpace && 'p-0')}>
+				{(withBackButton || appleTitle) && (
 					<div className={cn('flex w-full items-center justify-between')}>
 						{withBackButton && (
 							<Button
@@ -62,21 +62,8 @@ export function PageHeader(props: PageHeaderProps) {
 								isOnlyIcon
 							/>
 						)}
-						<div className='absolute left-1/2 -translate-x-1/2 transform font-bold'>{appleTitle}</div>
+						{appleTitle && <div className='absolute left-1/2 -translate-x-1/2 transform font-bold'>{appleTitle}</div>}
 					</div>
-				) : (
-					withBackButton && (
-						<Button
-							type={ButtonType.icon}
-							icon={
-								<div className='flex items-center justify-center'>
-									<Icon type='backButton' className='size-5' />
-								</div>
-							}
-							onClick={onBackButtonClick}
-							isOnlyIcon
-						/>
-					)
 				)}
 
 				{title && <div className='text-3xl font-bold'>{title}</div>}
