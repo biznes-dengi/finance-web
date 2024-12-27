@@ -30,6 +30,8 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 		handleUpdate,
 		title,
 		children,
+		maxLength,
+
 		isNotEdit,
 	} = props;
 
@@ -73,6 +75,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 						value={value as string}
 						onChange={(value) => onChange(value as Value)}
 						placeholder={title}
+						maxLength={maxLength}
 					/>
 				)}
 

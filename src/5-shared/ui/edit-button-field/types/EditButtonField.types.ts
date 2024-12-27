@@ -18,5 +18,7 @@ export type EditButtonFieldProps<Value> = {
 	isSuccess?: boolean;
 	isError?: boolean;
 	handleUpdate?: () => void;
+	maxLength?: number;
+
 	isNotEdit?: boolean;
 };

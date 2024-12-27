@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {GoalImageField} from '@widgets/goal';
+import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {
 	AmountField,
@@ -68,7 +69,12 @@ export function GoalCreatePage() {
 					<>
 						<GoalImageField isCreatePage>{Header}</GoalImageField>
 						<div className='mt-4 px-4'>
-							<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
+							<TextField
+								value={name}
+								onChange={setName}
+								maxLength={goalNameMaxLength}
+								placeholder={APP_TEXT.goalName}
+							/>
 						</div>
 						{!name && (
 							<div className={cn('flex flex-wrap gap-2 p-4')}>
@@ -140,12 +146,7 @@ export function GoalCreatePage() {
 				statusTextKey='createGoalSuccess'
 				statusTextProps={{name}}
 			/>
-			<StatusPopup
-				isOpen={isCreateGoalError}
-				status='error'
-				statusTextKey='createGoalError'
-				statusTextProps={{name}}
-			/>
+			<StatusPopup isOpen={isCreateGoalError} status='error' statusTextKey='createGoalError' statusTextProps={{name}} />
 		</>
 	);
 }

@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {Card, EditButtonField, LoadingWrapper, StatusPopup} from '@shared/ui';
 import {APP_TEXT, CURRENCY, CURRENCY_CODE, CURRENCY_SYMBOL} from '@shared/constants';
@@ -83,6 +84,7 @@ export function GoalEditDetails() {
 							onChange={setName}
 							isChanged={goalDetails?.name !== name.trim()}
 							isRequired
+							maxLength={goalNameMaxLength}
 							{...editButtonCommonProps}
 						>
 							{goalDetails?.name}
