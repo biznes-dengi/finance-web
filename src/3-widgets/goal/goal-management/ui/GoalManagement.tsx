@@ -54,7 +54,7 @@ export function GoalManagement() {
 						isLoading={isLoading}
 						disabled={(() => {
 							if (name === APP_TEXT.transfer) {
-								return !!allGoals?.length && allGoals.length <= 1;
+								return allGoals?.length ? allGoals.length <= 1 : true;
 							}
 
 							if (name === APP_TEXT.fund || name === APP_TEXT.withdraw) {

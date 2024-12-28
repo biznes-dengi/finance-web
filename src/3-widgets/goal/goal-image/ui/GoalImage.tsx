@@ -38,7 +38,7 @@ export function GoalImage() {
 					<Button
 						key={index}
 						isLoading={isLoading}
-						disabled={name === APP_TEXT.transfer && !!allGoals && allGoals.length <= 1}
+						disabled={name === APP_TEXT.transfer && (allGoals?.length ? allGoals.length <= 1 : true)}
 						{...restButtonConfig}
 					>
 						{name}
