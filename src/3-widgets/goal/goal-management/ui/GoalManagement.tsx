@@ -9,10 +9,10 @@ export function GoalManagement() {
 	const {filter, setFilter} = useFilter<typeof goalsDefaultFilter>({defaultFilter: goalsDefaultFilter});
 
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
-	const {goals: activeGoals, isGoalsLoading: isActiveGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
+	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems({filter});
+	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
 
-	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading || isActiveGoalsLoading;
+	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading || isAllGoalsLoading;
 
 	return (
 		<Card>
@@ -52,7 +52,7 @@ export function GoalManagement() {
 					<Button
 						key={index}
 						isLoading={isLoading}
-						disabled={name === APP_TEXT.transfer && activeGoals?.length <= 1}
+						disabled={name !== APP_TEXT.create && !!allGoals?.length && allGoals.length <= 1}
 						{...restButtonConfig}
 					>
 						{name}
@@ -72,8 +72,8 @@ export function GoalManagement() {
 			<List
 				emptyTextKey='goals'
 				isLoading={isLoading}
-				rows={goals}
-				renderRow={(row) => (
+				items={goals}
+				renderItem={(row) => (
 					<Item
 						image={
 							row.targetAmount ? (
@@ -94,12 +94,12 @@ export function GoalManagement() {
 								  }`
 								: APP_TEXT.goalAchieved
 						}
-						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${
-							CURRENCY_SYMBOL[row.balance.currency]
-						}`}
+						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${CURRENCY_SYMBOL[row.balance.currency]}`}
 						onClick={(navigate) => navigate(APP_PATH.goal.getItemDetailsPath(row.id))}
 					/>
 				)}
+				fetchNextPage={fetchNextGoalsPage}
+				hasNextPage={hasNextGoalsPage}
 			/>
 		</Card>
 	);

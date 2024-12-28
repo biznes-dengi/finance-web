@@ -8,7 +8,8 @@ export function GoalTransactionsHistory() {
 	const {id} = useParams();
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
-	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
+	const {goalTransactions, isGoalTransactionsLoading, fetchNextGoalTransactionsPage, hasNextGoalTransactionsPage} =
+		GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
 
 	const [groupedItems, setGroupedItems] = useState<{string: Transactions} | null>(null);
 	const [uniqueYears, setUniqueYears] = useState<number[] | null>(null);
@@ -27,11 +28,7 @@ export function GoalTransactionsHistory() {
 
 	return (
 		<div className='flex flex-col gap-6 px-4 pb-6'>
-			<LoadingWrapper
-				isLoading={isLoading}
-				className='my-0.5 h-4 w-10'
-				loadingChildren={<LoadingItem withRightName />}
-			>
+			<LoadingWrapper isLoading={isLoading} className='my-0.5 h-4 w-10' loadingChildren={<LoadingItem withRightName />}>
 				{groupedItems &&
 					Object.entries(groupedItems).map(([month, monthTransactions], transactionGroupIndex) => {
 						// console.log(month);
@@ -53,20 +50,17 @@ export function GoalTransactionsHistory() {
 							>
 								<List
 									isLoading={isLoading}
-									rows={monthTransactions as any[]}
-									renderRow={(row: any, index) => (
+									items={monthTransactions as any[]}
+									renderItem={(row: any, index) => (
 										<Item
 											image={TransactionHelpers.getTransactionIcon(
 												row,
-												Number(goalDetails?.balance.amount) >=
-													Number(goalDetails?.targetAmount) &&
+												Number(goalDetails?.balance.amount) >= Number(goalDetails?.targetAmount) &&
 													transactionGroupIndex === 0 &&
 													index === 0,
 											)}
 											name={TransactionHelpers.getTransactionName(row)}
-											description={
-												row.date && new DateService(new Date(row.date)).getLocalDateString()
-											}
+											description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
 											// TODO: написал 10 дек в финансы чат, row && itemDetails - должно быть только row
 											rightName={
 												goalDetails &&
@@ -78,6 +72,8 @@ export function GoalTransactionsHistory() {
 											}
 										/>
 									)}
+									fetchNextPage={fetchNextGoalTransactionsPage}
+									hasNextPage={hasNextGoalTransactionsPage}
 								/>
 							</Card>
 						);

@@ -146,8 +146,8 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 			{isMultipleOptions && (
 				<Popup {...popupProps}>
 					<List
-						rows={options}
-						renderRow={(option) => (
+						items={options ? options : null}
+						renderItem={(option) => (
 							<Item
 								className={cn(AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && 'bg-light-grey')}
 								onClick={() => handleOptionSelect(option)}

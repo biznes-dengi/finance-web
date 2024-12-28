@@ -31,8 +31,8 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 
 			<Popup {...popupProps} title={APP_TEXT.goals}>
 				<List
-					rows={options}
-					renderRow={(option) => {
+					items={options}
+					renderItem={(option) => {
 						const checked = value === option.value;
 						return (
 							<Item

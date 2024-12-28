@@ -7,7 +7,8 @@ import {DateService, TransactionHelpers} from '@shared/lib';
 export function GoalTransactions() {
 	const {id} = useParams();
 
-	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
+	const {goalTransactions, isGoalTransactionsLoading, fetchNextGoalTransactionsPage, hasNextGoalTransactionsPage} =
+		GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
 	const isLoading = isGoalTransactionsLoading || isGoalDetailsLoading;
@@ -24,8 +25,8 @@ export function GoalTransactions() {
 			<List
 				emptyTextKey='transactions'
 				isLoading={isLoading}
-				rows={goalTransactions ? [goalTransactions[0], goalTransactions[1], goalTransactions[2]] : []}
-				renderRow={(row, index) => {
+				items={goalTransactions ? [goalTransactions[0], goalTransactions[1], goalTransactions[2]] : []}
+				renderItem={(row, index) => {
 					if (!row) return null;
 					return (
 						<Item
@@ -52,6 +53,8 @@ export function GoalTransactions() {
 						/>
 					);
 				}}
+				fetchNextPage={fetchNextGoalTransactionsPage}
+				hasNextPage={hasNextGoalTransactionsPage}
 			/>
 		</Card>
 	);

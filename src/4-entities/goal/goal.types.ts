@@ -30,10 +30,6 @@ export type Props = {
 	};
 };
 
-export type InitialData = {
-	useItems: zod.infer<typeof responseValidator.fetchItems>;
-};
-
 export type MutationProps = {
 	useCreateItem: {
 		payload: {
@@ -140,7 +136,11 @@ export type ApiProps = {
 
 export const responseValidator = {
 	fetchItems: object({
-		hasNext: boolean(),
+		info: object({
+			hasNext: boolean(),
+			pageNumber: number(),
+			pageSize: number(),
+		}),
 		items: object({
 			id: number(),
 			name: string(),
@@ -160,7 +160,11 @@ export const responseValidator = {
 
 	// items[i] может быть type=transfer и там будет один validator, а может быть другой и будет другой валидатор
 	fetchItemTransactions: object({
-		hasNext: boolean(),
+		info: object({
+			hasNext: boolean(),
+			pageNumber: number(),
+			pageSize: number(),
+		}),
 		items: zod
 			.object({
 				id: number(),
