@@ -66,7 +66,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 		<>
 			<div
 				className={cn(
-					'rounded-2xl bg-field p-4 duration-200 focus-within:bg-field-state',
+					'rounded-2xl bg-field p-4 duration-300 focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
 					!!errorText && '!bg-[#FDE3E5]',
 				)}

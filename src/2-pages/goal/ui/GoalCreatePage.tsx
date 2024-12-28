@@ -29,11 +29,6 @@ export function GoalCreatePage() {
 
 	const {isMobile} = useResponsive();
 
-	const activeOption = {
-		name: CURRENCY_OPTIONS.find((option) => option.value === currency)?.description ?? '',
-		currency: currency as CURRENCY,
-	};
-
 	function handleCreateClick() {
 		createGoal({
 			payload: {
@@ -58,8 +53,6 @@ export function GoalCreatePage() {
 			activeStepIndex={activeStepIndex}
 		/>
 	);
-
-	console.log('currency ', currency);
 
 	return (
 		<>
@@ -110,7 +103,14 @@ export function GoalCreatePage() {
 
 				{activeStepIndex === 2 && (
 					<div key={activeStepIndex} className='px-4'>
-						<AmountField value={targetAmount} onChange={setTargetAmount} activeOption={activeOption} />
+						<AmountField
+							value={targetAmount}
+							onChange={setTargetAmount}
+							activeOption={{
+								name: CURRENCY_OPTIONS.find((option) => option.value === currency)?.description ?? '',
+								currency: currency as CURRENCY,
+							}}
+						/>
 						<div className='mt-4 flex justify-between px-4 text-sm'>
 							<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
 							<EditButtonField<Date | undefined>

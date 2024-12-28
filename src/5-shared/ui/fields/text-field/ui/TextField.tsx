@@ -17,7 +17,7 @@ type Props = {
 	isSearch?: boolean;
 };
 
-// TODO: SearchField
+// SearchField
 //  более высокоуровневый компонент, вынести отдельно
 //  when isSearch and focused, pin search-input to the top with animation + cancel text at right
 
@@ -67,7 +67,7 @@ export function TextField(props: Props) {
 		<div role='text-field'>
 			<div
 				className={cn(
-					'group flex items-center rounded-2xl bg-field p-4 cursor-text transition-colors duration-300 ease-in-out focus-within:bg-field-state',
+					'group flex cursor-text items-center rounded-2xl bg-field p-4 transition-colors duration-300 ease-in-out focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
 					isSearch && 'rounded-3xl px-3 py-1',
 				)}
@@ -77,10 +77,7 @@ export function TextField(props: Props) {
 
 				<input
 					ref={inputRef}
-					className={cn(
-						'w-full bg-inherit  font-light caret-primary-violet outline-none',
-						isSearch && 'py-1 text-sm',
-					)}
+					className={cn('w-full bg-inherit  font-light caret-primary-violet outline-none', isSearch && 'py-1 text-sm')}
 					type={type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type}
 					inputMode={type === 'email' ? 'email' : 'text'}
 					value={value}
@@ -92,12 +89,7 @@ export function TextField(props: Props) {
 				/>
 
 				{value && type !== 'password' && (
-					<div
-						className={cn(
-							'ml-2 size-5 flex shrink-0 transform cursor-pointer items-center justify-center active:scale-95 active:brightness-95 rounded-full bg-field-helper',
-							isDesktop && 'transition duration-200 ease-in-out',
-						)}
-					>
+					<div className='ml-2 flex size-5 shrink-0 transform cursor-pointer items-center justify-center rounded-full bg-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'>
 						<Icon
 							type='x'
 							className={cn(
@@ -113,10 +105,7 @@ export function TextField(props: Props) {
 					<div
 						ref={showHidePasswordIconRef}
 						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-						className={cn(
-							'ml-2 transform cursor-pointer text-field-helper active:scale-95 active:brightness-95',
-							isDesktop && 'transition duration-200 ease-in-out',
-						)}
+						className='ml-2 transform cursor-pointer text-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'
 					>
 						<Icon type={isPasswordVisible ? 'hidePassword' : 'showPassword'} className='size-5' />
 					</div>

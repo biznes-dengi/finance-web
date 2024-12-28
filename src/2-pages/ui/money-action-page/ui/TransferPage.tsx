@@ -105,7 +105,7 @@ export function TransferPage(props: TransferPageProps) {
 
 					<div
 						className={cn(
-							'absolute left-[50%] top-[50%] transform -translate-x-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-white transition-all duration-200',
+							'absolute left-[50%] top-[50%] flex size-8 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-white transition-all duration-300',
 						)}
 					>
 						<Icon type='transferTo' className='size-4 text-primary-violet' />

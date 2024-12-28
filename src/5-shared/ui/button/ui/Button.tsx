@@ -1,7 +1,7 @@
 import {ReactElement, ReactNode, useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
-import {cn, styleElement, useKeyClick, useResponsive} from '@shared/lib';
+import {cn, styleElement, useKeyClick} from '@shared/lib';
 import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
@@ -44,8 +44,6 @@ export function Button(props: Props) {
 
 	const navigate = useNavigate();
 
-	const {isDesktop} = useResponsive();
-
 	const [displayBoxShadow, setDisplayBoxShadow] = useState(true);
 
 	useKeyClick({
@@ -62,8 +60,10 @@ export function Button(props: Props) {
 	function gcn(...buttonClassName: Array<ClassValue>) {
 		return cn(
 			'block',
-			disabled ? 'cursor-not-allowed' : 'active:scale-95 active:brightness-95 transition ease-in-out cursor-pointer',
-			isDesktop ? 'duration-200' : 'duration-100',
+			disabled
+				? 'cursor-not-allowed'
+				: 'active:scale-95 active:brightness-95 duration-300 transition ease-in-out cursor-pointer',
+			// isDesktop ? 'duration-200' : 'duration-100',
 			...buttonClassName,
 			className,
 		);
