@@ -4,16 +4,15 @@ import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {Button, LoadingWrapper, PageHeader} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
-import {TextHelpers, useFilter} from '@shared/lib';
+import {TextHelpers} from '@shared/lib';
 
 export function GoalImage() {
 	const {id} = useParams();
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
-	const {filter} = useFilter<typeof goalsDefaultFilter>({defaultFilter: goalsDefaultFilter});
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
+	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
 
-	const isLoading = isGoalsLoading || isGoalDetailsLoading;
+	const isLoading = isAllGoalsLoading || isGoalDetailsLoading;
 
 	return (
 		<div className='flex h-[310px] flex-col bg-secondary-grey'>
@@ -39,7 +38,7 @@ export function GoalImage() {
 					<Button
 						key={index}
 						isLoading={isLoading}
-						disabled={name === APP_TEXT.transfer && goals?.length <= 1}
+						disabled={name === APP_TEXT.transfer && !!allGoals && allGoals.length <= 1}
 						{...restButtonConfig}
 					>
 						{name}

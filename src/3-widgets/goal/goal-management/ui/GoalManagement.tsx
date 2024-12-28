@@ -52,7 +52,15 @@ export function GoalManagement() {
 					<Button
 						key={index}
 						isLoading={isLoading}
-						disabled={name !== APP_TEXT.create && !!allGoals?.length && allGoals.length <= 1}
+						disabled={(() => {
+							if (name === APP_TEXT.transfer) {
+								return !!allGoals?.length && allGoals.length <= 1;
+							}
+
+							if (name === APP_TEXT.fund || name === APP_TEXT.withdraw) {
+								return !allGoals?.length;
+							}
+						})()}
 						{...restButtonConfig}
 					>
 						{name}
