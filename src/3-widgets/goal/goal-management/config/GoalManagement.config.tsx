@@ -29,8 +29,8 @@ export const buttonConfigs = [
 ] as ButtonConfig[];
 
 export const goalStatusOptions = [
-	{name: 'All', value: undefined},
-	{name: 'Active', value: 'ACTIVE'},
-	{name: 'Achieved', value: 'ACHIEVED'},
-	{name: 'Overdue', value: 'OVERDUE'},
+	{name: APP_TEXT.all, value: undefined},
+	{name: APP_TEXT.active, value: 'ACTIVE'},
+	{name: APP_TEXT.achieved, value: 'ACHIEVED'},
+	{name: APP_TEXT.overdue, value: 'OVERDUE'},
 ] as const;

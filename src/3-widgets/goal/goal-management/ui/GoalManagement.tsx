@@ -74,6 +74,7 @@ export function GoalManagement() {
 					onChange={(value) => setFilter({...filter, status: value})}
 					options={goalStatusOptions}
 					isLoading={isLoading}
+					title={APP_TEXT.goals}
 				/>
 			</div>
 

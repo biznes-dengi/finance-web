@@ -53,6 +53,10 @@ export const APP_TEXT = {
 	selectCurrency: 'Select a currency',
 	enterTargetAmount: 'Enter target amount',
 	exchangeRate: 'Exchange rate',
+	all: 'All',
+	active: 'Active',
+	achieved: 'Achieved',
+	overdue: 'Overdue',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {
