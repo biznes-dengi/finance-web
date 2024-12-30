@@ -68,8 +68,7 @@ export function GoalProgress() {
 					</LoadingWrapper>
 					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
 						<div>
-							{goalDetails?.deadline &&
-								`${APP_TEXT.left}: ${new DateService(goalDetails.deadline).calculateTimeLeft()}`}
+							{goalDetails?.deadline && `${APP_TEXT.eshe} ${new DateService(goalDetails.deadline).calculateTimeLeft()}`}
 						</div>
 					</LoadingWrapper>
 				</div>
@@ -79,15 +78,15 @@ export function GoalProgress() {
 				<div className='flex flex-col items-center justify-center'>
 					<Icon type='congratulations' className='mb-4 mt-2 text-3xl' />
 
-					<div className='mb-4 text-lg font-medium text-center'>{APP_TEXT.congratulations}</div>
+					<div className='mb-4 text-center text-lg font-medium'>{APP_TEXT.congratulations}</div>
 
 					<div className='mb-2'>
 						Там, где другие сдавались, вы проявили настойчивость и теперь{' '}
 						<span className='font-medium text-primary-violet'>вы можете осуществить свою мечту</span>.
 					</div>
 					<div>
-						Мы гордимся вами, желаем дальнейших успехов и пусть впереди будет еще больше целей, которые вы
-						легко достигнете!
+						Мы гордимся вами, желаем дальнейших успехов и пусть впереди будет еще больше целей, которые вы легко
+						достигнете!
 					</div>
 
 					<Button className='mt-4' type={ButtonType.main} onClick={closePopup}>

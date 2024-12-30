@@ -16,6 +16,7 @@ export const APP_TEXT = {
 	addDeadline: 'Add deadline',
 	currency: 'Currency',
 	left: 'Осталось',
+	eshe: 'Еще',
 	congratulations: 'Поздравляем',
 	create: 'Create',
 	fund: 'Fund',

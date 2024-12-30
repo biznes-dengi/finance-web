@@ -99,7 +99,7 @@ export class GoalApi {
 			return responseValidator.createItem.parse(response);
 		} catch (error) {
 			console.error(error);
-			return null;
+			throw error;
 		}
 	}
 
@@ -116,7 +116,7 @@ export class GoalApi {
 			});
 		} catch (error) {
 			console.error(error);
-			return null;
+			throw error;
 		}
 	}
 
@@ -131,7 +131,7 @@ export class GoalApi {
 			});
 		} catch (error) {
 			console.error(error);
-			return null;
+			throw error;
 		}
 	}
 
@@ -150,7 +150,7 @@ export class GoalApi {
 			return {id};
 		} catch (error) {
 			console.error(error);
-			return null;
+			throw error;
 		}
 	}
 
@@ -169,7 +169,7 @@ export class GoalApi {
 			return {id};
 		} catch (error) {
 			console.error(error);
-			return null;
+			throw error;
 		}
 	}
 
@@ -188,7 +188,7 @@ export class GoalApi {
 			return {id: payload.fromGoalId};
 		} catch (error) {
 			console.error(error);
-			return null;
+			throw error;
 		}
 	}
 }

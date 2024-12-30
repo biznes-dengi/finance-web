@@ -9,7 +9,7 @@ export type EditButtonFieldProps<Value> = {
 	value: Value;
 	onChange: (value: Value) => void;
 	options?: {name: string; description: string; value: CURRENCY}[];
-	activeOption?: AmountFieldOption;
+	activeOption?: AmountFieldOption | null;
 	isChanged: boolean;
 	isRequired?: boolean;
 	title: string;
