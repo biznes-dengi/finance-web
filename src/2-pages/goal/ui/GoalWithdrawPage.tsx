@@ -3,7 +3,7 @@ import {GoalModel} from '@entities/goal';
 import {APP_PATH} from '@shared/constants';
 
 export function GoalWithdrawPage() {
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems();
 
 	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw({
 		isFromListPage: true,
@@ -13,6 +13,8 @@ export function GoalWithdrawPage() {
 		<FundWithdrawPage
 			actionType='withdraw'
 			items={goals}
+			fetchNextOptions={fetchNextGoalsPage}
+			hasNextOptions={hasNextGoalsPage}
 			isItemDataLoading={isGoalsLoading}
 			action={withdrawGoal}
 			isActionLoading={isWithdrawGoalLoading}

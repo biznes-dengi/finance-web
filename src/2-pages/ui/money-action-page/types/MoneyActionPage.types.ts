@@ -26,8 +26,10 @@ type ItemData = {
 };
 
 type CommonProps = {
-	itemDetails?: ItemData;
-	items?: ItemData[];
+	itemDetails?: ItemData | null;
+	items?: ItemData[] | null;
+	fetchNextOptions?: () => void;
+	hasNextOptions?: boolean;
 	isItemDataLoading: boolean;
 	successTextKey: StatusTextKey;
 	errorTextKey: StatusTextKey;

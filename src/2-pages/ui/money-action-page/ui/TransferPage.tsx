@@ -18,6 +18,8 @@ export function TransferPage(props: TransferPageProps) {
 	const {
 		itemDetails,
 		items,
+		hasNextOptions,
+		fetchNextOptions,
 		isItemDataLoading,
 		transfer,
 		isTransferLoading,
@@ -98,6 +100,8 @@ export function TransferPage(props: TransferPageProps) {
 							}
 						}}
 						options={itemDetails ? undefined : options}
+						hasNextOptions={hasNextOptions}
+						fetchNextOptions={fetchNextOptions}
 						errorText={isFromAmountError && 'exceeds balance'}
 						isLoading={isItemDataLoading}
 						withMinus
@@ -125,30 +129,30 @@ export function TransferPage(props: TransferPageProps) {
 							setToActiveOption(activeOption);
 						}}
 						options={options}
+						hasNextOptions={hasNextOptions}
+						fetchNextOptions={fetchNextOptions}
 						isLoading={isItemDataLoading}
 						withPlus
 						isAutoFocusDisabled
 					/>
 				</div>
 
-				<div className='my-4 flex flex-col gap-2'>
-					<div className='mt-4 flex justify-between text-sm'>
-						<div className='font-medium text-primary-grey'>{APP_TEXT.transactionDate}</div>
-						<EditButtonField<Date | undefined>
-							type='date'
-							title={APP_TEXT.transactionDate}
-							initialValue={undefined}
-							value={date}
-							onChange={(value) => {
-								if (!value) return;
-								setDate(value);
-							}}
-							isChanged={!new DateService(new DateService().value).isEqualTo(date)}
-							isNotEdit
-						>
-							{new DateService(date).getLocalDateString()}
-						</EditButtonField>
-					</div>
+				<div className='mt-4 flex justify-between px-4 text-sm'>
+					<div className='font-medium text-primary-grey'>{APP_TEXT.transactionDate}</div>
+					<EditButtonField<Date | undefined>
+						type='date'
+						title={APP_TEXT.transactionDate}
+						initialValue={undefined}
+						value={date}
+						onChange={(value) => {
+							if (!value) return;
+							setDate(value);
+						}}
+						isChanged={!new DateService(new DateService().value).isEqualTo(date)}
+						isNotEdit
+					>
+						{new DateService(date).getLocalDateString()}
+					</EditButtonField>
 				</div>
 			</div>
 

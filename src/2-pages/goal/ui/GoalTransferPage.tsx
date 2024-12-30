@@ -1,10 +1,9 @@
 import {TransferPage} from '@pages/ui';
-import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {APP_PATH} from '@shared/constants';
 
 export function GoalTransferPage() {
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
+	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems();
 
 	const {transferGoal, isTransferGoalLoading, isTransferGoalSuccess, isTransferGoalError} = GoalModel.useTransfer({
 		isFromListPage: true,
@@ -14,6 +13,8 @@ export function GoalTransferPage() {
 		<TransferPage
 			items={goals}
 			isItemDataLoading={isGoalsLoading}
+			fetchNextOptions={fetchNextGoalsPage}
+			hasNextOptions={hasNextGoalsPage}
 			transfer={(transferProps) => {
 				transferGoal({
 					payload: {

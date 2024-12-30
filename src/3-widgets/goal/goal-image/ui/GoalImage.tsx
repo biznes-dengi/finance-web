@@ -1,6 +1,5 @@
 import {useParams} from 'react-router-dom';
 import {getButtonConfigs} from '../config/GoalImage.config.tsx';
-import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {Button, LoadingWrapper, PageHeader} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
@@ -10,7 +9,7 @@ export function GoalImage() {
 	const {id} = useParams();
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
-	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
+	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({queryKey: 'all'});
 
 	const isLoading = isAllGoalsLoading || isGoalDetailsLoading;
 

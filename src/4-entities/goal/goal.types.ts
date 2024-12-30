@@ -6,6 +6,7 @@ import {balanceValidator} from '@shared/types';
 export type Props = {
 	useItems: {
 		filter?: Payload;
+		queryKey?: string;
 	};
 
 	useItemDetails: {
@@ -14,7 +15,6 @@ export type Props = {
 
 	useItemTransactions: {
 		id?: string;
-		filter?: Payload;
 	};
 
 	useFund: {
@@ -101,7 +101,7 @@ export type ApiProps = {
 
 	fetchItemTransactions: {
 		params: {id: Props['useItemTransactions']['id']; boardGoalId: number};
-		payload: Props['useItemTransactions']['filter'];
+		payload?: Payload;
 	};
 
 	createItem: {

@@ -10,7 +10,7 @@ export function GoalManagement() {
 
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
 	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems({filter});
-	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({filter: goalsDefaultFilter});
+	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({queryKey: 'all'});
 
 	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading || isAllGoalsLoading;
 

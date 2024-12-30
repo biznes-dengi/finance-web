@@ -1,8 +1,9 @@
 import {useEffect, useRef} from 'react';
 import {Spinner} from '@shared/ui';
+import {cn} from '@shared/lib';
 
 export const InfiniteScroll = (props: any) => {
-	const {children, fetchNextPage, hasNextPage} = props;
+	const {children, fetchNextPage, hasNextPage, isNotInList = false} = props;
 
 	const loaderRef = useRef(null);
 
@@ -19,8 +20,8 @@ export const InfiniteScroll = (props: any) => {
 			},
 			{
 				root: null,
-				rootMargin: '20px',
-				threshold: 1.0,
+				rootMargin: '0px',
+				threshold: 0.5,
 			},
 		);
 
@@ -29,17 +30,19 @@ export const InfiniteScroll = (props: any) => {
 		return () => {
 			observer.disconnect();
 		};
-	}, []);
+	}, [children]);
 
 	return (
-		<div>
-			<div>{children}</div>
-
+		<>
+			{children}
 			{hasNextPage && (
-				<div ref={loaderRef} className='flex items-center justify-center justify-self-center py-4'>
+				<div
+					ref={loaderRef}
+					className={cn('flex items-center justify-center justify-self-center py-4', isNotInList && 'p-0')}
+				>
 					<Spinner className='text-primary-grey' />
 				</div>
 			)}
-		</div>
+		</>
 	);
 };

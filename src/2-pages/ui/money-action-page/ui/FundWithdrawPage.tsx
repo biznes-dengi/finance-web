@@ -17,6 +17,8 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 	const {
 		itemDetails,
 		items,
+		fetchNextOptions,
+		hasNextOptions,
 		isItemDataLoading,
 		actionType,
 		action,
@@ -69,6 +71,8 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 					onChange={setAmount}
 					activeOption={activeOption}
 					options={options}
+					fetchNextOptions={fetchNextOptions}
+					hasNextOptions={hasNextOptions}
 					setActiveOption={setActiveOption}
 					isLoading={isItemDataLoading}
 					errorText={showWithdrawValidation && 'exceeds balance'}
@@ -95,12 +99,7 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 			</div>
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
-				<Button
-					type={ButtonType.main}
-					onClick={handleActionClick}
-					disabled={!amount}
-					isLoading={isActionLoading}
-				>
+				<Button type={ButtonType.main} onClick={handleActionClick} disabled={!amount} isLoading={isActionLoading}>
 					{APP_TEXT[actionType]}
 				</Button>
 			</div>

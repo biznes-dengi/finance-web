@@ -3,7 +3,7 @@ import {GoalModel} from '@entities/goal';
 import {APP_PATH} from '@shared/constants';
 
 export function GoalFundPage() {
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter: {pageNumber: 0}});
+	const {goals, isGoalsLoading, fetchNextGoalsPage, hasNextGoalsPage} = GoalModel.useItems();
 
 	const {fundGoal, isFundGoalLoading, isFundGoalSuccess, isFundGoalError} = GoalModel.useFund({isFromListPage: true});
 
@@ -11,6 +11,8 @@ export function GoalFundPage() {
 		<FundWithdrawPage
 			actionType='fund'
 			items={goals}
+			fetchNextOptions={fetchNextGoalsPage}
+			hasNextOptions={hasNextGoalsPage}
 			isItemDataLoading={isGoalsLoading}
 			action={fundGoal}
 			isActionLoading={isFundGoalLoading}

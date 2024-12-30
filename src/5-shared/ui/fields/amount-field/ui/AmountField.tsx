@@ -13,6 +13,8 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 		isLoading,
 		getCustomDescription,
 		options,
+		fetchNextOptions,
+		hasNextOptions,
 		setActiveOption,
 		errorText,
 		withMinus,
@@ -161,6 +163,8 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 								}
 							/>
 						)}
+						fetchNextPage={fetchNextOptions}
+						hasNextPage={hasNextOptions}
 					/>
 				</Popup>
 			)}

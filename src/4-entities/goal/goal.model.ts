@@ -7,25 +7,27 @@ import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
 import {StatusPopupHelpers} from '@shared/ui';
 
 export class GoalModel {
-	static useItems(props: Props['useItems']) {
-		const {filter} = props;
+	static useItems(props: Props['useItems'] = {}) {
+		const {filter, queryKey = ''} = props;
 
 		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
 
 		// when is loading data undefined in BLL, but null in UI
 		const {data, isLoading, fetchNextPage, hasNextPage} = useInfiniteQuery({
-			queryKey: ['goal-item-list', filter],
+			queryKey: [`goal-item-list-${queryKey}`, filter],
 
 			queryFn: ({pageParam}: {pageParam?: number}) => {
 				return GoalApi.fetchItems({
 					params: {boardGoalId: boardGoalId!},
-					payload: {...filter, pageNumber: pageParam},
+					payload: {...filter, pageNumber: pageParam, pageSize: 2},
 				});
 			},
 
 			initialPageParam: 0,
 
-			getNextPageParam: (lastPage) => lastPage && lastPage.info.pageNumber + 1,
+			getNextPageParam: (lastPage) => {
+				return lastPage?.info.hasNext ? lastPage.info.pageNumber + 1 : undefined;
+			},
 
 			enabled: !!boardGoalId,
 		});
@@ -65,25 +67,27 @@ export class GoalModel {
 	}
 
 	static useItemTransactions(props: Props['useItemTransactions']) {
-		const {id, filter} = props;
+		const {id} = props;
 
 		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
 
 		const {data, isLoading, fetchNextPage, hasNextPage} = useInfiniteQuery({
-			queryKey: [`goal-transactions-${id}`, filter],
+			queryKey: [`goal-transactions-${id}`],
 
 			queryFn: ({pageParam}: {pageParam?: number}) => {
 				return GoalApi.fetchItemTransactions({
 					params: {boardGoalId: boardGoalId!, id},
-					payload: {...filter, pageNumber: pageParam},
+					payload: {pageNumber: pageParam, pageSize: 2},
 				});
 			},
 
 			initialPageParam: 0,
 
-			getNextPageParam: (lastPage) => lastPage && lastPage.info.pageNumber + 1,
+			getNextPageParam: (lastPage) => {
+				return lastPage?.info.hasNext ? lastPage.info.pageNumber + 1 : undefined;
+			},
 
-			enabled: !!boardGoalId,
+			enabled: !!boardGoalId && !!id,
 		});
 
 		const filteredPages = data?.pages.filter((page) => page !== null);
