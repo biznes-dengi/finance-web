@@ -18,14 +18,7 @@ export class GoalApi {
 			return responseValidator.fetchItems.parse(response);
 		} catch (error) {
 			console.error(error);
-
-			// Для типизации goal.model
-			return {
-				info: {
-					pageNumber: 0,
-				},
-				items: [],
-			};
+			return null;
 		}
 	}
 
@@ -61,14 +54,7 @@ export class GoalApi {
 			return responseValidator.fetchItemTransactions.parse(response);
 		} catch (error) {
 			console.error(error);
-
-			// Для типизации goal.model
-			return {
-				info: {
-					pageNumber: 0,
-				},
-				items: [],
-			};
+			return null;
 		}
 	}
 

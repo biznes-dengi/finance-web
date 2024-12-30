@@ -12,6 +12,7 @@ export class GoalModel {
 
 		const {boardGoalId, isBoardGoalIdLoading} = this.useBoardGoalId();
 
+		// when is loading data undefined in BLL, but null in UI
 		const {data, isLoading, fetchNextPage, hasNextPage} = useInfiniteQuery({
 			queryKey: ['goal-item-list', filter],
 
@@ -24,14 +25,16 @@ export class GoalModel {
 
 			initialPageParam: 0,
 
-			getNextPageParam: (lastPage) => lastPage.info.pageNumber + 1,
+			getNextPageParam: (lastPage) => lastPage && lastPage.info.pageNumber + 1,
 
 			enabled: !!boardGoalId,
 		});
 
+		const filteredPages = data?.pages.filter((page) => page !== null);
+
 		return {
 			// Сливаем элементы всех страниц. В момент загрузки goals = null
-			goals: data ? data.pages.flatMap((page) => page.items) : null,
+			goals: filteredPages?.length ? filteredPages.flatMap((page) => page && page.items) : null,
 			isGoalsLoading: isLoading || isBoardGoalIdLoading,
 			hasNextGoalsPage: hasNextPage,
 			fetchNextGoalsPage: fetchNextPage,
@@ -78,13 +81,15 @@ export class GoalModel {
 
 			initialPageParam: 0,
 
-			getNextPageParam: (lastPage) => lastPage.info.pageNumber + 1,
+			getNextPageParam: (lastPage) => lastPage && lastPage.info.pageNumber + 1,
 
 			enabled: !!boardGoalId,
 		});
 
+		const filteredPages = data?.pages.filter((page) => page !== null);
+
 		return {
-			goalTransactions: data ? data.pages.flatMap((page) => page.items) : null,
+			goalTransactions: filteredPages?.length ? filteredPages.flatMap((page) => page && page.items) : null,
 			isGoalTransactionsLoading: isLoading || isBoardGoalIdLoading,
 			hasNextGoalTransactionsPage: hasNextPage,
 			fetchNextGoalTransactionsPage: fetchNextPage,
