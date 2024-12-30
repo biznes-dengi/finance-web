@@ -19,7 +19,7 @@ export class GoalModel {
 			queryFn: ({pageParam}: {pageParam?: number}) => {
 				return GoalApi.fetchItems({
 					params: {boardGoalId: boardGoalId!},
-					payload: {...filter, pageNumber: pageParam, pageSize: 2},
+					payload: {...filter, pageNumber: pageParam, pageSize: 10},
 				});
 			},
 
@@ -77,7 +77,7 @@ export class GoalModel {
 			queryFn: ({pageParam}: {pageParam?: number}) => {
 				return GoalApi.fetchItemTransactions({
 					params: {boardGoalId: boardGoalId!, id},
-					payload: {pageNumber: pageParam, pageSize: 2},
+					payload: {pageNumber: pageParam, pageSize: 10},
 				});
 			},
 
