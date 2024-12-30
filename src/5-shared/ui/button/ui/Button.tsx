@@ -146,14 +146,14 @@ export function Button(props: Props) {
 					<div
 						className={cn(
 							'flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet',
-							disabled && 'bg-secondary-violet/20  text-primary-violet/20',
+							disabled ? 'bg-secondary-violet/50 text-primary-violet/50' : 'bg-secondary-violet text-primary-violet',
 						)}
 					>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-4')}
 					</div>
 				)}
 				{children && (
-					<div className={cn('mt-2 text-[13px] text-primary-violet', disabled && 'text-primary-violet/20')}>
+					<div className={cn('mt-2 text-[13px]', disabled ? 'text-primary-violet/50' : 'text-primary-violet')}>
 						{children}
 					</div>
 				)}
