@@ -6,10 +6,10 @@ export function LoadingWrapper(props: LoadingWrapperProps) {
 
 	if (isLoading) {
 		return (
-			<>
+			<div>
 				<PreloadSkeleton className={className} />
 				{loadingChildren}
-			</>
+			</div>
 		);
 	}
 

@@ -1,22 +1,27 @@
+import {FundWithdrawPage} from '@pages/ui';
 import {GoalModel} from '@entities/goal';
-import {TransactionPage} from '@shared/ui';
 import {APP_PATH} from '@shared/constants';
 
 export function GoalWithdrawPage() {
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter: {pageNumber: 0}});
-	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw();
+	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems();
+
+	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw({
+		isFromListPage: true,
+	});
 
 	return (
-		<TransactionPage
+		<FundWithdrawPage
 			actionType='withdraw'
 			items={goals}
+			fetchNextOptions={fetchNextGoalsPage}
+			hasNextOptions={hasNextGoalsPage}
 			isItemDataLoading={isGoalsLoading}
 			action={withdrawGoal}
 			isActionLoading={isWithdrawGoalLoading}
 			isActionSuccess={isWithdrawGoalSuccess}
 			isActionError={isWithdrawGoalError}
-			successMessageKey='withdrawGoalSuccess'
-			errorMessageKey='withdrawGoalError'
+			successTextKey='withdrawGoalSuccess'
+			errorTextKey='withdrawGoalError'
 			backPath={APP_PATH.goalList}
 		/>
 	);

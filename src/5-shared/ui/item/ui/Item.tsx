@@ -7,7 +7,7 @@ import {cn, useResponsive} from '@shared/lib';
 export function Item(props: ItemProps) {
 	const {
 		image,
-		statusIcon,
+		imageIcon,
 		name,
 		description,
 		rightName,
@@ -36,7 +36,7 @@ export function Item(props: ItemProps) {
 			<div
 				className={cn(
 					'flex w-full rounded-2xl p-3 text-left duration-300',
-					onClick && (isDesktop ? 'duration-300 group-hover:bg-light-grey' : 'duration-300 group-active:bg-light-grey'),
+					onClick && (isDesktop ? 'group-hover:bg-light-grey' : 'group-active:bg-light-grey'),
 					className,
 				)}
 			>
@@ -46,15 +46,15 @@ export function Item(props: ItemProps) {
 					<div className='relative my-0.5 mr-4 flex-shrink-0'>
 						{image}
 
-						{statusIcon && (
+						{imageIcon && (
 							<div className='absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'>
-								{statusIcon}
+								{imageIcon}
 							</div>
 						)}
 					</div>
 				)}
 
-				<div className={cn('min-w-0 flex-1 self-center')}>
+				<div className='min-w-0 flex-1 self-center'>
 					<div className={cn('truncate font-medium', isNameText && 'font-normal')}>{name}</div>
 					{description && <div className='truncate text-sm font-light text-primary-grey'>{description}</div>}
 				</div>

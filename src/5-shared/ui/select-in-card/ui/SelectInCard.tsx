@@ -1,10 +1,9 @@
 import {Icon, Item, List, Popup, PreloadSkeleton, usePopupState} from '@shared/ui';
-import {APP_TEXT} from '@shared/constants';
-import {Props} from '../types/SelectInCard.types.ts';
+import {SelectInCardProps} from '../types/SelectInCard.types.ts';
 import {cn, useResponsive} from '@shared/lib';
 
-export function SelectInCard<TValue>(props: Props<TValue>) {
-	const {value, onChange, options, isLoading} = props;
+export function SelectInCard<TValue>(props: SelectInCardProps<TValue>) {
+	const {value, onChange, options, isLoading, title} = props;
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
@@ -23,16 +22,16 @@ export function SelectInCard<TValue>(props: Props<TValue>) {
 				)}
 				onClick={openPopup}
 			>
-				{options.find((option) => option.value === value)?.name}
+				{options.find((option) => option.value === value)?.name + ' ' + title.toLowerCase()}
 				<div className='ml-2'>
 					<Icon type='selectChevron' className='size-2.5' />
 				</div>
 			</div>
 
-			<Popup {...popupProps} title={APP_TEXT.goals}>
+			<Popup {...popupProps} title={title}>
 				<List
-					rows={options}
-					renderRow={(option) => {
+					items={options}
+					renderItem={(option) => {
 						const checked = value === option.value;
 						return (
 							<Item

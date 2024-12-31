@@ -1,3 +1,4 @@
+import {ChangeEvent, MouseEvent, useRef} from 'react';
 import {type AmountFieldOption, type AmountFieldProps} from '../types/AmountField.types.ts';
 import {AmountFieldHelpers} from '../lib/AmountField.helpers.ts';
 import {Icon, Item, List, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
@@ -12,6 +13,8 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 		isLoading,
 		getCustomDescription,
 		options,
+		fetchNextOptions,
+		hasNextOptions,
 		setActiveOption,
 		errorText,
 		withMinus,
@@ -23,35 +26,71 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
+	const inputRef = useRef<HTMLInputElement>(null);
+	const optionsRef = useRef<HTMLDivElement>(null);
+
 	function handleOptionSelect(option: Option) {
 		setActiveOption!(option);
 		onChange('');
 		closePopup();
+	}
+	function handleChange(event: ChangeEvent<HTMLInputElement>) {
+		const value = event.target.value.trim().replace(',', '.');
+
+		// Если в значении уже есть точка, запрещаем вводить еще точку
+		if (value.includes('.') && value.endsWith('.') && value.split('.').length > 2) {
+			return;
+		}
+
+		// Если в значении уже есть точка, запрещаем вводить запятую
+		if (value.includes('.') && value.endsWith(',')) {
+			return;
+		}
+
+		// Если в значении 2 цифры после точки, запрещаем вводить еще цифры
+		if (value.includes('.') && value.split('.')[1].length > 2) {
+			return;
+		}
+
+		// Оставляем только цифры и точку
+		onChange(value.replace(/[^0-9.]/g, ''));
+	}
+
+	function focusInput(event?: MouseEvent<HTMLDivElement>) {
+		// Если был клик по options, то не фокусировать инпут
+		if (optionsRef.current?.contains(event?.target as Node)) return;
+		inputRef.current?.focus();
 	}
 
 	const isMultipleOptions = Number(options?.length) > 1 && setActiveOption;
 
 	return (
 		<>
-			<label
+			<div
 				className={cn(
-					'block cursor-pointer rounded-2xl bg-field p-4 duration-200 focus-within:bg-field-state',
+					'rounded-2xl bg-field p-4 duration-300 focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
 					!!errorText && '!bg-[#FDE3E5]',
 				)}
+				onClick={focusInput}
 			>
 				<div className='flex items-center justify-between'>
 					<LoadingWrapper isLoading={!!isLoading} className='mb-2 mt-1 h-4 w-20'>
-						<div
-							className={cn('mr-4 flex min-w-40 items-center gap-1.5', isMultipleOptions && 'cursor-pointer')}
-							onClick={openPopup}
-						>
-							{activeOption?.image &&
-								styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
+						<div ref={optionsRef} className='mr-4 min-w-40'>
+							<div
+								className={cn(
+									'flex w-fit items-center gap-1.5',
+									isMultipleOptions ? 'cursor-pointer' : 'cursor-default',
+								)}
+								onClick={openPopup}
+							>
+								{activeOption?.image &&
+									styleElement(activeOption.image, 'size-5 flex-shrink-0 rounded-full bg-primary-grey')}
 
-							<div className='truncate font-medium'>{activeOption?.name}</div>
+								<div className='truncate font-medium'>{activeOption?.name}</div>
 
-							{isMultipleOptions && <Icon type='selectChevron' className='size-3 flex-shrink-0' />}
+								{isMultipleOptions && <Icon type='selectChevron' className='size-3 flex-shrink-0' />}
+							</div>
 						</div>
 					</LoadingWrapper>
 
@@ -60,18 +99,15 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 							<input
 								type='text'
 								inputMode='decimal'
+								ref={inputRef}
 								className={cn(
 									'min-w-[1ch] bg-inherit text-right text-xl font-semibold caret-primary-violet outline-none',
 									!!errorText && 'caret-[#B51F2D]',
 								)}
 								value={AmountFieldHelpers.getValue(value, withMinus, withPlus)}
-								onChange={(event) => {
-									onChange(event.target.value.replace(/[^0-9.]/g, '').trim());
-								}}
+								onChange={handleChange}
 								onKeyDown={(event) => {
-									if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-										event.preventDefault();
-									}
+									if (event.key === 'ArrowUp' || event.key === 'ArrowDown') event.preventDefault();
 								}}
 								placeholder={AmountFieldHelpers.getPlaceholder(withMinus, withPlus)}
 								autoFocus={!isAutoFocusDisabled}
@@ -90,24 +126,30 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 					<LoadingWrapper isLoading={!!isLoading} className='mb-1 h-4 w-10'>
 						<div
 							className={cn(
-								'mr-4 flex-shrink-0 basis-40 cursor-pointer text-sm font-light text-primary-grey',
+								'mr-4 min-w-40',
+								!getCustomDescription && 'cursor-pointer',
 								!!errorText && 'text-[#B51F2D]',
 							)}
 							onClick={() => !getCustomDescription && onChange(String(activeOption?.amount))}
 						>
-							{AmountFieldHelpers.getDescription<Option>({getCustomDescription, option: activeOption})}
+							<div className='truncate text-sm font-light text-primary-grey'>
+								{AmountFieldHelpers.getDescription<Option>({
+									getCustomDescription,
+									option: activeOption,
+								})}
+							</div>
 						</div>
 					</LoadingWrapper>
 
 					{!!errorText && <div className='text-sm font-light text-[#B51F2D]'>{errorText}</div>}
 				</div>
-			</label>
+			</div>
 
 			{isMultipleOptions && (
 				<Popup {...popupProps}>
 					<List
-						rows={options}
-						renderRow={(option) => (
+						items={options ? options : null}
+						renderItem={(option) => (
 							<Item
 								className={cn(AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && 'bg-light-grey')}
 								onClick={() => handleOptionSelect(option)}
@@ -115,13 +157,14 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 								name={option.name}
 								description={AmountFieldHelpers.getDescription<Option>({getCustomDescription, option})}
 								rightNode={
-									AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && <Icon type='check' /> && (
+									AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && (
 										<Icon type='check' className='flex size-4 self-center text-primary-violet' />
 									)
 								}
-								// statusIcon={AmountFieldHelpers.isItemSelected<Option>(option, activeOption) && <Icon type='check' />}
 							/>
 						)}
+						fetchNextPage={fetchNextOptions}
+						hasNextPage={hasNextOptions}
 					/>
 				</Popup>
 			)}

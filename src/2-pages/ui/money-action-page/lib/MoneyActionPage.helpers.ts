@@ -1,6 +1,6 @@
-import {ItemData} from '../types/TransactionPage.types.ts';
+import {ItemData} from '@pages/ui/money-action-page/types/MoneyActionPage.types.ts';
 
-export class TransactionPageHelpers {
+export class MoneyActionPageHelpers {
 	static mapItemDataToOption(itemData: ItemData) {
 		return {
 			id: itemData.id,

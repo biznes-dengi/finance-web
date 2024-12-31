@@ -1,16 +1,18 @@
 import {Button, Card, Item, ItemImageWithProgress, List, LoadingWrapper, SelectInCard} from '@shared/ui';
-import {buttonConfigs, defaultFilter, goalStatusOptions} from '../config/GoalManagement.config.tsx';
+import {buttonConfigs, goalStatusOptions} from '../config/GoalManagement.config.tsx';
+import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {TextHelpers, useFilter} from '@shared/lib';
 import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
 
 export function GoalManagement() {
-	const {filter, setFilter} = useFilter<typeof defaultFilter>({defaultFilter});
+	const {filter, setFilter} = useFilter<typeof goalsDefaultFilter>({defaultFilter: goalsDefaultFilter});
 
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
-	const {goals, isGoalsLoading} = GoalModel.useItems({filter});
+	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems({filter});
+	const {goals: allGoals, isGoalsLoading: isAllGoalsLoading} = GoalModel.useItems({queryKey: 'all'});
 
-	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading;
+	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading || isAllGoalsLoading;
 
 	return (
 		<Card>
@@ -19,16 +21,16 @@ export function GoalManagement() {
 					<LoadingWrapper isLoading={isLoading} className='mb-1.5 mt-2 h-6 w-32'>
 						{goalTotalBalance &&
 							(() => {
-								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split(',');
+								const [int, float] = TextHelpers.getAmount(goalTotalBalance.amount).split('.');
 								return (
 									<div>
-										<span className='text-3xl font-medium'>
+										<span className='text-3xl font-[600]'>
 											<span>{int}</span>
 											{!float && <span> {CURRENCY_SYMBOL[goalTotalBalance.currency]}</span>}
 										</span>
 										{float && (
 											<span className='text-xl font-bold'>
-												,{float} {CURRENCY_SYMBOL[goalTotalBalance.currency]}
+												.{float} {CURRENCY_SYMBOL[goalTotalBalance.currency]}
 											</span>
 										)}
 									</div>
@@ -45,9 +47,22 @@ export function GoalManagement() {
 				</LoadingWrapper>
 			</div>
 
-			<div className='flex justify-between px-4 py-2'>
+			<div className='flex justify-between px-4 pb-2 pt-1'>
 				{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
-					<Button key={index} isLoading={isLoading} {...restButtonConfig}>
+					<Button
+						key={index}
+						isLoading={isLoading}
+						disabled={(() => {
+							if (name === APP_TEXT.transfer) {
+								return allGoals?.length ? allGoals.length <= 1 : true;
+							}
+
+							if (name === APP_TEXT.fund || name === APP_TEXT.withdraw) {
+								return !allGoals?.length;
+							}
+						})()}
+						{...restButtonConfig}
+					>
 						{name}
 					</Button>
 				))}
@@ -59,14 +74,15 @@ export function GoalManagement() {
 					onChange={(value) => setFilter({...filter, status: value})}
 					options={goalStatusOptions}
 					isLoading={isLoading}
+					title={APP_TEXT.goals}
 				/>
 			</div>
 
 			<List
 				emptyTextKey='goals'
 				isLoading={isLoading}
-				rows={goals}
-				renderRow={(row) => (
+				items={goals}
+				renderItem={(row) => (
 					<Item
 						image={
 							row.targetAmount ? (
@@ -81,13 +97,18 @@ export function GoalManagement() {
 						}
 						name={row.name}
 						description={
-							row.targetAmount &&
-							`${APP_TEXT.target}: ${TextHelpers.getAmount(row.targetAmount)} ${CURRENCY_SYMBOL[row.balance.currency]}`
+							row.targetAmount && row.targetAmount > row.balance.amount
+								? `${APP_TEXT.left}: ${TextHelpers.getAmount(row.targetAmount - row.balance.amount)} ${
+										CURRENCY_SYMBOL[row.balance.currency]
+								  }`
+								: APP_TEXT.goalAchieved
 						}
 						rightName={`${TextHelpers.getAmount(row.balance.amount)} ${CURRENCY_SYMBOL[row.balance.currency]}`}
 						onClick={(navigate) => navigate(APP_PATH.goal.getItemDetailsPath(row.id))}
 					/>
 				)}
+				fetchNextPage={fetchNextGoalsPage}
+				hasNextPage={hasNextGoalsPage}
 			/>
 		</Card>
 	);

@@ -1,7 +1,6 @@
 import {MouseEvent, useEffect, useRef, useState} from 'react';
 import {cn, useResponsive} from '@shared/lib';
 import {Icon} from '@shared/ui/icon/ui/Icon.tsx';
-import {buttonClickStyles} from '@shared/ui/button/ui/Button.tsx';
 
 type Props = {
 	type?: 'email' | 'text' | 'password';
@@ -18,7 +17,7 @@ type Props = {
 	isSearch?: boolean;
 };
 
-// TODO: SearchField
+// SearchField
 //  более высокоуровневый компонент, вынести отдельно
 //  when isSearch and focused, pin search-input to the top with animation + cancel text at right
 
@@ -78,7 +77,7 @@ export function TextField(props: Props) {
 
 				<input
 					ref={inputRef}
-					className={cn('w-full bg-inherit font-light caret-primary-violet outline-none', isSearch && 'py-1 text-sm')}
+					className={cn('w-full bg-inherit  font-light caret-primary-violet outline-none', isSearch && 'py-1 text-sm')}
 					type={type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type}
 					inputMode={type === 'email' ? 'email' : 'text'}
 					value={value}
@@ -90,12 +89,7 @@ export function TextField(props: Props) {
 				/>
 
 				{value && type !== 'password' && (
-					<div
-						className={cn(
-							'ml-2 flex size-5 shrink-0 transform cursor-pointer items-center justify-center rounded-full bg-field-helper',
-							buttonClickStyles,
-						)}
-					>
+					<div className='ml-2 flex size-5 shrink-0 transform cursor-pointer items-center justify-center rounded-full bg-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'>
 						<Icon
 							type='x'
 							className={cn(
@@ -111,7 +105,7 @@ export function TextField(props: Props) {
 					<div
 						ref={showHidePasswordIconRef}
 						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-						className={cn('ml-2 transform cursor-pointer text-field-helper', buttonClickStyles)}
+						className='ml-2 transform cursor-pointer text-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'
 					>
 						<Icon type={isPasswordVisible ? 'hidePassword' : 'showPassword'} className='size-5' />
 					</div>

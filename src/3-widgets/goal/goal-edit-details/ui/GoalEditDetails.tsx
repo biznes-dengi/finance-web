@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {Card, EditButtonField, LoadingWrapper, StatusPopup} from '@shared/ui';
-import {APP_TEXT, CURRENCY, CURRENCY_CODE, CURRENCY_SYMBOL} from '@shared/constants';
-import {DateService, TextHelpers} from '@shared/lib';
+import {APP_TEXT, CURRENCY, CURRENCY_CODE, CURRENCY_OPTIONS, CURRENCY_SYMBOL} from '@shared/constants';
+import {DateService, isNull, TextHelpers} from '@shared/lib';
 
 export function GoalEditDetails() {
 	const {id} = useParams();
@@ -13,7 +14,7 @@ export function GoalEditDetails() {
 
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<string>('');
-	const [deadline, setDeadline] = useState<Date | undefined>();
+	const [deadline, setDeadline] = useState<Date | null>(null);
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 
 	const [initialState, setInitialState] = useState<any>({});
@@ -24,7 +25,7 @@ export function GoalEditDetails() {
 		const initialState = {
 			name: goalDetails.name,
 			targetAmount: String(goalDetails.targetAmount),
-			deadline: new Date(goalDetails.deadline as string),
+			deadline: goalDetails.deadline ? new DateService(goalDetails.deadline).value : null,
 			currency: goalDetails.balance.currency,
 		};
 
@@ -46,7 +47,7 @@ export function GoalEditDetails() {
 			payload: {
 				name,
 				targetAmount: Number(targetAmount),
-				deadline: new DateService(deadline).getPayloadDateFormat(),
+				deadline: deadline ? new DateService(deadline).getPayloadDateFormat() : undefined,
 				currency,
 			},
 		});
@@ -58,6 +59,26 @@ export function GoalEditDetails() {
 		isError: isUpdateGoalError,
 		handleUpdate,
 	};
+
+	const isDeadlineChanged = (() => {
+		if (isNull(goalDetails?.deadline) && isNull(deadline)) {
+			return false;
+		}
+
+		if (isNull(goalDetails?.deadline) && !isNull(deadline)) {
+			return true;
+		}
+
+		if (!isNull(goalDetails?.deadline) && isNull(deadline)) {
+			return true;
+		}
+
+		if (!!goalDetails?.deadline && !!deadline) {
+			return !new DateService(goalDetails?.deadline).isEqualTo(deadline);
+		}
+
+		return false;
+	})();
 
 	return (
 		<>
@@ -75,6 +96,7 @@ export function GoalEditDetails() {
 							onChange={setName}
 							isChanged={goalDetails?.name !== name.trim()}
 							isRequired
+							maxLength={goalNameMaxLength}
 							{...editButtonCommonProps}
 						>
 							{goalDetails?.name}
@@ -93,7 +115,7 @@ export function GoalEditDetails() {
 							initialValue={initialState.currency}
 							value={currency}
 							onChange={setCurrency}
-							options={[{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}]}
+							options={CURRENCY_OPTIONS}
 							isChanged={goalDetails?.balance.currency !== currency}
 							isRequired
 							{...editButtonCommonProps}
@@ -141,16 +163,15 @@ export function GoalEditDetails() {
 						<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
 					</LoadingWrapper>
 					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
-						<EditButtonField<Date | undefined>
+						<EditButtonField<Date | null>
 							type='date'
 							title={APP_TEXT.deadline}
 							initialValue={initialState.deadline}
 							value={deadline}
 							onChange={setDeadline}
-							isChanged={
-								!!(deadline && goalDetails?.deadline && !new DateService(goalDetails.deadline).isEqualTo(deadline))
-							}
+							isChanged={isDeadlineChanged}
 							icon={!goalDetails?.deadline ? 'add' : undefined}
+							minDate={new DateService().getTomorrowDate()}
 							{...editButtonCommonProps}
 						>
 							{goalDetails?.deadline
@@ -161,8 +182,22 @@ export function GoalEditDetails() {
 				</div>
 			</Card>
 
-			<StatusPopup isOpen={isUpdateGoalSuccess} status='success' statusTextKey='updateGoalSuccess' />
-			<StatusPopup isOpen={isUpdateGoalError} status='error' statusTextKey='updateGoalError' />
+			{goalDetails && (
+				<StatusPopup
+					isOpen={isUpdateGoalSuccess}
+					status='success'
+					statusTextKey='updateGoalSuccess'
+					statusTextProps={{name: goalDetails.name}}
+				/>
+			)}
+			{goalDetails && (
+				<StatusPopup
+					isOpen={isUpdateGoalError}
+					status='error'
+					statusTextKey='updateGoalError'
+					statusTextProps={{name: goalDetails.name}}
+				/>
+			)}
 		</>
 	);
 }

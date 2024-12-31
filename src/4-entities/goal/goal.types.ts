@@ -6,6 +6,7 @@ import {balanceValidator} from '@shared/types';
 export type Props = {
 	useItems: {
 		filter?: Payload;
+		queryKey?: string;
 	};
 
 	useItemDetails: {
@@ -14,7 +15,6 @@ export type Props = {
 
 	useItemTransactions: {
 		id?: string;
-		filter?: Payload;
 	};
 
 	useFund: {
@@ -24,10 +24,10 @@ export type Props = {
 	useWithdraw: {
 		isFromListPage?: boolean;
 	};
-};
 
-export type InitialData = {
-	useItems: zod.infer<typeof responseValidator.fetchItems>;
+	useTransfer: {
+		isFromListPage?: boolean;
+	};
 };
 
 export type MutationProps = {
@@ -101,7 +101,7 @@ export type ApiProps = {
 
 	fetchItemTransactions: {
 		params: {id: Props['useItemTransactions']['id']; boardGoalId: number};
-		payload: Props['useItemTransactions']['filter'];
+		payload?: Payload;
 	};
 
 	createItem: {
@@ -136,7 +136,11 @@ export type ApiProps = {
 
 export const responseValidator = {
 	fetchItems: object({
-		hasNext: boolean(),
+		info: object({
+			hasNext: boolean(),
+			pageNumber: number(),
+			pageSize: number(),
+		}),
 		items: object({
 			id: number(),
 			name: string(),
@@ -156,7 +160,11 @@ export const responseValidator = {
 
 	// items[i] может быть type=transfer и там будет один validator, а может быть другой и будет другой валидатор
 	fetchItemTransactions: object({
-		hasNext: boolean(),
+		info: object({
+			hasNext: boolean(),
+			pageNumber: number(),
+			pageSize: number(),
+		}),
 		items: zod
 			.object({
 				id: number(),

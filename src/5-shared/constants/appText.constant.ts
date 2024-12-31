@@ -16,6 +16,7 @@ export const APP_TEXT = {
 	addDeadline: 'Add deadline',
 	currency: 'Currency',
 	left: 'Осталось',
+	eshe: 'Еще',
 	congratulations: 'Поздравляем',
 	create: 'Create',
 	fund: 'Fund',
@@ -27,6 +28,7 @@ export const APP_TEXT = {
 	targetAmount: 'Target amount',
 	addTargetAmount: 'Add target amount',
 	target: 'Target',
+	goalAchieved: 'Goal achieved',
 	progress: 'Progress',
 	transaction: 'Transaction',
 	transactions: 'Transactions',
@@ -36,7 +38,7 @@ export const APP_TEXT = {
 	update: 'Update',
 	save: 'Save',
 	name: 'Name',
-	deleteGoal: 'Delete Goal',
+	deleteGoal: 'Delete goal',
 	deleteGoalConfirmation: 'Are you sure you want to delete the goal?',
 	email: 'Email',
 	password: 'Password',
@@ -50,8 +52,12 @@ export const APP_TEXT = {
 	noDate: 'No date',
 	customise: 'Customise',
 	selectCurrency: 'Select a currency',
-	enterTargetAmount: 'Enter target amount',
+	enterTargetValue: 'Enter target value',
 	exchangeRate: 'Exchange rate',
+	all: 'All',
+	active: 'Active',
+	achieved: 'Achieved',
+	overdue: 'Overdue',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

@@ -5,6 +5,7 @@ export * from './helpers/url.helpers.ts';
 export * from './helpers/transaction.helpers.tsx';
 
 export * from './components/PrivateRoute.tsx';
+export * from './components/InfiniteScroll.tsx';
 
 export * from './hooks/useFilter.ts';
 export * from './hooks/useResponsive.ts';

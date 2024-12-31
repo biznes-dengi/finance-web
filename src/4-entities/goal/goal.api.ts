@@ -2,18 +2,24 @@ import {type ApiProps, responseValidator} from './goal.types.ts';
 import {HttpClient} from '@shared/api';
 
 export class GoalApi {
-	static async fetchItemList(props: ApiProps['fetchItemList']) {
+	static async fetchItems(props: ApiProps['fetchItemList']) {
 		const {
 			params: {boardGoalId},
 			payload,
 		} = props;
 
-		const response = await HttpClient.get({
-			url: `board-goals/${boardGoalId}/goals`,
-			data: payload,
-		});
+		// try-catch чтобы выводить в консоль ZodError
+		try {
+			const response = await HttpClient.get({
+				url: `board-goals/${boardGoalId}/goals`,
+				data: payload,
+			});
 
-		return responseValidator.fetchItems.parse(response);
+			return responseValidator.fetchItems.parse(response);
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
 	}
 
 	static async fetchItemDetails(props: ApiProps['fetchItemDetails']) {
@@ -21,11 +27,16 @@ export class GoalApi {
 			params: {boardGoalId, id},
 		} = props;
 
-		const response = await HttpClient.get({
-			url: `board-goals/${boardGoalId}/goals/${id}`,
-		});
+		try {
+			const response = await HttpClient.get({
+				url: `board-goals/${boardGoalId}/goals/${id}`,
+			});
 
-		return responseValidator.fetchItem.parse(response);
+			return responseValidator.fetchItem.parse(response);
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
 	}
 
 	static async fetchItemTransactions(props: ApiProps['fetchItemTransactions']) {
@@ -34,28 +45,43 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		const response = await HttpClient.get({
-			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
-			data: payload,
-		});
+		try {
+			const response = await HttpClient.get({
+				url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
+				data: payload,
+			});
 
-		return responseValidator.fetchItemTransactions.parse(response);
+			return responseValidator.fetchItemTransactions.parse(response);
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
 	}
 
 	static async fetchBoardGoalId(accountId: number) {
-		const response = await HttpClient.get({
-			url: 'board-goals/id',
-			data: {accountId},
-		});
-		return responseValidator.fetchBoardGoalId.parse(response);
+		try {
+			const response = await HttpClient.get({
+				url: 'board-goals/id',
+				data: {accountId},
+			});
+			return responseValidator.fetchBoardGoalId.parse(response);
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
 	}
 
 	static async fetchTotalBalance(boardGoalId: number) {
-		const response = await HttpClient.get({
-			url: 'board-goals/balance',
-			data: {boardGoalId},
-		});
-		return responseValidator.fetchTotalBalance.parse(response);
+		try {
+			const response = await HttpClient.get({
+				url: 'board-goals/balance',
+				data: {boardGoalId},
+			});
+			return responseValidator.fetchTotalBalance.parse(response);
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
 	}
 
 	static async createItem(props: ApiProps['createItem']) {
@@ -64,12 +90,17 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		const response = await HttpClient.post({
-			url: `board-goals/${boardGoalId}/goals`,
-			data: payload,
-		});
+		try {
+			const response = await HttpClient.post({
+				url: `board-goals/${boardGoalId}/goals`,
+				data: payload,
+			});
 
-		return responseValidator.createItem.parse(response);
+			return responseValidator.createItem.parse(response);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	}
 
 	static async updateItem(props: ApiProps['updateItem']) {
@@ -78,10 +109,15 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		return await HttpClient.put({
-			url: `board-goals/${boardGoalId}/goals/${id}`,
-			data: payload,
-		});
+		try {
+			return await HttpClient.put({
+				url: `board-goals/${boardGoalId}/goals/${id}`,
+				data: payload,
+			});
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	}
 
 	static async deleteItem(props: ApiProps['deleteItem']) {
@@ -89,9 +125,14 @@ export class GoalApi {
 			params: {boardGoalId, id},
 		} = props;
 
-		return await HttpClient.delete({
-			url: `board-goals/${boardGoalId}/goals/${id}`,
-		});
+		try {
+			return await HttpClient.delete({
+				url: `board-goals/${boardGoalId}/goals/${id}`,
+			});
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	}
 
 	static async fundItem(props: ApiProps['depositMoney']) {
@@ -100,12 +141,17 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		await HttpClient.post({
-			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
-			data: payload,
-		});
+		try {
+			await HttpClient.post({
+				url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
+				data: payload,
+			});
 
-		return {id};
+			return {id};
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	}
 
 	static async withdrawItem(props: ApiProps['withdrawMoney']) {
@@ -114,12 +160,17 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		await HttpClient.post({
-			url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
-			data: payload,
-		});
+		try {
+			await HttpClient.post({
+				url: `board-goals/${boardGoalId}/goals/${id}/transactions`,
+				data: payload,
+			});
 
-		return {id};
+			return {id};
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	}
 
 	static async transferItem(props: ApiProps['transferMoney']) {
@@ -128,9 +179,16 @@ export class GoalApi {
 			payload,
 		} = props;
 
-		return await HttpClient.post({
-			url: `board-goals/${boardGoalId}/transfer`,
-			data: payload,
-		});
+		try {
+			await HttpClient.post({
+				url: `board-goals/${boardGoalId}/transfer`,
+				data: payload,
+			});
+
+			return {id: payload.fromGoalId};
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
 	}
 }

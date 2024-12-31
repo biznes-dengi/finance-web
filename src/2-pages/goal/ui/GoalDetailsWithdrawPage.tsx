@@ -1,16 +1,17 @@
 import {useParams} from 'react-router-dom';
+import {FundWithdrawPage} from '@pages/ui';
 import {GoalModel} from '@entities/goal';
-import {TransactionPage} from '@shared/ui';
 import {APP_PATH} from '@shared/constants';
 
 export function GoalDetailsWithdrawPage() {
 	const {id} = useParams();
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
+
 	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw();
 
 	return (
-		<TransactionPage
+		<FundWithdrawPage
 			itemDetails={goalDetails}
 			isItemDataLoading={isGoalDetailsLoading}
 			actionType='withdraw'
@@ -18,8 +19,8 @@ export function GoalDetailsWithdrawPage() {
 			isActionLoading={isWithdrawGoalLoading}
 			isActionSuccess={isWithdrawGoalSuccess}
 			isActionError={isWithdrawGoalError}
-			successMessageKey='withdrawGoalSuccess'
-			errorMessageKey='withdrawGoalError'
+			successTextKey='withdrawGoalSuccess'
+			errorTextKey='withdrawGoalError'
 			backPath={APP_PATH.goal.getItemDetailsPath(id)}
 		/>
 	);

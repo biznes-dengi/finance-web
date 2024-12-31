@@ -63,7 +63,7 @@ export function LoginPage() {
 
 	return (
 		<AuthLayout>
-			<PageHeader title={APP_TEXT.welcome} withBackButton={false} className='p-0' />
+			<PageHeader title={APP_TEXT.welcome} withBackButton={false} withNoSpace />
 
 			<div className='flex w-full flex-col gap-4'>
 				<TextField
@@ -97,6 +97,7 @@ export function LoginPage() {
 					disabled={!email || !password}
 					className={cn(!displayBoxShadow && 'shadow-none')}
 					isLoading={isLoginPending}
+					disableDefaultEnterClick
 				>
 					{APP_TEXT.logIn}
 				</Button>

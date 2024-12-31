@@ -44,7 +44,7 @@ export function GoalImageField({children, isCreatePage}: {children: ReactNode; i
 					</div>
 				)}
 
-				<div className='mb-4 mr-4'>
+				<div className='mb-3 mr-3 p-1'>
 					<LoadingWrapper isLoading={isGoalDetailsLoading && !isCreatePage} className='size-8 rounded-full'>
 						<div
 							className='flex size-8 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'

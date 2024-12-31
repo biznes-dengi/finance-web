@@ -31,5 +31,5 @@ export function useKeyClick({key, onKeyDown, onKeyUp, deps = [], disabled}: UseK
 			document.removeEventListener('keydown', handleKeyDown);
 			document.removeEventListener('keyup', handleKeyUp);
 		};
-	}, [...deps]);
+	}, [...deps, onKeyDown, onKeyUp]);
 }

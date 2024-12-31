@@ -67,7 +67,7 @@ export function SignupPage() {
 	return (
 		<>
 			<AuthLayout>
-				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} className='p-0' />
+				<PageHeader title={APP_TEXT.createAccount} backPath={APP_PATH.login} withNoSpace />
 
 				<div className='flex w-full flex-col gap-4'>
 					<TextField
@@ -97,6 +97,7 @@ export function SignupPage() {
 						disabled={!email || !password}
 						className={cn(!displayBoxShadow && 'shadow-none')}
 						isLoading={isSignupPending}
+						disableDefaultEnterClick
 					>
 						{APP_TEXT.signUp}
 					</Button>

@@ -13,9 +13,6 @@ export * from './status-popup/types/StatusPopup.types.ts';
 export * from './loading-wrapper/ui/LoadingWrapper.tsx';
 export * from './delete-item/ui/DeleteItem.tsx';
 export * from './edit-button-field/ui/EditButtonField.tsx';
-export * from './date-picker/ui/DatePicker.tsx';
-export * from './currency-picker/ui/CurrencyPicker.tsx';
-export * from './transaction-page/ui/TransactionPage.tsx';
 export * from './page-header/ui/PageHeader.tsx';
 export * from './icon/ui/Icon.tsx';
 export * from './popup/ui/Popup.tsx';
@@ -23,6 +20,9 @@ export * from './popup/hooks/usePopupState.ts';
 export * from './item/ui/Item.tsx';
 export * from './item/ui/LoadingItem.tsx';
 export * from './item/ui/ItemImageWithProgress.tsx';
+export * from './select-with-search/ui/SelectWithSearch.tsx';
+export * from './card/ui/Card.tsx';
+export * from './DatePicker.tsx';
 
 // new pattern -> get rid of index.ts
 
@@ -31,5 +31,7 @@ export * from './button';
 export * from './preload-skeleton';
 export * from './list';
 export * from './select-in-card';
-export * from './select-with-search';
-export * from './card';
+
+// editButtonField instead
+
+export * from './currency-picker/ui/CurrencyPicker.tsx';

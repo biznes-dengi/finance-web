@@ -3,7 +3,7 @@ import {NavigateFunction} from 'react-router-dom';
 
 export type ItemProps = {
 	image?: ReactElement;
-	statusIcon?: ReactNode;
+	imageIcon?: ReactNode;
 	name: ReactNode;
 	description?: ReactNode;
 	rightName?: ReactNode;

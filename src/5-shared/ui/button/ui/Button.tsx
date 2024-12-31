@@ -1,7 +1,7 @@
-import {ReactElement, ReactNode} from 'react';
+import {ReactElement, ReactNode, useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
-import {cn, styleElement} from '@shared/lib';
+import {cn, styleElement, useKeyClick} from '@shared/lib';
 import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
@@ -23,11 +23,10 @@ interface Props extends CommonButtonSettings {
 	isLoading?: boolean;
 	isOnlyIcon?: boolean;
 	isSecondary?: boolean;
+	disableDefaultEnterClick?: boolean;
 }
 
-// TODO: Typescript: when type = icon -> icon prop required
-
-export const buttonClickStyles = 'transition duration-200 ease-in-out active:scale-95 active:brightness-95';
+// Typescript: when type = icon -> icon prop required
 
 export function Button(props: Props) {
 	const {
@@ -40,24 +39,40 @@ export function Button(props: Props) {
 		disabled,
 		isLoading,
 		isOnlyIcon,
+		disableDefaultEnterClick,
 	} = props;
 
 	const navigate = useNavigate();
+
+	const [displayBoxShadow, setDisplayBoxShadow] = useState(true);
+
+	useKeyClick({
+		key: 'Enter',
+		onKeyDown: () => setDisplayBoxShadow(false),
+		onKeyUp: () => {
+			onClick({navigate});
+			setDisplayBoxShadow(true);
+		},
+		disabled: disabled || disableDefaultEnterClick || type !== ButtonType.main,
+		deps: [],
+	});
+
+	function gcn(...buttonClassName: Array<ClassValue>) {
+		return cn(
+			'block',
+			disabled
+				? 'cursor-not-allowed'
+				: 'active:scale-95 active:brightness-95 duration-300 transition ease-in-out cursor-pointer',
+			// isDesktop ? 'duration-200' : 'duration-100',
+			...buttonClassName,
+			className,
+		);
+	}
 
 	const buttonProps = {
 		onClick: disabled ? undefined : () => onClick({navigate}),
 		disabled,
 	};
-
-	function gcn(...buttonClassName: Array<ClassValue>) {
-		return cn(
-			'block',
-			buttonClickStyles,
-			disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-			...buttonClassName,
-			className,
-		);
-	}
 
 	if (type === ButtonType.main) {
 		return (
@@ -76,6 +91,7 @@ export function Button(props: Props) {
 						(isSecondary
 							? 'cursor-not-allowed bg-secondary-violet'
 							: 'cursor-not-allowed bg-primary-violet shadow-none'),
+					!displayBoxShadow && 'shadow-none',
 				)}
 			>
 				{isLoading ? (
@@ -127,11 +143,20 @@ export function Button(props: Props) {
 		return (
 			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
 				{icon && (
-					<div className='flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet'>
+					<div
+						className={cn(
+							'flex size-11 items-center justify-center rounded-full bg-secondary-violet  text-primary-violet',
+							disabled ? 'bg-secondary-violet/50 text-primary-violet/50' : 'bg-secondary-violet text-primary-violet',
+						)}
+					>
 						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-4')}
 					</div>
 				)}
-				{children && <div className='mt-2 text-[13px] text-primary-violet'>{children}</div>}
+				{children && (
+					<div className={cn('mt-2 text-[13px]', disabled ? 'text-primary-violet/50' : 'text-primary-violet')}>
+						{children}
+					</div>
+				)}
 			</button>
 		);
 	}

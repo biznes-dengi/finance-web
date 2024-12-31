@@ -16,6 +16,8 @@ export type AmountFieldProps<Option> = {
 	isLoading?: boolean;
 	getCustomDescription?: (option: Option) => ReactNode;
 	options?: Option[];
+	fetchNextOptions?: () => void;
+	hasNextOptions?: boolean;
 	setActiveOption?: (option: Option) => void;
 	errorText?: string | boolean;
 	withPlus?: boolean;

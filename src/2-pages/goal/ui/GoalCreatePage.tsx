@@ -1,21 +1,21 @@
 import {useState} from 'react';
 import {GoalImageField} from '@widgets/goal';
+import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {
 	AmountField,
 	Button,
 	ButtonType,
-	DatePicker,
 	PageHeader,
 	SelectWithSearch,
 	StatusPopup,
 	TextField,
+	DatePicker,
 } from '@shared/ui';
-import {APP_PATH, APP_TEXT, CURRENCY} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_OPTIONS} from '@shared/constants';
 import {cn, DateService, useResponsive} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone', 'Education'];
-const currencyOptions = [{description: 'USD', name: 'US Dollar', value: CURRENCY.USD}];
 
 export function GoalCreatePage() {
 	const [activeStepIndex, setActiveStepIndex] = useState(0);
@@ -23,26 +23,19 @@ export function GoalCreatePage() {
 	const [name, setName] = useState('');
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 	const [targetAmount, setTargetAmount] = useState('');
-	const [deadline, setDeadline] = useState<Date>();
+	const [deadline, setDeadline] = useState<Date | null>(null);
 
 	const {createGoal, isCreateGoalLoading, isCreateGoalSuccess, isCreateGoalError} = GoalModel.useCreateItem();
 
 	const {isMobile} = useResponsive();
 
-	const activeOption = {
-		name: currencyOptions.find((option) => option.value === currency)?.description ?? '',
-		currency: currency as CURRENCY,
-	};
-
 	function handleCreateClick() {
-		if (!targetAmount) return;
-
 		createGoal({
 			payload: {
 				name,
 				currency,
 				targetAmount: Number(targetAmount),
-				deadline: new DateService(deadline).getPayloadDateFormat(),
+				deadline: deadline ? new DateService(deadline).getPayloadDateFormat() : undefined,
 			},
 		});
 	}
@@ -52,7 +45,7 @@ export function GoalCreatePage() {
 			title={cn(
 				activeStepIndex === 0 && APP_TEXT.customise,
 				activeStepIndex === 1 && APP_TEXT.selectCurrency,
-				activeStepIndex === 2 && APP_TEXT.enterTargetAmount,
+				activeStepIndex === 2 && APP_TEXT.enterTargetValue,
 			)}
 			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
 			backPath={APP_PATH.goalList}
@@ -70,7 +63,12 @@ export function GoalCreatePage() {
 					<>
 						<GoalImageField isCreatePage>{Header}</GoalImageField>
 						<div className='mt-4 px-4'>
-							<TextField value={name} onChange={setName} maxLength={25} placeholder={APP_TEXT.goalName} />
+							<TextField
+								value={name}
+								onChange={setName}
+								maxLength={goalNameMaxLength}
+								placeholder={APP_TEXT.goalName}
+							/>
 						</div>
 						{!name && (
 							<div className={cn('flex flex-wrap gap-2 p-4')}>
@@ -93,7 +91,7 @@ export function GoalCreatePage() {
 				{activeStepIndex === 1 && (
 					<div className='px-4'>
 						<SelectWithSearch
-							options={currencyOptions}
+							options={CURRENCY_OPTIONS}
 							onChange={(value) => {
 								setCurrency(value);
 								setTargetAmount('');
@@ -105,9 +103,24 @@ export function GoalCreatePage() {
 
 				{activeStepIndex === 2 && (
 					<div key={activeStepIndex} className='px-4'>
-						<AmountField value={targetAmount} onChange={setTargetAmount} activeOption={activeOption} />
-						<div className='mt-4'>
-							<DatePicker type='deadline' value={deadline} onChange={setDeadline} />
+						<AmountField
+							value={targetAmount}
+							onChange={setTargetAmount}
+							activeOption={{
+								name: CURRENCY_OPTIONS.find((option) => option.value === currency)?.description ?? '',
+								currency: currency as CURRENCY,
+							}}
+						/>
+						<div className='mt-4 flex justify-between px-4 text-sm'>
+							<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
+							<DatePicker
+								onChange={setDeadline}
+								value={deadline}
+								minDate={new DateService().getTomorrowDate()}
+								title={APP_TEXT.deadline}
+							>
+								{deadline ? new DateService(deadline).getLocalDateString() : APP_TEXT.addDeadline}
+							</DatePicker>
 						</div>
 					</div>
 				)}
@@ -128,14 +141,9 @@ export function GoalCreatePage() {
 				isOpen={isCreateGoalSuccess}
 				status='success'
 				statusTextKey='createGoalSuccess'
-				statusTextProps={{goalName: name}}
+				statusTextProps={{name}}
 			/>
-			<StatusPopup
-				isOpen={isCreateGoalError}
-				status='error'
-				statusTextKey='createGoalError'
-				statusTextProps={{goalName: name}}
-			/>
+			<StatusPopup isOpen={isCreateGoalError} status='error' statusTextKey='createGoalError' statusTextProps={{name}} />
 		</>
 	);
 }

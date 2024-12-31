@@ -9,6 +9,33 @@
     @apply bg-light-grey;
 }
 
+.mobile-calendar-button:hover {
+    background: none !important;
+}
+
+/* Стили для кастомной полосы прокрутки */
+/*.custom-scrollbar::-webkit-scrollbar {*/
+/*    width: 4px;  !* Ширина вертикальной полосы прокрутки *!*/
+/*    opacity: 1;*/
+/*    transition: opacity 0.3s ease;  !* Плавное исчезновение *!*/
+/*}*/
+/*.custom-scrollbar::-webkit-scrollbar-track {*/
+/*    background: #f1f1f1;  !* Цвет фона трека *!*/
+/*    border-radius: 10px;   !* Радиус скругления углов трека *!*/
+/*}*/
+/*.custom-scrollbar::-webkit-scrollbar-thumb {*/
+/*    background: #BAC3CA;  !* Цвет самой полосы прокрутки *!*/
+/*    border-radius: 10px;  !* Скругление полосы прокрутки *!*/
+/*}*/
+/*.custom-scrollbar::-webkit-scrollbar-thumb:hover {*/
+/*    background: #555;  !* Цвет полосы прокрутки при наведении *!*/
+/*}*/
+/*!* Скрываем полосу прокрутки, если не происходит прокрутка *!*/
+/*.custom-scrollbar.hidden::-webkit-scrollbar {*/
+/*    opacity: 0;  !* Прячем полосу прокрутки *!*/
+/*}*/
+
+
 /* shadcn UI */
 @layer base {
   :root {

@@ -7,7 +7,7 @@ import {DateService, TransactionHelpers} from '@shared/lib';
 export function GoalTransactions() {
 	const {id} = useParams();
 
-	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id, filter: {pageNumber: 0}});
+	const {goalTransactions, isGoalTransactionsLoading} = GoalModel.useItemTransactions({id});
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
 	const isLoading = isGoalTransactionsLoading || isGoalDetailsLoading;
@@ -24,8 +24,8 @@ export function GoalTransactions() {
 			<List
 				emptyTextKey='transactions'
 				isLoading={isLoading}
-				rows={goalTransactions ? [goalTransactions[0], goalTransactions[1], goalTransactions[2]] : []}
-				renderRow={(row, index) => {
+				items={goalTransactions ? [goalTransactions[0], goalTransactions[1], goalTransactions[2]] : []}
+				renderItem={(row, index) => {
 					if (!row) return null;
 					return (
 						<Item
