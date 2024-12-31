@@ -90,11 +90,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 
 				{type === 'date' && (
 					<div className='flex w-full justify-center'>
-						<DateField
-							value={value as Date | undefined}
-							onChange={(date) => onChange(date as Value)}
-							minDate={minDate}
-						/>
+						<DateField value={value as Date | null} onChange={(date) => onChange(date as Value)} minDate={minDate} />
 					</div>
 				)}
 

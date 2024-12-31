@@ -4,7 +4,7 @@ import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
 import {Card, EditButtonField, LoadingWrapper, StatusPopup} from '@shared/ui';
 import {APP_TEXT, CURRENCY, CURRENCY_CODE, CURRENCY_OPTIONS, CURRENCY_SYMBOL} from '@shared/constants';
-import {DateService, TextHelpers} from '@shared/lib';
+import {DateService, isNull, TextHelpers} from '@shared/lib';
 
 export function GoalEditDetails() {
 	const {id} = useParams();
@@ -14,7 +14,7 @@ export function GoalEditDetails() {
 
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<string>('');
-	const [deadline, setDeadline] = useState<Date | undefined>();
+	const [deadline, setDeadline] = useState<Date | null>(null);
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 
 	const [initialState, setInitialState] = useState<any>({});
@@ -25,7 +25,7 @@ export function GoalEditDetails() {
 		const initialState = {
 			name: goalDetails.name,
 			targetAmount: String(goalDetails.targetAmount),
-			deadline: goalDetails.deadline ? new DateService(goalDetails.deadline).value : undefined,
+			deadline: goalDetails.deadline ? new DateService(goalDetails.deadline).value : null,
 			currency: goalDetails.balance.currency,
 		};
 
@@ -61,11 +61,23 @@ export function GoalEditDetails() {
 	};
 
 	const isDeadlineChanged = (() => {
-		if (deadline && goalDetails?.deadline) {
-			return !new DateService(goalDetails.deadline).isEqualTo(deadline);
+		if (isNull(goalDetails?.deadline) && isNull(deadline)) {
+			return false;
 		}
 
-		return !!deadline && !goalDetails?.deadline;
+		if (isNull(goalDetails?.deadline) && !isNull(deadline)) {
+			return true;
+		}
+
+		if (!isNull(goalDetails?.deadline) && isNull(deadline)) {
+			return true;
+		}
+
+		if (!!goalDetails?.deadline && !!deadline) {
+			return !new DateService(goalDetails?.deadline).isEqualTo(deadline);
+		}
+
+		return false;
 	})();
 
 	return (
@@ -151,7 +163,7 @@ export function GoalEditDetails() {
 						<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
 					</LoadingWrapper>
 					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
-						<EditButtonField<Date | undefined>
+						<EditButtonField<Date | null>
 							type='date'
 							title={APP_TEXT.deadline}
 							initialValue={initialState.deadline}

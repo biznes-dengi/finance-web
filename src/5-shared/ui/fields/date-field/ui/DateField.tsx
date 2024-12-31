@@ -45,12 +45,12 @@ export function DateField(props: DateFieldProps) {
 		<div className='rounded-2xl bg-white p-2'>
 			<div className='mb-2 flex justify-between px-2 text-sm'>
 				<div className='text-primary-grey'>{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}</div>
-				{value && <Button onClick={() => onChange(undefined)}>Reset</Button>}
+				{value && <Button onClick={() => onChange(null)}>Reset</Button>}
 			</div>
 			<DayPicker
 				mode='single'
-				selected={value}
-				onSelect={onChange}
+				selected={value ?? undefined}
+				onSelect={(value) => onChange(value as Date | null)}
 				showOutsideDays={true}
 				className={'w-fit'}
 				fromDate={minDate}

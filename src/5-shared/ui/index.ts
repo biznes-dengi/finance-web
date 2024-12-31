@@ -22,6 +22,7 @@ export * from './item/ui/LoadingItem.tsx';
 export * from './item/ui/ItemImageWithProgress.tsx';
 export * from './select-with-search/ui/SelectWithSearch.tsx';
 export * from './card/ui/Card.tsx';
+export * from './DatePicker.tsx';
 
 // new pattern -> get rid of index.ts
 

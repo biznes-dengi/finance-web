@@ -6,14 +6,14 @@ import {
 	AmountField,
 	Button,
 	ButtonType,
-	EditButtonField,
 	PageHeader,
 	SelectWithSearch,
 	StatusPopup,
 	TextField,
+	DatePicker,
 } from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_OPTIONS} from '@shared/constants';
-import {cn, DateService, isUndefined, useResponsive} from '@shared/lib';
+import {cn, DateService, useResponsive} from '@shared/lib';
 
 const hints = ['Mustang', 'House', 'Guitar', 'Maldives', 'TV', 'iPhone', 'Education'];
 
@@ -23,7 +23,7 @@ export function GoalCreatePage() {
 	const [name, setName] = useState('');
 	const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.USD);
 	const [targetAmount, setTargetAmount] = useState('');
-	const [deadline, setDeadline] = useState<Date>();
+	const [deadline, setDeadline] = useState<Date | null>(null);
 
 	const {createGoal, isCreateGoalLoading, isCreateGoalSuccess, isCreateGoalError} = GoalModel.useCreateItem();
 
@@ -45,7 +45,7 @@ export function GoalCreatePage() {
 			title={cn(
 				activeStepIndex === 0 && APP_TEXT.customise,
 				activeStepIndex === 1 && APP_TEXT.selectCurrency,
-				activeStepIndex === 2 && APP_TEXT.enterTargetAmount,
+				activeStepIndex === 2 && APP_TEXT.enterTargetValue,
 			)}
 			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
 			backPath={APP_PATH.goalList}
@@ -113,19 +113,14 @@ export function GoalCreatePage() {
 						/>
 						<div className='mt-4 flex justify-between px-4 text-sm'>
 							<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
-							<EditButtonField<Date | undefined>
-								type='date'
-								title={APP_TEXT.deadline}
-								initialValue={undefined}
-								value={deadline}
+							<DatePicker
 								onChange={setDeadline}
-								isChanged={!isUndefined(deadline)}
-								icon={!deadline ? 'add' : undefined}
+								value={deadline}
 								minDate={new DateService().getTomorrowDate()}
-								isNotEdit
+								title={APP_TEXT.deadline}
 							>
 								{deadline ? new DateService(deadline).getLocalDateString() : APP_TEXT.addDeadline}
-							</EditButtonField>
+							</DatePicker>
 						</div>
 					</div>
 				)}

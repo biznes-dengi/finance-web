@@ -52,7 +52,7 @@ export const APP_TEXT = {
 	noDate: 'No date',
 	customise: 'Customise',
 	selectCurrency: 'Select a currency',
-	enterTargetAmount: 'Enter target amount',
+	enterTargetValue: 'Enter target value',
 	exchangeRate: 'Exchange rate',
 	all: 'All',
 	active: 'Active',
