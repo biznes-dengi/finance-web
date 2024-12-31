@@ -1,15 +1,7 @@
 import {useEffect, useState} from 'react';
 import {type FundWithdrawPageProps} from '../types/MoneyActionPage.types.ts';
 import {MoneyActionPageHelpers} from '../lib/MoneyActionPage.helpers.ts';
-import {
-	AmountField,
-	type AmountFieldOption,
-	Button,
-	ButtonType,
-	EditButtonField,
-	PageHeader,
-	StatusPopup,
-} from '@shared/ui';
+import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, DateService, isNumber, TextHelpers, useResponsive} from '@shared/lib';
 
@@ -81,20 +73,14 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 				/>
 				<div className='mt-4 flex justify-between px-4 text-sm'>
 					<div className='font-medium text-primary-grey'>{APP_TEXT.transactionDate}</div>
-					<EditButtonField<Date | undefined>
-						type='date'
-						title={APP_TEXT.transactionDate}
-						initialValue={undefined}
+					<DatePicker
+						onChange={(value) => (value ? setDate(value) : undefined)}
 						value={date}
-						onChange={(value) => {
-							if (!value) return;
-							setDate(value);
-						}}
-						isChanged={!new DateService(new DateService().value).isEqualTo(date)}
-						isNotEdit
+						title={APP_TEXT.transactionDate}
+						withReset={false}
 					>
 						{new DateService(date).getLocalDateString()}
-					</EditButtonField>
+					</DatePicker>
 				</div>
 			</div>
 

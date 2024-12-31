@@ -39,13 +39,13 @@ const buttonVariants = cva(
 // Когда меняем на новую дату ставится дефолтное время. Продумать логику.
 
 export function DateField(props: DateFieldProps) {
-	const {value, onChange, minDate} = props;
+	const {value, onChange, minDate, withReset = true} = props;
 
 	return (
 		<div className='rounded-2xl bg-white p-2'>
 			<div className='mb-2 flex justify-between px-2 text-sm'>
 				<div className='text-primary-grey'>{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}</div>
-				{value && <Button onClick={() => onChange(null)}>Reset</Button>}
+				{withReset && value && <Button onClick={() => onChange(null)}>Reset</Button>}
 			</div>
 			<DayPicker
 				mode='single'

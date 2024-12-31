@@ -9,10 +9,11 @@ type DatePickerProps = {
 	onChange: (value: Date | null) => void;
 	children: ReactNode;
 	title: ReactNode;
+	withReset?: boolean;
 };
 
 export function DatePicker(props: DatePickerProps) {
-	const {value, onChange, children, minDate, title} = props;
+	const {value, onChange, children, minDate, title, withReset} = props;
 
 	const [localValue, setLocalValue] = useState(value);
 
@@ -59,7 +60,7 @@ export function DatePicker(props: DatePickerProps) {
 				<div className='mb-4 text-center text-xl font-medium'>{title}</div>
 
 				<div className='flex w-full justify-center'>
-					<DateField value={localValue} onChange={setLocalValue} minDate={minDate} />
+					<DateField value={localValue} onChange={setLocalValue} minDate={minDate} withReset={withReset} />
 				</div>
 
 				<Button

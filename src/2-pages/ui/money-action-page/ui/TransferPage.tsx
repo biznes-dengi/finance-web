@@ -6,7 +6,7 @@ import {
 	AmountFieldOption,
 	Button,
 	ButtonType,
-	EditButtonField,
+	DatePicker,
 	Icon,
 	PageHeader,
 	StatusPopup,
@@ -139,20 +139,14 @@ export function TransferPage(props: TransferPageProps) {
 
 				<div className='mt-4 flex justify-between px-4 text-sm'>
 					<div className='font-medium text-primary-grey'>{APP_TEXT.transactionDate}</div>
-					<EditButtonField<Date | undefined>
-						type='date'
-						title={APP_TEXT.transactionDate}
-						initialValue={undefined}
+					<DatePicker
+						onChange={(value) => (value ? setDate(value) : undefined)}
 						value={date}
-						onChange={(value) => {
-							if (!value) return;
-							setDate(value);
-						}}
-						isChanged={!new DateService(new DateService().value).isEqualTo(date)}
-						isNotEdit
+						title={APP_TEXT.transactionDate}
+						withReset={false}
 					>
 						{new DateService(date).getLocalDateString()}
-					</EditButtonField>
+					</DatePicker>
 				</div>
 			</div>
 
