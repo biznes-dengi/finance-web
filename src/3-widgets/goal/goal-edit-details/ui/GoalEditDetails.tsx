@@ -159,6 +159,7 @@ export function GoalEditDetails() {
 							onChange={setDeadline}
 							isChanged={isDeadlineChanged}
 							icon={!goalDetails?.deadline ? 'add' : undefined}
+							minDate={new DateService().getTomorrowDate()}
 							{...editButtonCommonProps}
 						>
 							{goalDetails?.deadline

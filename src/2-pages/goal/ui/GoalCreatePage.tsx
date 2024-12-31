@@ -121,6 +121,7 @@ export function GoalCreatePage() {
 								onChange={setDeadline}
 								isChanged={!isUndefined(deadline)}
 								icon={!deadline ? 'add' : undefined}
+								minDate={new DateService().getTomorrowDate()}
 								isNotEdit
 							>
 								{deadline ? new DateService(deadline).getLocalDateString() : APP_TEXT.addDeadline}

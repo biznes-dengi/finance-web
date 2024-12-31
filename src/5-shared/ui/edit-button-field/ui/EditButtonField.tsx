@@ -33,6 +33,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 		maxLength,
 
 		isNotEdit,
+		minDate,
 	} = props;
 
 	const {
@@ -89,7 +90,11 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 
 				{type === 'date' && (
 					<div className='flex w-full justify-center'>
-						<DateField value={value as Date | undefined} onChange={(date) => onChange(date as Value)} />
+						<DateField
+							value={value as Date | undefined}
+							onChange={(date) => onChange(date as Value)}
+							minDate={minDate}
+						/>
 					</div>
 				)}
 

@@ -39,14 +39,12 @@ const buttonVariants = cva(
 // Когда меняем на новую дату ставится дефолтное время. Продумать логику.
 
 export function DateField(props: DateFieldProps) {
-	const {value, onChange} = props;
+	const {value, onChange, minDate} = props;
 
 	return (
 		<div className='rounded-2xl bg-white p-2'>
 			<div className='mb-2 flex justify-between px-2 text-sm'>
-				<div className='text-primary-grey'>
-					{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}
-				</div>
+				<div className='text-primary-grey'>{value ? new DateService(value).getLocalDateString() : APP_TEXT.noDate}</div>
 				{value && <Button onClick={() => onChange(undefined)}>Reset</Button>}
 			</div>
 			<DayPicker
@@ -55,6 +53,7 @@ export function DateField(props: DateFieldProps) {
 				onSelect={onChange}
 				showOutsideDays={true}
 				className={'w-fit'}
+				fromDate={minDate}
 				classNames={{
 					months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
 					month: 'space-y-4',
@@ -91,6 +90,7 @@ export function DateField(props: DateFieldProps) {
 					IconLeft: ({...props}) => <ChevronLeft className='h-4 w-4' />,
 					IconRight: ({...props}) => <ChevronRight className='h-4 w-4' />,
 				}}
+				ISOWeek
 				{...props}
 			/>
 		</div>

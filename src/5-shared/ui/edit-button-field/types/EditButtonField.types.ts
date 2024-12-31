@@ -20,5 +20,6 @@ export type EditButtonFieldProps<Value> = {
 	handleUpdate?: () => void;
 	maxLength?: number;
 
+	minDate?: Date;
 	isNotEdit?: boolean;
 };

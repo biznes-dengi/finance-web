@@ -23,6 +23,10 @@ export class DateService {
 			.replace(' г.', '');
 	}
 
+	getTomorrowDate() {
+		return dayjs().add(1, 'day').toDate();
+	}
+
 	getPayloadDateFormat() {
 		return this.value.toISOString().split('.')[0]; // Убираем миллисекунды и таймзону;
 	}
