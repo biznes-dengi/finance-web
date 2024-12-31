@@ -1,9 +1,8 @@
 import {DayPicker} from 'react-day-picker';
-import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {cva} from 'class-variance-authority';
 import {DateFieldProps} from '../types/DateField.types.ts';
-import {cn, DateService} from '@shared/lib';
-import {Button} from '@shared/ui';
+import {cn, DateService, useResponsive} from '@shared/lib';
+import {Button, Icon} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 
 const buttonVariants = cva(
@@ -41,6 +40,8 @@ const buttonVariants = cva(
 export function DateField(props: DateFieldProps) {
 	const {value, onChange, minDate, withReset = true} = props;
 
+	const {isMobile} = useResponsive();
+
 	return (
 		<div className='rounded-2xl bg-white p-2'>
 			<div className='mb-2 flex justify-between px-2 text-sm'>
@@ -64,8 +65,8 @@ export function DateField(props: DateFieldProps) {
 						buttonVariants({variant: 'outline'}),
 						'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100',
 					),
-					nav_button_previous: 'absolute left-1',
-					nav_button_next: 'absolute right-1',
+					nav_button_previous: cn('absolute left-1', isMobile && 'mobile-calendar-button active:bg-light-grey'),
+					nav_button_next: cn('absolute right-1', isMobile && 'mobile-calendar-button active:bg-light-grey'),
 					table: 'w-full border-collapse space-y-1',
 					head_row: 'flex mb-2',
 					head_cell: 'text-neutral-500 rounded-md w-9 font-normal text-[0.8rem] dark:text-neutral-400',
@@ -87,8 +88,8 @@ export function DateField(props: DateFieldProps) {
 					day_hidden: 'invisible',
 				}}
 				components={{
-					IconLeft: ({...props}) => <ChevronLeft className='h-4 w-4' />,
-					IconRight: ({...props}) => <ChevronRight className='h-4 w-4' />,
+					IconLeft: ({...props}) => <Icon type='chevronLeft' className='size-3' />,
+					IconRight: ({...props}) => <Icon type='chevronRight' className='size-3' />,
 				}}
 				ISOWeek
 				{...props}

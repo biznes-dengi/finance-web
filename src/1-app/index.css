@@ -9,6 +9,10 @@
     @apply bg-light-grey;
 }
 
+.mobile-calendar-button:hover {
+    background: none !important;
+}
+
 /* Стили для кастомной полосы прокрутки */
 /*.custom-scrollbar::-webkit-scrollbar {*/
 /*    width: 4px;  !* Ширина вертикальной полосы прокрутки *!*/
