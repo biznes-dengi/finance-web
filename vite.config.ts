@@ -1,10 +1,14 @@
 import path from 'path';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
+import Checker from 'vite-plugin-checker';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react()],
+	plugins: [
+		react(),
+		Checker({typescript: true}), // Включаем TypeScript проверку
+	],
 	resolve: {
 		alias: {
 			'@app': path.resolve('src/1-app'),
