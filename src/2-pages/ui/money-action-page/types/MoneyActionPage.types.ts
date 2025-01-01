@@ -16,7 +16,7 @@ type TransferProps = {
 	};
 };
 
-type ItemData = {
+export type ItemData = {
 	id: number | string;
 	name: string;
 	balance: {
