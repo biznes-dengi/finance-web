@@ -1,4 +1,4 @@
-import {ItemData} from '@pages/ui/money-action-page/types/MoneyActionPage.types.ts';
+import {ItemData} from '../types/MoneyActionPage.types.ts';
 
 export class MoneyActionPageHelpers {
 	static mapItemDataToOption(itemData: ItemData) {
