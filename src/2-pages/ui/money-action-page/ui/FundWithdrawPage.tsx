@@ -3,7 +3,7 @@ import {type FundWithdrawPageProps} from '../types/MoneyActionPage.types.ts';
 import {MoneyActionPageHelpers} from '../lib/MoneyActionPage.helpers.ts';
 import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
-import {cn, DateService, isNumber, TextHelpers, useResponsive} from '@shared/lib';
+import {cn, DateService, TextHelpers, useResponsive} from '@shared/lib';
 
 export function FundWithdrawPage(props: FundWithdrawPageProps) {
 	const {
@@ -51,7 +51,7 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 	}
 
 	const showWithdrawValidation =
-		actionType === 'withdraw' && !!activeOption && isNumber(amount) && Number(amount) > Number(activeOption.amount);
+		actionType === 'withdraw' && !!activeOption && !!amount.length && Number(amount) > Number(activeOption.amount);
 
 	return (
 		<>
@@ -85,7 +85,12 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 			</div>
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
-				<Button type={ButtonType.main} onClick={handleActionClick} disabled={!amount} isLoading={isActionLoading}>
+				<Button
+					type={ButtonType.main}
+					onClick={handleActionClick}
+					disabled={!amount || showWithdrawValidation}
+					isLoading={isActionLoading}
+				>
 					{APP_TEXT[actionType]}
 				</Button>
 			</div>
