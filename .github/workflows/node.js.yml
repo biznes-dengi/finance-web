@@ -23,4 +23,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy with scp
-        run: scp -r ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/finance-app-master/finance-web/
+        run: scp -r ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/finance-app-master/finance-web/web/
