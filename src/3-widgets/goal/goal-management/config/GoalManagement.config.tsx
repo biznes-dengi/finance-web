@@ -3,7 +3,7 @@ import {Icon, type ButtonConfig, ButtonType} from '@shared/ui';
 
 export const buttonConfigs = [
 	{
-		name: APP_TEXT.create,
+		name: APP_TEXT.create + ' goal',
 		type: ButtonType.icon,
 		icon: <Icon type='createGoal' />,
 		onClick: ({navigate}) => navigate(APP_PATH.createGoal),
