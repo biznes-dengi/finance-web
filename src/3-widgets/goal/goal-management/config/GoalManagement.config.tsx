@@ -9,7 +9,7 @@ export const buttonConfigs = [
 		onClick: ({navigate}) => navigate(APP_PATH.createGoal),
 	},
 	{
-		name: APP_TEXT.fund,
+		name: 'Add money',
 		type: ButtonType.icon,
 		icon: <Icon type='fund' />,
 		onClick: ({navigate}) => navigate(APP_PATH.goalFund),
