@@ -2,24 +2,50 @@ name: deploy
 on:
   pull_request:
       branches: [ "master" ]
+      
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v4
 
       - run: npm update
       - run: npm run build
 
+      - name: Upload Build Folder as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
+
+          
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
 
+      - name: mkdir
+        run: mkdir dist
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Verify Renamed Folder
+        run: |
+          ls -la /home/runner/work/web/web/dist/
+
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy with scp
-        run: scp -r ./dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/finance-app-master/finance-web/web/
+      - name: Deploy with rsync
+        run: scp -r /home/runner/work/web/web/dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/finance-app-master/finance-web/web/
