@@ -121,17 +121,6 @@ export function Button(props: Props) {
 	}
 
 	if (type === ButtonType.icon) {
-		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
-
-		if (isLoading) {
-			return (
-				<div className='flex flex-col items-center gap-y-3'>
-					<PreloadSkeleton isCircular className='size-11' />
-					<PreloadSkeleton className='h-[15.5px] w-12' />
-				</div>
-			);
-		}
-
 		if (isOnlyIcon) {
 			return (
 				<button {...buttonProps} className={gcn('flex flex-col items-center')}>
@@ -140,8 +129,19 @@ export function Button(props: Props) {
 			);
 		}
 
+		if (isLoading) {
+			return (
+				<div className='flex w-[68px] flex-col items-center gap-y-3'>
+					<PreloadSkeleton isCircular className='size-11' />
+					<PreloadSkeleton className='h-[15.5px] w-12' />
+				</div>
+			);
+		}
+
+		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
+
 		return (
-			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
+			<button {...buttonProps} className={gcn('flex w-[68px] flex-col items-center')}>
 				{icon && (
 					<div
 						className={cn(
@@ -149,11 +149,11 @@ export function Button(props: Props) {
 							disabled ? 'bg-secondary-violet/50 text-primary-violet/50' : 'bg-secondary-violet text-primary-violet',
 						)}
 					>
-						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-4')}
+						{styleElement(icon, 'size-4')}
 					</div>
 				)}
 				{children && (
-					<div className={cn('mt-2 text-[13px]', disabled ? 'text-primary-violet/50' : 'text-primary-violet')}>
+					<div className={cn('mt-2 text-xs', disabled ? 'text-primary-violet/50' : 'text-primary-violet')}>
 						{children}
 					</div>
 				)}

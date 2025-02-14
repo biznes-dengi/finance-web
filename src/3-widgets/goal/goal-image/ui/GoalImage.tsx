@@ -32,7 +32,7 @@ export function GoalImage() {
 				</LoadingWrapper>
 			</div>
 
-			<div className='flex justify-between px-4 py-2'>
+			<div className='flex justify-between p-2'>
 				{getButtonConfigs(id).map(({name, ...restButtonConfig}, index) => (
 					<Button
 						key={index}

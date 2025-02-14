@@ -3,13 +3,13 @@ import {Icon, type ButtonConfig, ButtonType} from '@shared/ui';
 
 export const buttonConfigs = [
 	{
-		name: APP_TEXT.create + ' goal',
+		name: APP_TEXT.create + ' ' + APP_TEXT.goal.toLowerCase(),
 		type: ButtonType.icon,
 		icon: <Icon type='createGoal' />,
 		onClick: ({navigate}) => navigate(APP_PATH.createGoal),
 	},
 	{
-		name: 'Add money',
+		name: APP_TEXT.fund,
 		type: ButtonType.icon,
 		icon: <Icon type='fund' />,
 		onClick: ({navigate}) => navigate(APP_PATH.goalFund),
