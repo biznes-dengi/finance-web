@@ -58,6 +58,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 			</Button>
 
 			<Popup
+				title={isNotEdit ? title : APP_TEXT.edit + ' ' + title.toLowerCase()}
 				isOpen={isOpen}
 				setIsOpen={(open) => {
 					setIsOpen(open);
@@ -67,10 +68,6 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 					}
 				}}
 			>
-				<div className='mb-4 text-center text-xl font-medium'>
-					{isNotEdit ? title : APP_TEXT.edit + ' ' + title.toLowerCase()}
-				</div>
-
 				{type === 'text' && (
 					<TextField
 						value={value as string}
