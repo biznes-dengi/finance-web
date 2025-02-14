@@ -76,16 +76,16 @@ export function GoalProgress() {
 
 			<Popup {...popupProps}>
 				<div className='flex flex-col items-center justify-center'>
-					<Icon type='congratulations' className='mb-4 mt-2 text-3xl' />
+					<Icon type='congratulations' className='my-2 text-3xl' />
 
-					<div className='mb-4 text-center text-lg font-medium'>{APP_TEXT.congratulations}</div>
+					<div className='mb-3 text-center text-lg font-medium'>{APP_TEXT.congratulations}</div>
 
 					<div className='mb-2'>
-						Там, где другие сдавались, вы проявили настойчивость и теперь{' '}
-						<span className='font-medium text-primary-violet'>вы можете осуществить свою мечту</span>.
+						Там, где другие сдавались, Вы проявили настойчивость и теперь{' '}
+						<span className='font-medium text-primary-violet'>Вы можете осуществить свою мечту</span>.
 					</div>
 					<div>
-						Мы гордимся вами, желаем дальнейших успехов и пусть впереди будет еще больше целей, которые вы легко
+						Мы гордимся Вами, желаем дальнейших успехов и пусть впереди будет еще больше целей, которые Вы легко
 						достигнете!
 					</div>
 

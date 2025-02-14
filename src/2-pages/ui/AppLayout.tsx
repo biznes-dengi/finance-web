@@ -63,7 +63,7 @@ export function AppLayout() {
 
 			<div role='app-content' className='w-full'>
 				<header role='app-header' className='mb-4'>
-					<Button onClick={() => logout()} type={ButtonType.icon} icon={<Icon type='user' />} />
+					<Button onClick={() => logout()} type={ButtonType.icon} icon={<Icon type='user' />} className='w-fit' />
 				</header>
 
 				<Outlet />
