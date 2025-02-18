@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Копирование в буфер обмена</title>
+  <style>
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Копирование в буфер обмена</h2>
+  
+  <button onclick="copyToClipboard('Mikita')">Mikita</button>
+  <button onclick="copyToClipboard('Yankouski')">Yankouski</button>
+  <button onclick="copyToClipboard('Mikita Yankouski')">Mikita Yankouski</button>
+  <button onclick="copyToClipboard('nikitayankouski@gmail.com')">gmail.com</button>
+  <button onclick="copyToClipboard('+48533464079')">phone number</button>
+  <button onclick="copyToClipboard('https://www.linkedin.com/in/mikita-yankouski-8aab781b2/')">LinkiedIn</button>
+
+  <p id="status" style="color: green; font-weight: bold;"></p>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          document.getElementById('status').innerText = 'Текст скопирован: ' + text;
+          setTimeout(() => {
+            document.getElementById('status').innerText = '';
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Ошибка копирования: ', err);
+          document.getElementById('status').innerText = 'Ошибка копирования!';
+        });
+    }
+  </script>
+
+</body>
+</html>
