@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {AuthLayout} from './AuthLayout.tsx';
 import {AuthModel} from '@entities/auth';
-import {Button, ButtonType, PageHeader, StatusPopup, TextField} from '@shared/ui';
+import {Button, PageHeader, StatusPopup, TextField} from '@shared/ui';
 import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 
@@ -92,7 +92,7 @@ export function SignupPage() {
 
 				<div className='my-6 flex flex-col items-center gap-4'>
 					<Button
-						type={ButtonType.main}
+						type='main'
 						onClick={handleSignup}
 						disabled={!email || !password}
 						className={cn(!displayBoxShadow && 'shadow-none')}

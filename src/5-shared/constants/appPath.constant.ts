@@ -23,5 +23,6 @@ export const APP_PATH = {
 
 	portfolio: {
 		list: '/portfolio-list',
+		create: '/portfolio-create',
 	},
 };

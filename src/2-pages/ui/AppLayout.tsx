@@ -1,6 +1,6 @@
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {cn} from '@shared/lib';
-import {Button, ButtonType, Icon, Item, Popup, usePopupState} from '@shared/ui';
+import {Button, ButtonType, Icon, Item, Popup, usePopupState, PopupHelpers, Card} from '@shared/ui';
 import {AuthModel} from '@entities/auth';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 
@@ -27,20 +27,31 @@ export function AppLayout() {
 
 export function AppHeader() {
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	const {logout} = AuthModel.useLogout();
 	const {authUser} = AuthModel.useAuthUser();
 
 	const {popupProps: userPopupProps, openPopup: openUserPopup} = usePopupState();
-	const {popupProps: portfolioPopupProps, openPopup: openPortfolioPopup} = usePopupState();
+	const {
+		popupProps: portfolioPopupProps,
+		openPopup: openPortfolioPopup,
+		closePopup: closePortfolioPopup,
+	} = usePopupState();
+
+	function handleCreatePortfolioClick() {
+		closePortfolioPopup();
+		PopupHelpers.runAfterPopupClosed(() => navigate(APP_PATH.portfolio.create));
+	}
 
 	return (
 		<header role='app-header' className='mb-4 flex items-center justify-between'>
-			<Button onClick={openUserPopup} type={ButtonType.icon} icon={<Icon type='user' />} className='w-fit' />
+			<Button enumType={ButtonType.icon} onClick={openUserPopup} icon={<Icon type='user' />} className='w-fit' />
 
 			{location.pathname === APP_PATH.portfolio.list && (
-				<div className='text-xl font-medium' onClick={openPortfolioPopup}>
-					Portfolio 1
+				<div className='flex items-center gap-2 text-xl font-medium' onClick={openPortfolioPopup}>
+					<div>Portfolio 1</div>
+					<Icon type='selectChevron' className='size-3 flex-shrink-0' />
 				</div>
 			)}
 
@@ -58,10 +69,13 @@ export function AppHeader() {
 			</Popup>
 
 			<Popup {...portfolioPopupProps}>
-				<div>Portfolio 1</div>
-				<div>Portfolio 2</div>
-				<div>Portfolio 3</div>
-				<div>Create portfolio</div>
+				<div className='mb-3'>
+					<Card titleInCard={'Portfolios'} rightTitleInCard={'create edit'}>
+						<Item name={'Portfolio 1'} />
+						<Item name={'Portfolio 2'} />
+						<Item name={'Portfolio 3'} />
+					</Card>
+				</div>
 			</Popup>
 		</header>
 	);

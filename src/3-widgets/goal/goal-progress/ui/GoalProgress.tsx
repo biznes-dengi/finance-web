@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {Button, ButtonType, Card, Icon, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
+import {Button, Card, Icon, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
 import {cn, DateService, TextHelpers} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
@@ -89,7 +89,7 @@ export function GoalProgress() {
 						достигнете!
 					</div>
 
-					<Button className='mt-4' type={ButtonType.main} onClick={closePopup}>
+					<Button className='mt-4' type='main' onClick={closePopup}>
 						{APP_TEXT.kaif}
 					</Button>
 				</div>

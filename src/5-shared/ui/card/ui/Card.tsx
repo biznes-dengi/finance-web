@@ -3,7 +3,7 @@ import {cn} from '@shared/lib';
 import {LoadingWrapper} from '@shared/ui';
 
 export function Card(props: CardProps) {
-	const {title, rightTitle, titleInCard, children, isLoading} = props;
+	const {title, rightTitle, titleInCard, rightTitleInCard, children, isLoading} = props;
 
 	return (
 		<div>
@@ -19,13 +19,17 @@ export function Card(props: CardProps) {
 			)}
 
 			<div role='card' className='w-full rounded-2xl bg-white'>
-				{titleInCard && (
-					<div className='px-4 py-3 text-sm font-medium text-primary-grey'>
-						<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
-							{titleInCard}
-						</LoadingWrapper>
-					</div>
-				)}
+				<div className='flex items-center justify-between px-4 py-3 text-sm font-medium text-primary-grey'>
+					{titleInCard && (
+						<div>
+							<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
+								{titleInCard}
+							</LoadingWrapper>
+						</div>
+					)}
+
+					{rightTitleInCard}
+				</div>
 
 				{children}
 			</div>

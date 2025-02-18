@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {PageHeaderProps} from '../types/PageHeader.types.ts';
-import {Button, ButtonType, Icon} from '@shared/ui';
+import {Button, Icon} from '@shared/ui';
 import {cn, isNumber} from '@shared/lib';
 
 /** navigate(-1) не сработает, если страницу открыли в новой вкладке -> history.length = 0 */
@@ -46,14 +46,13 @@ export function PageHeader(props: PageHeaderProps) {
 
 			{withBackButton && (
 				<Button
-					type={ButtonType.icon}
+					type='icon'
 					icon={
 						<div className='flex items-center justify-center'>
 							<Icon type='backButton' className='size-5' />
 						</div>
 					}
 					onClick={onBackButtonClick}
-					isOnlyIcon
 					className={cn('ml-2 p-2', withNoSpace && 'm-0 pl-0')}
 				/>
 			)}

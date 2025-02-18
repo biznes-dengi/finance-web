@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {type FundWithdrawPageProps} from '../types/MoneyActionPage.types.ts';
 import {MoneyActionPageHelpers} from '../lib/MoneyActionPage.helpers.ts';
-import {AmountField, type AmountFieldOption, Button, ButtonType, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
+import {AmountField, type AmountFieldOption, Button, DatePicker, PageHeader, StatusPopup} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, DateService, TextHelpers, useResponsive} from '@shared/lib';
 
@@ -86,7 +86,7 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					type={ButtonType.main}
+					type='main'
 					onClick={handleActionClick}
 					disabled={!amount || showWithdrawValidation}
 					isLoading={isActionLoading}

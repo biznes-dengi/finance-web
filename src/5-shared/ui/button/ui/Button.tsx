@@ -13,7 +13,8 @@ export enum ButtonType {
 
 export interface CommonButtonSettings {
 	icon?: ReactElement;
-	type?: ButtonType;
+	type?: 'main' | 'text' | 'circle' | 'icon';
+	enumType?: ButtonType;
 	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
 }
 interface Props extends CommonButtonSettings {
@@ -21,7 +22,6 @@ interface Props extends CommonButtonSettings {
 	className?: string;
 	disabled?: boolean;
 	isLoading?: boolean;
-	isOnlyIcon?: boolean;
 	isSecondary?: boolean;
 	disableDefaultEnterClick?: boolean;
 }
@@ -30,15 +30,15 @@ interface Props extends CommonButtonSettings {
 
 export function Button(props: Props) {
 	const {
+		type = 'text',
 		children,
 		className,
 		onClick,
-		type = ButtonType.text,
+		enumType = ButtonType.text,
 		isSecondary,
 		icon,
 		disabled,
 		isLoading,
-		isOnlyIcon,
 		disableDefaultEnterClick,
 	} = props;
 
@@ -53,7 +53,7 @@ export function Button(props: Props) {
 			onClick({navigate});
 			setDisplayBoxShadow(true);
 		},
-		disabled: disabled || disableDefaultEnterClick || type !== ButtonType.main,
+		disabled: disabled || disableDefaultEnterClick || enumType !== ButtonType.main,
 		deps: [],
 	});
 
@@ -74,7 +74,7 @@ export function Button(props: Props) {
 		disabled,
 	};
 
-	if (type === ButtonType.main) {
+	if (enumType === ButtonType.main) {
 		return (
 			<button
 				{...buttonProps}
@@ -108,27 +108,7 @@ export function Button(props: Props) {
 		);
 	}
 
-	if (type === ButtonType.text) {
-		return (
-			<button
-				{...buttonProps}
-				className={gcn('w-fit text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
-			>
-				{icon && styleElement(icon, 'size-3')}
-				<span>{children}</span>
-			</button>
-		);
-	}
-
-	if (type === ButtonType.icon) {
-		if (isOnlyIcon) {
-			return (
-				<button {...buttonProps} className={gcn('flex flex-col items-center')}>
-					{icon}
-				</button>
-			);
-		}
-
+	if (enumType === ButtonType.icon || type === 'circle') {
 		if (isLoading) {
 			return (
 				<div className='flex w-[68px] flex-col items-center gap-y-3'>
@@ -157,6 +137,26 @@ export function Button(props: Props) {
 						{children}
 					</div>
 				)}
+			</button>
+		);
+	}
+
+	if (type === 'icon' && icon) {
+		return (
+			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
+				{icon}
+			</button>
+		);
+	}
+
+	if (enumType === ButtonType.text || type === 'text') {
+		return (
+			<button
+				{...buttonProps}
+				className={gcn('w-fit text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
+			>
+				{icon && styleElement(icon, 'size-3')}
+				<span>{children}</span>
 			</button>
 		);
 	}

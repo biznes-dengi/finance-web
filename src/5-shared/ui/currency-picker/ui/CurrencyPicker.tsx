@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {cn} from '@shared/lib';
-import {Button, ButtonType, Icon, Popup, usePopupState} from '@shared/ui';
+import {Button, Icon, Popup, usePopupState} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 
 type Props = {
@@ -53,7 +53,7 @@ export function CurrencyPicker(props: Props) {
 							/>
 						</label>
 					</div>
-					<Button onClick={handleSaveClick} type={ButtonType.main}>
+					<Button onClick={handleSaveClick} type='main'>
 						Change currency rate
 					</Button>
 				</div>

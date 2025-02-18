@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {DeleteItemProps} from '../types/DeleteItem.types.ts';
-import {Button, ButtonType, Item, Popup, StatusPopup, usePopupState} from '@shared/ui';
+import {Button, Item, Popup, StatusPopup, usePopupState} from '@shared/ui';
 import {cn} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
@@ -23,10 +23,10 @@ export function DeleteItem(props: DeleteItemProps) {
 			<Popup {...popupProps} title={title}>
 				<div className='text-center'>{confirmationText}</div>
 				<div className='mt-6 flex gap-2'>
-					<Button type={ButtonType.main} onClick={closePopup} isSecondary>
+					<Button type='main' onClick={closePopup} isSecondary>
 						{APP_TEXT.cancel}
 					</Button>
-					<Button type={ButtonType.main} onClick={handleDelete} isLoading={isLoading}>
+					<Button type='main' onClick={handleDelete} isLoading={isLoading}>
 						{APP_TEXT.confirm}
 					</Button>
 				</div>

@@ -2,16 +2,7 @@ import {useState} from 'react';
 import {GoalImageField} from '@widgets/goal';
 import {goalNameMaxLength} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
-import {
-	AmountField,
-	Button,
-	ButtonType,
-	PageHeader,
-	SelectWithSearch,
-	StatusPopup,
-	TextField,
-	DatePicker,
-} from '@shared/ui';
+import {AmountField, Button, DatePicker, PageHeader, SelectWithSearch, StatusPopup, TextField} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_OPTIONS} from '@shared/constants';
 import {cn, DateService, useResponsive} from '@shared/lib';
 
@@ -74,7 +65,7 @@ export function GoalCreatePage() {
 							<div className={cn('flex flex-wrap gap-2 p-4')}>
 								{hints.map((hint, index) => (
 									<Button
-										type={ButtonType.main}
+										type='main'
 										key={hint + index}
 										className='w-fit px-2.5 py-1.5 text-sm'
 										onClick={() => setName(hint)}
@@ -128,7 +119,7 @@ export function GoalCreatePage() {
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					type={ButtonType.main}
+					type='main'
 					onClick={activeStepIndex === 2 ? handleCreateClick : () => setActiveStepIndex(activeStepIndex + 1)}
 					disabled={(activeStepIndex === 0 && !name) || (activeStepIndex === 2 && !targetAmount)}
 					isLoading={isCreateGoalLoading}

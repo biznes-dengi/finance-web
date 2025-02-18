@@ -1,28 +1,28 @@
 import {APP_PATH, APP_TEXT} from '@shared/constants';
-import {Icon, type ButtonConfig, ButtonType} from '@shared/ui';
+import {Icon, type ButtonConfig} from '@shared/ui';
 
 export const buttonConfigs = [
 	{
 		name: APP_TEXT.create + ' ' + APP_TEXT.goal.toLowerCase(),
-		type: ButtonType.icon,
+		type: 'circle',
 		icon: <Icon type='createGoal' />,
 		onClick: ({navigate}) => navigate(APP_PATH.goal.create),
 	},
 	{
 		name: APP_TEXT.fund,
-		type: ButtonType.icon,
+		type: 'circle',
 		icon: <Icon type='fund' />,
 		onClick: ({navigate}) => navigate(APP_PATH.goal.fund),
 	},
 	{
 		name: APP_TEXT.withdraw,
-		type: ButtonType.icon,
+		type: 'circle',
 		icon: <Icon type='withdraw' />,
 		onClick: ({navigate}) => navigate(APP_PATH.goal.withdraw),
 	},
 	{
 		name: APP_TEXT.transfer,
-		type: ButtonType.icon,
+		type: 'circle',
 		icon: <Icon type='transfer' />,
 		onClick: ({navigate}) => navigate(APP_PATH.goal.transfer),
 	},

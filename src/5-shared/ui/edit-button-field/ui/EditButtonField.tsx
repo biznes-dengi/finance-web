@@ -1,16 +1,6 @@
 import {useEffect} from 'react';
 import {EditButtonFieldProps} from '../types/EditButtonField.types.ts';
-import {
-	AmountField,
-	Button,
-	ButtonType,
-	DateField,
-	Icon,
-	Popup,
-	SelectWithSearch,
-	TextField,
-	usePopupState,
-} from '@shared/ui';
+import {AmountField, Button, DateField, Icon, Popup, SelectWithSearch, TextField, usePopupState} from '@shared/ui';
 import {APP_TEXT, CURRENCY} from '@shared/constants';
 
 export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
@@ -101,7 +91,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 
 				<Button
 					className='mt-6'
-					type={ButtonType.main}
+					type='main'
 					onClick={isNotEdit ? closePopup : handleUpdate!}
 					isLoading={isLoading}
 					disabled={!isChanged || (isRequired && !value)}

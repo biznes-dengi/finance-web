@@ -60,6 +60,7 @@ export const APP_TEXT = {
 	achieved: 'Achieved',
 	overdue: 'Overdue',
 	portfolio: 'Portfolio',
+	createPortfolio: 'Create portfolio',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {
