@@ -10,7 +10,7 @@ import {
 	FaChevronRight,
 	FaPen,
 	FaPlus,
-	// FaUser,
+	FaUser,
 	FaXmark,
 	FaStar,
 	FaChevronLeft,
@@ -19,7 +19,8 @@ import {FaCamera, FaSignOutAlt} from 'react-icons/fa';
 import {cn} from '@shared/lib';
 
 export const ICON_MAP = {
-	user: FaSignOutAlt,
+	user: FaUser,
+	logout: FaSignOutAlt,
 
 	showPassword: EyeIcon,
 	hidePassword: EyeOffIcon,

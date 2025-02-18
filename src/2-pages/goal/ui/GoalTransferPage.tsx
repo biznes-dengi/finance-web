@@ -31,7 +31,7 @@ export function GoalTransferPage() {
 			isTransferError={isTransferGoalError}
 			successTextKey='transferGoalSuccess'
 			errorTextKey='transferGoalError'
-			backPath={APP_PATH.goalList}
+			backPath={APP_PATH.goal.list}
 		/>
 	);
 }

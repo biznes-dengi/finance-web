@@ -48,7 +48,7 @@ export function GoalCreatePage() {
 				activeStepIndex === 2 && APP_TEXT.enterTargetValue,
 			)}
 			handleBackButtonClick={activeStepIndex === 0 ? undefined : () => setActiveStepIndex(activeStepIndex - 1)}
-			backPath={APP_PATH.goalList}
+			backPath={APP_PATH.goal.list}
 			stepsCount={3}
 			activeStepIndex={activeStepIndex}
 		/>

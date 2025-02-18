@@ -44,6 +44,7 @@ export const APP_TEXT = {
 	password: 'Password',
 	welcome: 'Welcome',
 	logIn: 'Log in',
+	logOut: 'Log out',
 	signUp: 'Sign up',
 	finansy: 'Finansy',
 	createAccount: 'Create account',
@@ -58,6 +59,7 @@ export const APP_TEXT = {
 	active: 'Active',
 	achieved: 'Achieved',
 	overdue: 'Overdue',
+	portfolio: 'Portfolio',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

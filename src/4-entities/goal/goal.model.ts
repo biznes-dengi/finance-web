@@ -162,7 +162,7 @@ export class GoalModel {
 
 			onError: () => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(APP_PATH.goalList);
+					navigate(APP_PATH.goal.list);
 				});
 			},
 		});
@@ -224,7 +224,7 @@ export class GoalModel {
 			onSuccess: () => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: ['goal-items']});
-					navigate(APP_PATH.goalList);
+					navigate(APP_PATH.goal.list);
 				});
 			},
 		});
@@ -261,7 +261,7 @@ export class GoalModel {
 				}
 
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goal.list : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
@@ -298,7 +298,7 @@ export class GoalModel {
 				}
 
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goal.list : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
@@ -335,7 +335,7 @@ export class GoalModel {
 				}
 
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goal.list : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});

@@ -2,33 +2,26 @@ export const APP_PATH = {
 	root: '/',
 	home: '/goal-list',
 	pageNotFound: '/page-not-found',
-	goalList: '/goal-list',
-	goalFund: '/goal-fund',
-	goalWithdraw: '/goal-withdraw',
-	goalTransfer: '/goal-transfer',
-	createGoal: '/goal-create',
-	goalDetails: '/goal-details',
 	login: '/log-in',
 	signup: '/sign-up',
 
 	goal: {
-		getItemDetailsPath(id: any) {
-			return `${APP_PATH.goalDetails}/${id}`;
-		},
-		getItemTransactionsPath(id: any) {
-			return `${APP_PATH.goalDetails}/${id}/transactions`;
-		},
-		getItemDetailsFundPath(id: any) {
-			return `${APP_PATH.goalDetails}/${id}/fund`;
-		},
-		getItemDetailsWithdrawPath(id: any) {
-			return `${APP_PATH.goalDetails}/${id}/withdraw`;
-		},
-		getItemDetailsTransferPath(id: any) {
-			return `${APP_PATH.goalDetails}/${id}/transfer`;
-		},
-		getItemEditPath(id: any) {
-			return `${APP_PATH.goalDetails}/${id}/edit`;
-		},
+		list: '/goal-list',
+		fund: '/goal-fund',
+		withdraw: '/goal-withdraw',
+		transfer: '/goal-transfer',
+		create: '/goal-create',
+		details: '/goal-details',
+
+		getItemDetailsPath: (id: any) => `${APP_PATH.goal.details}/${id}`,
+		getItemTransactionsPath: (id: any) => `${APP_PATH.goal.details}/${id}/transactions`,
+		getItemDetailsFundPath: (id: any) => `${APP_PATH.goal.details}/${id}/fund`,
+		getItemDetailsWithdrawPath: (id: any) => `${APP_PATH.goal.details}/${id}/withdraw`,
+		getItemDetailsTransferPath: (id: any) => `${APP_PATH.goal.details}/${id}/transfer`,
+		getItemEditPath: (id: any) => `${APP_PATH.goal.details}/${id}/edit`,
+	},
+
+	portfolio: {
+		list: '/portfolio-list',
 	},
 };

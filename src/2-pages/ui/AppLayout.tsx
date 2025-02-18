@@ -1,7 +1,98 @@
-import {Outlet} from 'react-router-dom';
+import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {cn} from '@shared/lib';
-import {Button, ButtonType, Icon} from '@shared/ui';
+import {Button, ButtonType, Icon, Item, Popup, usePopupState} from '@shared/ui';
 import {AuthModel} from '@entities/auth';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
+
+export function AppLayout() {
+	const isDesktop = false;
+
+	return (
+		<div
+			role='list-page-layout'
+			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop ? 'flex justify-between px-6 py-8' : 'p-4')}
+		>
+			<AppHeader />
+
+			{isDesktop && <AppSidebar />}
+
+			<div role='app-content' className='w-full'>
+				<AppTabs />
+
+				<Outlet />
+			</div>
+		</div>
+	);
+}
+
+export function AppHeader() {
+	const location = useLocation();
+
+	const {logout} = AuthModel.useLogout();
+	const {authUser} = AuthModel.useAuthUser();
+
+	const {popupProps: userPopupProps, openPopup: openUserPopup} = usePopupState();
+	const {popupProps: portfolioPopupProps, openPopup: openPortfolioPopup} = usePopupState();
+
+	return (
+		<header role='app-header' className='mb-4 flex items-center justify-between'>
+			<Button onClick={openUserPopup} type={ButtonType.icon} icon={<Icon type='user' />} className='w-fit' />
+
+			{location.pathname === APP_PATH.portfolio.list && (
+				<div className='text-xl font-medium' onClick={openPortfolioPopup}>
+					Portfolio 1
+				</div>
+			)}
+
+			<div className='size-11' />
+
+			<Popup {...userPopupProps}>
+				<div className='mb-3 flex flex-col items-center gap-2'>
+					<div>
+						<Icon type='user' />
+					</div>
+					<div>{authUser?.email}</div>
+				</div>
+
+				<Item image={<Icon type='logout' />} name={APP_TEXT.logOut} onClick={() => logout()} />
+			</Popup>
+
+			<Popup {...portfolioPopupProps}>
+				<div>Portfolio 1</div>
+				<div>Portfolio 2</div>
+				<div>Portfolio 3</div>
+				<div>Create portfolio</div>
+			</Popup>
+		</header>
+	);
+}
+
+const tabConfigs: {name: string; path: string}[] = [
+	{name: APP_TEXT.goal, path: APP_PATH.goal.list},
+	{name: APP_TEXT.portfolio, path: APP_PATH.portfolio.list},
+];
+
+export function AppTabs() {
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	return (
+		<div className='my-4 flex gap-2'>
+			{tabConfigs.map(({name, path}, index) => (
+				<div
+					key={index}
+					className={cn(
+						'cursor-pointer px-4 py-2 text-sm',
+						location.pathname === path ? 'rounded-3xl bg-white' : 'text-primary-grey',
+					)}
+					onClick={() => navigate(path)}
+				>
+					{name}
+				</div>
+			))}
+		</div>
+	);
+}
 
 const sidebarConfigs = [
 	{
@@ -26,48 +117,31 @@ const sidebarConfigs = [
 	},
 ];
 
-export function AppLayout() {
-	const {logout} = AuthModel.useLogout();
-
-	const isDesktop = false;
-
+export function AppSidebar() {
 	return (
-		<div
-			role='app-layout'
-			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop ? 'flex justify-between px-6 py-8' : 'p-4')}
-		>
-			{isDesktop && (
-				<div role='app-navbar' className='w-52'>
-					<div className='mb-12 flex pl-4 text-2xl font-bold'>
-						<Icon type='user' />
-					</div>
-					{/* APP LOGO */}
-					<nav>
-						{sidebarConfigs.map(({label, path, icon}, index) => (
-							<div
-								className={cn(
-									'flex cursor-pointer rounded-2xl px-4 py-3',
-									index === 0 && 'bg-white',
-									isDesktop && 'hover:bg-secondary-grey',
-								)}
-								key={label + path}
-								onClick={() => alert(label + ' module')}
-							>
-								<div className={cn('mr-4')}>{icon}</div>
-								<div className={cn('font-medium text-primary-grey', index === 0 && 'text-primary-violet')}>{label}</div>
-							</div>
-						))}
-					</nav>
-				</div>
-			)}
-
-			<div role='app-content' className='w-full'>
-				<header role='app-header' className='mb-4'>
-					<Button onClick={() => logout()} type={ButtonType.icon} icon={<Icon type='user' />} className='w-fit' />
-				</header>
-
-				<Outlet />
+		<div role='app-navbar' className='w-52'>
+			<div className='mb-12 flex pl-4 text-2xl font-bold'>
+				<Icon type='user' />
 			</div>
+
+			{/* APP LOGO */}
+			<div>Finansy</div>
+
+			<nav>
+				{sidebarConfigs.map(({label, path, icon}, index) => (
+					<div
+						className={cn(
+							'flex cursor-pointer rounded-2xl px-4 py-3 hover:bg-secondary-grey',
+							index === 0 && 'bg-white',
+						)}
+						key={label + path}
+						onClick={() => alert(label + ' module')}
+					>
+						<div className={cn('mr-4')}>{icon}</div>
+						<div className={cn('font-medium text-primary-grey', index === 0 && 'text-primary-violet')}>{label}</div>
+					</div>
+				))}
+			</nav>
 		</div>
 	);
 }

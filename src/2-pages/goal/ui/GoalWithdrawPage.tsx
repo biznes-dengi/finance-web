@@ -22,7 +22,7 @@ export function GoalWithdrawPage() {
 			isActionError={isWithdrawGoalError}
 			successTextKey='withdrawGoalSuccess'
 			errorTextKey='withdrawGoalError'
-			backPath={APP_PATH.goalList}
+			backPath={APP_PATH.goal.list}
 		/>
 	);
 }

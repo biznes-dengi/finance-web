@@ -20,7 +20,7 @@ export function GoalFundPage() {
 			isActionError={isFundGoalError}
 			successTextKey='fundGoalSuccess'
 			errorTextKey='fundGoalError'
-			backPath={APP_PATH.goalList}
+			backPath={APP_PATH.goal.list}
 		/>
 	);
 }

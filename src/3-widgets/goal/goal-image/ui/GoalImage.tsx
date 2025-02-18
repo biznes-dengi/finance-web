@@ -15,7 +15,7 @@ export function GoalImage() {
 
 	return (
 		<div className='flex h-[310px] flex-col bg-secondary-grey'>
-			<PageHeader backPath={APP_PATH.goalList} className='flex-grow' />
+			<PageHeader backPath={APP_PATH.goal.list} className='flex-grow' />
 
 			<div className='flex flex-col gap-2 px-4 py-2'>
 				<LoadingWrapper isLoading={isLoading} className='mb-5 h-6 w-14'>
