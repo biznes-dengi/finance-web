@@ -9,7 +9,7 @@ export function GoalDetailsTransferPage() {
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 	const {goals, isGoalsLoading, fetchNextGoalsPage, hasNextGoalsPage} = GoalModel.useItems();
 
-	const {transferGoal, isTransferGoalLoading, isTransferGoalSuccess, isTransferGoalError} = GoalModel.useTransfer();
+	const {transferGoal, isTransferGoalPending, isTransferGoalSuccess, isTransferGoalError} = GoalModel.useTransfer();
 
 	return (
 		<TransferPage
@@ -29,7 +29,7 @@ export function GoalDetailsTransferPage() {
 					},
 				});
 			}}
-			isTransferLoading={isTransferGoalLoading}
+			isTransferPending={isTransferGoalPending}
 			isTransferSuccess={isTransferGoalSuccess}
 			isTransferError={isTransferGoalError}
 			successTextKey='transferGoalSuccess'

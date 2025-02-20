@@ -5,7 +5,7 @@ import {cn} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
 export function DeleteItem(props: DeleteItemProps) {
-	const {title, confirmationText, isLoading, handleDelete, isSuccess, isError, children} = props;
+	const {title, confirmationText, isPending, handleDelete, isSuccess, isError, children} = props;
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
@@ -23,10 +23,10 @@ export function DeleteItem(props: DeleteItemProps) {
 			<Popup {...popupProps} title={title}>
 				<div className='text-center'>{confirmationText}</div>
 				<div className='mt-6 flex gap-2'>
-					<Button type='main' onClick={closePopup} isSecondary>
+					<Button type='secondary' onClick={closePopup} secondaryWithPrimaryStyles>
 						{APP_TEXT.cancel}
 					</Button>
-					<Button type='main' onClick={handleDelete} isLoading={isLoading}>
+					<Button type='primary' onClick={handleDelete} isPending={isPending}>
 						{APP_TEXT.confirm}
 					</Button>
 				</div>

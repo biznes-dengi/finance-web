@@ -92,12 +92,12 @@ export function LoginPage() {
 
 			<div className='my-6 flex flex-col items-center gap-4'>
 				<Button
-					type='main'
+					type='primary'
 					onClick={handleLogin}
 					disabled={!email || !password}
 					className={cn(!displayBoxShadow && 'shadow-none')}
-					isLoading={isLoginPending}
-					disableDefaultEnterClick
+					isPending={isLoginPending}
+					disabledPrimaryButtonEnterClick
 				>
 					{APP_TEXT.logIn}
 				</Button>

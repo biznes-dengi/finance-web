@@ -7,7 +7,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 	const {
 		type,
 		icon = 'edit',
-		isLoading,
+		isPending,
 		isSuccess,
 		isError,
 		isChanged,
@@ -91,9 +91,9 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 
 				<Button
 					className='mt-6'
-					type='main'
+					type='primary'
 					onClick={isNotEdit ? closePopup : handleUpdate!}
-					isLoading={isLoading}
+					isPending={isPending}
 					disabled={!isChanged || (isRequired && !value)}
 				>
 					{APP_TEXT.save}

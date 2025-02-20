@@ -16,7 +16,7 @@ export function GoalCreatePage() {
 	const [targetAmount, setTargetAmount] = useState('');
 	const [deadline, setDeadline] = useState<Date | null>(null);
 
-	const {createGoal, isCreateGoalLoading, isCreateGoalSuccess, isCreateGoalError} = GoalModel.useCreateItem();
+	const {createGoal, isCreateGoalPending, isCreateGoalSuccess, isCreateGoalError} = GoalModel.useCreateItem();
 
 	const {isMobile} = useResponsive();
 
@@ -65,11 +65,10 @@ export function GoalCreatePage() {
 							<div className={cn('flex flex-wrap gap-2 p-4')}>
 								{hints.map((hint, index) => (
 									<Button
-										type='main'
+										type='secondary'
 										key={hint + index}
 										className='w-fit px-2.5 py-1.5 text-sm'
 										onClick={() => setName(hint)}
-										isSecondary
 									>
 										{hint}
 									</Button>
@@ -119,10 +118,10 @@ export function GoalCreatePage() {
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					type='main'
+					type='primary'
 					onClick={activeStepIndex === 2 ? handleCreateClick : () => setActiveStepIndex(activeStepIndex + 1)}
 					disabled={(activeStepIndex === 0 && !name) || (activeStepIndex === 2 && !targetAmount)}
-					isLoading={isCreateGoalLoading}
+					isPending={isCreateGoalPending}
 				>
 					{activeStepIndex === 2 ? APP_TEXT.create : APP_TEXT.continue}
 				</Button>

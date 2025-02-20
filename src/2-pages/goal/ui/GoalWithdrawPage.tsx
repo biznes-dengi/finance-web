@@ -5,7 +5,7 @@ import {APP_PATH} from '@shared/constants';
 export function GoalWithdrawPage() {
 	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems();
 
-	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw({
+	const {withdrawGoal, isWithdrawGoalPending, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw({
 		isFromListPage: true,
 	});
 
@@ -17,7 +17,7 @@ export function GoalWithdrawPage() {
 			hasNextOptions={hasNextGoalsPage}
 			isItemDataLoading={isGoalsLoading}
 			action={withdrawGoal}
-			isActionLoading={isWithdrawGoalLoading}
+			isActionPending={isWithdrawGoalPending}
 			isActionSuccess={isWithdrawGoalSuccess}
 			isActionError={isWithdrawGoalError}
 			successTextKey='withdrawGoalSuccess'

@@ -53,7 +53,7 @@ export function CurrencyPicker(props: Props) {
 							/>
 						</label>
 					</div>
-					<Button onClick={handleSaveClick} type='main'>
+					<Button onClick={handleSaveClick} type='primary'>
 						Change currency rate
 					</Button>
 				</div>

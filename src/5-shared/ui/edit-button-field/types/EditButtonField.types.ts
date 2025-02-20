@@ -14,7 +14,7 @@ export type EditButtonFieldProps<Value> = {
 	isRequired?: boolean;
 	title: string;
 	children?: ReactNode;
-	isLoading?: boolean;
+	isPending?: boolean;
 	isSuccess?: boolean;
 	isError?: boolean;
 	handleUpdate?: () => void;

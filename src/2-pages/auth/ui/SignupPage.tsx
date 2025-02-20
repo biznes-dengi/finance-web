@@ -92,12 +92,12 @@ export function SignupPage() {
 
 				<div className='my-6 flex flex-col items-center gap-4'>
 					<Button
-						type='main'
+						type='primary'
 						onClick={handleSignup}
 						disabled={!email || !password}
 						className={cn(!displayBoxShadow && 'shadow-none')}
-						isLoading={isSignupPending}
-						disableDefaultEnterClick
+						isPending={isSignupPending}
+						disabledPrimaryButtonEnterClick
 					>
 						{APP_TEXT.signUp}
 					</Button>

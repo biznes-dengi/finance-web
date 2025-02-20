@@ -13,7 +13,7 @@ export function TransferPage(props: TransferPageProps) {
 		fetchNextOptions,
 		isItemDataLoading,
 		transfer,
-		isTransferLoading,
+		isTransferPending,
 		isTransferSuccess,
 		isTransferError,
 		successTextKey,
@@ -143,10 +143,10 @@ export function TransferPage(props: TransferPageProps) {
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					type='main'
+					type='primary'
 					onClick={handleTransferClick}
 					disabled={!fromGoalAmount || !toGoalAmount || isFromAmountError}
-					isLoading={isTransferLoading}
+					isPending={isTransferPending}
 				>
 					{APP_TEXT.transfer}
 				</Button>

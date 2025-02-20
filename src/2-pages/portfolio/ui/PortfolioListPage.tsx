@@ -1,3 +1,5 @@
+import {PortfolioManagement} from '@widgets/portfolio';
+
 export function PortfolioListPage() {
-	return <div>PortfolioListPage</div>;
+	return <PortfolioManagement />;
 }

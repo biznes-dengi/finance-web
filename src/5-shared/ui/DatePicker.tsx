@@ -65,7 +65,7 @@ export function DatePicker(props: DatePickerProps) {
 
 				<Button
 					className='mt-6'
-					type='main'
+					type='primary'
 					onClick={() => {
 						onChange(localValue);
 						closePopup();

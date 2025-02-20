@@ -39,14 +39,14 @@ type CommonProps = {
 export type FundWithdrawPageProps = CommonProps & {
 	actionType: 'fund' | 'withdraw';
 	action: (props: ActionProps) => void;
-	isActionLoading: boolean;
+	isActionPending: boolean;
 	isActionSuccess: boolean;
 	isActionError: boolean;
 };
 
 export type TransferPageProps = CommonProps & {
 	transfer: (props: TransferProps) => void;
-	isTransferLoading: boolean;
+	isTransferPending: boolean;
 	isTransferSuccess: boolean;
 	isTransferError: boolean;
 };

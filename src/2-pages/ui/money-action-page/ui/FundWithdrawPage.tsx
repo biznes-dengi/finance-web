@@ -14,7 +14,7 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 		isItemDataLoading,
 		actionType,
 		action,
-		isActionLoading,
+		isActionPending,
 		isActionSuccess,
 		isActionError,
 		successTextKey,
@@ -86,10 +86,10 @@ export function FundWithdrawPage(props: FundWithdrawPageProps) {
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					type='main'
+					type='primary'
 					onClick={handleActionClick}
 					disabled={!amount || showWithdrawValidation}
-					isLoading={isActionLoading}
+					isPending={isActionPending}
 				>
 					{APP_TEXT[actionType]}
 				</Button>

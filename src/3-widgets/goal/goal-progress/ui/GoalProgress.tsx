@@ -89,7 +89,7 @@ export function GoalProgress() {
 						достигнете!
 					</div>
 
-					<Button className='mt-4' type='main' onClick={closePopup}>
+					<Button className='mt-4' type='primary' onClick={closePopup}>
 						{APP_TEXT.kaif}
 					</Button>
 				</div>

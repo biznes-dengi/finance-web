@@ -5,7 +5,7 @@ import {APP_PATH} from '@shared/constants';
 export function GoalTransferPage() {
 	const {goals, isGoalsLoading, hasNextGoalsPage, fetchNextGoalsPage} = GoalModel.useItems();
 
-	const {transferGoal, isTransferGoalLoading, isTransferGoalSuccess, isTransferGoalError} = GoalModel.useTransfer({
+	const {transferGoal, isTransferGoalPending, isTransferGoalSuccess, isTransferGoalError} = GoalModel.useTransfer({
 		isFromListPage: true,
 	});
 
@@ -26,7 +26,7 @@ export function GoalTransferPage() {
 					},
 				});
 			}}
-			isTransferLoading={isTransferGoalLoading}
+			isTransferPending={isTransferGoalPending}
 			isTransferSuccess={isTransferGoalSuccess}
 			isTransferError={isTransferGoalError}
 			successTextKey='transferGoalSuccess'

@@ -96,8 +96,8 @@ export function AppTabs() {
 				<div
 					key={index}
 					className={cn(
-						'cursor-pointer px-4 py-2 text-sm',
-						location.pathname === path ? 'rounded-3xl bg-white' : 'text-primary-grey',
+						'cursor-pointer rounded-3xl px-4 py-2 text-sm transition duration-200',
+						location.pathname === path ? 'bg-white' : 'bg-inherit text-primary-grey',
 					)}
 					onClick={() => navigate(path)}
 				>

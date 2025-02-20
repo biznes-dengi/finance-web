@@ -10,7 +10,7 @@ export function GoalEditDetails() {
 	const {id} = useParams();
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
-	const {updateGoal, isUpdateGoalLoading, isUpdateGoalSuccess, isUpdateGoalError} = GoalModel.useUpdateItem();
+	const {updateGoal, isUpdateGoalPending, isUpdateGoalSuccess, isUpdateGoalError} = GoalModel.useUpdateItem();
 
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<string>('');
@@ -54,7 +54,7 @@ export function GoalEditDetails() {
 	}
 
 	const editButtonCommonProps = {
-		isLoading: isUpdateGoalLoading,
+		isPending: isUpdateGoalPending,
 		isSuccess: isUpdateGoalSuccess,
 		isError: isUpdateGoalError,
 		handleUpdate,

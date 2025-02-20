@@ -112,7 +112,7 @@ export class GoalModel {
 		});
 
 		return {
-			goalTotalBalance: data,
+			goalTotalBalance: data ? data : null,
 			isGoalTotalBalanceLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
@@ -169,7 +169,7 @@ export class GoalModel {
 
 		return {
 			createGoal: mutate,
-			isCreateGoalLoading: isPending,
+			isCreateGoalPending: isPending,
 			isCreateGoalSuccess: isSuccess,
 			isCreateGoalError: isError,
 		};
@@ -199,7 +199,7 @@ export class GoalModel {
 
 		return {
 			updateGoal: mutate,
-			isUpdateGoalLoading: isPending,
+			isUpdateGoalPending: isPending,
 			isUpdateGoalSuccess: isSuccess,
 			isUpdateGoalError: isError,
 		};
@@ -231,7 +231,7 @@ export class GoalModel {
 
 		return {
 			deleteGoal: mutate,
-			isDeleteGoalLoading: isPending,
+			isDeleteGoalPending: isPending,
 			isDeleteGoalSuccess: isSuccess,
 			isDeleteGoalError: isError,
 		};
@@ -268,7 +268,7 @@ export class GoalModel {
 
 		return {
 			fundGoal: mutate,
-			isFundGoalLoading: isPending,
+			isFundGoalPending: isPending,
 			isFundGoalSuccess: isSuccess,
 			isFundGoalError: isError,
 		};
@@ -305,7 +305,7 @@ export class GoalModel {
 
 		return {
 			withdrawGoal: mutate,
-			isWithdrawGoalLoading: isPending,
+			isWithdrawGoalPending: isPending,
 			isWithdrawGoalSuccess: isSuccess,
 			isWithdrawGoalError: isError,
 		};
@@ -342,7 +342,7 @@ export class GoalModel {
 
 		return {
 			transferGoal: mutate,
-			isTransferGoalLoading: isPending,
+			isTransferGoalPending: isPending,
 			isTransferGoalSuccess: isSuccess,
 			isTransferGoalError: isError,
 		};

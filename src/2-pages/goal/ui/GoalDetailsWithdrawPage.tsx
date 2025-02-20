@@ -8,7 +8,7 @@ export function GoalDetailsWithdrawPage() {
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
-	const {withdrawGoal, isWithdrawGoalLoading, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw();
+	const {withdrawGoal, isWithdrawGoalPending, isWithdrawGoalSuccess, isWithdrawGoalError} = GoalModel.useWithdraw();
 
 	return (
 		<FundWithdrawPage
@@ -16,7 +16,7 @@ export function GoalDetailsWithdrawPage() {
 			isItemDataLoading={isGoalDetailsLoading}
 			actionType='withdraw'
 			action={withdrawGoal}
-			isActionLoading={isWithdrawGoalLoading}
+			isActionPending={isWithdrawGoalPending}
 			isActionSuccess={isWithdrawGoalSuccess}
 			isActionError={isWithdrawGoalError}
 			successTextKey='withdrawGoalSuccess'

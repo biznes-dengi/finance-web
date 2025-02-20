@@ -23,7 +23,7 @@ export * from './item/ui/LoadingItem.tsx';
 export * from './item/ui/ItemImageWithProgress.tsx';
 export * from './select-with-search/ui/SelectWithSearch.tsx';
 export * from './card/ui/Card.tsx';
-export * from './DatePicker.tsx';
+export * from './management/ui/Management.tsx';
 
 // new pattern -> get rid of index.ts
 
@@ -32,6 +32,7 @@ export * from './button';
 export * from './preload-skeleton';
 export * from './list';
 export * from './select-in-card';
+export * from './DatePicker.tsx';
 
 // editButtonField instead
 
