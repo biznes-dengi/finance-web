@@ -19,17 +19,19 @@ export function Card(props: CardProps) {
 			)}
 
 			<div role='card' className='w-full rounded-2xl bg-white'>
-				<div className='flex items-center justify-between px-4 py-3 text-sm font-medium text-primary-grey'>
-					{titleInCard && (
-						<div>
-							<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
-								{titleInCard}
-							</LoadingWrapper>
-						</div>
-					)}
+				{(titleInCard || rightTitleInCard) && (
+					<div className='flex items-center justify-between px-4 py-3 text-sm font-medium text-primary-grey'>
+						{titleInCard && (
+							<div>
+								<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
+									{titleInCard}
+								</LoadingWrapper>
+							</div>
+						)}
 
-					{rightTitleInCard}
-				</div>
+						{rightTitleInCard}
+					</div>
+				)}
 
 				{children}
 			</div>

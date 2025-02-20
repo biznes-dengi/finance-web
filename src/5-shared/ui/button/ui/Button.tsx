@@ -5,16 +5,9 @@ import {cn, styleElement, useKeyClick} from '@shared/lib';
 import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
-export enum ButtonType {
-	main,
-	text,
-	icon,
-}
-
 export interface CommonButtonSettings {
 	icon?: ReactElement;
 	type?: 'main' | 'text' | 'circle' | 'icon';
-	enumType?: ButtonType;
 	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
 }
 interface Props extends CommonButtonSettings {
@@ -34,7 +27,6 @@ export function Button(props: Props) {
 		children,
 		className,
 		onClick,
-		enumType = ButtonType.text,
 		isSecondary,
 		icon,
 		disabled,
@@ -53,7 +45,7 @@ export function Button(props: Props) {
 			onClick({navigate});
 			setDisplayBoxShadow(true);
 		},
-		disabled: disabled || disableDefaultEnterClick || enumType !== ButtonType.main,
+		disabled: disabled || disableDefaultEnterClick || type !== 'main',
 		deps: [],
 	});
 
@@ -74,7 +66,7 @@ export function Button(props: Props) {
 		disabled,
 	};
 
-	if (enumType === ButtonType.main) {
+	if (type === 'main') {
 		return (
 			<button
 				{...buttonProps}
@@ -108,7 +100,7 @@ export function Button(props: Props) {
 		);
 	}
 
-	if (enumType === ButtonType.icon || type === 'circle') {
+	if (type === 'circle') {
 		if (isLoading) {
 			return (
 				<div className='flex w-[68px] flex-col items-center gap-y-3'>
@@ -149,7 +141,7 @@ export function Button(props: Props) {
 		);
 	}
 
-	if (enumType === ButtonType.text || type === 'text') {
+	if (type === 'text') {
 		return (
 			<button
 				{...buttonProps}

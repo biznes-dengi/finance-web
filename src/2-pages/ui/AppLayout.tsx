@@ -1,6 +1,6 @@
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {cn} from '@shared/lib';
-import {Button, ButtonType, Icon, Item, Popup, usePopupState, PopupHelpers, Card} from '@shared/ui';
+import {Button, Card, Icon, Item, Popup, usePopupState} from '@shared/ui';
 import {AuthModel} from '@entities/auth';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 
@@ -27,7 +27,7 @@ export function AppLayout() {
 
 export function AppHeader() {
 	const location = useLocation();
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const {logout} = AuthModel.useLogout();
 	const {authUser} = AuthModel.useAuthUser();
@@ -36,17 +36,17 @@ export function AppHeader() {
 	const {
 		popupProps: portfolioPopupProps,
 		openPopup: openPortfolioPopup,
-		closePopup: closePortfolioPopup,
+		// closePopup: closePortfolioPopup,
 	} = usePopupState();
 
-	function handleCreatePortfolioClick() {
-		closePortfolioPopup();
-		PopupHelpers.runAfterPopupClosed(() => navigate(APP_PATH.portfolio.create));
-	}
+	// function handleCreatePortfolioClick() {
+	// 	closePortfolioPopup();
+	// 	PopupHelpers.runAfterPopupClosed(() => navigate(APP_PATH.portfolio.create));
+	// }
 
 	return (
 		<header role='app-header' className='mb-4 flex items-center justify-between'>
-			<Button enumType={ButtonType.icon} onClick={openUserPopup} icon={<Icon type='user' />} className='w-fit' />
+			<Button type='circle' onClick={openUserPopup} icon={<Icon type='user' />} className='w-fit' />
 
 			{location.pathname === APP_PATH.portfolio.list && (
 				<div className='flex items-center gap-2 text-xl font-medium' onClick={openPortfolioPopup}>
@@ -70,7 +70,7 @@ export function AppHeader() {
 
 			<Popup {...portfolioPopupProps}>
 				<div className='mb-3'>
-					<Card titleInCard={'Portfolios'} rightTitleInCard={'create edit'}>
+					<Card titleInCard={'Portfolios'} rightTitleInCard={'create edit delete'}>
 						<Item name={'Portfolio 1'} />
 						<Item name={'Portfolio 2'} />
 						<Item name={'Portfolio 3'} />
