@@ -59,13 +59,13 @@ export function AppHeader() {
 
 			<Popup {...userPopupProps}>
 				<div className='mb-3 flex flex-col items-center gap-2'>
-					<div>
+					<div className='flex size-11 items-center justify-center rounded-full bg-secondary-grey'>
 						<Icon type='user' />
 					</div>
 					<div>{authUser?.email}</div>
 				</div>
 
-				<Item image={<Icon type='logout' />} name={APP_TEXT.logOut} onClick={() => logout()} />
+				<Item icon={<Icon type='logout' />} name={APP_TEXT.logOut} onClick={() => logout()} />
 			</Popup>
 
 			<Popup {...portfolioPopupProps}>

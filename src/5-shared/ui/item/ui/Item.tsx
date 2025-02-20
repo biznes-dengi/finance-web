@@ -6,6 +6,7 @@ import {cn, useResponsive} from '@shared/lib';
 
 export function Item(props: ItemProps) {
 	const {
+		icon,
 		image,
 		imageIcon,
 		name,
@@ -41,6 +42,12 @@ export function Item(props: ItemProps) {
 				)}
 			>
 				{leftNode && <div className='mr-4 flex flex-shrink-0 items-center'>{leftNode}</div>}
+
+				{icon && (
+					<div className='mr-4 flex size-10 flex-shrink-0 items-center justify-center rounded-full  bg-secondary-violet text-primary-violet'>
+						{icon}
+					</div>
+				)}
 
 				{image && (
 					<div className='relative my-0.5 mr-4 flex-shrink-0'>

@@ -2,6 +2,7 @@ import {ReactElement, ReactNode} from 'react';
 import {NavigateFunction} from 'react-router-dom';
 
 export type ItemProps = {
+	icon?: ReactNode;
 	image?: ReactElement;
 	imageIcon?: ReactNode;
 	name: ReactNode;

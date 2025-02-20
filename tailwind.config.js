@@ -15,8 +15,6 @@ export default {
 				'primary-violet': '#805CF5',
 				'secondary-violet': '#F2EEFE',
 
-				'primary-blue': '#4F55F1',
-
 				'error-red': '#B51F2D',
 
 				field: '#EDEFF2',
