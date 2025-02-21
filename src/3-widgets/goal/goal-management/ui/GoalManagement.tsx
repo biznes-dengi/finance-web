@@ -1,4 +1,4 @@
-import {Button, Item, ItemImageWithProgress, Management, SelectInCard} from '@shared/ui';
+import {Item, ItemImageWithProgress, Management, SelectInCard} from '@shared/ui';
 import {buttonConfigs, goalStatusOptions} from '../config/GoalManagement.config.tsx';
 import {goalsDefaultFilter} from '@widgets/goal/util';
 import {GoalModel} from '@entities/goal';
@@ -18,24 +18,18 @@ export function GoalManagement() {
 		<Management
 			isLoading={isLoading}
 			totalBalance={goalTotalBalance}
-			buttons={buttonConfigs.map(({name, ...restButtonConfig}, index) => (
-				<Button
-					key={index}
-					isLoading={isLoading}
-					disabled={(() => {
-						if (name === APP_TEXT.transfer) {
-							return allGoals?.length ? allGoals.length <= 1 : true;
-						}
+			buttonConfigs={buttonConfigs.map((buttonConfig) => ({
+				...buttonConfig,
+				disabled: (() => {
+					if (buttonConfig.name === APP_TEXT.transfer) {
+						return allGoals?.length ? allGoals.length <= 1 : true;
+					}
 
-						if (name === APP_TEXT.fund || name === APP_TEXT.withdraw) {
-							return !allGoals?.length;
-						}
-					})()}
-					{...restButtonConfig}
-				>
-					{name}
-				</Button>
-			))}
+					if (buttonConfig.name === APP_TEXT.fund || buttonConfig.name === APP_TEXT.withdraw) {
+						return !allGoals?.length;
+					}
+				})(),
+			}))}
 			listTitle={
 				<SelectInCard<(typeof goalStatusOptions)[number]['value']>
 					value={filter.status}
@@ -68,11 +62,13 @@ export function GoalManagement() {
 							: APP_TEXT.goalAchieved
 					}
 					rightName={`${TextHelpers.getAmount(goal.balance.amount)} ${CURRENCY_SYMBOL[goal.balance.currency]}`}
-					onClick={(navigate) => navigate(APP_PATH.goal.getItemDetailsPath(goal.id))}
+					onClick={({navigate}) => navigate(APP_PATH.goal.getItemDetailsPath(goal.id))}
 				/>
 			)}
 			fetchNextListPage={fetchNextGoalsPage}
 			hasNextListPage={hasNextGoalsPage}
+			emptyListTextKey='goals'
+			isButtonsSpaceBetween
 		/>
 	);
 }

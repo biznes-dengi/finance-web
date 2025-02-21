@@ -1,8 +1,8 @@
-import {Button, Item, Management} from '@shared/ui';
 import {GoalModel} from '@entities/goal';
+import {buttonConfigs, settingsConfigs} from '../config/PortfolioManagement.config.tsx';
+import {Item, Management} from '@shared/ui';
 import {TextHelpers} from '@shared/lib';
-import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
-import {buttonConfigs} from '@widgets/portfolio/portfolio-management/config/PortfolioManagement.config.tsx';
+import {APP_PATH, CURRENCY_SYMBOL} from '@shared/constants';
 
 export function PortfolioManagement() {
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
@@ -14,12 +14,9 @@ export function PortfolioManagement() {
 		<Management
 			isLoading={isLoading}
 			totalBalance={goalTotalBalance}
-			buttons={buttonConfigs.map((buttonConfig, index) => (
-				<Button key={index} isLoading={isLoading} {...buttonConfig}>
-					{APP_TEXT.connectWallet}
-				</Button>
-			))}
-			listTitle={'Assets'}
+			settingsConfigs={settingsConfigs}
+			buttonConfigs={buttonConfigs}
+			listTitle='Tokens'
 			listItems={goals}
 			renderListItem={(goal) => (
 				<Item
@@ -27,11 +24,12 @@ export function PortfolioManagement() {
 					name={goal.name}
 					description={'description'}
 					rightName={`${TextHelpers.getAmount(goal.balance.amount)} ${CURRENCY_SYMBOL[goal.balance.currency]}`}
-					onClick={(navigate) => navigate(APP_PATH.goal.getItemDetailsPath(goal.id))}
+					onClick={({navigate}) => navigate(APP_PATH.goal.getItemDetailsPath(goal.id))}
 				/>
 			)}
 			fetchNextListPage={fetchNextGoalsPage}
 			hasNextListPage={hasNextGoalsPage}
+			emptyListTextKey='tokens'
 		/>
 	);
 }

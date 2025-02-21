@@ -7,7 +7,7 @@ import './Button.css';
 
 export interface CommonButtonSettings {
 	icon?: ReactElement;
-	type?: 'primary' | 'secondary' | 'text' | 'circle' | 'icon';
+	type: 'primary' | 'secondary' | 'text' | 'circle' | 'icon';
 	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
 }
 interface Props extends CommonButtonSettings {
@@ -124,7 +124,7 @@ export function Button(props: Props) {
 			return (
 				<div className='flex w-[68px] flex-col items-center gap-y-3'>
 					<PreloadSkeleton isCircular className='size-11' />
-					<PreloadSkeleton className='h-[15.5px] w-12' />
+					<PreloadSkeleton className='h-[12px] w-12' />
 				</div>
 			);
 		}
@@ -152,7 +152,7 @@ export function Button(props: Props) {
 
 	if (type === 'icon' && icon) {
 		return (
-			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
+			<button {...buttonProps} className={gcn('flex items-center justify-center')}>
 				{icon}
 			</button>
 		);

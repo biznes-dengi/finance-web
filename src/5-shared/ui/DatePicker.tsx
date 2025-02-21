@@ -43,7 +43,11 @@ export function DatePicker(props: DatePickerProps) {
 
 	return (
 		<>
-			<Button onClick={openPopup} icon={!value ? <Icon type='fund' /> : <Icon type='edit' className='size-1' />}>
+			<Button
+				type='text'
+				onClick={openPopup}
+				icon={!value ? <Icon type='fund' /> : <Icon type='edit' className='size-1' />}
+			>
 				{children}
 			</Button>
 

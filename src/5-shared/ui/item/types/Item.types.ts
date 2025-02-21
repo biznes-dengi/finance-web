@@ -12,7 +12,7 @@ export type ItemProps = {
 	isNameText?: boolean;
 	leftNode?: ReactNode;
 	rightNode?: ReactNode;
-	onClick?: (navigate: NavigateFunction) => void;
+	onClick?: ({navigate}: {navigate: NavigateFunction}) => void;
 	className?: string | boolean;
 	isSingle?: boolean;
 };

@@ -23,6 +23,8 @@ export const APP_PATH = {
 
 	portfolio: {
 		list: '/portfolio-list',
+		info: '/portfolio-info',
+		connectedWallets: '/portfolio-connected-wallets',
 		create: '/portfolio-create',
 	},
 };

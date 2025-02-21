@@ -32,7 +32,7 @@ export function Item(props: ItemProps) {
 				!isSingle && '[&:not(:last-child)]:pb-0',
 				onClick && 'cursor-pointer',
 			)}
-			onClick={() => onClick?.(navigate)}
+			onClick={() => onClick?.({navigate})}
 		>
 			<div
 				className={cn(
@@ -44,7 +44,7 @@ export function Item(props: ItemProps) {
 				{leftNode && <div className='mr-4 flex flex-shrink-0 items-center'>{leftNode}</div>}
 
 				{icon && (
-					<div className='mr-4 flex size-10 flex-shrink-0 items-center justify-center rounded-full  bg-secondary-violet text-primary-violet'>
+					<div className='mr-4 flex size-10 flex-shrink-0 items-center justify-center self-center rounded-full  bg-secondary-violet text-primary-violet'>
 						{icon}
 					</div>
 				)}

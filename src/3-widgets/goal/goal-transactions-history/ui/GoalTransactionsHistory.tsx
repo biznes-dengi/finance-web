@@ -27,7 +27,7 @@ export function GoalTransactionsHistory() {
 	const isLoading = isGoalDetailsLoading || isGoalTransactionsLoading;
 
 	return (
-		<div className='flex flex-col gap-6 px-4 pb-6'>
+		<div className='flex flex-col gap-6'>
 			<LoadingWrapper
 				isLoading={isLoading}
 				className='my-0.5 mb-[18px] h-4 w-10'

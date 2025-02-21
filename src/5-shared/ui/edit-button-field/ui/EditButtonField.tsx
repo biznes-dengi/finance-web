@@ -41,6 +41,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 	return (
 		<>
 			<Button
+				type='text'
 				onClick={openPopup}
 				icon={icon === 'add' ? <Icon type='fund' /> : <Icon type={icon} className='size-1' />}
 			>

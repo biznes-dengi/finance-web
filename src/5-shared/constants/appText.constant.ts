@@ -62,6 +62,8 @@ export const APP_TEXT = {
 	portfolio: 'Portfolio',
 	createPortfolio: 'Create portfolio',
 	connectWallet: 'Connect wallet',
+	connectedWallets: 'Connected wallets',
+	howItWorks: 'How it works',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

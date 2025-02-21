@@ -1,4 +1,4 @@
-import {EyeIcon, EyeOffIcon, Search, TrendingUp} from 'lucide-react';
+import {EyeIcon, EyeOffIcon, Search, SettingsIcon, TrendingUp} from 'lucide-react';
 import {
 	FaArrowDown,
 	FaArrowLeft,
@@ -7,13 +7,16 @@ import {
 	FaCalendar,
 	FaCheck,
 	FaChevronDown,
+	FaChevronLeft,
 	FaChevronRight,
+	FaDollarSign,
+	FaInfo,
 	FaPen,
 	FaPlus,
-	FaUser,
-	FaXmark,
 	FaStar,
-	FaChevronLeft,
+	FaUser,
+	FaWallet,
+	FaXmark,
 } from 'react-icons/fa6';
 import {FaCamera, FaSignOutAlt} from 'react-icons/fa';
 import {cn} from '@shared/lib';
@@ -58,6 +61,10 @@ export const ICON_MAP = {
 	search: Search,
 	chevronLeft: FaChevronLeft,
 	chevronRight: FaChevronRight,
+	info: FaInfo,
+	settings: SettingsIcon,
+	dollar: FaDollarSign,
+	wallet: FaWallet,
 
 	trendUp: TrendingUp,
 } as const;

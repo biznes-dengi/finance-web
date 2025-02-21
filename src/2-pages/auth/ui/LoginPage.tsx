@@ -85,7 +85,7 @@ export function LoginPage() {
 					setIsFocused={setIsPasswordFocused}
 				/>
 
-				<Button className='text-left font-light' onClick={() => alert('Вспоминай, а то не войдешь 😁')}>
+				<Button type='text' className='text-left font-light' onClick={() => alert('Вспоминай, а то не войдешь 😁')}>
 					{APP_TEXT.forgotPassword}
 				</Button>
 			</div>
@@ -101,7 +101,7 @@ export function LoginPage() {
 				>
 					{APP_TEXT.logIn}
 				</Button>
-				<Button onClick={() => navigate(APP_PATH.signup)} isLoading={isLoginPending}>
+				<Button type='text' onClick={() => navigate(APP_PATH.signup)} isLoading={isLoginPending}>
 					{APP_TEXT.signUp}
 				</Button>
 			</div>

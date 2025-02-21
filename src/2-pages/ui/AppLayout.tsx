@@ -49,17 +49,18 @@ export function AppHeader() {
 			<Button type='circle' onClick={openUserPopup} icon={<Icon type='user' />} className='w-fit' />
 
 			{location.pathname === APP_PATH.portfolio.list && (
-				<div className='flex items-center gap-2 text-xl font-medium' onClick={openPortfolioPopup}>
-					<div>Portfolio 1</div>
-					<Icon type='selectChevron' className='size-3 flex-shrink-0' />
-				</div>
+				<>
+					<div className='flex items-center gap-2 text-xl font-medium' onClick={openPortfolioPopup}>
+						<div>Portfolio 1</div>
+						<Icon type='selectChevron' className='size-3 flex-shrink-0' />
+					</div>
+					<div className='size-11' />
+				</>
 			)}
-
-			<div className='size-11' />
 
 			<Popup {...userPopupProps}>
 				<div className='mb-3 flex flex-col items-center gap-2'>
-					<div className='flex size-11 items-center justify-center rounded-full bg-secondary-grey'>
+					<div className='flex size-11 items-center justify-center rounded-full bg-secondary-violet text-primary-violet'>
 						<Icon type='user' />
 					</div>
 					<div>{authUser?.email}</div>
@@ -70,7 +71,19 @@ export function AppHeader() {
 
 			<Popup {...portfolioPopupProps}>
 				<div className='mb-3'>
-					<Card titleInCard={'Portfolios'} rightTitleInCard={'create edit delete'}>
+					<Card
+						titleInCard={'Portfolios'}
+						rightTitleInCard={
+							<div className='flex items-center gap-3'>
+								<div>
+									<Icon type='edit' className='size-3' />
+								</div>
+								<div>
+									<Icon type='plus' className='size-4' />
+								</div>
+							</div>
+						}
+					>
 						<Item name={'Portfolio 1'} />
 						<Item name={'Portfolio 2'} />
 						<Item name={'Portfolio 3'} />
