@@ -10,8 +10,8 @@ export const buttonConfigs = [
 		onClick: () => alert('Navigate to connect wallet page'),
 	},
 	{
-		name: 'Share',
 		type: 'secondary',
+		icon: <Icon type='share' />,
 		onClick: () => alert('share in tg for viral effect'),
 	},
 ] as ButtonConfig[];

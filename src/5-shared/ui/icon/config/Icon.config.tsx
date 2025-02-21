@@ -13,6 +13,7 @@ import {
 	FaInfo,
 	FaPen,
 	FaPlus,
+	FaShare,
 	FaStar,
 	FaUser,
 	FaWallet,
@@ -65,6 +66,7 @@ export const ICON_MAP = {
 	settings: SettingsIcon,
 	dollar: FaDollarSign,
 	wallet: FaWallet,
+	share: FaShare,
 
 	trendUp: TrendingUp,
 } as const;

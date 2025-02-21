@@ -7,9 +7,9 @@ export function PortfolioInfoPage() {
 			<PageHeader
 				title={APP_TEXT.howItWorks}
 				backPath={APP_PATH.portfolio.list}
-				subDescription={'Note: Мы не имеем доступа к вашему кошельку, мы только считываем оттуда информацию.'}
+				subDescription={'Note: мы не имеем доступа к вашему кошельку, мы только считываем оттуда информацию.'}
 			/>
-			<div className='flex flex-col gap-3 px-4'>
+			<div className='flex flex-col gap-4 px-4'>
 				<div className=''>
 					Вы подключаете свои кошельки и получаете{' '}
 					<span className='font-medium text-primary-violet'>список всех своих активов в одном месте</span>.

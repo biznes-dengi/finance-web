@@ -113,7 +113,7 @@ export function Button(props: Props) {
 			>
 				<div className='flex items-center justify-center gap-2'>
 					{icon && <div>{styleElement(icon, 'size-[14px]')}</div>}
-					<div>{children}</div>
+					{children && <div>{children}</div>}
 				</div>
 			</button>
 		);
