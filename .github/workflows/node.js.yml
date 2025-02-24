@@ -2,12 +2,12 @@ name: pull-request-master
 on:
   pull_request:
       branches: [ "master" ]
-  workflow_dispatch:
+      types:
+        - closed   
       
 jobs:
           
   build:
-    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,7 +27,6 @@ jobs:
 
           
   deploy:
-    if: ${{ github.event_name == 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     steps:
