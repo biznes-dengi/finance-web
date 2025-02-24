@@ -1,6 +1,6 @@
 name: test_pull_request
 on:
-  workflow_call:
+  workflow_dispatch:
       
 jobs:
 
