@@ -1,6 +1,6 @@
 name: pull-request-master
 on:
-  push:
+  pull_request:
       branches: [ "master" ]
       
 jobs:
@@ -52,4 +52,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: scp -r /home/runner/work/finance-web/finance-web/dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/finance-app-master/finance-web/web/
+        run: scp -r /home/runner/work/finance-web/finance-web/dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/app/web/
