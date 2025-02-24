@@ -1,11 +1,15 @@
 name: test_pull_request
 on:
-  pull_request:
-      branches: [ "master" ]
-      
-jobs:
+  workflow_call:
+    inputs:
+      job-to-run:
+        description: 'Job to run (tests)'
+        type: string
+        required: true
 
-  test:
+jobs:
+  tests:
+    if: ${{ github.event.inputs.job-to-run == 'tests' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
