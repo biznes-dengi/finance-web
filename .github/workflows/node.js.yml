@@ -1,6 +1,6 @@
 name: pull-request-master
 on:
-  push:
+  pull_request:
       branches: [ "master" ]
       
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - run: npm run build
 
       - name: Upload Build Folder as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
@@ -51,7 +51,7 @@ jobs:
         run: mkdir dist
 
       - name: Download Build Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
