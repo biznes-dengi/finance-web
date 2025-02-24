@@ -2,6 +2,7 @@ name: pull-request-master
 on:
   pull_request:
       branches: [ "master" ]
+  workflow_dispatch:
       
 jobs:
           
@@ -53,3 +54,16 @@ jobs:
 
       - name: Deploy with rsync
         run: scp -r /home/runner/work/finance-web/finance-web/dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/admin/app/web/
+
+  test:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # Используем код из PR
+      - uses: actions/setup-node@v4
+
+      - run: npm update
+      - run: npm run build
