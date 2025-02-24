@@ -18,6 +18,7 @@ export function GoalManagement() {
 		<Management
 			isLoading={isLoading}
 			totalBalance={goalTotalBalance}
+			totalBalanceDescription={APP_TEXT.totalBalance}
 			buttonConfigs={buttonConfigs.map((buttonConfig) => ({
 				...buttonConfig,
 				disabled: (() => {

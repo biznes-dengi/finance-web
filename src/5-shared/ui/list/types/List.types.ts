@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 
-export type EmptyTextKey = 'transactions' | 'goals' | 'tokens';
+export type EmptyTextKey = 'transactions' | 'goals' | 'assets';
 
 export type ListProps<R> = {
 	items: readonly R[] | null;

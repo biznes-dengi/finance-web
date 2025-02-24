@@ -11,7 +11,10 @@ export function PortfolioConnectedWallets() {
 	return (
 		<div className='flex flex-col gap-6'>
 			<TextField value={''} onChange={() => {}} placeholder={APP_TEXT.search} isSearch />
-			<List items={wallets} renderItem={(wallet) => <Item {...wallet} icon={<Icon type='calendar' />} />} />
+			<List
+				items={wallets}
+				renderItem={(wallet) => <Item {...wallet} image={<Icon type='wallet' withBackground />} />}
+			/>
 		</div>
 	);
 }

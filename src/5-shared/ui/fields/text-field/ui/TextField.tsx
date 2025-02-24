@@ -107,7 +107,7 @@ export function TextField(props: Props) {
 						onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 						className='ml-2 transform cursor-pointer text-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'
 					>
-						<Icon type={isPasswordVisible ? 'hidePassword' : 'showPassword'} className='size-5' />
+						<Icon type={isPasswordVisible ? 'hide' : 'show'} className={isPasswordVisible ? 'size-[21px]' : 'size-5'} />
 					</div>
 				)}
 			</div>

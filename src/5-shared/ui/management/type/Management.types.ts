@@ -8,10 +8,8 @@ export type ManagementSettingsConfigs = ItemProps[][];
 
 export type ManagementProps<ListItem> = {
 	isLoading: boolean;
-	totalBalance: {
-		amount: number;
-		currency: CURRENCY;
-	} | null;
+	totalBalance: {amount: number; currency: CURRENCY} | null;
+	totalBalanceDescription: ReactNode;
 	buttonConfigs: ButtonConfig[];
 	listTitle: ReactNode;
 	listItems: ListItem[] | null;
@@ -20,5 +18,5 @@ export type ManagementProps<ListItem> = {
 	fetchNextListPage: () => void;
 	emptyListTextKey: EmptyTextKey;
 	isButtonsSpaceBetween?: boolean;
-	settingsConfigs?: ManagementSettingsConfigs;
+	// settingsConfigs?: ManagementSettingsConfigs;
 };

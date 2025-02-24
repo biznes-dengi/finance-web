@@ -1,12 +1,11 @@
 import {useNavigate} from 'react-router-dom';
 import {ItemProps} from '../types/Item.types.ts';
-import {cn, useResponsive} from '@shared/lib';
+import {cn, isBoolean, styleElement, useResponsive} from '@shared/lib';
 
 //if leftNode or rightNode is an icon => size-5
 
 export function Item(props: ItemProps) {
 	const {
-		icon,
 		image,
 		imageIcon,
 		name,
@@ -43,19 +42,13 @@ export function Item(props: ItemProps) {
 			>
 				{leftNode && <div className='mr-4 flex flex-shrink-0 items-center'>{leftNode}</div>}
 
-				{icon && (
-					<div className='mr-4 flex size-10 flex-shrink-0 items-center justify-center self-center rounded-full  bg-secondary-violet text-primary-violet'>
-						{icon}
-					</div>
-				)}
-
 				{image && (
 					<div className='relative my-0.5 mr-4 flex-shrink-0'>
 						{image}
 
 						{imageIcon && (
 							<div className='absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'>
-								{imageIcon}
+								{isBoolean(imageIcon) ? null : styleElement(imageIcon, 'size-[10px]')}
 							</div>
 						)}
 					</div>

@@ -1,8 +1,8 @@
 import {GoalModel} from '@entities/goal';
-import {buttonConfigs, settingsConfigs} from '../config/PortfolioManagement.config.tsx';
+import {buttonConfigs} from '../config/PortfolioManagement.config.tsx';
 import {Item, Management} from '@shared/ui';
 import {TextHelpers} from '@shared/lib';
-import {APP_PATH, CURRENCY_SYMBOL} from '@shared/constants';
+import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
 
 export function PortfolioManagement() {
 	const {goalTotalBalance, isGoalTotalBalanceLoading} = GoalModel.useTotalBalance();
@@ -14,22 +14,36 @@ export function PortfolioManagement() {
 		<Management
 			isLoading={isLoading}
 			totalBalance={goalTotalBalance}
-			settingsConfigs={settingsConfigs}
+			totalBalanceDescription={
+				<div className='flex items-center gap-1.5 text-red-600'>
+					<div>-1 700$</div>
+					<div className='size-0.5 rounded-full bg-red-600' />
+					<div>30%</div>
+				</div>
+			}
 			buttonConfigs={buttonConfigs}
-			listTitle='Tokens'
+			listTitle={APP_TEXT.assets}
 			listItems={goals}
 			renderListItem={(goal) => (
 				<Item
 					image={<div className='size-10 rounded-full bg-green-200' />}
+					imageIcon={<div className='size-2 bg-secondary-violet' />}
 					name={goal.name}
 					description={'description'}
 					rightName={`${TextHelpers.getAmount(goal.balance.amount)} ${CURRENCY_SYMBOL[goal.balance.currency]}`}
+					rightDescription={
+						<div className='flex items-center gap-1.5 text-red-600'>
+							<div>-1 700$</div>
+							<div className='size-0.5 rounded-full bg-red-600' />
+							<div>30%</div>
+						</div>
+					}
 					onClick={({navigate}) => navigate(APP_PATH.goal.getItemDetailsPath(goal.id))}
 				/>
 			)}
 			fetchNextListPage={fetchNextGoalsPage}
 			hasNextListPage={hasNextGoalsPage}
-			emptyListTextKey='tokens'
+			emptyListTextKey='assets'
 		/>
 	);
 }

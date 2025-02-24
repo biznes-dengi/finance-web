@@ -1,6 +1,6 @@
 export const APP_PATH = {
 	root: '/',
-	home: '/goal-list',
+	home: '/portfolio-list',
 	pageNotFound: '/page-not-found',
 	login: '/log-in',
 	signup: '/sign-up',
@@ -23,7 +23,7 @@ export const APP_PATH = {
 
 	portfolio: {
 		list: '/portfolio-list',
-		info: '/portfolio-info',
+		connectWallet: '/connect-wallet',
 		connectedWallets: '/portfolio-connected-wallets',
 		create: '/portfolio-create',
 	},

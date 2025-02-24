@@ -1,13 +1,13 @@
 import {ManagementProps} from '../type/Management.types.ts';
-import {Button, Card, Icon, Item, List, LoadingWrapper, Popup, PopupHelpers, usePopupState} from '@shared/ui';
+import {Button, Card, Icon, List, LoadingWrapper} from '@shared/ui';
 import {cn, TextHelpers} from '@shared/lib';
-import {APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
+import {CURRENCY_SYMBOL} from '@shared/constants';
 
 export function Management<ListItem>(props: ManagementProps<ListItem>) {
 	const {
 		isLoading,
 		totalBalance,
-		settingsConfigs,
+		totalBalanceDescription,
 		buttonConfigs,
 		listTitle,
 		listItems,
@@ -17,8 +17,6 @@ export function Management<ListItem>(props: ManagementProps<ListItem>) {
 		emptyListTextKey,
 		isButtonsSpaceBetween,
 	} = props;
-
-	const {popupProps, openPopup, closePopup} = usePopupState();
 
 	return (
 		<>
@@ -45,29 +43,24 @@ export function Management<ListItem>(props: ManagementProps<ListItem>) {
 								})()}
 						</LoadingWrapper>
 
-						{settingsConfigs && (
-							<LoadingWrapper isLoading={isLoading} className='size-6 rounded-xl'>
-								<Button
-									type='icon'
-									icon={
-										<Icon
-											type='settings'
-											className={cn(popupProps.isOpen && 'text-primary-grey transition duration-200')}
-										/>
-									}
-									onClick={openPopup}
-								/>
-							</LoadingWrapper>
-						)}
+						<LoadingWrapper isLoading={isLoading} className='my-0.5 h-4 w-10'>
+							<div className='flex items-center gap-1 rounded-2xl bg-light-grey p-2 text-sm '>
+								<div>24h</div>
+								<div>
+									<Icon type='selectChevron' className='size-[10px]' />
+								</div>
+							</div>
+						</LoadingWrapper>
 					</div>
+
 					<div className='text-sm font-light text-primary-grey'>
 						<LoadingWrapper isLoading={isLoading} className='mb-1 h-[14px] w-16'>
-							{APP_TEXT.totalBalance}
+							{totalBalanceDescription}
 						</LoadingWrapper>
 					</div>
 				</div>
 
-				<div className={cn('flex px-4 pb-2 pt-1', isButtonsSpaceBetween ? 'justify-between' : 'gap-2')}>
+				<div className={cn('flex px-4 pb-2', isButtonsSpaceBetween ? 'justify-between' : 'gap-2')}>
 					{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
 						<Button key={index} isLoading={isLoading} {...restButtonConfig}>
 							{name}
@@ -75,9 +68,9 @@ export function Management<ListItem>(props: ManagementProps<ListItem>) {
 					))}
 				</div>
 
-				<div className='px-4 py-3 text-sm font-medium text-primary-grey'>
+				<div className='flex justify-between px-4 py-3 text-sm font-medium text-primary-grey'>
 					<LoadingWrapper isLoading={isLoading} className='my-0.5 h-4 w-10'>
-						{listTitle}
+						<div>{listTitle}</div>
 					</LoadingWrapper>
 				</div>
 
@@ -90,32 +83,6 @@ export function Management<ListItem>(props: ManagementProps<ListItem>) {
 					fetchNextPage={fetchNextListPage}
 				/>
 			</Card>
-
-			{settingsConfigs && (
-				<Popup {...popupProps}>
-					<div className='flex flex-col gap-4'>
-						{settingsConfigs.map((settingsConfig, index) => (
-							<List
-								key={index}
-								items={settingsConfig}
-								renderItem={(settingConfig) => (
-									<Item
-										{...settingConfig}
-										onClick={
-											settingConfig.onClick
-												? ({navigate}) => {
-														closePopup();
-														PopupHelpers.runAfterPopupClosed(() => settingConfig.onClick!({navigate}));
-												  }
-												: undefined
-										}
-									/>
-								)}
-							/>
-						))}
-					</div>
-				</Popup>
-			)}
 		</>
 	);
 }

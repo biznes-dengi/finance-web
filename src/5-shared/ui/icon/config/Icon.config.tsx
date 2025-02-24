@@ -1,9 +1,10 @@
-import {EyeIcon, EyeOffIcon, Search, SettingsIcon, TrendingUp} from 'lucide-react';
+import {Search, TrendingUp} from 'lucide-react';
 import {
 	FaArrowDown,
 	FaArrowLeft,
 	FaArrowRight,
 	FaArrowUp,
+	FaBriefcase,
 	FaCalendar,
 	FaCheck,
 	FaChevronDown,
@@ -15,19 +16,21 @@ import {
 	FaPlus,
 	FaShare,
 	FaStar,
+	FaTrash,
 	FaUser,
 	FaWallet,
 	FaXmark,
 } from 'react-icons/fa6';
-import {FaCamera, FaSignOutAlt} from 'react-icons/fa';
+import {FaCamera, FaSignOutAlt, FaEye, FaEyeSlash} from 'react-icons/fa';
 import {cn} from '@shared/lib';
+import {BsThreeDotsVertical} from 'react-icons/bs';
 
 export const ICON_MAP = {
 	user: FaUser,
 	logout: FaSignOutAlt,
 
-	showPassword: EyeIcon,
-	hidePassword: EyeOffIcon,
+	show: FaEye,
+	hide: FaEyeSlash,
 
 	createGoal: FaStar,
 	fund: FaPlus,
@@ -63,10 +66,12 @@ export const ICON_MAP = {
 	chevronLeft: FaChevronLeft,
 	chevronRight: FaChevronRight,
 	info: FaInfo,
-	settings: SettingsIcon,
+	settings: BsThreeDotsVertical,
 	dollar: FaDollarSign,
 	wallet: FaWallet,
 	share: FaShare,
+	delete: FaTrash,
+	portfolio: FaBriefcase,
 
 	trendUp: TrendingUp,
 } as const;

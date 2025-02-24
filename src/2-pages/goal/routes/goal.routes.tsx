@@ -14,7 +14,7 @@ import {GoalDetailsWithdrawPage} from '@pages/goal/ui/GoalDetailsWithdrawPage.ts
 import {GoalDetailsTransferPage} from '@pages/goal/ui/GoalDetailsTransferPage.tsx';
 
 const goalListRoute = {
-	path: APP_PATH.home,
+	path: APP_PATH.goal.list,
 	element: <PrivateRoute page={<GoalListPage />} />,
 };
 

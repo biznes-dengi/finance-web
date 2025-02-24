@@ -56,7 +56,7 @@ export function SelectWithSearch(props: SelectWithSearchProps) {
 							key={option.name}
 							className={cn(option.checked && 'bg-light-grey')}
 							image={<div className={'size-10 rounded-full bg-primary-grey'} />}
-							imageIcon={option.checked && <Icon type='check' className='size-3' />}
+							imageIcon={option.checked && <Icon type='check' />}
 							name={option.name}
 							description={option.description}
 							onClick={() => handleOptionClick(option.value)}

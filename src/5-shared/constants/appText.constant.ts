@@ -35,6 +35,8 @@ export const APP_TEXT = {
 	seeAll: 'See all',
 	createdSuccess: 'has been successfully created',
 	edit: 'Edit',
+	delete: 'Delete',
+	share: 'Share',
 	update: 'Update',
 	save: 'Save',
 	name: 'Name',
@@ -60,10 +62,12 @@ export const APP_TEXT = {
 	achieved: 'Achieved',
 	overdue: 'Overdue',
 	portfolio: 'Portfolio',
+	portfolios: 'Portfolios',
 	createPortfolio: 'Create portfolio',
 	connectWallet: 'Connect wallet',
 	connectedWallets: 'Connected wallets',
 	howItWorks: 'How it works',
+	assets: 'Assets',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {
