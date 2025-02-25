@@ -1,4 +1,4 @@
-name: test-pull-request
+name: build
 on:
   pull_request:
       branches: [ "master" ]
