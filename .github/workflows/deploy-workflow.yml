@@ -48,7 +48,7 @@ jobs:
 
       - name: Verify Renamed Folder
         run: |
-          ls -la /home/runner/work/finance-web/finance-web/dist/
+          ls -la /home/runner/work/finansy-io/finansy-io/dist/
 
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
