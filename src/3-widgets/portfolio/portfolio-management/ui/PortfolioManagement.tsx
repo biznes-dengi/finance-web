@@ -29,7 +29,7 @@ export function PortfolioManagement() {
 					image={<div className='size-10 rounded-full bg-green-200' />}
 					imageIcon={<div className='size-2 bg-secondary-violet' />}
 					name={goal.name}
-					description={'0.1354$'}
+					description='0.1354$'
 					rightName={`${TextHelpers.getAmount(goal.balance.amount)} ${CURRENCY_SYMBOL[goal.balance.currency]}`}
 					rightDescription={
 						<div className='flex items-center gap-1.5 text-red-600'>
