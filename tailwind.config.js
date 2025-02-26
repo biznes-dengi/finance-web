@@ -16,6 +16,7 @@ export default {
 				'secondary-violet': '#F2EEFE',
 
 				'error-red': '#B51F2D',
+				'secondary-error-red': '#FDE3E5',
 
 				field: '#EDEFF2',
 				'field-state': '#DFE3E7',

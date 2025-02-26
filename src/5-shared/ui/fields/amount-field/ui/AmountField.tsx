@@ -70,7 +70,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 				className={cn(
 					'rounded-2xl bg-field p-4 duration-300 focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
-					!!errorText && '!bg-[#FDE3E5]',
+					!!errorText && '!bg-secondary-error-red',
 				)}
 				onClick={focusInput}
 			>
@@ -102,7 +102,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 								ref={inputRef}
 								className={cn(
 									'min-w-[1ch] bg-inherit text-right text-xl font-semibold caret-primary-violet outline-none',
-									!!errorText && 'caret-[#B51F2D]',
+									!!errorText && 'caret-error-red',
 								)}
 								value={AmountFieldHelpers.getValue(value, withMinus, withPlus)}
 								onChange={handleChange}
@@ -128,7 +128,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 							className={cn(
 								'mr-4 min-w-40',
 								!getCustomDescription && 'cursor-pointer',
-								!!errorText && 'text-[#B51F2D]',
+								!!errorText && 'text-error-red',
 							)}
 							onClick={() => !getCustomDescription && onChange(String(activeOption?.amount))}
 						>
@@ -141,7 +141,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 						</div>
 					</LoadingWrapper>
 
-					{!!errorText && <div className='text-sm font-light text-[#B51F2D]'>{errorText}</div>}
+					{!!errorText && <div className='text-sm font-light text-error-red'>{errorText}</div>}
 				</div>
 			</div>
 

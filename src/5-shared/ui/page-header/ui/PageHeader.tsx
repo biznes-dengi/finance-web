@@ -32,7 +32,7 @@ export function PageHeader(props: PageHeaderProps) {
 		<div role='page-header' className={cn('mb-6 w-full pt-2', withNoSpace && 'p-0', className)}>
 			{isNumber(stepsCount) && isNumber(activeStepIndex) && (
 				<div className='mb-1 flex w-full gap-1 px-2'>
-					{Array.from({length: 3}).map((item, index) => (
+					{Array.from({length: stepsCount}).map((item, index) => (
 						<div
 							key={cn(item as any, index)}
 							className={cn(

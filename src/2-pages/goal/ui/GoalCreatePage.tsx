@@ -1,6 +1,5 @@
 import {useState} from 'react';
-import {GoalImageField} from '@widgets/goal';
-import {goalNameMaxLength} from '@widgets/goal/util';
+import {GoalImageField, goalNameMaxLength} from '@widgets/goal';
 import {GoalModel} from '@entities/goal';
 import {AmountField, Button, DatePicker, PageHeader, SelectWithSearch, StatusPopup, TextField} from '@shared/ui';
 import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_OPTIONS} from '@shared/constants';

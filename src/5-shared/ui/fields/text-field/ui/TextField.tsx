@@ -1,27 +1,13 @@
 import {MouseEvent, useEffect, useRef, useState} from 'react';
+import {TextFieldProps} from '../props/TextField.types.ts';
 import {cn, useResponsive} from '@shared/lib';
-import {Icon} from '@shared/ui/icon/ui/Icon.tsx';
-
-type Props = {
-	type?: 'email' | 'text' | 'password';
-	value: string;
-	onChange: (value: string) => void;
-	placeholder?: string;
-	enterKeyHint?: 'search' | 'enter' | 'done' | 'go' | 'next' | 'previous' | 'send';
-
-	description?: string;
-	maxLength?: number;
-	isFocused?: boolean;
-	setIsFocused?: (value: boolean) => void;
-
-	isSearch?: boolean;
-};
+import {Icon} from '@shared/ui';
 
 // SearchField
 //  более высокоуровневый компонент, вынести отдельно
 //  when isSearch and focused, pin search-input to the top with animation + cancel text at right
 
-export function TextField(props: Props) {
+export function TextField(props: TextFieldProps) {
 	const {
 		value,
 		onChange,
@@ -30,6 +16,7 @@ export function TextField(props: Props) {
 		isSearch,
 		type = 'text',
 		description,
+		errorText,
 		enterKeyHint,
 		isFocused,
 		setIsFocused,
@@ -69,6 +56,7 @@ export function TextField(props: Props) {
 				className={cn(
 					'group flex cursor-text items-center rounded-2xl bg-field p-4 transition-colors duration-300 ease-in-out focus-within:bg-field-state',
 					isDesktop && 'hover:bg-field-state',
+					!!errorText && '!bg-secondary-error-red',
 					isSearch && 'rounded-3xl px-3 py-1',
 				)}
 				onClick={focusInput}
@@ -77,7 +65,11 @@ export function TextField(props: Props) {
 
 				<input
 					ref={inputRef}
-					className={cn('w-full bg-inherit  font-light caret-primary-violet outline-none', isSearch && 'py-1 text-sm')}
+					className={cn(
+						'w-full bg-inherit  font-light caret-primary-violet outline-none',
+						!!errorText && 'caret-error-red',
+						isSearch && 'py-1 text-sm',
+					)}
 					type={type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type}
 					inputMode={type === 'email' ? 'email' : 'text'}
 					value={value}
@@ -89,14 +81,16 @@ export function TextField(props: Props) {
 				/>
 
 				{value && type !== 'password' && (
-					<div className='ml-2 flex size-5 shrink-0 transform cursor-pointer items-center justify-center rounded-full bg-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'>
+					<div
+						className='ml-2 flex size-5 shrink-0 transform cursor-pointer items-center justify-center rounded-full bg-field-helper transition duration-300 ease-in-out active:scale-95 active:brightness-95'
+						onClick={() => onChange('')}
+					>
 						<Icon
 							type='x'
 							className={cn(
 								'size-3.5 text-field duration-300 ease-in-out group-focus-within:text-secondary-grey',
 								isDesktop && 'group-hover:text-secondary-grey',
 							)}
-							onClick={() => onChange('')}
 						/>
 					</div>
 				)}
@@ -115,6 +109,7 @@ export function TextField(props: Props) {
 			{(description || maxLength) && (
 				<div className='flex cursor-default px-4 py-1 text-xs font-light text-field-helper'>
 					{description && <div>{description}</div>}
+					{errorText && <div className='text-error-red'>{errorText}</div>}
 					{maxLength && (
 						<div className='ml-auto'>
 							{value.length} / {maxLength}
