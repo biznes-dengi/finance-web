@@ -27,121 +27,118 @@ export function AppLayout() {
 	);
 }
 
+const settingsConfigs = [
+	[
+		{
+			name: APP_TEXT.connectedWallets,
+			image: <Icon type='wallet' withBackground />,
+			onClick: ({navigate}) => navigate(APP_PATH.portfolio.connectedWallets),
+		},
+		{
+			name: APP_TEXT.currency,
+			description: 'Coming soon',
+			image: <Icon type='dollar' className='text-[17px]' withBackground />,
+			rightNode: <div className='text-primary-grey'>{CURRENCY_CODE[CURRENCY.USD]}</div>,
+		},
+		{
+			name: 'Hide balance',
+			description: 'Coming soon',
+			image: <Icon type='hide' className='text-[18px]' withBackground />,
+			rightNode: 'switch',
+		},
+		{
+			name: 'Include in total portfolio',
+			description: 'Coming soon',
+			image: <Icon type='portfolio' withBackground />,
+			rightNode: 'switch',
+		},
+	],
+	[
+		{
+			name: APP_TEXT.share + ' ' + APP_TEXT.portfolio.toLowerCase(),
+			image: <Icon type='share' withBackground />,
+			onClick: () => console.log('delete portfolio'),
+		},
+		{
+			name: APP_TEXT.edit + ' ' + APP_TEXT.portfolio.toLowerCase(),
+			image: <Icon type='edit' withBackground />,
+			onClick: () => console.log('edit portfolio'),
+		},
+		{
+			name: APP_TEXT.delete + ' ' + APP_TEXT.portfolio.toLowerCase(),
+			image: <Icon type='delete' className='bg-red-100 text-red-600' withBackground />,
+			onClick: () => console.log('delete portfolio'),
+		},
+	],
+] as ManagementSettingsConfigs;
+const portfolioConfigs = [
+	{
+		name: 'Portfolio 1',
+		description: '10 assets',
+		rightName: '9 990 $',
+		rightDescription: (
+			<div className='flex items-center gap-1.5 text-red-600'>
+				<div>-7 631$</div>
+				<div className='size-0.5 rounded-full bg-red-600' />
+				<div>78.91%</div>
+			</div>
+		),
+		image: <Icon type='portfolio' withBackground />,
+	},
+	{
+		name: 'Portfolio 2',
+		description: '12 assets',
+		rightName: '8 865 $',
+		rightDescription: (
+			<div className='flex items-center gap-1.5 text-red-600'>
+				<div>-2 947$</div>
+				<div className='size-0.5 rounded-full bg-red-600' />
+				<div>56.78%</div>
+			</div>
+		),
+		image: <Icon type='portfolio' withBackground />,
+	},
+	{
+		name: 'Portfolio 3',
+		description: '11 assets',
+		rightName: '6 798 $',
+		rightDescription: (
+			<div className='flex items-center gap-1.5 text-red-600'>
+				<div>-765$</div>
+				<div className='size-0.5 rounded-full bg-red-600' />
+				<div>32.21%</div>
+			</div>
+		),
+		image: <Icon type='portfolio' withBackground />,
+	},
+];
+const tabConfigs = [
+	{name: '24h', path: '24h'},
+	{name: '7d', path: '7d'},
+	{name: '1m', path: '1m'},
+	{name: '6m', path: '6m'},
+	{name: '1y', path: '1y'},
+	{name: 'All time', path: 'All time'},
+];
+
 export function AppHeader() {
 	const location = useLocation();
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const {logout} = AuthModel.useLogout();
 	const {authUser} = AuthModel.useAuthUser();
 
 	const {popupProps: userPopupProps, openPopup: openUserPopup} = usePopupState();
-	const {popupProps: portfolioPopupProps, openPopup: openPortfolioPopup} = usePopupState();
+	const {
+		popupProps: portfolioPopupProps,
+		openPopup: openPortfolioPopup,
+		closePopup: closePortfolioPopup,
+	} = usePopupState();
 	const {
 		popupProps: portfolioSettingsPopupProps,
 		openPopup: openPortfolioSettingsPopup,
 		closePopup: closePortfolioSettingsPopup,
 	} = usePopupState();
-
-	// function handleCreatePortfolioClick() {
-	// 	closePortfolioPopup();
-	// 	PopupHelpers.runAfterPopupClosed(() => navigate(APP_PATH.portfolio.create));
-	// }
-
-	const settingsConfigs = [
-		[
-			{
-				name: APP_TEXT.connectedWallets,
-				image: <Icon type='wallet' withBackground />,
-				onClick: ({navigate}) => navigate(APP_PATH.portfolio.connectedWallets),
-			},
-			{
-				name: APP_TEXT.currency,
-				description: 'Coming soon',
-				image: <Icon type='dollar' className='text-[17px]' withBackground />,
-				rightNode: <div className='text-primary-grey'>{CURRENCY_CODE[CURRENCY.USD]}</div>,
-			},
-			{
-				name: 'Hide balance',
-				description: 'Coming soon',
-				image: <Icon type='hide' className='text-[18px]' withBackground />,
-				rightNode: 'switch',
-			},
-			{
-				name: 'Include in total portfolio',
-				description: 'Coming soon',
-				image: <Icon type='portfolio' withBackground />,
-				rightNode: 'switch',
-			},
-		],
-		[
-			{
-				name: APP_TEXT.share + ' ' + APP_TEXT.portfolio.toLowerCase(),
-				image: <Icon type='share' withBackground />,
-				onClick: () => console.log('delete portfolio'),
-			},
-			{
-				name: APP_TEXT.edit + ' ' + APP_TEXT.portfolio.toLowerCase(),
-				image: <Icon type='edit' withBackground />,
-				onClick: () => console.log('edit portfolio'),
-			},
-			{
-				name: APP_TEXT.delete + ' ' + APP_TEXT.portfolio.toLowerCase(),
-				image: <Icon type='delete' className='bg-red-100 text-red-600' withBackground />,
-				onClick: () => console.log('delete portfolio'),
-			},
-		],
-	] as ManagementSettingsConfigs;
-
-	const portfolioConfgs = [
-		{
-			name: 'Portfolio 1',
-			description: '10 assets',
-			rightName: '9 990 $',
-			rightDescription: (
-				<div className='flex items-center gap-1.5 text-red-600'>
-					<div>-7 631$</div>
-					<div className='size-0.5 rounded-full bg-red-600' />
-					<div>78.91%</div>
-				</div>
-			),
-			image: <Icon type='portfolio' withBackground />,
-		},
-		{
-			name: 'Portfolio 2',
-			description: '12 assets',
-			rightName: '8 865 $',
-			rightDescription: (
-				<div className='flex items-center gap-1.5 text-red-600'>
-					<div>-2 947$</div>
-					<div className='size-0.5 rounded-full bg-red-600' />
-					<div>56.78%</div>
-				</div>
-			),
-			image: <Icon type='portfolio' withBackground />,
-		},
-		{
-			name: 'Portfolio 3',
-			description: '11 assets',
-			rightName: '6 798 $',
-			rightDescription: (
-				<div className='flex items-center gap-1.5 text-red-600'>
-					<div>-765$</div>
-					<div className='size-0.5 rounded-full bg-red-600' />
-					<div>32.21%</div>
-				</div>
-			),
-			image: <Icon type='portfolio' withBackground />,
-		},
-	];
-
-	const tabConfigs = [
-		{name: '24h', path: '24h'},
-		{name: '7d', path: '7d'},
-		{name: '1m', path: '1m'},
-		{name: '6m', path: '6m'},
-		{name: '1y', path: '1y'},
-		{name: 'All time', path: 'All time'},
-	];
 
 	const [dataFilter, setDataFilter] = useState('24h');
 
@@ -226,13 +223,19 @@ export function AppHeader() {
 					<Card
 						titleInCard={'Portfolios'}
 						rightTitleInCard={
-							<div className='-m-1 flex items-center gap-3 p-1' onClick={() => alert('create portfolio')}>
+							<div
+								className='-m-1 flex items-center gap-3 p-1'
+								onClick={() => {
+									closePortfolioPopup();
+									PopupHelpers.runAfterPopupClosed(() => navigate(APP_PATH.portfolio.create));
+								}}
+							>
 								<Icon type='plus' className='size-4' />
 							</div>
 						}
 					>
 						<List
-							items={portfolioConfgs}
+							items={portfolioConfigs}
 							renderItem={(portfolioConfig) => {
 								const checked = portfolioConfig.name === 'Portfolio 1';
 								return (
@@ -275,7 +278,7 @@ export function AppHeader() {
 	);
 }
 
-const tabConfigs: {name: string; path: string}[] = [
+const appTabConfigs: {name: string; path: string}[] = [
 	{name: APP_TEXT.portfolios, path: APP_PATH.portfolio.list},
 	{name: APP_TEXT.goals, path: APP_PATH.goal.list},
 ];
@@ -286,7 +289,7 @@ export function AppTabs() {
 
 	return (
 		<div className='my-4 flex gap-2'>
-			{tabConfigs.map(({name, path}, index) => (
+			{appTabConfigs.map(({name, path}, index) => (
 				<div
 					key={index}
 					className={cn(

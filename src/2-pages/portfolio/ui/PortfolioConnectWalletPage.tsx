@@ -19,8 +19,8 @@ export function PortfolioConnectWalletPage() {
 	const [name, setName] = useState('');
 	const [address, setAddress] = useState('');
 
-	const [isConnectWalletSuccess] = useState(false);
-	const [isConnectWalletError, setConnectWalletError] = useState(false);
+	const [isConnectWalletSuccess, setIsConnectWalletSuccess] = useState(false);
+	const [isConnectWalletError] = useState(false);
 
 	const {isMobile} = useResponsive();
 
@@ -115,7 +115,7 @@ export function PortfolioConnectWalletPage() {
 						activeStepIndex === 0
 							? () => setActiveStepIndex(activeStepIndex + 1)
 							: () => {
-									setConnectWalletError(true);
+									setIsConnectWalletSuccess(true);
 									StatusPopupHelpers.runAfterStatusPopup(() => navigate(APP_PATH.portfolio.list));
 							  }
 					}

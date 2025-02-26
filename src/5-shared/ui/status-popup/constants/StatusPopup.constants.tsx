@@ -25,4 +25,7 @@ export const STATUS_POPUP_TEXT = {
 
 	connectWalletSuccess: ({name}: any) => `Wallet "${name}" connected`,
 	connectWalletError: () => 'Some errors occur wallet connecting',
+
+	createPortfolioSuccess: ({name}: any) => `Portfolio "${name}" created`,
+	createPortfolioError: () => 'Some errors occur portfolio creating',
 } as const;
