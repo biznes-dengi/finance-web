@@ -91,6 +91,7 @@ export function PortfolioConnectWalletPage() {
 						onChange={setAddress}
 						description={
 							<>
+								<div>Supported networks: SOL</div>
 								{isAddressValidationPending && (
 									<div className='flex items-center gap-1'>
 										<div className='text-primary-grey'>
@@ -102,7 +103,7 @@ export function PortfolioConnectWalletPage() {
 								{isAddressValidationSuccess && <div className='text-primary-violet'>Address is available</div>}
 							</>
 						}
-						errorText={isAddressValidationError && 'Such address already connected'}
+						errorText={isAddressValidationError && (true ? 'Network is unsupported' : 'Such address already connected')}
 						placeholder={APP_TEXT.walletAddress}
 					/>
 				)}
