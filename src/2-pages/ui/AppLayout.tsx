@@ -150,7 +150,7 @@ export function AppHeader() {
 				<>
 					<div
 						className={cn(
-							'flex items-center gap-2 text-xl font-medium',
+							'flex items-center gap-2 text-xl font-medium transition duration-200',
 							portfolioPopupProps.isOpen && 'text-primary-grey',
 						)}
 						onClick={openPortfolioPopup}

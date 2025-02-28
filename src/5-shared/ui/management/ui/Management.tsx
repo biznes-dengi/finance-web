@@ -1,5 +1,5 @@
 import {ManagementProps} from '../type/Management.types.ts';
-import {Button, Card, Icon, List, LoadingWrapper} from '@shared/ui';
+import {Button, Card, List, LoadingWrapper} from '@shared/ui';
 import {cn, TextHelpers} from '@shared/lib';
 import {CURRENCY_SYMBOL} from '@shared/constants';
 
@@ -8,6 +8,7 @@ export function Management<ListItem>(props: ManagementProps<ListItem>) {
 		isLoading,
 		totalBalance,
 		totalBalanceDescription,
+		rightNode,
 		buttonConfigs,
 		listTitle,
 		listItems,
@@ -43,14 +44,11 @@ export function Management<ListItem>(props: ManagementProps<ListItem>) {
 								})()}
 						</LoadingWrapper>
 
-						<LoadingWrapper isLoading={isLoading} className='my-0.5 h-4 w-10'>
-							<div className='flex items-center gap-1 rounded-2xl bg-light-grey p-2 text-sm '>
-								<div>24h</div>
-								<div>
-									<Icon type='selectChevron' className='size-[10px]' />
-								</div>
-							</div>
-						</LoadingWrapper>
+						{rightNode && (
+							<LoadingWrapper isLoading={isLoading} className='my-0.5 h-4 w-10'>
+								{rightNode}
+							</LoadingWrapper>
+						)}
 					</div>
 
 					<div className='text-sm font-light text-primary-grey'>
