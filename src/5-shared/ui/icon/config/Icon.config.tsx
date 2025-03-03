@@ -14,6 +14,7 @@ import {
 	FaInfo,
 	FaPen,
 	FaPlus,
+	FaRegCopy,
 	FaShare,
 	FaStar,
 	FaTrash,
@@ -72,6 +73,8 @@ export const ICON_MAP = {
 	share: FaShare,
 	delete: FaTrash,
 	portfolio: FaBriefcase,
+
+	copy: FaRegCopy,
 
 	trendUp: TrendingUp,
 } as const;

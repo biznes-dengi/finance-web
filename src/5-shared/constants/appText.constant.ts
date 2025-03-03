@@ -78,6 +78,7 @@ export const APP_TEXT = {
 	connectedWallets: 'Connected wallets',
 	howItWorks: 'How it works',
 	assets: 'Assets',
+	walletDetails: 'Wallet details',
 } as const;
 
 export function getEmptyText(emptyStateEntity: string) {

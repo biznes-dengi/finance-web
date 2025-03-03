@@ -9,10 +9,10 @@ export interface CommonButtonSettings {
 	icon?: ReactElement;
 	type: 'primary' | 'secondary' | 'text' | 'circle' | 'icon';
 	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
+	className?: string;
 }
 interface Props extends CommonButtonSettings {
 	children?: ReactNode;
-	className?: string;
 	disabled?: boolean;
 	isLoading?: boolean;
 	isPending?: boolean;

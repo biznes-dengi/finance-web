@@ -9,6 +9,7 @@ import {cn, isNumber} from '@shared/lib';
 export function PageHeader(props: PageHeaderProps) {
 	const {
 		title,
+		image,
 		description,
 		subDescription,
 		handleBackButtonClick,
@@ -18,6 +19,8 @@ export function PageHeader(props: PageHeaderProps) {
 		stepsCount,
 		activeStepIndex,
 		className,
+		buttonConfigs,
+		isLoading,
 		// appleTitle,
 	} = props;
 
@@ -58,10 +61,25 @@ export function PageHeader(props: PageHeaderProps) {
 			)}
 
 			<div className={cn('flex flex-col items-start gap-2 px-4', withNoSpace && 'p-0')}>
-				{title && <div className='text-3xl font-bold'>{title}</div>}
+				{title && (
+					<div className='flex w-full items-center justify-between'>
+						<div className='text-3xl font-bold'>{title}</div>
+						{image}
+					</div>
+				)}
 				{description && <div className='font-medium'>{description}</div>}
 				{subDescription && <div className='text-sm font-light text-primary-grey'>{subDescription}</div>}
 			</div>
+
+			{buttonConfigs && (
+				<div className='mt-4 flex gap-2 px-4'>
+					{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
+						<Button key={index} isLoading={isLoading} {...restButtonConfig}>
+							{name}
+						</Button>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

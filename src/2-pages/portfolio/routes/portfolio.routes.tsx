@@ -4,7 +4,8 @@ import {APP_PATH} from '@shared/constants';
 import {PortfolioListPage} from '../ui/PortfolioListPage.tsx';
 import {PortfolioCreatePage} from '../ui/PortfolioCreatePage.tsx';
 import {PortfolioConnectWalletPage} from '../ui/PortfolioConnectWalletPage.tsx';
-import {PortfolioConnectedWalletsPage} from '../ui/PortfolioConnectedWalletsPage.tsx';
+import {PortfolioWalletListPage} from '../ui/PortfolioWalletListPage.tsx';
+import {PortfolioWalletDetailsPage} from '../ui/PortfolioWalletDetailsPage.tsx';
 
 const portfolioListRoute = {
 	path: APP_PATH.portfolio.list,
@@ -17,8 +18,8 @@ const portfolioInfoRoute = {
 };
 
 const portfolioConnectedWalletsRoute = {
-	path: APP_PATH.portfolio.connectedWallets,
-	element: <PrivateRoute page={<PortfolioConnectedWalletsPage />} />,
+	path: APP_PATH.portfolio.wallets,
+	element: <PrivateRoute page={<PortfolioWalletListPage />} />,
 };
 
 const portfolioCreateRoute = {
@@ -26,10 +27,15 @@ const portfolioCreateRoute = {
 	element: <PrivateRoute page={<PortfolioCreatePage />} />,
 };
 
+const portfolioWalletDetailsRoute = {
+	path: `${APP_PATH.portfolio.wallets}/:id`,
+	element: <PrivateRoute page={<PortfolioWalletDetailsPage />} />,
+};
+
 export const portfolioRoutes = [
 	{element: <AppLayout />, children: [portfolioListRoute]},
 	{
 		element: <FullScreenPageLayout />,
-		children: [portfolioCreateRoute, portfolioInfoRoute, portfolioConnectedWalletsRoute],
+		children: [portfolioCreateRoute, portfolioInfoRoute, portfolioConnectedWalletsRoute, portfolioWalletDetailsRoute],
 	},
 ];

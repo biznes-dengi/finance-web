@@ -1,9 +1,9 @@
+import {useState} from 'react';
 import {GoalModel} from '@entities/goal';
 import {buttonConfigs} from '../config/PortfolioManagement.config.tsx';
 import {Icon, Item, List, Management, Popup, PopupHelpers, usePopupState} from '@shared/ui';
 import {cn, TextHelpers} from '@shared/lib';
 import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
-import {useState} from 'react';
 
 const options = [
 	{name: '24h', value: 1},

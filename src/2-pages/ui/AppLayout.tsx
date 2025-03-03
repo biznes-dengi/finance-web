@@ -32,7 +32,7 @@ const settingsConfigs = [
 		{
 			name: APP_TEXT.connectedWallets,
 			image: <Icon type='wallet' withBackground />,
-			onClick: ({navigate}) => navigate(APP_PATH.portfolio.connectedWallets),
+			onClick: ({navigate}) => navigate(APP_PATH.portfolio.wallets),
 		},
 		{
 			name: APP_TEXT.currency,
