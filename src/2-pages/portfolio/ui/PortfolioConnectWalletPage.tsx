@@ -91,7 +91,7 @@ export function PortfolioConnectWalletPage() {
 						onChange={setAddress}
 						description={
 							<>
-								<div>Supported networks: SOL</div>
+								<div>Supported networks: Ethereum, Solana</div>
 								{isAddressValidationPending && (
 									<div className='flex items-center gap-1'>
 										<div className='text-primary-grey'>

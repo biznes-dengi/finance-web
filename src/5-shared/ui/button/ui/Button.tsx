@@ -99,7 +99,7 @@ export function Button(props: Props) {
 
 	if (type === 'secondary') {
 		if (isLoading) {
-			return <PreloadSkeleton className='h-[40px] w-24 rounded-3xl' />;
+			return <PreloadSkeleton className='my-2 h-6 w-24 rounded-3xl' />;
 		}
 
 		return (
