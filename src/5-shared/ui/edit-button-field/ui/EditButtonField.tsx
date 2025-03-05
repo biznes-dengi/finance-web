@@ -1,23 +1,13 @@
 import {useEffect} from 'react';
 import {EditButtonFieldProps} from '../types/EditButtonField.types.ts';
-import {
-	AmountField,
-	Button,
-	ButtonType,
-	DateField,
-	Icon,
-	Popup,
-	SelectWithSearch,
-	TextField,
-	usePopupState,
-} from '@shared/ui';
+import {AmountField, Button, DateField, Icon, Popup, SelectWithSearch, TextField, usePopupState} from '@shared/ui';
 import {APP_TEXT, CURRENCY} from '@shared/constants';
 
 export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 	const {
 		type,
 		icon = 'edit',
-		isLoading,
+		isPending,
 		isSuccess,
 		isError,
 		isChanged,
@@ -51,6 +41,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 	return (
 		<>
 			<Button
+				type='text'
 				onClick={openPopup}
 				icon={icon === 'add' ? <Icon type='fund' /> : <Icon type={icon} className='size-1' />}
 			>
@@ -58,6 +49,7 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 			</Button>
 
 			<Popup
+				title={isNotEdit ? title : APP_TEXT.edit + ' ' + title.toLowerCase()}
 				isOpen={isOpen}
 				setIsOpen={(open) => {
 					setIsOpen(open);
@@ -67,10 +59,6 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 					}
 				}}
 			>
-				<div className='mb-4 text-center text-xl font-medium'>
-					{isNotEdit ? title : APP_TEXT.edit + ' ' + title.toLowerCase()}
-				</div>
-
 				{type === 'text' && (
 					<TextField
 						value={value as string}
@@ -104,9 +92,9 @@ export function EditButtonField<Value>(props: EditButtonFieldProps<Value>) {
 
 				<Button
 					className='mt-6'
-					type={ButtonType.main}
+					type='primary'
 					onClick={isNotEdit ? closePopup : handleUpdate!}
-					isLoading={isLoading}
+					isPending={isPending}
 					disabled={!isChanged || (isRequired && !value)}
 				>
 					{APP_TEXT.save}

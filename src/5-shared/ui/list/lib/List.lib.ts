@@ -1,9 +1,5 @@
-export function getEmptyText(key: 'transactions' | 'goals') {
-	if (key === 'transactions') {
-		return 'Transactions will appear here';
-	}
+import {EmptyTextKey} from '@shared/ui/list/types/List.types.ts';
 
-	if (key === 'goals') {
-		return 'Your goals will appear here';
-	}
+export function getEmptyText(key: EmptyTextKey) {
+	return `${key.toLocaleLowerCase()} will appear here`;
 }

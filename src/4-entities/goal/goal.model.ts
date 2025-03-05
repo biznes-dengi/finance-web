@@ -5,6 +5,7 @@ import {type MutationProps, type Props} from './goal.types.ts';
 import {AuthModel} from '@entities/auth';
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
 import {StatusPopupHelpers} from '@shared/ui';
+import {isUndefined} from '@shared/lib';
 
 export class GoalModel {
 	static useItems(props: Props['useItems'] = {}) {
@@ -61,7 +62,7 @@ export class GoalModel {
 		});
 
 		return {
-			goalDetails: data,
+			goalDetails: isUndefined(data) ? null : data,
 			isGoalDetailsLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
@@ -112,7 +113,7 @@ export class GoalModel {
 		});
 
 		return {
-			goalTotalBalance: data,
+			goalTotalBalance: data ? data : null,
 			isGoalTotalBalanceLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}
@@ -162,14 +163,14 @@ export class GoalModel {
 
 			onError: () => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(APP_PATH.goalList);
+					navigate(APP_PATH.goal.list);
 				});
 			},
 		});
 
 		return {
 			createGoal: mutate,
-			isCreateGoalLoading: isPending,
+			isCreateGoalPending: isPending,
 			isCreateGoalSuccess: isSuccess,
 			isCreateGoalError: isError,
 		};
@@ -199,7 +200,7 @@ export class GoalModel {
 
 		return {
 			updateGoal: mutate,
-			isUpdateGoalLoading: isPending,
+			isUpdateGoalPending: isPending,
 			isUpdateGoalSuccess: isSuccess,
 			isUpdateGoalError: isError,
 		};
@@ -224,14 +225,14 @@ export class GoalModel {
 			onSuccess: () => {
 				StatusPopupHelpers.runAfterStatusPopup(() => {
 					void queryClient.invalidateQueries({queryKey: ['goal-items']});
-					navigate(APP_PATH.goalList);
+					navigate(APP_PATH.goal.list);
 				});
 			},
 		});
 
 		return {
 			deleteGoal: mutate,
-			isDeleteGoalLoading: isPending,
+			isDeleteGoalPending: isPending,
 			isDeleteGoalSuccess: isSuccess,
 			isDeleteGoalError: isError,
 		};
@@ -261,14 +262,14 @@ export class GoalModel {
 				}
 
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goal.list : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
 
 		return {
 			fundGoal: mutate,
-			isFundGoalLoading: isPending,
+			isFundGoalPending: isPending,
 			isFundGoalSuccess: isSuccess,
 			isFundGoalError: isError,
 		};
@@ -298,14 +299,14 @@ export class GoalModel {
 				}
 
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goal.list : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
 
 		return {
 			withdrawGoal: mutate,
-			isWithdrawGoalLoading: isPending,
+			isWithdrawGoalPending: isPending,
 			isWithdrawGoalSuccess: isSuccess,
 			isWithdrawGoalError: isError,
 		};
@@ -335,14 +336,14 @@ export class GoalModel {
 				}
 
 				StatusPopupHelpers.runAfterStatusPopup(() => {
-					navigate(isFromListPage ? APP_PATH.goalList : APP_PATH.goal.getItemDetailsPath(goal.id));
+					navigate(isFromListPage ? APP_PATH.goal.list : APP_PATH.goal.getItemDetailsPath(goal.id));
 				});
 			},
 		});
 
 		return {
 			transferGoal: mutate,
-			isTransferGoalLoading: isPending,
+			isTransferGoalPending: isPending,
 			isTransferGoalSuccess: isSuccess,
 			isTransferGoalError: isError,
 		};

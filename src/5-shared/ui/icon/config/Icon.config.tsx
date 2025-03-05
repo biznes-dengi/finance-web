@@ -1,28 +1,37 @@
-import {EyeIcon, EyeOffIcon, Search, TrendingUp} from 'lucide-react';
+import {Search, TrendingUp} from 'lucide-react';
 import {
 	FaArrowDown,
 	FaArrowLeft,
 	FaArrowRight,
 	FaArrowUp,
+	FaBriefcase,
 	FaCalendar,
 	FaCheck,
 	FaChevronDown,
+	FaChevronLeft,
 	FaChevronRight,
+	FaDollarSign,
+	FaInfo,
 	FaPen,
 	FaPlus,
-	FaUser,
-	FaXmark,
+	FaRegCopy,
+	FaShare,
 	FaStar,
-	FaChevronLeft,
+	FaTrash,
+	FaUser,
+	FaWallet,
+	FaXmark,
 } from 'react-icons/fa6';
-import {FaCamera} from 'react-icons/fa';
+import {FaCamera, FaSignOutAlt, FaEye, FaEyeSlash} from 'react-icons/fa';
 import {cn} from '@shared/lib';
+import {BsThreeDotsVertical} from 'react-icons/bs';
 
 export const ICON_MAP = {
 	user: FaUser,
+	logout: FaSignOutAlt,
 
-	showPassword: EyeIcon,
-	hidePassword: EyeOffIcon,
+	show: FaEye,
+	hide: FaEyeSlash,
 
 	createGoal: FaStar,
 	fund: FaPlus,
@@ -31,24 +40,14 @@ export const ICON_MAP = {
 
 	transferTo: FaArrowDown,
 
-	x: FaXmark,
-	check: FaCheck,
-
 	success: FaCheck,
 	error: FaXmark,
 
 	backButton: FaArrowLeft,
 
-	selectChevron: FaChevronDown,
-
 	uploadImage: FaCamera,
 
-	trendUp: TrendingUp,
-
 	edit: FaPen,
-	calendar: FaCalendar,
-
-	search: Search,
 
 	depositTransaction: FaArrowLeft,
 	withdrawTransaction: FaArrowRight,
@@ -56,10 +55,28 @@ export const ICON_MAP = {
 		<FaArrowUp className={cn('rotate-45 transform', className)} />
 	),
 
+	congratulations: ({className}: {className: string}) => <div className={className}>🎉</div>,
+
+	selectChevron: FaChevronDown,
+
+	plus: FaPlus,
+	x: FaXmark,
+	check: FaCheck,
+	calendar: FaCalendar,
+	search: Search,
 	chevronLeft: FaChevronLeft,
 	chevronRight: FaChevronRight,
+	info: FaInfo,
+	settings: BsThreeDotsVertical,
+	dollar: FaDollarSign,
+	wallet: FaWallet,
+	share: FaShare,
+	delete: FaTrash,
+	portfolio: FaBriefcase,
 
-	congratulations: ({className}: {className: string}) => <div className={className}>🎉</div>,
+	copy: FaRegCopy,
+
+	trendUp: TrendingUp,
 } as const;
 
 export type IconType = keyof typeof ICON_MAP;

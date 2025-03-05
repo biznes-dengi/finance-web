@@ -4,10 +4,11 @@ import {APP_PATH} from '@shared/constants';
 import {pageNotFoundRoute} from '@pages/not-found';
 import {goalRoutes} from '@pages/goal';
 import {authRoutes} from '@pages/auth/route/auth.route.tsx';
+import {portfolioRoutes} from '@pages/portfolio/routes/portfolio.routes.tsx';
 
 const router = createBrowserRouter([
 	{
-		children: [...goalRoutes, ...authRoutes, pageNotFoundRoute],
+		children: [pageNotFoundRoute, ...authRoutes, ...goalRoutes, ...portfolioRoutes],
 	},
 
 	{path: APP_PATH.root, element: <Navigate to={APP_PATH.login} replace />},

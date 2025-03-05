@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {ItemProps} from '../types/Item.types.ts';
-import {cn, useResponsive} from '@shared/lib';
+import {cn, isBoolean, styleElement, useResponsive} from '@shared/lib';
 
 //if leftNode or rightNode is an icon => size-5
 
@@ -31,7 +31,7 @@ export function Item(props: ItemProps) {
 				!isSingle && '[&:not(:last-child)]:pb-0',
 				onClick && 'cursor-pointer',
 			)}
-			onClick={() => onClick?.(navigate)}
+			onClick={() => onClick?.({navigate})}
 		>
 			<div
 				className={cn(
@@ -48,7 +48,7 @@ export function Item(props: ItemProps) {
 
 						{imageIcon && (
 							<div className='absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-primary-violet text-white shadow-[0_0_0_2px_white_inset]'>
-								{imageIcon}
+								{isBoolean(imageIcon) ? null : styleElement(imageIcon, 'size-[10px]')}
 							</div>
 						)}
 					</div>

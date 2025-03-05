@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {AuthLayout} from './AuthLayout.tsx';
 import {AuthModel} from '@entities/auth';
-import {Button, ButtonType, PageHeader, TextField} from '@shared/ui';
+import {Button, PageHeader, TextField} from '@shared/ui';
 import {cn, useKeyClick} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 
@@ -85,23 +85,23 @@ export function LoginPage() {
 					setIsFocused={setIsPasswordFocused}
 				/>
 
-				<Button className='text-left font-light' onClick={() => alert('Вспоминай, а то не войдешь 😁')}>
+				<Button type='text' className='text-left font-light' onClick={() => alert('Вспоминай, а то не войдешь 😁')}>
 					{APP_TEXT.forgotPassword}
 				</Button>
 			</div>
 
 			<div className='my-6 flex flex-col items-center gap-4'>
 				<Button
-					type={ButtonType.main}
+					type='primary'
 					onClick={handleLogin}
 					disabled={!email || !password}
 					className={cn(!displayBoxShadow && 'shadow-none')}
-					isLoading={isLoginPending}
-					disableDefaultEnterClick
+					isPending={isLoginPending}
+					disabledPrimaryButtonEnterClick
 				>
 					{APP_TEXT.logIn}
 				</Button>
-				<Button onClick={() => navigate(APP_PATH.signup)} isLoading={isLoginPending}>
+				<Button type='text' onClick={() => navigate(APP_PATH.signup)} isLoading={isLoginPending}>
 					{APP_TEXT.signUp}
 				</Button>
 			</div>

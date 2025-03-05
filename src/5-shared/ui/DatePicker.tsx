@@ -1,4 +1,4 @@
-import {Button, ButtonType, DateField, Icon, Popup, usePopupState} from '@shared/ui/index.ts';
+import {Button, DateField, Icon, Popup, usePopupState} from '@shared/ui/index.ts';
 import {APP_TEXT} from '@shared/constants';
 import {ReactNode, useState} from 'react';
 import {DateService, isNull} from '@shared/lib';
@@ -43,7 +43,11 @@ export function DatePicker(props: DatePickerProps) {
 
 	return (
 		<>
-			<Button onClick={openPopup} icon={!value ? <Icon type='fund' /> : <Icon type='edit' className='size-1' />}>
+			<Button
+				type='text'
+				onClick={openPopup}
+				icon={!value ? <Icon type='fund' /> : <Icon type='edit' className='size-1' />}
+			>
 				{children}
 			</Button>
 
@@ -65,7 +69,7 @@ export function DatePicker(props: DatePickerProps) {
 
 				<Button
 					className='mt-6'
-					type={ButtonType.main}
+					type='primary'
 					onClick={() => {
 						onChange(localValue);
 						closePopup();

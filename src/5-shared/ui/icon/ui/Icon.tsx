@@ -1,8 +1,22 @@
+import {ICON_MAP} from '../config/Icon.config.tsx';
+import {IconProps} from '../types/Icon.types.ts';
 import {cn} from '@shared/lib';
-import {ICON_MAP, type IconType} from '../config/Icon.config.tsx';
 
-export function Icon({type, className, ...rest}: {type: IconType; className?: string; onClick?: () => void}) {
+export function Icon({type, className, withBackground, ...rest}: IconProps) {
 	const Icon = ICON_MAP[type];
+
+	if (withBackground) {
+		return (
+			<div
+				className={cn(
+					'flex size-10 flex-shrink-0 items-center justify-center rounded-full  bg-secondary-violet text-primary-violet',
+					className,
+				)}
+			>
+				<Icon {...rest} className='' />
+			</div>
+		);
+	}
 
 	return <Icon className={cn('shrink-0', className)} {...rest} />;
 }

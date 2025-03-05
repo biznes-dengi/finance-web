@@ -3,7 +3,7 @@ import {NavigateFunction} from 'react-router-dom';
 
 export type ItemProps = {
 	image?: ReactElement;
-	imageIcon?: ReactNode;
+	imageIcon?: ReactElement | boolean;
 	name: ReactNode;
 	description?: ReactNode;
 	rightName?: ReactNode;
@@ -11,7 +11,7 @@ export type ItemProps = {
 	isNameText?: boolean;
 	leftNode?: ReactNode;
 	rightNode?: ReactNode;
-	onClick?: (navigate: NavigateFunction) => void;
+	onClick?: ({navigate}: {navigate: NavigateFunction}) => void;
 	className?: string | boolean;
 	isSingle?: boolean;
 };

@@ -9,7 +9,9 @@ export function GoalTransactionsPage() {
 	return (
 		<>
 			<PageHeader title={APP_TEXT.transactions} backPath={APP_PATH.goal.getItemDetailsPath(id)} />
-			<GoalTransactionsHistory />
+			<div className='px-4 pb-6'>
+				<GoalTransactionsHistory />
+			</div>
 		</>
 	);
 }

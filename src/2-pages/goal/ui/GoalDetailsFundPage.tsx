@@ -8,7 +8,7 @@ export function GoalDetailsFundPage() {
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
-	const {fundGoal, isFundGoalLoading, isFundGoalSuccess, isFundGoalError} = GoalModel.useFund();
+	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = GoalModel.useFund();
 
 	return (
 		<FundWithdrawPage
@@ -16,7 +16,7 @@ export function GoalDetailsFundPage() {
 			isItemDataLoading={isGoalDetailsLoading}
 			actionType='fund'
 			action={fundGoal}
-			isActionLoading={isFundGoalLoading}
+			isActionPending={isFundGoalPending}
 			isActionSuccess={isFundGoalSuccess}
 			isActionError={isFundGoalError}
 			successTextKey='fundGoalSuccess'

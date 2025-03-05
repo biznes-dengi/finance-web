@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {GoalModel} from '@entities/goal';
-import {Button, ButtonType, Card, Icon, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
+import {Button, Card, Icon, LoadingWrapper, Popup, usePopupState} from '@shared/ui';
 import {cn, DateService, TextHelpers} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
@@ -31,12 +31,12 @@ export function GoalProgress() {
 		<Card>
 			<div className='p-4'>
 				<div className='flex justify-between text-sm'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div className='font-medium'>
 							{APP_TEXT.saved} {percentage}%
 						</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div>{ratio}</div>
 					</LoadingWrapper>
 				</div>
@@ -60,13 +60,13 @@ export function GoalProgress() {
 				</div>
 
 				<div className='flex justify-between gap-4 pt-4 text-sm text-primary-grey'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div>
 							{goalDetails?.deadline &&
 								`${APP_TEXT.deadline}: ${new DateService(goalDetails.deadline).getLocalDateString()}`}
 						</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div>
 							{goalDetails?.deadline && `${APP_TEXT.eshe} ${new DateService(goalDetails.deadline).calculateTimeLeft()}`}
 						</div>
@@ -76,20 +76,20 @@ export function GoalProgress() {
 
 			<Popup {...popupProps}>
 				<div className='flex flex-col items-center justify-center'>
-					<Icon type='congratulations' className='mb-4 mt-2 text-3xl' />
+					<Icon type='congratulations' className='my-2 text-3xl' />
 
-					<div className='mb-4 text-center text-lg font-medium'>{APP_TEXT.congratulations}</div>
+					<div className='mb-3 text-center text-lg font-medium'>{APP_TEXT.congratulations}</div>
 
 					<div className='mb-2'>
-						Там, где другие сдавались, вы проявили настойчивость и теперь{' '}
-						<span className='font-medium text-primary-violet'>вы можете осуществить свою мечту</span>.
+						Там, где другие сдавались, Вы проявили настойчивость и теперь{' '}
+						<span className='font-medium text-primary-violet'>Вы можете осуществить свою мечту</span>.
 					</div>
 					<div>
-						Мы гордимся вами, желаем дальнейших успехов и пусть впереди будет еще больше целей, которые вы легко
+						Мы гордимся Вами, желаем дальнейших успехов и пусть впереди будет еще больше целей, которые Вы легко
 						достигнете!
 					</div>
 
-					<Button className='mt-4' type={ButtonType.main} onClick={closePopup}>
+					<Button className='mt-4' type='primary' onClick={closePopup}>
 						{APP_TEXT.kaif}
 					</Button>
 				</div>

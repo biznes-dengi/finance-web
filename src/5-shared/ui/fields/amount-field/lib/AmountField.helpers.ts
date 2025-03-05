@@ -9,11 +9,11 @@ export class AmountFieldHelpers {
 		const amountValue = TextHelpers.getAmount(value);
 
 		if (withMinus) {
-			return `- ${amountValue}`;
+			return `-${amountValue}`;
 		}
 
 		if (withPlus) {
-			return `+ ${amountValue}`;
+			return `+${amountValue}`;
 		}
 
 		return amountValue;
@@ -21,10 +21,10 @@ export class AmountFieldHelpers {
 
 	static getPlaceholder(withMinus?: boolean, withPlus?: boolean) {
 		if (withMinus) {
-			return '- 0';
+			return '-0';
 		}
 		if (withPlus) {
-			return '+ 0';
+			return '+0';
 		}
 		return '0';
 	}

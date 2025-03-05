@@ -13,7 +13,7 @@ export function LoadingItem({withRightName}: {withRightName?: boolean}) {
 
 				{withRightName && (
 					<div className='flex flex-col items-end justify-between'>
-						<PreloadSkeleton className='mb-1 h-4 w-10' />
+						<PreloadSkeleton className='my-0.5 h-4 w-10' />
 						{/*<PreloadSkeleton className='h-3 w-6' />*/}
 					</div>
 				)}

@@ -1,6 +1,6 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {cn} from '@shared/lib';
-import {Button, ButtonType, Icon, Popup, usePopupState} from '@shared/ui';
+import {Button, Icon, Popup, usePopupState} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 
 type Props = {
@@ -33,7 +33,7 @@ export function CurrencyPicker(props: Props) {
 			<div className='flex w-full items-center justify-between px-4 text-sm '>
 				<div className='font-medium text-primary-grey'>{APP_TEXT.exchangeRate}</div>
 				<div className='shrink-0'>
-					<Button icon={<Icon type='trendUp' />} onClick={openPopup}>
+					<Button type='text' icon={<Icon type='trendUp' />} onClick={openPopup}>
 						{buttonText}
 					</Button>
 				</div>
@@ -53,7 +53,7 @@ export function CurrencyPicker(props: Props) {
 							/>
 						</label>
 					</div>
-					<Button onClick={handleSaveClick} type={ButtonType.main}>
+					<Button onClick={handleSaveClick} type='primary'>
 						Change currency rate
 					</Button>
 				</div>

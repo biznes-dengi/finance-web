@@ -10,7 +10,7 @@ export function GoalEditDetails() {
 	const {id} = useParams();
 
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
-	const {updateGoal, isUpdateGoalLoading, isUpdateGoalSuccess, isUpdateGoalError} = GoalModel.useUpdateItem();
+	const {updateGoal, isUpdateGoalPending, isUpdateGoalSuccess, isUpdateGoalError} = GoalModel.useUpdateItem();
 
 	const [name, setName] = useState('');
 	const [targetAmount, setTargetAmount] = useState<string>('');
@@ -54,7 +54,7 @@ export function GoalEditDetails() {
 	}
 
 	const editButtonCommonProps = {
-		isLoading: isUpdateGoalLoading,
+		isPending: isUpdateGoalPending,
 		isSuccess: isUpdateGoalSuccess,
 		isError: isUpdateGoalError,
 		handleUpdate,
@@ -84,10 +84,10 @@ export function GoalEditDetails() {
 		<>
 			<Card>
 				<div className='flex justify-between p-4 text-sm'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div className='font-medium text-primary-grey'>{APP_TEXT.name}</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<EditButtonField<string>
 							type='text'
 							title={APP_TEXT.name}
@@ -105,10 +105,10 @@ export function GoalEditDetails() {
 				</div>
 
 				<div className='flex justify-between p-4 text-sm'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div className='font-medium text-primary-grey'>{APP_TEXT.currency}</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<EditButtonField<CURRENCY>
 							type='select'
 							title={APP_TEXT.currency}
@@ -126,10 +126,10 @@ export function GoalEditDetails() {
 				</div>
 
 				<div className='flex justify-between p-4 text-sm'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div className='font-medium text-primary-grey'>{APP_TEXT.targetAmount}</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<EditButtonField<string>
 							type='amount'
 							title={APP_TEXT.targetAmount}
@@ -159,10 +159,10 @@ export function GoalEditDetails() {
 				</div>
 
 				<div className='flex justify-between p-4 text-sm'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div className='font-medium text-primary-grey'>{APP_TEXT.deadline}</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<EditButtonField<Date | null>
 							type='date'
 							title={APP_TEXT.deadline}
@@ -182,76 +182,8 @@ export function GoalEditDetails() {
 				</div>
 			</Card>
 
-			{goalDetails && (
-				<StatusPopup
-					isOpen={isUpdateGoalSuccess}
-					status='success'
-					statusTextKey='updateGoalSuccess'
-					statusTextProps={{name: goalDetails.name}}
-				/>
-			)}
-			{goalDetails && (
-				<StatusPopup
-					isOpen={isUpdateGoalError}
-					status='error'
-					statusTextKey='updateGoalError'
-					statusTextProps={{name: goalDetails.name}}
-				/>
-			)}
+			<StatusPopup isOpen={isUpdateGoalSuccess} status='success' statusTextKey='updateGoalSuccess' />
+			<StatusPopup isOpen={isUpdateGoalError} status='error' statusTextKey='updateGoalError' />
 		</>
 	);
 }
-
-// type DetailsProps = {
-// 	details: any;
-// 	detailsFields: {
-// 		label: string;
-// 		key: string;
-// 		type?: 'text' | 'custom';
-// 		customNode?: ({details, value}: any) => ReactNode;
-// 		customValue?: ({details}: any) => ReactNode;
-// 		// handler: ({navigate}: {navigate: NavigateFunction}) => void;
-// 	}[];
-// 	isLoading: boolean;
-// };
-//
-// function getDetailsFields<Details>({handlers}: any) {
-// 	return [
-// 		{
-// 			label: 'name',
-// 			key: 'name',
-// 			type: 'custom',
-// 			customNode: ({value}: any) => (
-// 				<Button onClick={handlers.name} icon={<Icon type='edit' className='size-1' />} isOnlyIcon>
-// 					{value}
-// 				</Button>
-// 			),
-// 		},
-// 		{
-// 			label: 'name',
-// 			key: 'name',
-// 			type: 'button',
-// 			customValue: ({details}: {details: Details}) => (
-// 				<>
-// 					{details?.targetAmount} {details && CURRENCY_SYMBOL[details.balance.currency]}
-// 				</>
-// 			),
-// 		},
-// 	] as DetailsProps['detailsFields'];
-// }
-//
-// function Details({details, isLoading, detailsFields}: DetailsProps) {
-// 	return detailsFields.map((detailsField, index) => (
-// 		<div key={index} className='flex justify-between p-4 text-sm'>
-// 			<div className='font-medium text-primary-grey'>{detailsField.label}</div>
-//
-// 			{detailsField.type === 'button' ? (
-// 				<Button onClick={detailsField.handler} icon={<Icon type='edit' className='size-1' />} isOnlyIcon>
-// 					{details?.[detailsField.key]}
-// 				</Button>
-// 			) : (
-// 				details?.[detailsField.key]
-// 			)}
-// 		</div>
-// 	));
-// }

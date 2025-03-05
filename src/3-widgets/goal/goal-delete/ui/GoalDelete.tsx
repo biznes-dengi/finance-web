@@ -5,19 +5,22 @@ import {useParams} from 'react-router-dom';
 
 export function GoalDelete() {
 	const {id} = useParams();
-	const {deleteGoal, isDeleteGoalLoading, isDeleteGoalSuccess, isDeleteGoalError} = GoalModel.useDeleteItem();
+
+	const {deleteGoal, isDeleteGoalPending, isDeleteGoalSuccess, isDeleteGoalError} = GoalModel.useDeleteItem();
 	const {goalDetails, isGoalDetailsLoading} = GoalModel.useItemDetails({id});
 
 	return (
 		<DeleteItem
-			title={goalDetails?.name as string}
-			confirmationText={APP_TEXT.deleteGoalConfirmation}
-			isLoading={isDeleteGoalLoading}
+			confirmationTitle={goalDetails?.name as string}
+			entityName={APP_TEXT.goal}
+			isPending={isDeleteGoalPending}
 			isSuccess={isDeleteGoalSuccess}
 			isError={isDeleteGoalError}
 			handleDelete={() => deleteGoal({params: {id: id!}})}
+			successStatusTextKey='deleteGoalSuccess'
+			errorStatusTextKey='deleteGoalError'
 		>
-			<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+			<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 				{APP_TEXT.deleteGoal}
 			</LoadingWrapper>
 		</DeleteItem>

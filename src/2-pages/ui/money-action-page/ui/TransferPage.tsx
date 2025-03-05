@@ -1,16 +1,7 @@
 import {useEffect, useState} from 'react';
 import {MoneyActionPageHelpers} from '../lib/MoneyActionPage.helpers.ts';
 import {TransferPageProps} from '../types/MoneyActionPage.types.ts';
-import {
-	AmountField,
-	AmountFieldOption,
-	Button,
-	ButtonType,
-	DatePicker,
-	Icon,
-	PageHeader,
-	StatusPopup,
-} from '@shared/ui';
+import {AmountField, AmountFieldOption, Button, DatePicker, Icon, PageHeader, StatusPopup} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
 import {cn, DateService, isEqual, useResponsive} from '@shared/lib';
 
@@ -22,7 +13,7 @@ export function TransferPage(props: TransferPageProps) {
 		fetchNextOptions,
 		isItemDataLoading,
 		transfer,
-		isTransferLoading,
+		isTransferPending,
 		isTransferSuccess,
 		isTransferError,
 		successTextKey,
@@ -152,10 +143,10 @@ export function TransferPage(props: TransferPageProps) {
 
 			<div className={cn('p-4', !isMobile && 'w-96 self-center')}>
 				<Button
-					type={ButtonType.main}
+					type='primary'
 					onClick={handleTransferClick}
 					disabled={!fromGoalAmount || !toGoalAmount || isFromAmountError}
-					isLoading={isTransferLoading}
+					isPending={isTransferPending}
 				>
 					{APP_TEXT.transfer}
 				</Button>

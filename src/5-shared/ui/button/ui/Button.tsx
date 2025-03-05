@@ -1,50 +1,46 @@
 import {ReactElement, ReactNode, useState} from 'react';
 import {NavigateFunction, useNavigate} from 'react-router-dom';
 import {ClassValue} from 'clsx';
-import {cn, styleElement, useKeyClick} from '@shared/lib';
+import {cn, styleElement, useKeyClick, useResponsive} from '@shared/lib';
 import {PreloadSkeleton, Spinner} from '@shared/ui';
 import './Button.css';
 
-export enum ButtonType {
-	main,
-	text,
-	icon,
-}
-
 export interface CommonButtonSettings {
 	icon?: ReactElement;
-	type?: ButtonType;
+	type: 'primary' | 'secondary' | 'text' | 'circle' | 'icon';
 	onClick: ({navigate}: {navigate: NavigateFunction}) => void;
+	className?: string;
 }
 interface Props extends CommonButtonSettings {
 	children?: ReactNode;
-	className?: string;
 	disabled?: boolean;
 	isLoading?: boolean;
-	isOnlyIcon?: boolean;
-	isSecondary?: boolean;
-	disableDefaultEnterClick?: boolean;
+	isPending?: boolean;
+	disabledPrimaryButtonEnterClick?: boolean;
+	secondaryWithPrimaryStyles?: boolean;
 }
 
-// Typescript: when type = icon -> icon prop required
+/** если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton **/
 
 export function Button(props: Props) {
 	const {
+		type = 'text',
 		children,
 		className,
 		onClick,
-		type = ButtonType.text,
-		isSecondary,
 		icon,
 		disabled,
 		isLoading,
-		isOnlyIcon,
-		disableDefaultEnterClick,
+		isPending,
+		disabledPrimaryButtonEnterClick,
+		secondaryWithPrimaryStyles,
 	} = props;
 
 	const navigate = useNavigate();
 
 	const [displayBoxShadow, setDisplayBoxShadow] = useState(true);
+
+	const {isDesktop} = useResponsive();
 
 	useKeyClick({
 		key: 'Enter',
@@ -53,7 +49,7 @@ export function Button(props: Props) {
 			onClick({navigate});
 			setDisplayBoxShadow(true);
 		},
-		disabled: disabled || disableDefaultEnterClick || type !== ButtonType.main,
+		disabled: disabled || disabledPrimaryButtonEnterClick || type !== 'primary',
 		deps: [],
 	});
 
@@ -62,8 +58,10 @@ export function Button(props: Props) {
 			'block',
 			disabled
 				? 'cursor-not-allowed'
-				: 'active:scale-95 active:brightness-95 duration-300 transition ease-in-out cursor-pointer',
-			// isDesktop ? 'duration-200' : 'duration-100',
+				: cn(
+						'active:brightness-90 duration-300 transition ease-in-out cursor-pointer',
+						isDesktop && 'hover:brightness-95',
+				  ),
 			...buttonClassName,
 			className,
 		);
@@ -74,27 +72,18 @@ export function Button(props: Props) {
 		disabled,
 	};
 
-	if (type === ButtonType.main) {
+	if (type === 'primary') {
 		return (
 			<button
 				{...buttonProps}
 				className={gcn(
-					'block w-full rounded-3xl p-3 text-center text-white active:scale-100 ',
-					disabled
-						? isSecondary
-							? 'cursor-not-allowed bg-secondary-violet/20'
-							: 'cursor-not-allowed bg-primary-violet/20'
-						: isSecondary
-						? 'bg-secondary-violet text-primary-violet'
-						: 'primaryButtonShadow bg-primary-violet active:shadow-none',
-					isLoading &&
-						(isSecondary
-							? 'cursor-not-allowed bg-secondary-violet'
-							: 'cursor-not-allowed bg-primary-violet shadow-none'),
+					'primaryButtonShadow block w-full rounded-3xl bg-primary-violet px-4 py-3 text-center text-white active:shadow-none',
+					disabled && 'bg-primary-violet/20 shadow-none',
+					isPending && 'cursor-not-allowed bg-primary-violet shadow-none',
 					!displayBoxShadow && 'shadow-none',
 				)}
 			>
-				{isLoading ? (
+				{isPending ? (
 					<div className='flex items-center justify-center gap-2'>
 						<div className='relative'>
 							<Spinner className='absolute -left-7 top-1 text-white' />
@@ -108,40 +97,40 @@ export function Button(props: Props) {
 		);
 	}
 
-	if (type === ButtonType.text) {
+	if (type === 'secondary') {
+		if (isLoading) {
+			return <PreloadSkeleton className='my-2 h-6 w-24 rounded-3xl' />;
+		}
+
 		return (
 			<button
 				{...buttonProps}
-				className={gcn('w-fit text-sm font-medium text-primary-violet', icon && 'flex items-center gap-2')}
+				className={gcn(
+					'w-fit rounded-3xl bg-secondary-violet px-4 py-[10px] text-sm text-primary-violet hover:brightness-95',
+					secondaryWithPrimaryStyles && 'w-full py-3 text-base',
+					disabled && 'cursor-not-allowed bg-secondary-violet/20 text-white',
+				)}
 			>
-				{icon && styleElement(icon, 'size-3')}
-				<span>{children}</span>
+				<div className='flex items-center justify-center gap-2'>
+					{icon && <div>{styleElement(icon, 'size-[14px]')}</div>}
+					{children && <div>{children}</div>}
+				</div>
 			</button>
 		);
 	}
 
-	if (type === ButtonType.icon) {
-		/* если меняются стили у кнопки, смотреть и за стилями для preloadSkeleton */
-
+	if (type === 'circle') {
 		if (isLoading) {
 			return (
-				<div className='flex flex-col items-center gap-y-3'>
+				<div className='flex w-[68px] flex-col items-center gap-y-3'>
 					<PreloadSkeleton isCircular className='size-11' />
-					<PreloadSkeleton className='h-[15.5px] w-12' />
+					<PreloadSkeleton className='h-[12px] w-12' />
 				</div>
 			);
 		}
 
-		if (isOnlyIcon) {
-			return (
-				<button {...buttonProps} className={gcn('flex flex-col items-center')}>
-					{icon}
-				</button>
-			);
-		}
-
 		return (
-			<button {...buttonProps} className={gcn('flex flex-col items-center')}>
+			<button {...buttonProps} className={gcn('flex w-[68px] flex-col items-center active:scale-95')}>
 				{icon && (
 					<div
 						className={cn(
@@ -149,14 +138,37 @@ export function Button(props: Props) {
 							disabled ? 'bg-secondary-violet/50 text-primary-violet/50' : 'bg-secondary-violet text-primary-violet',
 						)}
 					>
-						{styleElement(icon, icon.type === 'img' ? 'size-5' : 'size-4')}
+						{styleElement(icon, 'size-4')}
 					</div>
 				)}
 				{children && (
-					<div className={cn('mt-2 text-[13px]', disabled ? 'text-primary-violet/50' : 'text-primary-violet')}>
+					<div className={cn('mt-2 text-xs', disabled ? 'text-primary-violet/50' : 'text-primary-violet')}>
 						{children}
 					</div>
 				)}
+			</button>
+		);
+	}
+
+	if (type === 'icon' && icon) {
+		return (
+			<button {...buttonProps} className={gcn('flex items-center justify-center')}>
+				{icon}
+			</button>
+		);
+	}
+
+	if (type === 'text') {
+		return (
+			<button
+				{...buttonProps}
+				className={gcn(
+					'w-fit text-sm font-medium text-primary-violet active:scale-95',
+					icon && 'flex items-center gap-2',
+				)}
+			>
+				{icon && styleElement(icon, 'size-3')}
+				<span>{children}</span>
 			</button>
 		);
 	}

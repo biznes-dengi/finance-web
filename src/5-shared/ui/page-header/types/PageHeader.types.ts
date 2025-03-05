@@ -1,15 +1,21 @@
-import {ReactNode} from 'react';
+import {ReactElement, ReactNode} from 'react';
+import type {ButtonConfig} from '@shared/ui';
 
 export type PageHeaderProps = {
-	className?: string;
-	appleTitle?: string;
 	title?: string;
+	image?: ReactElement;
 	description?: ReactNode;
 	subDescription?: ReactNode;
 	backPath?: string;
 	handleBackButtonClick?: () => void;
 	withBackButton?: boolean;
-	withNoSpace?: boolean;
 	stepsCount?: number;
 	activeStepIndex?: number;
+	className?: string;
+	buttonConfigs?: ButtonConfig[];
+	isLoading?: boolean;
+
+	withNoSpace?: boolean;
+
+	// appleTitle?: string;
 };

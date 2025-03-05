@@ -5,7 +5,7 @@ import {APP_PATH} from '@shared/constants';
 export function GoalFundPage() {
 	const {goals, isGoalsLoading, fetchNextGoalsPage, hasNextGoalsPage} = GoalModel.useItems();
 
-	const {fundGoal, isFundGoalLoading, isFundGoalSuccess, isFundGoalError} = GoalModel.useFund({isFromListPage: true});
+	const {fundGoal, isFundGoalPending, isFundGoalSuccess, isFundGoalError} = GoalModel.useFund({isFromListPage: true});
 
 	return (
 		<FundWithdrawPage
@@ -15,12 +15,12 @@ export function GoalFundPage() {
 			hasNextOptions={hasNextGoalsPage}
 			isItemDataLoading={isGoalsLoading}
 			action={fundGoal}
-			isActionLoading={isFundGoalLoading}
+			isActionPending={isFundGoalPending}
 			isActionSuccess={isFundGoalSuccess}
 			isActionError={isFundGoalError}
 			successTextKey='fundGoalSuccess'
 			errorTextKey='fundGoalError'
-			backPath={APP_PATH.goalList}
+			backPath={APP_PATH.goal.list}
 		/>
 	);
 }

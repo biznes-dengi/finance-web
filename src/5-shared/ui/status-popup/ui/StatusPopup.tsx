@@ -1,6 +1,6 @@
 import {Drawer as VaulDrawer} from 'vaul';
 import {useEffect, useState} from 'react';
-import {statusDuration} from '../lib/StatusPopup.helpers.ts';
+import {statusDuration} from '@shared/ui/status-popup/helpers/StatusPopup.helpers.ts';
 import {StatusPopupProps} from '../types/StatusPopup.types.ts';
 import {STATUS_POPUP_TEXT} from '../constants/StatusPopup.constants.tsx';
 import {Icon} from '@shared/ui';
@@ -66,7 +66,7 @@ export function StatusPopup(props: StatusPopupProps) {
 							isOpen && 'items-center',
 						)}
 					>
-						<div className='mx-auto mb-4 h-1 w-12 rounded-full bg-secondary-grey'>
+						<div className='mx-auto mb-4 h-[3px] w-10 rounded-full bg-secondary-grey'>
 							<div className='h-full rounded-full bg-[#BAC3CA]' style={{width: `${progress}%`}} />
 						</div>
 
