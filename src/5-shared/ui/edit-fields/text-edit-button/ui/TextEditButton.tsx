@@ -1,7 +1,8 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {TextEditButtonProps} from '../types/TextEditButton.types.ts';
 import {Button, Icon, LoadingWrapper, Popup, StatusPopup, TextField, usePopupState} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
+import {useKeyClick, useResponsive} from '@shared/lib';
 
 export function TextEditButton(props: TextEditButtonProps) {
 	const {
@@ -19,6 +20,10 @@ export function TextEditButton(props: TextEditButtonProps) {
 		isError,
 	} = props;
 
+	const [isFocused, setIsFocused] = useState(false);
+
+	const {isDesktop} = useResponsive();
+
 	const {
 		popupProps: {isOpen, setIsOpen},
 		openPopup,
@@ -30,6 +35,12 @@ export function TextEditButton(props: TextEditButtonProps) {
 			closePopup();
 		}
 	}, [isSuccess, isError]);
+
+	useKeyClick({
+		key: 'Enter',
+		onKeyUp: () => setIsFocused(false),
+		disabled: isDesktop,
+	});
 
 	return (
 		<>
@@ -50,7 +61,15 @@ export function TextEditButton(props: TextEditButtonProps) {
 					}
 				}}
 			>
-				<TextField value={value} onChange={onChange} placeholder={entityName} maxLength={maxLength} />
+				<TextField
+					value={value}
+					onChange={onChange}
+					placeholder={entityName}
+					maxLength={maxLength}
+					isFocused={isFocused}
+					setIsFocused={setIsFocused}
+					enterKeyHint='done'
+				/>
 
 				<Button
 					className='mt-6'
@@ -58,6 +77,7 @@ export function TextEditButton(props: TextEditButtonProps) {
 					onClick={handleUpdate}
 					isPending={isPending}
 					disabled={!isChanged || !value}
+					disabledPrimaryButtonEnterClick={!isDesktop}
 				>
 					{APP_TEXT.save}
 				</Button>
