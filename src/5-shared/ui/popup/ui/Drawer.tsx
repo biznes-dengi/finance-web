@@ -25,7 +25,10 @@ export function Drawer(props: DrawerProps) {
 			<Portal>
 				<Overlay className='fixed inset-0 bg-black/40' />
 
-				<Content className='fixed bottom-0 left-0 right-0 max-h-[94vh] rounded-t-[28px] bg-light-grey outline-none transition-all duration-200'>
+				<Content
+					style={{maxWidth: '496px', margin: '0 auto'}}
+					className='fixed bottom-0 left-0 right-0 max-h-[94vh] rounded-t-[28px] bg-light-grey outline-none transition-all duration-200'
+				>
 					<div className='mx-auto flex h-full w-full max-w-md flex-col p-2'>
 						<div className='mx-auto mb-4 h-[3px] w-10 rounded-full bg-[#BAC3CA]' />
 						<Title className={cn(title ? 'mb-4 text-center text-lg font-medium' : 'hidden')}>{title}</Title>
