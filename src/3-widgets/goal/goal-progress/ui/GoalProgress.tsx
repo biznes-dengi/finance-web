@@ -31,12 +31,12 @@ export function GoalProgress() {
 		<Card>
 			<div className='p-4'>
 				<div className='flex justify-between text-sm'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div className='font-medium'>
 							{APP_TEXT.saved} {percentage}%
 						</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div>{ratio}</div>
 					</LoadingWrapper>
 				</div>
@@ -60,13 +60,13 @@ export function GoalProgress() {
 				</div>
 
 				<div className='flex justify-between gap-4 pt-4 text-sm text-primary-grey'>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div>
 							{goalDetails?.deadline &&
 								`${APP_TEXT.deadline}: ${new DateService(goalDetails.deadline).getLocalDateString()}`}
 						</div>
 					</LoadingWrapper>
-					<LoadingWrapper isLoading={isGoalDetailsLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={isGoalDetailsLoading} className='my-0.5 h-4 w-10'>
 						<div>
 							{goalDetails?.deadline && `${APP_TEXT.eshe} ${new DateService(goalDetails.deadline).calculateTimeLeft()}`}
 						</div>

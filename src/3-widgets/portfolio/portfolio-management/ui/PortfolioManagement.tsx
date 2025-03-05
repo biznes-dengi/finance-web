@@ -39,7 +39,7 @@ export function PortfolioManagement() {
 				rightNode={
 					<div
 						className={cn(
-							'flex items-center gap-1 rounded-2xl bg-light-grey p-2 text-sm transition duration-200',
+							'flex items-center gap-1.5 rounded-2xl bg-light-grey p-2 text-sm transition duration-200',
 							popupProps.isOpen && 'text-primary-grey',
 						)}
 						onClick={openPopup}

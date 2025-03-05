@@ -20,7 +20,7 @@ export function PortfolioWalletList() {
 					<Item
 						{...wallet}
 						image={<Icon type='wallet' withBackground />}
-						onClick={() => navigate(APP_PATH.portfolio.getWalletDetailsPath('1'))}
+						onClick={() => navigate(APP_PATH.portfolio.getItemWalletDetailsPath('1'))}
 					/>
 				)}
 			/>

@@ -123,7 +123,7 @@ export function AmountField<Option extends AmountFieldOption>(props: AmountField
 				</div>
 
 				<div className='mt-1 flex justify-between'>
-					<LoadingWrapper isLoading={!!isLoading} className='mb-1 h-4 w-10'>
+					<LoadingWrapper isLoading={!!isLoading} className='my-0.5 h-4 w-10'>
 						<div
 							className={cn(
 								'mr-4 min-w-40',

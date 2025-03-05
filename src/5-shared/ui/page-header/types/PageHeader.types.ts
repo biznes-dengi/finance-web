@@ -1,9 +1,9 @@
-import {ReactNode} from 'react';
+import {ReactElement, ReactNode} from 'react';
 import type {ButtonConfig} from '@shared/ui';
 
 export type PageHeaderProps = {
 	title?: string;
-	image?: ReactNode;
+	image?: ReactElement;
 	description?: ReactNode;
 	subDescription?: ReactNode;
 	backPath?: string;

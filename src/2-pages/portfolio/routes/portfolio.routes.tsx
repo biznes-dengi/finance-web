@@ -6,6 +6,7 @@ import {PortfolioCreatePage} from '../ui/PortfolioCreatePage.tsx';
 import {PortfolioConnectWalletPage} from '../ui/PortfolioConnectWalletPage.tsx';
 import {PortfolioWalletListPage} from '../ui/PortfolioWalletListPage.tsx';
 import {PortfolioWalletDetailsPage} from '../ui/PortfolioWalletDetailsPage.tsx';
+import {PortfolioWalletEditPage} from '../ui/PortfolioWalletEditPage.tsx';
 
 const portfolioListRoute = {
 	path: APP_PATH.portfolio.list,
@@ -32,10 +33,21 @@ const portfolioWalletDetailsRoute = {
 	element: <PrivateRoute page={<PortfolioWalletDetailsPage />} />,
 };
 
+const portfolioWalletEditRoute = {
+	path: `${APP_PATH.portfolio.wallets}/:id/edit`,
+	element: <PrivateRoute page={<PortfolioWalletEditPage />} />,
+};
+
 export const portfolioRoutes = [
 	{element: <AppLayout />, children: [portfolioListRoute]},
 	{
 		element: <FullScreenPageLayout />,
-		children: [portfolioCreateRoute, portfolioInfoRoute, portfolioConnectedWalletsRoute, portfolioWalletDetailsRoute],
+		children: [
+			portfolioCreateRoute,
+			portfolioInfoRoute,
+			portfolioConnectedWalletsRoute,
+			portfolioWalletDetailsRoute,
+			portfolioWalletEditRoute,
+		],
 	},
 ];

@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 import {PageHeaderProps} from '../types/PageHeader.types.ts';
 import {Button, Icon} from '@shared/ui';
-import {cn, isNumber} from '@shared/lib';
+import {cn, isNumber, styleElement} from '@shared/lib';
 
 /** navigate(-1) не сработает, если страницу открыли в новой вкладке -> history.length = 0 */
 /** поэтому если есть возможность прокинуть backPath - лучше так и сделать */
@@ -60,26 +60,31 @@ export function PageHeader(props: PageHeaderProps) {
 				/>
 			)}
 
-			<div className={cn('flex flex-col items-start gap-2 px-4', withNoSpace && 'p-0')}>
-				{title && (
-					<div className='flex w-full items-center justify-between'>
-						<div className='text-3xl font-bold'>{title}</div>
-						{image}
+			<div className={cn('flex items-start justify-between gap-4 px-4', withNoSpace && 'p-0')}>
+				<div>
+					<div className='flex flex-col items-start gap-4'>
+						{title && (
+							<div className='flex w-full items-center justify-between'>
+								<div className='text-3xl font-bold'>{title}</div>
+							</div>
+						)}
+						{description && <div className='font-medium'>{description}</div>}
+						{subDescription && <div className='text-sm font-light text-primary-grey'>{subDescription}</div>}
 					</div>
-				)}
-				{description && <div className='font-medium'>{description}</div>}
-				{subDescription && <div className='text-sm font-light text-primary-grey'>{subDescription}</div>}
-			</div>
 
-			{buttonConfigs && (
-				<div className='mt-4 flex gap-2 px-4'>
-					{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
-						<Button key={index} isLoading={isLoading} {...restButtonConfig}>
-							{name}
-						</Button>
-					))}
+					{buttonConfigs && (
+						<div className='mt-4 flex gap-2'>
+							{buttonConfigs.map(({name, ...restButtonConfig}, index) => (
+								<Button key={index} isLoading={isLoading} {...restButtonConfig}>
+									{name}
+								</Button>
+							))}
+						</div>
+					)}
 				</div>
-			)}
+
+				{image && styleElement(image, 'size-10')}
+			</div>
 		</div>
 	);
 }

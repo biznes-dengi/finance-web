@@ -11,7 +11,9 @@ export const APP_TEXT = {
 	saved: 'Saved',
 	goalName: 'Goal name',
 	walletName: 'Wallet name',
+	wallet: 'Wallet',
 	walletAddress: 'Wallet address',
+	address: 'Address',
 	goals: 'Goals',
 	deadline: 'Deadline',
 	transactionDate: 'Transaction date',
@@ -39,12 +41,12 @@ export const APP_TEXT = {
 	createdSuccess: 'has been successfully created',
 	edit: 'Edit',
 	delete: 'Delete',
+	deleteWallet: 'Delete wallet',
 	share: 'Share',
 	update: 'Update',
 	save: 'Save',
 	name: 'Name',
 	deleteGoal: 'Delete goal',
-	deleteGoalConfirmation: 'Are you sure you want to delete the goal?',
 	email: 'Email',
 	password: 'Password',
 	welcome: 'Welcome',
@@ -52,6 +54,7 @@ export const APP_TEXT = {
 	logOut: 'Log out',
 	signUp: 'Sign up',
 	finansy: 'Finansy',
+	deleteGoalConfirmation: 'Are you sure you want to delete the',
 	createAccount: 'Create account',
 	cancel: 'Cancel',
 	confirm: 'Confirm',
@@ -80,7 +83,3 @@ export const APP_TEXT = {
 	assets: 'Assets',
 	walletDetails: 'Wallet details',
 } as const;
-
-export function getEmptyText(emptyStateEntity: string) {
-	return `Your ${emptyStateEntity} will appear here`;
-}

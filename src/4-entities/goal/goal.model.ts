@@ -5,6 +5,7 @@ import {type MutationProps, type Props} from './goal.types.ts';
 import {AuthModel} from '@entities/auth';
 import {APP_PATH, TRANSACTION_TYPE} from '@shared/constants';
 import {StatusPopupHelpers} from '@shared/ui';
+import {isUndefined} from '@shared/lib';
 
 export class GoalModel {
 	static useItems(props: Props['useItems'] = {}) {
@@ -61,7 +62,7 @@ export class GoalModel {
 		});
 
 		return {
-			goalDetails: data,
+			goalDetails: isUndefined(data) ? null : data,
 			isGoalDetailsLoading: isFetching || isBoardGoalIdLoading,
 		};
 	}

@@ -5,11 +5,20 @@ import {cn} from '@shared/lib';
 import {APP_TEXT} from '@shared/constants';
 
 export function DeleteItem(props: DeleteItemProps) {
-	const {title, confirmationText, isPending, handleDelete, isSuccess, isError, children} = props;
+	const {
+		confirmationTitle,
+		entityName,
+		isPending,
+		handleDelete,
+		isSuccess,
+		isError,
+		children,
+		successStatusTextKey,
+		errorStatusTextKey,
+	} = props;
 
 	const {popupProps, openPopup, closePopup} = usePopupState();
 
-	//duplicated fragment with EditButtonField
 	useEffect(() => {
 		if (isSuccess || isError) {
 			closePopup();
@@ -20,8 +29,8 @@ export function DeleteItem(props: DeleteItemProps) {
 		<>
 			<Item name={children} className={cn('text-sm text-red-500')} onClick={openPopup} isSingle />
 
-			<Popup {...popupProps} title={title}>
-				<div className='text-center'>{confirmationText}</div>
+			<Popup {...popupProps} title={confirmationTitle}>
+				<div className='text-center'>{`${APP_TEXT.deleteGoalConfirmation} ${entityName.toLowerCase()}?`}</div>
 				<div className='mt-6 flex gap-2'>
 					<Button type='secondary' onClick={closePopup} secondaryWithPrimaryStyles>
 						{APP_TEXT.cancel}
@@ -32,8 +41,8 @@ export function DeleteItem(props: DeleteItemProps) {
 				</div>
 			</Popup>
 
-			<StatusPopup isOpen={isSuccess} status='success' statusTextKey='deleteGoalSuccess' />
-			<StatusPopup isOpen={isError} status='error' statusTextKey='deleteGoalError' />
+			<StatusPopup isOpen={isSuccess} status='success' statusTextKey={successStatusTextKey} />
+			<StatusPopup isOpen={isError} status='error' statusTextKey={errorStatusTextKey} />
 		</>
 	);
 }

@@ -27,6 +27,7 @@ export const APP_PATH = {
 		wallets: '/portfolio-wallets',
 		create: '/portfolio-create',
 
-		getWalletDetailsPath: (id: any) => `${APP_PATH.portfolio.wallets}/${id}`,
+		getItemWalletDetailsPath: (id: any) => `${APP_PATH.portfolio.wallets}/${id}`,
+		getItemWalletEditPath: (id: any) => `${APP_PATH.portfolio.wallets}/${id}/edit`,
 	},
 };
