@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {PageWidgetsWrapper} from '@pages/ui';
-import {type ButtonConfig, DeleteItem, Details, Icon, PageHeader} from '@shared/ui';
-import {APP_PATH, APP_TEXT, confirmation} from '@shared/constants';
+import {type ButtonConfig, DeleteItem, deleteItemConfirmation, Details, Icon, PageHeader} from '@shared/ui';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 
-// into WalletDetailsWidget
+// move into WalletDetailsWidget
 export const buttonConfigs = [
 	{
 		name: APP_TEXT.edit,
@@ -42,20 +42,26 @@ export function PortfolioWalletDetailsPage() {
 
 	return (
 		<>
-			<PageHeader title={walletName} buttonConfigs={buttonConfigs} image={<Icon type='wallet' withBackground />} />
+			<PageHeader
+				title={walletName}
+				buttonConfigs={buttonConfigs}
+				backPath={APP_PATH.portfolio.wallets}
+				image={<Icon type='wallet' withBackground />}
+			/>
 			<PageWidgetsWrapper>
 				<Details detailsFields={detailsFields} isLoading={isLoading} />
 				<DeleteItem
 					confirmationTitle={walletName}
-					confirmationText={confirmation.disconnectWallet(portfolioName)}
+					confirmationText={deleteItemConfirmation.disconnectWallet(portfolioName)}
 					isPending={isPending}
 					isSuccess={isSuccess}
 					isError={isError}
+					actionButtonText={APP_TEXT.disconnect}
 					handleDelete={handleDelete}
 					successStatusTextKey='disconnectWalletSuccess'
 					errorStatusTextKey='disconnectWalletError'
 				>
-					{APP_TEXT.disconnectWallet}
+					{`${APP_TEXT.disconnect} ${APP_TEXT.wallet.toLowerCase()}`}
 				</DeleteItem>
 			</PageWidgetsWrapper>
 		</>

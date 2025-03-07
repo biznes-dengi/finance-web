@@ -17,7 +17,7 @@ export function TextField(props: TextFieldProps) {
 		type = 'text',
 		description,
 		errorText,
-		enterKeyHint,
+		enterKeyHint = 'done',
 		isFocused,
 		setIsFocused,
 	} = props;

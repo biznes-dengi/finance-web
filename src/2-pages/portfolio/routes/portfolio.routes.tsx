@@ -3,7 +3,7 @@ import {PrivateRoute} from '@shared/lib';
 import {APP_PATH} from '@shared/constants';
 import {PortfolioListPage} from '../ui/PortfolioListPage.tsx';
 import {PortfolioCreatePage} from '../ui/PortfolioCreatePage.tsx';
-import {PortfolioConnectWalletPage} from '../ui/PortfolioConnectWalletPage.tsx';
+import {PortfolioWalletConnectPage} from '../ui/PortfolioWalletConnectPage.tsx';
 import {PortfolioWalletListPage} from '../ui/PortfolioWalletListPage.tsx';
 import {PortfolioWalletDetailsPage} from '../ui/PortfolioWalletDetailsPage.tsx';
 import {PortfolioWalletEditPage} from '../ui/PortfolioWalletEditPage.tsx';
@@ -15,7 +15,7 @@ const portfolioListRoute = {
 
 const portfolioInfoRoute = {
 	path: APP_PATH.portfolio.connectWallet,
-	element: <PrivateRoute page={<PortfolioConnectWalletPage />} />,
+	element: <PrivateRoute page={<PortfolioWalletConnectPage />} />,
 };
 
 const portfolioConnectedWalletsRoute = {

@@ -42,6 +42,7 @@ export const APP_TEXT = {
 	edit: 'Edit',
 	delete: 'Delete',
 	disconnectWallet: 'Disconnect wallet',
+	disconnect: 'Disconnect',
 	share: 'Share',
 	update: 'Update',
 	save: 'Save',
@@ -84,8 +85,3 @@ export const APP_TEXT = {
 	assets: 'Assets',
 	walletDetails: 'Wallet details',
 } as const;
-
-export const confirmation = {
-	disconnectWallet: (portfolioName: string) =>
-		`Are you sure you want to disconnect this wallet from portfolio "${portfolioName}"?`,
-};

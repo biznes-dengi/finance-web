@@ -7,12 +7,12 @@ import {
 	Icon,
 	Item,
 	List,
+	type ManagementSettingsConfigs,
 	Popup,
 	PopupHelpers,
 	usePopupState,
-	type ManagementSettingsConfigs,
 } from '@shared/ui';
-import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_CODE} from '@shared/constants';
+import {APP_PATH, APP_TEXT} from '@shared/constants';
 import {cn} from '@shared/lib';
 
 export function AppLayout() {
@@ -21,48 +21,52 @@ export function AppLayout() {
 	return (
 		<div
 			role='list-page-layout'
-			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop && 'flex justify-between px-6 py-8')}
+			className={cn('mx-auto flex min-h-screen max-w-[33rem] flex-col', isDesktop && 'flex justify-between px-6 py-8')}
 		>
 			<AppHeader />
 
 			{isDesktop && <AppSidebar />}
 
-			<div role='app-content' className='w-full'>
+			<div role='app-content' className='flex w-full flex-1 flex-col'>
 				<AppTabs />
 
 				<Outlet />
 			</div>
+
+			{/*<div className='fixed bottom-0 flex w-full justify-center gap-2 border-t border-secondary-grey bg-[rgba(0,0,0)/0.8] p-2 backdrop-blur-lg'>*/}
+			{/*	<div className='rounded-2xl bg-secondary-grey p-4'>Portfolio</div>*/}
+			{/*	<div className='rounded-2xl bg-secondary-grey p-4'>Alerts</div>*/}
+			{/*	<div className='rounded-2xl bg-secondary-grey p-4'>Watchlist</div>*/}
+			{/*</div>*/}
 		</div>
 	);
 }
 
 const settingsConfigs = [
 	[
-		{
-			name: APP_TEXT.currency,
-			description: 'Coming soon...',
-			image: <Icon type='dollar' className='text-[17px]' withBackground />,
-			rightNode: <div className='text-primary-grey'>{CURRENCY_CODE[CURRENCY.USD]}</div>,
-		},
+		// {
+		// 	name: APP_TEXT.currency,
+		// 	description: 'Coming soon...',
+		// 	image: <Icon type='dollar' className='text-[17px]' withBackground />,
+		// 	rightNode: <div className='text-primary-grey'>{CURRENCY_CODE[CURRENCY.USD]}</div>,
+		// },
 		{
 			name: 'Hide balance',
-			description: 'Coming soon...',
 			image: <Icon type='hide' className='text-[18px]' withBackground />,
 			rightNode: 'switch',
 		},
 		{
 			name: 'Include in total portfolio',
-			description: 'Coming soon...',
 			image: <Icon type='portfolio' withBackground />,
 			rightNode: 'switch',
 		},
 	],
 	[
-		{
-			name: APP_TEXT.share + ' ' + APP_TEXT.portfolio.toLowerCase(),
-			image: <Icon type='share' withBackground />,
-			onClick: () => console.log('delete portfolio'),
-		},
+		// {
+		// 	name: APP_TEXT.share + ' ' + APP_TEXT.portfolio.toLowerCase(),
+		// 	image: <Icon type='share' withBackground />,
+		// 	onClick: () => console.log('delete portfolio'),
+		// },
 		{
 			name: APP_TEXT.edit + ' ' + APP_TEXT.portfolio.toLowerCase(),
 			image: <Icon type='edit' withBackground />,
@@ -118,11 +122,12 @@ const portfolioConfigs = [
 ];
 const tabConfigs = [
 	{name: '24h', path: '24h'},
-	{name: '7d', path: '7d'},
+	{name: '1w', path: '1w'},
 	{name: '1m', path: '1m'},
+	{name: '3m', path: '3m'},
 	{name: '6m', path: '6m'},
 	{name: '1y', path: '1y'},
-	{name: 'All time', path: 'All time'},
+	{name: 'All', path: 'All'},
 ];
 
 export function AppHeader() {
@@ -147,7 +152,7 @@ export function AppHeader() {
 	const [dataFilter, setDataFilter] = useState('24h');
 
 	return (
-		<header role='app-header' className='mb-4 flex items-center justify-between px-4 pt-4'>
+		<header role='app-header' className='flex items-center justify-between p-4'>
 			<Button type='circle' onClick={openUserPopup} icon={<Icon type='user' />} className='w-fit' />
 
 			{location.pathname === APP_PATH.portfolio.list && (
@@ -292,7 +297,7 @@ export function AppTabs() {
 	const navigate = useNavigate();
 
 	return (
-		<div className='my-4 flex gap-2 px-4'>
+		<div className='flex gap-2 px-4 pb-4'>
 			{appTabConfigs.map(({name, path}, index) => (
 				<div
 					key={index}

@@ -3,15 +3,16 @@ import {GoalModel} from '@entities/goal';
 import {buttonConfigs} from '../config/PortfolioManagement.config.tsx';
 import {Icon, Item, List, Management, Popup, PopupHelpers, usePopupState} from '@shared/ui';
 import {cn, TextHelpers} from '@shared/lib';
-import {APP_PATH, APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
+import {APP_TEXT, CURRENCY_SYMBOL} from '@shared/constants';
 
 const options = [
 	{name: '24h', value: 1},
-	{name: '7d', value: 2},
+	{name: '1w', value: 2},
 	{name: '1m', value: 3},
+	{name: '3m', value: 9},
 	{name: '6m', value: 4},
 	{name: '1y', value: 5},
-	{name: 'All time', value: 6},
+	{name: 'All', value: 6},
 ];
 
 export function PortfolioManagement() {
@@ -24,18 +25,20 @@ export function PortfolioManagement() {
 
 	const isLoading = isGoalTotalBalanceLoading || isGoalsLoading;
 
+	const Component = (
+		<div className='flex items-center gap-1.5 text-red-600'>
+			<div>-1 700.28 $</div>
+			<div className='size-0.5 rounded-full bg-red-600' />
+			<div>30%</div>
+		</div>
+	);
+
 	return (
 		<>
 			<Management
 				isLoading={isLoading}
 				totalBalance={goalTotalBalance}
-				totalBalanceDescription={
-					<div className='flex items-center gap-1.5 text-red-600'>
-						<div>-1 700$</div>
-						<div className='size-0.5 rounded-full bg-red-600' />
-						<div>30%</div>
-					</div>
-				}
+				totalBalanceDescription={Component}
 				rightNode={
 					<div
 						className={cn(
@@ -58,16 +61,9 @@ export function PortfolioManagement() {
 						image={<div className='size-10 rounded-full bg-green-200' />}
 						imageIcon={<div className='size-2 bg-secondary-violet' />}
 						name={goal.name}
-						description='0.1354$'
+						description='0.1354 $'
 						rightName={`${TextHelpers.getAmount(goal.balance.amount)} ${CURRENCY_SYMBOL[goal.balance.currency]}`}
-						rightDescription={
-							<div className='flex items-center gap-1.5 text-red-600'>
-								<div>-1 700$</div>
-								<div className='size-0.5 rounded-full bg-red-600' />
-								<div>30%</div>
-							</div>
-						}
-						onClick={({navigate}) => navigate(APP_PATH.goal.getItemDetailsPath(goal.id))}
+						rightDescription={Component}
 					/>
 				)}
 				fetchNextListPage={fetchNextGoalsPage}

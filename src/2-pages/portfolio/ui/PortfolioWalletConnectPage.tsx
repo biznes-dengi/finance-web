@@ -11,7 +11,7 @@ const hints = ['Phantom memes', 'Metamask memes', 'Long term altcoins', 'Cold wa
  * Фронтовая логика валидации: 1 get запрос на лист с фильтром name={name}
  * */
 
-export function PortfolioConnectWalletPage() {
+export function PortfolioWalletConnectPage() {
 	const navigate = useNavigate();
 
 	const [activeStepIndex, setActiveStepIndex] = useState(0);

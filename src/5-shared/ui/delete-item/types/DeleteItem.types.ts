@@ -8,6 +8,7 @@ export type DeleteItemProps = {
 	isPending: boolean;
 	isSuccess: boolean;
 	isError: boolean;
+	actionButtonText?: string;
 	handleDelete: () => void;
 	children: ReactNode;
 	successStatusTextKey: StatusTextKey;
