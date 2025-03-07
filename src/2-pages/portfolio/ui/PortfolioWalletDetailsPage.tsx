@@ -1,5 +1,5 @@
 import {type ButtonConfig, DeleteItem, Details, Icon, PageHeader} from '@shared/ui';
-import {APP_PATH, APP_TEXT} from '@shared/constants';
+import {APP_PATH, APP_TEXT, confirmation} from '@shared/constants';
 import {useState} from 'react';
 
 export const buttonConfigs = [
@@ -36,6 +36,7 @@ export function PortfolioWalletDetailsPage() {
 	const isPending = false;
 	const isError = false;
 	const walletName = 'Metamask memes';
+	const portfolioName = 'Portfolio 1';
 
 	return (
 		<>
@@ -45,7 +46,7 @@ export function PortfolioWalletDetailsPage() {
 				<Details detailsFields={detailsFields} isLoading={isLoading} />
 				<DeleteItem
 					confirmationTitle={walletName}
-					entityName={APP_TEXT.wallet}
+					confirmationText={confirmation.disconnectWallet(portfolioName)}
 					isPending={isPending}
 					isSuccess={isSuccess}
 					isError={isError}
@@ -53,7 +54,7 @@ export function PortfolioWalletDetailsPage() {
 					successStatusTextKey='deleteWalletSuccess'
 					errorStatusTextKey='deleteWalletError'
 				>
-					{APP_TEXT.deleteWallet}
+					{APP_TEXT.disconnectWallet}
 				</DeleteItem>
 			</div>
 		</>
