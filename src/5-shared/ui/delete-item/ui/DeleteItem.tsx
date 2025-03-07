@@ -10,6 +10,7 @@ export function DeleteItem(props: DeleteItemProps) {
 		confirmationText,
 		entityName,
 		isPending,
+		actionButtonText,
 		handleDelete,
 		isSuccess,
 		isError,
@@ -38,8 +39,13 @@ export function DeleteItem(props: DeleteItemProps) {
 					<Button type='secondary' onClick={closePopup} secondaryWithPrimaryStyles>
 						{APP_TEXT.cancel}
 					</Button>
-					<Button type='primary' onClick={handleDelete} isPending={isPending}>
-						{APP_TEXT.confirm}
+					<Button
+						type='primary'
+						onClick={handleDelete}
+						isPending={isPending}
+						className='bg-red-100 text-red-600 shadow-none'
+					>
+						{actionButtonText ? actionButtonText : APP_TEXT.delete}
 					</Button>
 				</div>
 			</Popup>

@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {AuthLayout} from './AuthLayout.tsx';
 import {AuthModel} from '@entities/auth';
 import {Button, PageHeader, TextField} from '@shared/ui';
-import {cn, useKeyClick} from '@shared/lib';
+import {cn, useKeyClick, useResponsive} from '@shared/lib';
 import {APP_PATH, APP_TEXT} from '@shared/constants';
 
 export function LoginPage() {
@@ -18,6 +18,8 @@ export function LoginPage() {
 	const [displayBoxShadow, setDisplayBoxShadow] = useState(false);
 
 	const {login, isLoginPending, isLoginError} = AuthModel.useLogin();
+
+	const {isDesktop} = useResponsive();
 
 	useEffect(() => {
 		document.title = 'Log in | Finansy';
@@ -90,7 +92,7 @@ export function LoginPage() {
 				</Button>
 			</div>
 
-			<div className='my-6 flex flex-col items-center gap-4'>
+			<div className='my-6 flex flex-col items-center gap-2'>
 				<Button
 					type='primary'
 					onClick={handleLogin}
@@ -101,7 +103,16 @@ export function LoginPage() {
 				>
 					{APP_TEXT.logIn}
 				</Button>
-				<Button type='text' onClick={() => navigate(APP_PATH.signup)} isLoading={isLoginPending}>
+				<Button
+					type='primary'
+					className={cn(
+						'bg-inherit text-sm text-primary-violet shadow-none  active:bg-secondary-violet',
+						isDesktop && 'hover:bg-secondary-violet',
+					)}
+					onClick={() => navigate(APP_PATH.signup)}
+					isLoading={isLoginPending}
+					disabledPrimaryButtonEnterClick
+				>
 					{APP_TEXT.signUp}
 				</Button>
 			</div>
