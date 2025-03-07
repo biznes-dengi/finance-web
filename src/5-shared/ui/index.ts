@@ -26,6 +26,7 @@ export * from './item/ui/ItemImageWithProgress.tsx';
 export * from './select-with-search/ui/SelectWithSearch.tsx';
 export * from './card/ui/Card.tsx';
 export * from './management/ui/Management.tsx';
+export * from './management/type/Management.types.ts';
 export * from './details/ui/Details.tsx';
 
 // new pattern -> get rid of index.ts

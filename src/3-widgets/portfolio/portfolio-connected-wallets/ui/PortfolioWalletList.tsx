@@ -12,7 +12,7 @@ export function PortfolioWalletList() {
 	const navigate = useNavigate();
 
 	return (
-		<div className='flex flex-col gap-6'>
+		<>
 			<TextField value={''} onChange={() => {}} placeholder={APP_TEXT.search} isSearch />
 			<List
 				items={wallets}
@@ -24,6 +24,6 @@ export function PortfolioWalletList() {
 					/>
 				)}
 			/>
-		</div>
+		</>
 	);
 }

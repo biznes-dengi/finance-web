@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {PageWidgetsWrapper} from '@pages/ui';
 import {walletNameMaxLength} from '@widgets/portfolio';
 import {Details, PageHeader, TextEditButton} from '@shared/ui';
 import {APP_TEXT} from '@shared/constants';
@@ -59,9 +60,9 @@ export function PortfolioWalletEditPage() {
 		<>
 			<PageHeader />
 
-			<div className='flex flex-col gap-6 px-4 pb-6'>
+			<PageWidgetsWrapper>
 				<Details detailsFields={detailsFields} isLoading={isLoading} />
-			</div>
+			</PageWidgetsWrapper>
 		</>
 	);
 }

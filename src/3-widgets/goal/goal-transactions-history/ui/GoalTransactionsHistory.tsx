@@ -27,64 +27,62 @@ export function GoalTransactionsHistory() {
 	const isLoading = isGoalDetailsLoading || isGoalTransactionsLoading;
 
 	return (
-		<div className='flex flex-col gap-6'>
-			<LoadingWrapper
-				isLoading={isLoading}
-				className='my-0.5 mb-[18px] h-4 w-10'
-				loadingChildren={<LoadingItem withRightName />}
+		<LoadingWrapper
+			isLoading={isLoading}
+			className='my-0.5 mb-[18px] h-4 w-10'
+			loadingChildren={<LoadingItem withRightName />}
+		>
+			<InfiniteScroll
+				fetchNextPage={fetchNextGoalTransactionsPage}
+				hasNextPage={hasNextGoalTransactionsPage}
+				isNotInList
 			>
-				<InfiniteScroll
-					fetchNextPage={fetchNextGoalTransactionsPage}
-					hasNextPage={hasNextGoalTransactionsPage}
-					isNotInList
-				>
-					{groupedItems &&
-						Object.entries(groupedItems).map(([month, monthTransactions], transactionGroupIndex) => {
-							return (
-								<Card
-									key={month}
-									title={TransactionHelpers.getTransactionGroupTitle(month, uniqueYears)}
-									rightTitle={
-										<div className='text-sm text-primary-grey'>
-											{TransactionHelpers.getMonthTotal(monthTransactions) > 0}
-											{goalDetails &&
-												TextHelpers.getAmountWithCurrency(
-													TransactionHelpers.getMonthTotal(monthTransactions),
+				{groupedItems &&
+					Object.entries(groupedItems).map(([month, monthTransactions], transactionGroupIndex) => {
+						return (
+							<Card
+								key={month}
+								title={TransactionHelpers.getTransactionGroupTitle(month, uniqueYears)}
+								rightTitle={
+									<div className='text-sm text-primary-grey'>
+										{TransactionHelpers.getMonthTotal(monthTransactions) > 0}
+										{goalDetails &&
+											TextHelpers.getAmountWithCurrency(
+												TransactionHelpers.getMonthTotal(monthTransactions),
+												goalDetails.balance.currency,
+											)}
+									</div>
+								}
+							>
+								<List
+									isLoading={isLoading}
+									items={monthTransactions as any[]}
+									renderItem={(row: any, index) => (
+										<Item
+											image={TransactionHelpers.getTransactionIcon(
+												row,
+												Number(goalDetails?.balance.amount) >= Number(goalDetails?.targetAmount) &&
+													transactionGroupIndex === 0 &&
+													index === 0,
+											)}
+											name={TransactionHelpers.getTransactionName(row)}
+											description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
+											/*написал 10 дек в финансы чат, row && itemDetails - должно быть только row*/
+											rightName={
+												goalDetails &&
+												TransactionHelpers.getTransactionRightName(
+													row.type,
+													(row.amount ?? row.fromGoalAmount) as number,
 													goalDetails.balance.currency,
-												)}
-										</div>
-									}
-								>
-									<List
-										isLoading={isLoading}
-										items={monthTransactions as any[]}
-										renderItem={(row: any, index) => (
-											<Item
-												image={TransactionHelpers.getTransactionIcon(
-													row,
-													Number(goalDetails?.balance.amount) >= Number(goalDetails?.targetAmount) &&
-														transactionGroupIndex === 0 &&
-														index === 0,
-												)}
-												name={TransactionHelpers.getTransactionName(row)}
-												description={row.date && new DateService(new Date(row.date)).getLocalDateString()}
-												// TODO: написал 10 дек в финансы чат, row && itemDetails - должно быть только row
-												rightName={
-													goalDetails &&
-													TransactionHelpers.getTransactionRightName(
-														row.type,
-														(row.amount ?? row.fromGoalAmount) as number,
-														goalDetails.balance.currency,
-													)
-												}
-											/>
-										)}
-									/>
-								</Card>
-							);
-						})}
-				</InfiniteScroll>
-			</LoadingWrapper>
-		</div>
+												)
+											}
+										/>
+									)}
+								/>
+							</Card>
+						);
+					})}
+			</InfiniteScroll>
+		</LoadingWrapper>
 	);
 }

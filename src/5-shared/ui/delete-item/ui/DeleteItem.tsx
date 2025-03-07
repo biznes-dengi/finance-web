@@ -7,6 +7,7 @@ import {APP_TEXT} from '@shared/constants';
 export function DeleteItem(props: DeleteItemProps) {
 	const {
 		confirmationTitle,
+		confirmationText,
 		entityName,
 		isPending,
 		handleDelete,
@@ -30,7 +31,9 @@ export function DeleteItem(props: DeleteItemProps) {
 			<Item name={children} className={cn('text-sm text-red-500')} onClick={openPopup} isSingle />
 
 			<Popup {...popupProps} title={confirmationTitle}>
-				<div className='text-center'>{`${APP_TEXT.deleteGoalConfirmation} ${entityName.toLowerCase()}?`}</div>
+				<div className='text-center'>
+					{confirmationText ? confirmationText : `${APP_TEXT.deleteGoalConfirmation} ${entityName?.toLowerCase()}?`}
+				</div>
 				<div className='mt-6 flex gap-2'>
 					<Button type='secondary' onClick={closePopup} secondaryWithPrimaryStyles>
 						{APP_TEXT.cancel}

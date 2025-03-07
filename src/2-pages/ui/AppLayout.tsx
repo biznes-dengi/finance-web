@@ -1,10 +1,19 @@
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
-import {cn} from '@shared/lib';
-import {Button, Card, Icon, Item, List, Popup, PopupHelpers, usePopupState} from '@shared/ui';
-import {AuthModel} from '@entities/auth';
-import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_CODE} from '@shared/constants';
-import {ManagementSettingsConfigs} from '@shared/ui/management/type/Management.types.ts';
 import {useState} from 'react';
+import {AuthModel} from '@entities/auth';
+import {
+	Button,
+	Card,
+	Icon,
+	Item,
+	List,
+	Popup,
+	PopupHelpers,
+	usePopupState,
+	type ManagementSettingsConfigs,
+} from '@shared/ui';
+import {APP_PATH, APP_TEXT, CURRENCY, CURRENCY_CODE} from '@shared/constants';
+import {cn} from '@shared/lib';
 
 export function AppLayout() {
 	const isDesktop = false;
@@ -12,7 +21,7 @@ export function AppLayout() {
 	return (
 		<div
 			role='list-page-layout'
-			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop ? 'flex justify-between px-6 py-8' : 'p-4')}
+			className={cn('mx-auto min-h-screen max-w-[33rem]', isDesktop && 'flex justify-between px-6 py-8')}
 		>
 			<AppHeader />
 
@@ -30,25 +39,20 @@ export function AppLayout() {
 const settingsConfigs = [
 	[
 		{
-			name: APP_TEXT.connectedWallets,
-			image: <Icon type='wallet' withBackground />,
-			onClick: ({navigate}) => navigate(APP_PATH.portfolio.wallets),
-		},
-		{
 			name: APP_TEXT.currency,
-			description: 'Coming soon',
+			description: 'Coming soon...',
 			image: <Icon type='dollar' className='text-[17px]' withBackground />,
 			rightNode: <div className='text-primary-grey'>{CURRENCY_CODE[CURRENCY.USD]}</div>,
 		},
 		{
 			name: 'Hide balance',
-			description: 'Coming soon',
+			description: 'Coming soon...',
 			image: <Icon type='hide' className='text-[18px]' withBackground />,
 			rightNode: 'switch',
 		},
 		{
 			name: 'Include in total portfolio',
-			description: 'Coming soon',
+			description: 'Coming soon...',
 			image: <Icon type='portfolio' withBackground />,
 			rightNode: 'switch',
 		},
@@ -143,7 +147,7 @@ export function AppHeader() {
 	const [dataFilter, setDataFilter] = useState('24h');
 
 	return (
-		<header role='app-header' className='mb-4 flex items-center justify-between'>
+		<header role='app-header' className='mb-4 flex items-center justify-between px-4 pt-4'>
 			<Button type='circle' onClick={openUserPopup} icon={<Icon type='user' />} className='w-fit' />
 
 			{location.pathname === APP_PATH.portfolio.list && (
@@ -288,7 +292,7 @@ export function AppTabs() {
 	const navigate = useNavigate();
 
 	return (
-		<div className='my-4 flex gap-2'>
+		<div className='my-4 flex gap-2 px-4'>
 			{appTabConfigs.map(({name, path}, index) => (
 				<div
 					key={index}
