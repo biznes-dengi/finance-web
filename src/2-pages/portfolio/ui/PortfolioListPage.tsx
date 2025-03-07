@@ -1,5 +1,11 @@
-import {PortfolioManagement} from '@widgets/portfolio';
+import {PageWidgetsWrapper} from '@pages/ui';
+import {PortfolioManagement, PortfolioWallets} from '@widgets/portfolio';
 
 export function PortfolioListPage() {
-	return <PortfolioManagement />;
+	return (
+		<PageWidgetsWrapper>
+			<PortfolioManagement />
+			<PortfolioWallets />
+		</PageWidgetsWrapper>
+	);
 }

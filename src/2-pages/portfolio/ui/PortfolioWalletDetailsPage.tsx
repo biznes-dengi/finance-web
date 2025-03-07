@@ -1,7 +1,9 @@
+import {useState} from 'react';
+import {PageWidgetsWrapper} from '@pages/ui';
 import {type ButtonConfig, DeleteItem, Details, Icon, PageHeader} from '@shared/ui';
 import {APP_PATH, APP_TEXT, confirmation} from '@shared/constants';
-import {useState} from 'react';
 
+// into WalletDetailsWidget
 export const buttonConfigs = [
 	{
 		name: APP_TEXT.edit,
@@ -41,8 +43,7 @@ export function PortfolioWalletDetailsPage() {
 	return (
 		<>
 			<PageHeader title={walletName} buttonConfigs={buttonConfigs} image={<Icon type='wallet' withBackground />} />
-
-			<div className='flex flex-col gap-6 px-4 pb-6'>
+			<PageWidgetsWrapper>
 				<Details detailsFields={detailsFields} isLoading={isLoading} />
 				<DeleteItem
 					confirmationTitle={walletName}
@@ -51,12 +52,12 @@ export function PortfolioWalletDetailsPage() {
 					isSuccess={isSuccess}
 					isError={isError}
 					handleDelete={handleDelete}
-					successStatusTextKey='deleteWalletSuccess'
-					errorStatusTextKey='deleteWalletError'
+					successStatusTextKey='disconnectWalletSuccess'
+					errorStatusTextKey='disconnectWalletError'
 				>
 					{APP_TEXT.disconnectWallet}
 				</DeleteItem>
-			</div>
+			</PageWidgetsWrapper>
 		</>
 	);
 }

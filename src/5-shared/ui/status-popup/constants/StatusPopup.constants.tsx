@@ -29,8 +29,8 @@ export const STATUS_POPUP_TEXT = {
 	createPortfolioSuccess: ({name}: any) => `Portfolio "${name}" created`,
 	createPortfolioError: () => 'Some errors occur portfolio creating',
 
-	deleteWalletSuccess: () => 'Your wallet has been deleted',
-	deleteWalletError: () => 'Your wallet has not been deleted',
+	disconnectWalletSuccess: () => 'Your wallet has been disconnected',
+	disconnectWalletError: () => 'Your wallet has not been disconnect',
 
 	updateWalletSuccess: () => 'Your wallet has been updated',
 	updateWalletError: () => 'Your wallet has not been updated',
