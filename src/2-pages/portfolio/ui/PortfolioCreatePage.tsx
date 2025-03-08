@@ -135,7 +135,7 @@ export function PortfolioCreatePage() {
 			<Popup {...popupProps} title={APP_TEXT.setImage}>
 				<div className='flex flex-col gap-4'>
 					<div className='flex size-20 items-center justify-center self-center rounded-full bg-secondary-violet text-2xl'>
-						<span>{inPopupEmojiConfig.value}</span>
+						{inPopupEmojiConfig.value}
 					</div>
 
 					<div className='flex flex-wrap gap-2 text-xl'>
@@ -143,8 +143,8 @@ export function PortfolioCreatePage() {
 							<div
 								key={emojiConfig.id}
 								className={cn(
-									'size-10 p-1 text-center transition duration-200 active:scale-95 active:brightness-90',
-									inPopupEmojiConfig.id === emojiConfig.id && 'rounded-full bg-secondary-grey',
+									'size-10 rounded-full p-1 text-center transition duration-200 active:scale-95 active:brightness-90',
+									inPopupEmojiConfig.id === emojiConfig.id && 'bg-secondary-grey',
 								)}
 								onClick={() => setInPopupEmojiConfig(emojiConfig)}
 							>
